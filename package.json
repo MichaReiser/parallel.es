@@ -1,0 +1,49 @@
+{
+  "name": "parallel.es",
+  "version": "1.0.0",
+  "description": "Simple parallelization for ES",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.prod.config.js --progress",
+    "prepublish": "npm run-script build",
+    "start": "webpack --progress --colors --watch",
+    "test": "karma start --single-run",
+    "test:watch": "karma start",
+    "coveralljs": "cat ./coverage/Chrome*/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DatenMetzgerX/parallel.es.git"
+  },
+  "keywords": [
+    "Parallel",
+    "JS",
+    "Parallel.For",
+    "Web",
+    "Workers"
+  ],
+  "author": "Micha Reiser <micha@famreiser.ch>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DatenMetzgerX/parallel.es/issues"
+  },
+  "homepage": "https://github.com/DatenMetzgerX/parallel.es#readme",
+  "devDependencies": {
+    "coveralls": "^2.11.12",
+    "istanbul-instrumenter-loader": "^0.2.0",
+    "jasmine-core": "^2.4.1",
+    "karma": "^1.2.0",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.1.1",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-sauce-launcher": "^1.0.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^1.8.0",
+    "ts-loader": "^0.8.2",
+    "tslint": "^3.14.0",
+    "tslint-loader": "^2.1.5",
+    "typescript": "^1.8.10",
+    "webpack": "^1.13.1"
+  }
+}

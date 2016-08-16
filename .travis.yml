@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "stable"
+after_success:
+  - npm run coveralljs
+
+addons:
+  sauce_connect:
+    username: "micha"
+    access_key:
+      secure: "qpZ1UiS7DSakG4L0OcvEwuF0EOucGpQOaSWW5YtF9nJTR7VedskUbEOXv+iXVi8M4u8p18RRSZRK+Ge2AmU3FrBTgcmHQXsr4NoEdmxZ0T9f6u8kQ1NyCAhvCHa1Sx4RfLkc00rq37eNAQOUjE0G5MggezaEvvhtl4+GCweIQsSeIuLzdqxBTCfFA+8GNEzUfy3XVpDFYrKqZye0gUuahcEdgHELDlC7jhKnKBx7Ro3MApcFffxFsRl2jPYh+hBhstgbkTcF74+8Mw4WC9SDR0ifBrrwhckZ106rb8fdHzmBPJMr34GaeAgQAEETgGCjdMFYfjXv/YX5gfBg/SLH6rkHWOftW+LxtnewUvqnLPrIjmVs/ZVyMiXXUWrto4GjFeCoDz7/BRmVv6MYXDouEYnjVvlCjkm6k5pp+g7xSZ+z/0TuPU+PKaMHAy+pbFDU4pNfh7gjT7n1AfZw/Q99gDbMtGdJIoqVUnuDJpZu9Q3bNwzmJzFzWnStNt+4v7XpOar7FdtrFhvAloUk9AfFueWt3Dwg+qDwAbelVhnC44iPzhSEFFtGE8ejxWdYuY8XBlHrjBvXK2N0AgFEcfDsHYUNiE13SyaTfZFtHv9dzPJTCMMJmhUKsVq4bQ9h57gzGkg+to+mlT6U0VWP65isbAkTNBhLv19DnjbS4Uq4Dy4="
