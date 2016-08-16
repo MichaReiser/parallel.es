@@ -2,6 +2,10 @@
 // Generated on Mon Aug 15 2016 13:48:58 GMT+0200 (CEST)
 
 var webpackConfig = require("./webpack.config");
+var process = require("process");
+
+var travis = process.env.TRAVIS;
+
 webpackConfig.entry = {};
 webpackConfig.module.postLoaders = [
     {
@@ -12,6 +16,7 @@ webpackConfig.module.postLoaders = [
 ];
 
 module.exports = function (config) {
+
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -65,11 +70,11 @@ module.exports = function (config) {
 
         // Concurrency level
         // how many browser should be started simultaneous
-        concurrency: Infinity,
+        concurrency: travis ? undefined : 1,
 
         coverageReporter: {
             reporters: [
-                { type: 'lcov' },
+                {type: 'lcov'},
                 {
                     type: 'html',
                     dir: 'coverage/'
@@ -77,5 +82,54 @@ module.exports = function (config) {
             ],
             includeAllSources: true
         },
-    })
+    });
+
+    if (travis) {
+        var customLaunchers = {
+            // see https://saucelabs.com/platforms
+            chrome_latest: {
+                base: "SauceLabs",
+                browserName: "Chrome",
+                platform: "Windows 10",
+                version: ""
+            },
+            firefox_latest: {
+                base: "SauceLabs",
+                browserName: "firefox",
+                platform: "Windows 10",
+                version: "latest"
+            },
+            ie_latest: {
+                base: "SauceLabs",
+                browserName: "internet explorer",
+                platform: "Windows 10",
+                version: ""
+            },
+            edge_latest: {
+                base: "SauceLabs",
+                browserName: "microsoftedge",
+                platform: "Windows 10",
+                version: ""
+            },
+            safari_latest: {
+                base: "SauceLabs",
+                browserName: "safari",
+                platform: "OS X 10.11",
+                version: ""
+            }
+        };
+
+        config.set({
+            customLaunchers: customLaunchers,
+            sauceLabs: {
+                testName: 'Parallel.ES Tests',
+                startConnect: false,
+                tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
+            },
+            browsers: Object.keys(customLaunchers),
+            reporters: ['dots', 'coverage', 'saucelabs'],
+            singleRun: true
+        });
+    }
 };
+
