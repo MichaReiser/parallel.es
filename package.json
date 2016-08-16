@@ -8,7 +8,8 @@
     "prepublish": "npm run-script build",
     "start": "webpack --progress --colors --watch",
     "test": "karma start --single-run",
-    "test-watch": "karma start"
+    "test:watch": "karma start",
+    "coveralljs": "cat ./coverage/Chrome*/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf coverage"
   },
   "repository": {
     "type": "git",
@@ -28,9 +29,12 @@
   },
   "homepage": "https://github.com/DatenMetzgerX/parallel.es#readme",
   "devDependencies": {
+    "coveralls": "^2.11.12",
+    "istanbul-instrumenter-loader": "^0.2.0",
     "jasmine-core": "^2.4.1",
     "karma": "^1.2.0",
     "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.1.1",
     "karma-firefox-launcher": "^1.0.0",
     "karma-jasmine": "^1.0.2",
     "karma-sourcemap-loader": "^0.3.7",
