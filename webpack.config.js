@@ -9,10 +9,15 @@ module.exports = {
         filename: "bundle.js"
     },
     resolve: {
-        // Add `.ts` and `.tsx` as a resolvable extension.
         extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
     },
     module: {
+        preLoaders: [
+            {
+                test: /\.ts$/,
+                loader: "tslint"
+            }
+        ],
         loaders: [
             { test: /\.ts?$/, loader: 'ts-loader' }
         ]
