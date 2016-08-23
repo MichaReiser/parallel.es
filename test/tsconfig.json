@@ -3,11 +3,15 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
     "pretty": true,
     "target": "es5",
+    "lib": ["es5", "es2015.promise", "dom"],
     "sourceMap": true
   },
-  "exclude": [
-    "node_modules"
+  "files": [
+    "../typings/index.d.ts"
   ]
 }
