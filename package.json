@@ -4,9 +4,10 @@
   "description": "Simple parallelization for ES",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.prod.config.js --progress",
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && webpack --config webpack.prod.config.js --progress",
     "prepublish": "npm run-script build",
-    "start": "webpack --progress --colors --watch",
+    "start": "webpack-dev-server --progress --colors --watch",
     "test": "karma start --single-run",
     "test:watch": "karma start",
     "coveralljs": "cat ./coverage/Chrome*/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf coverage"
@@ -29,7 +30,9 @@
   },
   "homepage": "https://github.com/DatenMetzgerX/parallel.es#readme",
   "devDependencies": {
+    "compression-webpack-plugin": "^0.3.1",
     "coveralls": "^2.11.12",
+    "es6-promise": "^3.2.1",
     "istanbul-instrumenter-loader": "^0.2.0",
     "jasmine-core": "^2.4.1",
     "karma": "^1.2.0",
@@ -43,7 +46,9 @@
     "ts-loader": "^0.8.2",
     "tslint": "^3.14.0",
     "tslint-loader": "^2.1.5",
-    "typescript": "^1.8.10",
-    "webpack": "^1.13.1"
+    "typescript": "^2.0.0",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1",
+    "worker-loader": "^0.7.1"
   }
 }

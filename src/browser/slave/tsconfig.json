@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "pretty": true,
+    "target": "es5",
+    "lib": ["es5", "es2015.promise", "webworker"],
+    "sourceMap": true
+  },
+  "files": ["browser-slave.ts"]
+}

@@ -7,13 +7,13 @@ var process = require("process");
 var travis = process.env.TRAVIS;
 
 webpackConfig.entry = {};
-webpackConfig.module.postLoaders = [
+/*webpackConfig.module.postLoaders = [
     {
         test: /\.ts$/,
         exclude: /(test|node_modules|bower_components)[\/\\]/,
         loader: 'istanbul-instrumenter'
     }
-];
+];*/
 
 module.exports = function (config) {
 
@@ -37,7 +37,7 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            "test/**.js": ["webpack", "sourcemap"],
+            "test/tests.js": ["webpack", "sourcemap"]
         },
 
         webpack: webpackConfig,
@@ -81,7 +81,7 @@ module.exports = function (config) {
                 }
             ],
             includeAllSources: true
-        },
+        }
     });
 
     if (travis) {
