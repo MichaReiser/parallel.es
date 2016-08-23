@@ -70,7 +70,7 @@ module.exports = function (config) {
 
         // Concurrency level
         // how many browser should be started simultaneous
-        concurrency: travis ? 1 : undefined,
+        concurrency: travis ? 3 : undefined,
 
         coverageReporter: {
             reporters: [
