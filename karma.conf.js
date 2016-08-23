@@ -7,13 +7,13 @@ var process = require("process");
 var travis = process.env.TRAVIS;
 
 webpackConfig.entry = {};
-/*webpackConfig.module.postLoaders = [
+webpackConfig.module.postLoaders = [
     {
         test: /\.ts$/,
         exclude: /(test|node_modules|bower_components)[\/\\]/,
         loader: 'istanbul-instrumenter'
     }
-];*/
+];
 
 module.exports = function (config) {
 
