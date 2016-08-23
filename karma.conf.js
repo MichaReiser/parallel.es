@@ -70,7 +70,7 @@ module.exports = function (config) {
 
         // Concurrency level
         // how many browser should be started simultaneous
-        concurrency: travis ? undefined : 1,
+        concurrency: travis ? 3 : undefined,
 
         coverageReporter: {
             reporters: [
@@ -99,11 +99,23 @@ module.exports = function (config) {
                 platform: "Windows 10",
                 version: "latest"
             },
+            opera_latest: {
+                base: "SauceLabs",
+                browserName: "opera",
+                platform: "Windows 7",
+                version: ""
+            },
             ie_latest: {
                 base: "SauceLabs",
                 browserName: "internet explorer",
                 platform: "Windows 10",
                 version: ""
+            },
+            ie_10: {
+                base: "SauceLabs",
+                browserName: "internet explorer",
+                platform: "Windows 7",
+                version: "10"
             },
             edge_latest: {
                 base: "SauceLabs",
@@ -116,6 +128,41 @@ module.exports = function (config) {
                 browserName: "safari",
                 platform: "OS X 10.11",
                 version: ""
+            },
+            ios_latest: {
+                base: "SauceLabs",
+                browserName: "iphone",
+                deviceName: "iPhone 6",
+                platform: "OS X 10.11",
+                version: "9.3"
+            },
+            ios_8: {
+                base: "SauceLabs",
+                browserName: "iphone",
+                deviceName: "iPhone 6",
+                platform: "OS X 10.11",
+                version: "8.4"
+            },
+            ios_7: {
+                base: "SauceLabs",
+                browserName: "iphone",
+                deviceName: "iPhone 6",
+                platform: "OS X 10.11",
+                version: "7.1"
+            },
+            android_latest: {
+                base: "SauceLabs",
+                browserName: "android",
+                deviceName: "Android Emulator",
+                version: "5.1",
+                platform: "Linux"
+            },
+            android_44: {
+                base: "SauceLabs",
+                browserName: "android",
+                deviceName: "Android Emulator",
+                version: "4.4",
+                platform: "Linux"
             }
         };
 
