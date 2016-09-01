@@ -8,11 +8,6 @@ export interface FunctionDefinition {
     id: number;
 
     /**
-     * The name of the function (if any)
-     */
-    name?: string;
-
-    /**
      * The names of the function arguments
      */
     argumentNames: string[];

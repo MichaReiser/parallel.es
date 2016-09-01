@@ -55,18 +55,5 @@ describe("SlaveFunctionCache", function () {
             // assert
             expect(cache.has(1)).toBe(true);
         });
-
-        it("assigns the function a name if the definition defines a name", function () {
-            // act
-            cache.registerFunction({
-                body: "return x;",
-                argumentNames: ["x"],
-                id: 1,
-                name: "test"
-            });
-
-            // assert
-            expect((cache.getFunction(1) as any).name).toEqual("test");
-        });
     });
 });

@@ -10,8 +10,5 @@
     "target": "es5",
     "lib": ["es5", "es2015.promise", "dom"],
     "sourceMap": true
-  },
-  "files": [
-    "./typings/index.d.ts"
-  ]
+  }
 }

@@ -1,8 +1,4 @@
-import {
-    scheduleTaskMessage, WorkerMessageType, initializeWorkerMessage,
-    functionResponseMessage, isFunctionRequest, isWorkerResult, isFunctionExecutionError, stopMessage
-} from "../../../src/common/worker/worker-messages";
-import {TaskDefinition} from "../../../src/common/task/task-definition";
+import {initializeWorkerMessage} from "../../../src/common/worker/worker-messages";
 import {BrowserSlave} from "../../../src/browser/slave/browser-slave";
 import {IdleSlaveState} from "../../../src/browser/slave/browser-slave-states";
 
@@ -47,7 +43,7 @@ describe("BrowserSlave", function () {
             // arrange
             const state = new IdleSlaveState(slave);
             spyOn(state, "enter");
-            const onMessageSpy = spyOn(state, "onMessage").and.returnValue(false);
+            spyOn(state, "onMessage").and.returnValue(false);
             const message = initializeWorkerMessage(10);
             slave.changeState(state);
 

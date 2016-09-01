@@ -14,10 +14,6 @@ export class SlaveFunctionCache implements FunctionLookupTable {
 
     registerFunction(definition: FunctionDefinition): Function {
         const f = Function.apply(null, [...definition.argumentNames, definition.body]);
-        if (definition.name) {
-            Object.defineProperty(f, "name", { value: definition.name });
-        }
-
         this._cache[definition.id] = f;
         return f;
     }
