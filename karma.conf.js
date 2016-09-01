@@ -7,13 +7,16 @@ var process = require("process");
 var travis = process.env.TRAVIS;
 
 webpackConfig.entry = {};
-webpackConfig.module.postLoaders = [
-    {
-        test: /\.ts$/,
-        exclude: /(test|node_modules|bower_components)[\/\\]/,
-        loader: 'istanbul-instrumenter'
-    }
-];
+
+if (travis) {
+    webpackConfig.module.postLoaders = [
+        {
+            test: /\.ts$/,
+            exclude: /(test|node_modules|bower_components)[\/\\]/,
+            loader: 'istanbul-instrumenter'
+        }
+    ];
+}
 
 module.exports = function (config) {
 
@@ -45,7 +48,7 @@ module.exports = function (config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', "coverage"],
+        reporters: ['progress', "coverage", "kjhtml"],
 
         // web server port
         port: 9876,
