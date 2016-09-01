@@ -1,7 +1,7 @@
 import {TaskDefinition} from "../task/task-definition";
 import {FunctionDefinition} from "./function-defintion";
 
-export const enum MessageType {
+export const enum WorkerMessageType {
     InitializeWorker,
     ScheduleTask,
     FunctionRequest,
@@ -12,7 +12,7 @@ export const enum MessageType {
 }
 
 export interface WorkerMessage {
-    type: MessageType;
+    type: WorkerMessageType;
 }
 
 /**
@@ -40,9 +40,9 @@ export interface ScheduleTaskMessage extends WorkerMessage {
  */
 export interface FunctionRequest extends WorkerMessage {
     /**
-     * The id of the requested function
+     * The ids of the requested functions
      */
-    functionId: number;
+    functionIds: number[];
 }
 
 /**
@@ -81,23 +81,23 @@ export interface FunctionExecutionError extends WorkerMessage {
  * @returns the initialize worker message
  */
 export function initializeWorkerMessage(id: number): InitializeWorkerMessage {
-    return { workerId: id, type: MessageType.InitializeWorker };
+    return { workerId: id, type: WorkerMessageType.InitializeWorker };
 }
 
 export function scheduleTaskMessage(task: TaskDefinition): ScheduleTaskMessage {
-    return { task, type: MessageType.ScheduleTask};
+    return { task, type: WorkerMessageType.ScheduleTask};
 }
 
-export function requestFunctionMessage(functionId: number): FunctionRequest {
-    return { functionId, type: MessageType.FunctionRequest };
+export function requestFunctionMessage(functionId: number, ...otherFunctionIds: number[]): FunctionRequest {
+    return { functionIds: [functionId, ...otherFunctionIds], type: WorkerMessageType.FunctionRequest };
 }
 
 export function functionResponseMessage(functions: FunctionDefinition[]): FunctionResponse {
-    return { functions, type: MessageType.FunctionResponse };
+    return { functions, type: WorkerMessageType.FunctionResponse };
 }
 
 export function workerResultMessage(result: any): WorkerResultMessage {
-    return { result: result, type: MessageType.WorkerResult };
+    return { result: result, type: WorkerMessageType.WorkerResult };
 }
 
 export function functionExecutionError(error: Error): FunctionExecutionError {
@@ -107,37 +107,37 @@ export function functionExecutionError(error: Error): FunctionExecutionError {
         errorObject[prop] = JSON.stringify((<any>error)[prop]);
     }
 
-    return { error: errorObject, type: MessageType.FunctionExecutionError };
+    return { error: errorObject, type: WorkerMessageType.FunctionExecutionError };
 }
 
 export function stopMessage(): WorkerMessage {
-    return { type: MessageType.Stop };
+    return { type: WorkerMessageType.Stop };
 }
 
 export function isScheduleTask(message: WorkerMessage): message is ScheduleTaskMessage {
-    return message.type === MessageType.ScheduleTask;
+    return message.type === WorkerMessageType.ScheduleTask;
 }
 
 export function isInitializeMessage(message: WorkerMessage): message is InitializeWorkerMessage {
-    return message.type === MessageType.InitializeWorker;
+    return message.type === WorkerMessageType.InitializeWorker;
 }
 
 export function isFunctionRequest(message: WorkerMessage): message is FunctionRequest {
-    return message.type === MessageType.FunctionRequest;
+    return message.type === WorkerMessageType.FunctionRequest;
 }
 
 export function isFunctionResponse(message: WorkerMessage): message is FunctionResponse {
-    return message.type === MessageType.FunctionResponse;
+    return message.type === WorkerMessageType.FunctionResponse;
 }
 
 export function isWorkerResult(message: WorkerMessage): message is WorkerResultMessage {
-    return message.type === MessageType.WorkerResult;
+    return message.type === WorkerMessageType.WorkerResult;
 }
 
 export function isFunctionExecutionError(message: WorkerMessage): message is FunctionExecutionError {
-    return message.type === MessageType.FunctionExecutionError;
+    return message.type === WorkerMessageType.FunctionExecutionError;
 }
 
 export function isStopMesssage(message: WorkerMessage): boolean {
-    return message.type === MessageType.Stop;
+    return message.type === WorkerMessageType.Stop;
 }

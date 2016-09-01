@@ -1,16 +1,16 @@
 import {WorkerThreadFactory} from "../../common/worker/worker-thread-factory";
 import {WorkerThread} from "../../common/worker/worker-thread";
 import {BrowserWorkerThread} from "./browser-worker-thread";
-import {DynamicFunctionLookupTable} from "../../common/thread-pool/dynamic-function-lookup-table";
+import {FunctionRegistry} from "../../common/serialization/function-registry";
 
 declare function require(module: string): any;
-const SlaveWorker = require("worker?name=worker-slave.parallel-es.js!../slave/browser-slave");
+const SlaveWorker = require("worker?inline&name=worker-slave.parallel-es.js!../slave");
 
 /**
  * Thread factory that creates web worker based threads.
  */
 export class BrowserWorkerThreadFactory implements WorkerThreadFactory {
-    constructor(private functionLookupTable: DynamicFunctionLookupTable) {}
+    constructor(private functionLookupTable: FunctionRegistry) {}
 
     spawn(): WorkerThread {
         if (!(<any>window)["Worker"]) {

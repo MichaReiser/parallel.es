@@ -1,14 +1,19 @@
 import {WorkerThread} from "../../../src/common/worker/worker-thread";
 import {WorkerTask} from "../../../src/common/task/worker-task";
+import {TaskDefinition} from "../../../src/common/task/task-definition";
 
 describe("WorkerTask", function () {
     let worker: WorkerThread;
     let runSpy: jasmine.Spy;
     let workerTask: WorkerTask<number>;
-    let taskDefinition = {
+    let taskDefinition: TaskDefinition = {
         id: 1,
-        functionId: 2,
-        params: [5, 10]
+        main: {
+            functionId: 2,
+            params: [5, 10],
+            ______serializedFunctionCall: true
+        },
+        usedFunctionIds: [2]
     };
 
     beforeEach(function () {

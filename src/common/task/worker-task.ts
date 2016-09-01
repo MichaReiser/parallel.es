@@ -16,7 +16,7 @@ export class WorkerTask<T> implements Task<T> {
      * Creates a new task that is used to execute the passed in task
      * @param taskDefinition the definition of the task to execute
      */
-    constructor(private taskDefinition: TaskDefinition) {
+    constructor(public taskDefinition: TaskDefinition) {
         this.promise = new Promise<T>((resolve, reject) => {
             this._resolve = resolve;
             this._reject = reject;

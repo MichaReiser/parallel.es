@@ -22,6 +22,6 @@ export class SimpleMap<K, V> {
     }
 
     private toInternalKey(key: K): string {
-        return `$@{key}`;
+        return `@${key}`;
     }
 }

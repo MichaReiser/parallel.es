@@ -1,143 +1,58 @@
 import {
-    scheduleTaskMessage, MessageType, initializeWorkerMessage,
-    functionResponseMessage, isFunctionRequest, isWorkerResult, isFunctionExecutionError
-} from "../../../src/common/worker/messages";
-declare function require(module: string): any;
-const BrowserSlave = require("worker!../../../src/browser/slave/browser-slave");
+    scheduleTaskMessage, WorkerMessageType, initializeWorkerMessage,
+    functionResponseMessage, isFunctionRequest, isWorkerResult, isFunctionExecutionError, stopMessage
+} from "../../../src/common/worker/worker-messages";
+import {TaskDefinition} from "../../../src/common/task/task-definition";
+import {BrowserSlave} from "../../../src/browser/slave/browser-slave";
+import {IdleSlaveState} from "../../../src/browser/slave/browser-slave-states";
 
 describe("BrowserSlave", function () {
-    let slave: Worker;
-    let onresponse: (event: MessageEvent) => void;
+    let slave: BrowserSlave;
 
     beforeEach(function () {
         slave = new BrowserSlave();
-        slave.onmessage = onresponse = jasmine.createSpy("onmessage");
-        slave.onerror = (error: ErrorEvent) => fail(error);
     });
 
-    afterEach(function () {
-        slave.terminate();
+    describe("changeState", function () {
+        it("calls enter on the passed state", function () {
+            // arrange
+            const state = new IdleSlaveState(slave);
+            const enterSpy = spyOn(state, "enter");
+
+            // act
+            slave.changeState(state);
+
+            // assert
+            expect(enterSpy).toHaveBeenCalled();
+        });
     });
 
-    describe("task execution", function () {
-        it("requests missing function definitions", function (done) {
-             // arrange
-            const task = { id: 1, functionId: 1, params: [] };
-            slave.postMessage(initializeWorkerMessage(1));
+    describe("onMessage", function () {
+        it("calls onMessage of the current state", function () {
+            // arrange
+            const state = new IdleSlaveState(slave);
+            spyOn(state, "enter");
+            const onMessageSpy = spyOn(state, "onMessage").and.returnValue(true);
+            const message = initializeWorkerMessage(10);
+            slave.changeState(state);
 
             // act
-            slave.postMessage(scheduleTaskMessage(task));
-
-            slave.onmessage = function (event: MessageEvent) {
-                // assert
-                expect(event.data.type).toBe(MessageType.FunctionRequest);
-                expect(event.data.functionId).toBe(1);
-                done();
-            };
-        });
-
-        it("it executes the function as soon as the function definition has been retrieved", function (done) {
-            // arrange
-            const task = { id: 1, functionId: 1, params: [10] };
-
-            let promise = new Promise((resolve, reject) => {
-                (onresponse as jasmine.Spy).and.callFake(function (event: MessageEvent) {
-                    if (isFunctionRequest(event.data)) {
-                        slave.postMessage(functionResponseMessage([{ id: 1, argumentNames: ["x"], body: "return x;" }]));
-                    } else if (isWorkerResult(event.data)) {
-                        resolve(event.data.result);
-                    } else {
-                        reject("Unexpected message from slave");
-                    }
-                });
-            });
-
-            slave.postMessage(initializeWorkerMessage(1));
-
-            // act
-            slave.postMessage(scheduleTaskMessage(task));
+            slave.onMessage({ data: message } as any);
 
             // assert
-            promise.then(function (result) {
-                expect(result).toBe(10);
-                done();
-            }, function () {
-                fail();
-            });
+            expect(onMessageSpy).toHaveBeenCalledWith(jasmine.objectContaining({ data: message }));
         });
 
-        it("does not request the function definition if the slave has executed the function before", function (done) {
+        it("throws an error if the state cannot handle the given message", function () {
             // arrange
-            let firstTask = new Promise((resolve, reject) => {
-                (onresponse as jasmine.Spy).and.callFake(function (event: MessageEvent) {
-                    if (isFunctionRequest(event.data)) {
-                        slave.postMessage(functionResponseMessage([{ id: 1, argumentNames: ["x"], body: "return x;" }]));
-                    } else if (isWorkerResult(event.data)) {
-                            resolve(event.data.result);
-                    } else {
-                        reject("Unexpected message from slave");
-                    }
-                });
-            });
+            const state = new IdleSlaveState(slave);
+            spyOn(state, "enter");
+            const onMessageSpy = spyOn(state, "onMessage").and.returnValue(false);
+            const message = initializeWorkerMessage(10);
+            slave.changeState(state);
 
-            slave.postMessage(initializeWorkerMessage(1));
-            slave.postMessage(scheduleTaskMessage({ id: 1, functionId: 1, params: [10] }));
-
-            const secondTask = firstTask.then(function () {
-                const promise = new Promise((resolve, reject) => {
-                    (onresponse as jasmine.Spy).and.callFake(function (event: MessageEvent) {
-                        if (isFunctionRequest(event.data)) {
-                            fail("Slave requested function definition for second execution of same function again.");
-                        } else if (isWorkerResult(event.data)) {
-                            resolve(event.data.result);
-                        } else {
-                            reject("Unexpected message from slave");
-                        }
-                    });
-                });
-
-                // act
-                slave.postMessage(scheduleTaskMessage({ id: 2, functionId: 1, params: [20] }));
-                return promise;
-            });
-
-            // assert
-            secondTask.then(function (result) {
-                expect(result).toBe(20);
-                done();
-            }, function () {
-                fail();
-            });
-        });
-
-        it("reports any errors occurring during the function execution", function (done) {
-            // arrange
-            const task = { id: 1, functionId: 1, params: [10] };
-
-            let promise = new Promise((resolve, reject) => {
-                (onresponse as jasmine.Spy).and.callFake(function (event: MessageEvent) {
-                    if (isFunctionRequest(event.data)) {
-                        slave.postMessage(functionResponseMessage([{ id: 1, argumentNames: ["x"], body: "return y;" }]));
-                    } else if (isFunctionExecutionError(event.data)) {
-                        resolve(event.data.error);
-                    } else {
-                        reject("Unexpected message from slave");
-                    }
-                });
-            });
-
-            slave.postMessage(initializeWorkerMessage(1));
-
-            // act
-            slave.postMessage(scheduleTaskMessage(task));
-
-            // assert
-            promise.then(function (error: Error) {
-                expect(error.message).toEqual(jasmine.stringMatching("y")); // y is not defined or y is undefined... depends on the browser
-                done();
-            }, function () {
-                fail();
-            });
+            // act, assert
+            expect(() => slave.onMessage({ data: message } as any)).toThrowError(`Message with type 0 cannot be handled by slave BrowserSlave { id: NaN, state: 'Idle' }`);
         });
     });
 });

@@ -1,19 +1,20 @@
+import {SerializedFunctionCall} from "../serialization/serialized-function-call";
 /**
  * Definition of a task to execute. A task is uniquely identified by an id.
  */
 export interface TaskDefinition {
     /**
-     * The unique identification of the task to execute
+     * The unique identification of the task to execute. Is assigned by the thread pool.
      */
-    id: number;
+    id?: number;
 
     /**
-     * The id of the function to execute
+     * The main function to execute
      */
-    functionId: number;
+    readonly main: SerializedFunctionCall;
 
     /**
-     * Array with the parameters that are passed to the executed function.
+     * IDs of functions used
      */
-    params: any[];
+    readonly usedFunctionIds: number[];
 }

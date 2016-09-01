@@ -1,4 +1,4 @@
-import {SimpleMap} from "../../src/common/simple-map";
+import {SimpleMap} from "../../../src/common/util/simple-map";
 describe("SimpleMap", function () {
 
     let map: SimpleMap<string, string>;
