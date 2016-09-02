@@ -3,7 +3,7 @@ var config = require("./webpack.config");
 var CompressionPlugin = require("compression-webpack-plugin");
 
 config.debug = false;
-config.devtool = "#source-map";
+config.devtool = "source-map";
 config.plugins = config.plugins.concat([
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),

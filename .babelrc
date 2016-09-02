@@ -1,0 +1,21 @@
+{
+  "presets": [
+    ["es2015", { "modules": false }]
+  ],
+  "plugins": [
+    ["transform-runtime", {
+      "regenerator": false
+    }]
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        ["istanbul", {
+          "exclude": [
+            "test/**/*.spec.js"
+          ]
+        }]
+      ]
+    }
+  }
+}

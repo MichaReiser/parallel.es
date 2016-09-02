@@ -1,4 +1,4 @@
-import {toIterator, toArray, Iterator} from "../../../src/common/util/iterator";
+import {toIterator, toArray} from "../../../src/common/util/iterator";
 describe("Iterator", function () {
     describe("toIterator", function () {
         it("returns an iterator with a next method", function () {
@@ -53,7 +53,7 @@ describe("Iterator", function () {
     describe("toArray", function () {
         it("converts an empty iterator to an empty array", function () {
             // arrange
-            const iterator = { next: function () { return { done: true }; }};
+            const iterator = { next: function () { return { done: true } as IteratorResult<number>; }};
 
             // assert
             expect(toArray(iterator)).toEqual([]);
@@ -67,7 +67,7 @@ describe("Iterator", function () {
                     if (++i < 4) {
                         return { done: false, value: i };
                     }
-                    return { done: true };
+                    return { done: true } as IteratorResult<number>;
                 }
             };
 

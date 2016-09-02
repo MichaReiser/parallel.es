@@ -1,5 +1,5 @@
 import {SerializedParallelAction} from "./parallel-action";
-import {Iterator, IteratorResult, toArray, toIterator} from "../util/iterator";
+import {toArray, toIterator} from "../util/iterator";
 import {SerializedFunctionCall} from "../serialization/serialized-function-call";
 import {FunctionCallDeserializer} from "../serialization/function-call-deserializer";
 import {staticFunctionRegistry} from "../serialization/static-function-registry";
@@ -15,16 +15,19 @@ export const ParallelWorkerFunctions = {
             iterator = coordinator(iterator, iteratee);
         }
 
-        return toArray(<Iterator<TResult>>iterator);
+        return toArray<TResult>(iterator as any);
     },
 
-    map<T, TResult>(iterator: Iterator<T>, iteratee: (value: T | undefined) => TResult): Iterator<TResult> {
+    map<T, TResult>(iterator: Iterator<T>, iteratee: (value: T) => TResult): Iterator<TResult> {
         return {
-            next() {
+            next(): IteratorResult<TResult> {
                 const result = iterator.next();
+                if (result.done) {
+                    return { done: true } as IteratorResult<TResult>;
+                }
                 return {
                     done: result.done,
-                    value: result.done ? undefined : iteratee(result.value)
+                    value: iteratee(result.value)
                 };
             }
         };
@@ -60,13 +63,13 @@ export const ParallelWorkerFunctions = {
         console.log("range", arguments);
         let next = start;
         return {
-            next() {
+            next(): IteratorResult<number> {
                 let current = next;
                 next = current + step;
                 if (current < end) {
                     return { done: false, value: current };
                 }
-                return { done: true };
+                return { done: true } as IteratorResult<number>;
             }
         };
     },
@@ -75,13 +78,13 @@ export const ParallelWorkerFunctions = {
         console.log("times", arguments);
         let next = start;
         return {
-            next() {
+            next(): IteratorResult<TResult> {
                 let current = next;
                 next = current + 1;
                 if (current < end) {
                     return { done: false, value: iteratee(current) };
                 }
-                return { done: true };
+                return { done: true } as IteratorResult<TResult>;
             }
         };
     },

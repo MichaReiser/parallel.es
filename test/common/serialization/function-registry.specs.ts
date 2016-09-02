@@ -51,7 +51,7 @@ describe("FunctionRegistry", function () {
 
     describe("getDefinition", function () {
         it("returns undefined if the function with the given id is not registered", function () {
-            expect(functionRegistry.getDefinition(0)).toBeUndefined();
+            expect(functionRegistry.getDefinition(1000)).toBeUndefined();
         });
 
         it("returns the function definition if a function with the given id is registered", function () {

@@ -110,8 +110,8 @@ describe("BrowserSlave IntegrationTests", function () {
             secondTaskCompleted.then(function (result) {
                 expect(result).toBe(20);
                 done();
-            }, function () {
-                fail();
+            }, function (error) {
+                fail(error);
             });
         });
 
@@ -140,8 +140,8 @@ describe("BrowserSlave IntegrationTests", function () {
             promise.then(function (error: Error) {
                 expect(error.message).toEqual(jasmine.stringMatching("y")); // y is not defined or y is undefined... depends on the browser
                 done();
-            }, function () {
-                fail();
+            }, function (error) {
+                fail(error);
             });
         });
     });

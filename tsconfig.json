@@ -7,8 +7,8 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "pretty": true,
-    "target": "es5",
-    "lib": ["es5", "es2015.promise", "dom"],
+    "target": "es6",
+    // "lib": ["es6", "dom"],
     "sourceMap": true
   }
 }

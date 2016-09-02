@@ -1,5 +1,4 @@
-require('es6-promise').polyfill();
+var browser = require("../src/browser/index");
 
-
-var testsContext = require.context(".", true, /.*specs\.ts$/);
+var testsContext = require.context(".", true, /.*\.specs\.ts$/);
 testsContext.keys().forEach(testsContext);

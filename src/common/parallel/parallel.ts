@@ -38,12 +38,7 @@ export function parallelFactory(configuration: Configuration): Parallel {
     };
 
     function initOptions(userOptions?: ParallelOptions): DefaultInitializedParallelOptions {
-        let options: DefaultInitializedParallelOptions = userOptions || {} as any;
-        for (const key of Object.keys(defaultOptions)) {
-            (options as any)[key] = (options as any)[key] || (defaultOptions as any)[key];
-        }
-
-        return options;
+        return Object.assign({}, defaultOptions, userOptions) as DefaultInitializedParallelOptions;
     }
 
     return {
