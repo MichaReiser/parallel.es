@@ -6,24 +6,7 @@ import {DefaultInitializedParallelOptions} from "./parallel-options";
 
 export interface ParallelTaskScheduling {
     numberOfWorkers: number;
-    itemsPerWorker: number;
-}
-
-export function getParallelTaskScheduling(totalItems: number, options: DefaultInitializedParallelOptions): ParallelTaskScheduling {
-    let itemsPerWorker = totalItems / options.maxConcurrencyLevel;
-
-    if (options.minValuesPerWorker) {
-        itemsPerWorker = Math.min(Math.max(itemsPerWorker, options.minValuesPerWorker), totalItems);
-    }
-
-    if (options.maxValuesPerWorker) {
-        itemsPerWorker = Math.min(itemsPerWorker, options.maxValuesPerWorker);
-    }
-
-    return {
-        itemsPerWorker: Math.ceil(itemsPerWorker),
-        numberOfWorkers: Math.round(totalItems / itemsPerWorker)
-    };
+    valuesPerWorker: number;
 }
 
 export interface ParallelChain<TIn, TOut> {
@@ -43,9 +26,9 @@ export function toParallelChain<T>(generator: ParallelGenerator, options: Defaul
     return new ParallelChainImpl<T, T>(generator, actions, options);
 }
 
-class ParallelChainImpl<TIn, TOut> implements ParallelChain<TIn, TOut> {
+export class ParallelChainImpl<TIn, TOut> implements ParallelChain<TIn, TOut> {
 
-    constructor(private generator: ParallelGenerator, private __actions: ParallelAction[] = [], private options: DefaultInitializedParallelOptions) {
+    constructor(public generator: ParallelGenerator, private __actions: ParallelAction[] = [], private options: DefaultInitializedParallelOptions) {
     }
 
     map<TResult>(mapper: (element: TOut) => TResult): ParallelChain<TIn, TResult> {
@@ -89,7 +72,7 @@ class ParallelChainImpl<TIn, TOut> implements ParallelChain<TIn, TOut> {
         const functionCallSerializer = this.options.threadPool.createFunctionSerializer();
 
         const taskDefinitions: TaskDefinition[] = [];
-        const scheduling = getParallelTaskScheduling(this.generator.length, this.options);
+        const scheduling = this.getParallelTaskScheduling(this.generator.length);
         const serializedActions = this.__actions.map(action => {
             return {
                 coordinator: functionCallSerializer.serializeFunctionCall(action.coordinator, ...action.coordinatorParams),
@@ -98,7 +81,7 @@ class ParallelChainImpl<TIn, TOut> implements ParallelChain<TIn, TOut> {
         });
 
         for (let i = 0; i < scheduling.numberOfWorkers; ++i) {
-            const generator = this.generator.serializeSlice(i, scheduling.itemsPerWorker, functionCallSerializer);
+            const generator = this.generator.serializeSlice(i, scheduling.valuesPerWorker, functionCallSerializer);
             const taskDefinition = {
                 main: functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctions.process, generator, serializedActions),
                 usedFunctionIds: functionCallSerializer.serializedFunctionIds
@@ -107,6 +90,23 @@ class ParallelChainImpl<TIn, TOut> implements ParallelChain<TIn, TOut> {
             taskDefinitions.push(taskDefinition);
         }
         return taskDefinitions;
+    }
+
+    getParallelTaskScheduling(totalItems: number): ParallelTaskScheduling {
+        let itemsPerWorker = totalItems / this.options.maxConcurrencyLevel;
+
+        if (this.options.minValuesPerWorker) {
+            itemsPerWorker = Math.min(Math.max(itemsPerWorker, this.options.minValuesPerWorker), totalItems);
+        }
+
+        if (this.options.maxValuesPerWorker) {
+            itemsPerWorker = Math.min(itemsPerWorker, this.options.maxValuesPerWorker);
+        }
+
+        return {
+            valuesPerWorker: Math.ceil(itemsPerWorker),
+            numberOfWorkers: Math.round(totalItems / itemsPerWorker)
+        };
     }
 
     private _chain<TResult> (func: Function, iteratee: Function, ...params: any[]): ParallelChainImpl<TIn, TResult> {

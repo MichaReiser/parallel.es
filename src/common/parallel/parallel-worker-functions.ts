@@ -33,7 +33,7 @@ export const ParallelWorkerFunctions = {
         };
     },
 
-    filter<T>(iterator: Iterator<T>, predicate: (value: T | undefined) => boolean): Iterator<T> {
+    filter<T>(iterator: Iterator<T>, predicate: (value: T) => boolean): Iterator<T> {
         return {
             next() {
                 let current: IteratorResult<T>;
@@ -60,7 +60,6 @@ export const ParallelWorkerFunctions = {
     },
 
     range(start: number, end: number, step: number): Iterator<number> {
-        console.log("range", arguments);
         let next = start;
         return {
             next(): IteratorResult<number> {
@@ -75,7 +74,6 @@ export const ParallelWorkerFunctions = {
     },
 
     times<TResult>(start: number, end: number, iteratee: (i: number) => TResult): Iterator<TResult> {
-        console.log("times", arguments);
         let next = start;
         return {
             next(): IteratorResult<TResult> {
@@ -93,9 +91,7 @@ export const ParallelWorkerFunctions = {
         return element;
     },
 
-    toIterator<T>(array: T[]): Iterator<T> {
-        return toIterator(array);
-    }
+    toIterator: toIterator
 };
 
 staticFunctionRegistry.registerStaticFunctions(ParallelWorkerFunctions);

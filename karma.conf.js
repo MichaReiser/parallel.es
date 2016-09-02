@@ -13,7 +13,7 @@ if (!process.env.NODE_ENV) {
 
 const files = [ './test/tests.js' ];
 
-if (integrationTests) {
+if (singleRun) {
     files.push('test/integration-tests.js');
 }
 
@@ -64,7 +64,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome', 'Firefox'],
+        browsers: ['Chrome', 'Firefox', 'Safari'],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -72,7 +72,7 @@ module.exports = function (config) {
 
         // Concurrency level
         // how many browser should be started simultaneous
-        concurrency: travis ? 2 : undefined,
+        concurrency: travis ? 4 : undefined,
 
         // https://support.saucelabs.com/customer/en/portal/articles/2440724-karma-disconnected-tests-particularly-with-safari
         browserDisconnectTimeout : 10000, // default 2000
@@ -175,6 +175,7 @@ module.exports = function (config) {
         };
 
         config.set({
+
             customLaunchers: customLaunchers,
             sauceLabs: {
                 testName: 'Parallel.ES Tests',

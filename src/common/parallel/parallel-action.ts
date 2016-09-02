@@ -1,11 +1,11 @@
 import {SerializedFunctionCall} from "../serialization/serialized-function-call";
 export interface ParallelAction {
-    iteratee: Function;
-    coordinator: Function;
-    coordinatorParams: any[];
+    readonly iteratee: Function;
+    readonly coordinator: Function;
+    readonly coordinatorParams: any[];
 }
 
 export interface SerializedParallelAction {
-    iteratee: SerializedFunctionCall;
-    coordinator: SerializedFunctionCall;
+    readonly iteratee: SerializedFunctionCall;
+    readonly coordinator: SerializedFunctionCall;
 }
