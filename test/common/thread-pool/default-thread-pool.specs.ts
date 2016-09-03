@@ -1,18 +1,18 @@
 import {DefaultThreadPool} from "../../../src/common/thread-pool/default-thread-pool";
-import {DynamicFunctionLookupTable} from "../../../src/common/thread-pool/dynamic-function-lookup-table";
+import {FunctionRegistry} from "../../../src/common/serialization/function-registry";
 import {WorkerThread} from "../../../src/common/worker/worker-thread";
 
 describe("DefaultThreadPool", function () {
     let spawn: jasmine.Spy;
-    let functionLookupTable: DynamicFunctionLookupTable;
+    let functionLookupTable: FunctionRegistry;
     let threadPool: DefaultThreadPool;
 
     beforeEach(function () {
         spawn = jasmine.createSpy("spawn");
 
         const workerThreadFactory = { spawn };
-        functionLookupTable = new DynamicFunctionLookupTable();
-        threadPool = new DefaultThreadPool(workerThreadFactory, functionLookupTable, { concurrencyLimit: 2 });
+        functionLookupTable = new FunctionRegistry();
+        threadPool = new DefaultThreadPool(workerThreadFactory, functionLookupTable, { maxConcurrencyLevel: 2 });
     });
 
     describe("schedule", function () {
@@ -53,7 +53,7 @@ describe("DefaultThreadPool", function () {
             threadPool.schedule(func);
 
             // assert
-            expect(worker.run).toHaveBeenCalledWith(jasmine.objectContaining({ functionId: 1}));
+            expect(worker.run).toHaveBeenCalledWith({ main: jasmine.objectContaining({ functionId: 1, params: [] }), usedFunctionIds: [ 1 ], id: 0 });
         });
 
         it("enqueues the task if no worker thread is available", function () {
@@ -122,6 +122,17 @@ describe("DefaultThreadPool", function () {
                 expect(worker2.run).toHaveBeenCalledTimes(1);
                 done();
             });
+        });
+    });
+
+    describe("createFunctionSerializer", function () {
+        it("returns a new serializer instance", function () {
+            // arrange
+            const serializer = threadPool.createFunctionSerializer();
+
+            // assert
+            expect(serializer).not.toBeUndefined();
+            expect(threadPool.createFunctionSerializer()).not.toBe(serializer);
         });
     });
 

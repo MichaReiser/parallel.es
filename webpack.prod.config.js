@@ -10,7 +10,7 @@ config.plugins = config.plugins.concat([
     new CompressionPlugin({
         asset: "[path].gz[query]",
         algorithm: "gzip",
-        test: /\.js$|\.css$|\.html$/,
+        test: /\.js$|\.css$|\.html$/
     })
 ]);
 

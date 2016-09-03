@@ -1,7 +1,10 @@
+import {TaskDefinition} from "./task-definition";
 /**
  * Represents a running or scheduled task on the thread pool. Behaves like a promise.
  */
 export interface Task<T> {
+
+    taskDefinition: TaskDefinition;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.

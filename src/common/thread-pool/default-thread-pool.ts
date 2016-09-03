@@ -1,10 +1,11 @@
 import {ThreadPool} from "./thread-pool";
 import {WorkerThread} from "../worker/worker-thread";
 import {TaskDefinition} from "../task/task-definition";
-import {DynamicFunctionLookupTable} from "./dynamic-function-lookup-table";
+import {FunctionRegistry} from "../serialization/function-registry";
 import {WorkerThreadFactory} from "../worker/worker-thread-factory";
 import {WorkerTask} from "../task/worker-task";
 import {Task} from "../task/task";
+import {FunctionCallSerializer} from "../serialization/function-call-serializer";
 
 /**
  * Default thread pool implementation that processes the scheduled functions in FIFO order.
@@ -16,13 +17,19 @@ export class DefaultThreadPool implements ThreadPool {
     private lastTaskId = -1;
     private concurrencyLimit: number;
 
-    constructor(private workerThreadFactory: WorkerThreadFactory, private functionLookupTable: DynamicFunctionLookupTable, options: { concurrencyLimit: number }) {
-        this.concurrencyLimit = options.concurrencyLimit;
+    constructor(private workerThreadFactory: WorkerThreadFactory, private functionLookupTable: FunctionRegistry, options: { maxConcurrencyLevel: number }) {
+        this.concurrencyLimit = options.maxConcurrencyLevel;
     }
 
     schedule<TResult>(func: (this: void, ...params: any[]) => TResult, ...params: any[]): Task<TResult> {
-        const funcId = this.functionLookupTable.getOrSetId(func);
-        const taskDefinition: TaskDefinition = { id: ++this.lastTaskId, functionId: funcId, params };
+        const serializer = this.createFunctionSerializer();
+        const serializedFunc = serializer.serializeFunctionCall(func, ...params);
+        const taskDefinition: TaskDefinition = { main: serializedFunc, usedFunctionIds: serializer.serializedFunctionIds };
+        return this.scheduleTask(taskDefinition);
+    }
+
+    scheduleTask<TResult>(taskDefinition: TaskDefinition): Task<TResult> {
+        taskDefinition.id = ++this.lastTaskId;
         const task = new WorkerTask<TResult>(taskDefinition);
 
         task.always(() => this._releaseWorker(task));
@@ -31,6 +38,10 @@ export class DefaultThreadPool implements ThreadPool {
         this._schedulePendingTasks();
 
         return task;
+    }
+
+    createFunctionSerializer(): FunctionCallSerializer {
+        return new FunctionCallSerializer(this.functionLookupTable);
     }
 
     _releaseWorker(task: WorkerTask<any>): void {

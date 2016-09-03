@@ -3,17 +3,21 @@
 
 var webpackConfig = require("./webpack.config");
 var process = require("process");
-
 var travis = process.env.TRAVIS;
+var singleRun = process.argv.includes("--single-run");
+var integrationTests = travis || singleRun || false;
+
+if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'test'
+}
+
+const files = [ './test/tests.js' ];
+
+if (singleRun) {
+    files.push('test/integration-tests.js');
+}
 
 webpackConfig.entry = {};
-webpackConfig.module.postLoaders = [
-    {
-        test: /\.ts$/,
-        exclude: /(test|node_modules|bower_components)[\/\\]/,
-        loader: 'istanbul-instrumenter'
-    }
-];
 
 module.exports = function (config) {
 
@@ -27,9 +31,7 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
-        files: [
-            'test/tests.js'
-        ],
+        files: files,
 
         // list of files to exclude
         exclude: [],
@@ -37,7 +39,7 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            "test/tests.js": ["webpack", "sourcemap"]
+            "test/*.js": ["webpack", "sourcemap"]
         },
 
         webpack: webpackConfig,
@@ -45,7 +47,7 @@ module.exports = function (config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', "coverage"],
+        reporters: ['progress', "coverage", "kjhtml"],
 
         // web server port
         port: 9876,
@@ -62,7 +64,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome', 'Firefox'],
+        browsers: ['Chrome', 'Firefox', 'Safari'],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -70,7 +72,13 @@ module.exports = function (config) {
 
         // Concurrency level
         // how many browser should be started simultaneous
-        concurrency: travis ? 2 : undefined,
+        concurrency: travis ? 4 : undefined,
+
+        // https://support.saucelabs.com/customer/en/portal/articles/2440724-karma-disconnected-tests-particularly-with-safari
+        browserDisconnectTimeout : 10000, // default 2000
+        browserDisconnectTolerance : 1, // default 0
+        browserNoActivityTimeout : 4*60*1000, //default 10000
+        captureTimeout: 4*60*1000, //default 60000
 
         coverageReporter: {
             reporters: [
@@ -167,6 +175,7 @@ module.exports = function (config) {
         };
 
         config.set({
+
             customLaunchers: customLaunchers,
             sauceLabs: {
                 testName: 'Parallel.ES Tests',

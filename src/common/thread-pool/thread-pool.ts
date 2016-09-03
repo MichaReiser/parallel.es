@@ -1,4 +1,6 @@
 import {Task} from "../task/task";
+import {TaskDefinition} from "../task/task-definition";
+import {FunctionCallSerializer} from "../serialization/function-call-serializer";
 
 /**
  * The thread pool is responsible for scheduling the work onto different workers. The thread pool defines
@@ -23,4 +25,8 @@ export interface ThreadPool {
     schedule<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(func: (this: void, param1: TParam1, param2: TParam2, param3: TParam3, param4: TParam4, param5: TParam5, param6: TParam6, param7: TParam7, param8: TParam8) => TResult, param1: TParam1, param2: TParam2, param3: TParam3, param4: TParam4, param5: TParam5, param6: TParam6, param7: TParam7, param8: TParam8): Task<TResult>;
     schedule<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TResult>(func: (this: void, param1: TParam1, param2: TParam2, param3: TParam3, param4: TParam4, param5: TParam5, param6: TParam6, param7: TParam7, param8: TParam8, param9: TParam9) => TResult, param1: TParam1, param2: TParam2, param3: TParam3, param4: TParam4, param5: TParam5, param6: TParam6, param7: TParam7, param8: TParam8, param9: TParam9): Task<TResult>;
     schedule<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TResult>(func: (this: void, param1: TParam1, param2: TParam2, param3: TParam3, param4: TParam4, param5: TParam5, param6: TParam6, param7: TParam7, param8: TParam8, param9: TParam9, param10: TParam10) => TResult, param1: TParam1, param2: TParam2, param3: TParam3, param4: TParam4, param5: TParam5, param6: TParam6, param7: TParam7, param8: TParam8, param9: TParam9, param10: TParam10): Task<TResult>;
+
+    scheduleTask<TResult>(task: TaskDefinition): Task<TResult>;
+
+    createFunctionSerializer(): FunctionCallSerializer;
 }

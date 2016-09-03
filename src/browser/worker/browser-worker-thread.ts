@@ -2,9 +2,9 @@ import {WorkerThread} from "../../common/worker/worker-thread";
 import {TaskDefinition} from "../../common/task/task-definition";
 import {
     WorkerMessage, initializeWorkerMessage, scheduleTaskMessage, isFunctionRequest,
-    functionResponseMessage, isWorkerResult, isFunctionExecutionError, stopMessage
-} from "../../common/worker/messages";
-import {DynamicFunctionLookupTable} from "../../common/thread-pool/dynamic-function-lookup-table";
+    functionResponseMessage, isWorkerResult, isFunctionExecutionError, stopMessage, FunctionRequest
+} from "../../common/worker/worker-messages";
+import {FunctionRegistry} from "../../common/serialization/function-registry";
 
 let workerThreadId = 0;
 
@@ -21,7 +21,7 @@ export class BrowserWorkerThread implements WorkerThread {
     oncomplete: (result: any) => void;
     onerror: (error: any) => void;
 
-    constructor(private worker: Worker, private functionLookupTable: DynamicFunctionLookupTable) {
+    constructor(private worker: Worker, private functionLookupTable: FunctionRegistry) {
         this.worker.addEventListener("message", this.onWorkerMessage.bind(this));
         this.worker.addEventListener("error", this.onError.bind(this));
     }
@@ -55,12 +55,14 @@ export class BrowserWorkerThread implements WorkerThread {
     private onWorkerMessage(event: MessageEvent): void {
         const message = event.data;
         if (isFunctionRequest(message)) {
-            const definition = this.functionLookupTable.getDefinition(message.functionId);
-            if (!definition) {
-                throw Error(`${this} requested unknown function with id ${message.functionId}`);
-            }
-
-            this.sendMessage(functionResponseMessage([definition]));
+            const definitions = (message as FunctionRequest).functionIds.map(functionId => {
+                const definition = this.functionLookupTable.getDefinition(functionId);
+                if (!definition) {
+                    throw Error(`${this} requested unknown function with id ${functionId}`);
+                }
+                return definition;
+            });
+            this.sendMessage(functionResponseMessage(definitions));
         } else if (isWorkerResult(message)) {
             if (this.oncomplete) {
                 this.oncomplete(message.result);

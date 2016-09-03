@@ -1,13 +1,14 @@
 import {FunctionDefinition} from "../worker/function-defintion";
-import {SimpleMap} from "../simple-map";
+import {SimpleMap} from "../util/simple-map";
+import {staticFunctionRegistry} from "./static-function-registry";
 
 /**
  * Lookup Table that assigns a unique id to dynamically resolved functions.
  */
-export class DynamicFunctionLookupTable {
+export class FunctionRegistry {
     private ids = new SimpleMap<string, number>();
     private definitions = new SimpleMap<number, FunctionDefinition>();
-    private lastId = -1;
+    private lastId = 999;
 
     /**
      * Returns the unique id for the passed in function or assigns a new id to this function and returns the newly assigned id
@@ -15,6 +16,13 @@ export class DynamicFunctionLookupTable {
      * @returns {number} the unique id of this function
      */
     getOrSetId(func: Function): number {
+        if (staticFunctionRegistry.has(func)) {
+            return staticFunctionRegistry.getId(func);
+        }
+        return this._getOrSetIdForDynamicFunction(func);
+    }
+
+    private _getOrSetIdForDynamicFunction(func: Function): number {
         const source = func.toString();
         let id = this.ids.get(source);
 
@@ -33,15 +41,25 @@ export class DynamicFunctionLookupTable {
      * @returns the resolved function definition or undefined
      */
     getDefinition(id: number): FunctionDefinition | undefined {
+        if (staticFunctionRegistry.has(id)) {
+            throw new Error("The definition of a static function is not available");
+        }
+
         return this.definitions.get(id);
     }
 
     private initDefinition(func: Function, id: number) {
         const source = func.toString();
+        const name = source.substring(source.indexOf("function") + 9, source.indexOf("(")).trim();
         const args = source.substring(source.indexOf("(") + 1, source.indexOf(")")).split(",");
-        const body = source.substring(source.indexOf("{") + 1, source.lastIndexOf("}"));
+        const body = source.substring(source.indexOf("{") + 1, source.lastIndexOf("}")).trim();
 
-        const definition = { id, argumentNames: args.map(arg => arg.trim()), body: body.trim() };
+        const definition = {
+            id,
+            name: name !== "anonymous" ? name : undefined,
+            argumentNames: args.map(arg => arg.trim()),
+            body
+        };
         this.definitions.set(id, definition);
     }
 }
