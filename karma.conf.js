@@ -158,7 +158,7 @@ module.exports = function (config) {
                 browser: "android",
                 device: "Google Nexus 5",
                 os: "android",
-                os_version: "5"
+                os_version: "5.0"
             },
             android_44: {
                 base: "BrowserStack",
