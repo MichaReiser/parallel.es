@@ -1,33 +1,10 @@
-var path = require("path");
+var process = require("process");
+var webpackConfig = require("webpack-config");
+var Config = webpackConfig.Config;
+var environment = webpackConfig.environment;
 
-module.exports = {
-    entry: {
-        browser: "./src/browser/index.ts"
-    },
-    debug: true,
-    devtool: "#inline-source-map",
-    output: {
-        library: "parallel-es",
-        libraryTarget: "umd",
-        path: __dirname + "/dist",
-        filename: "[name].parallel-es.js"
-    },
-    resolve: {
-        extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
-    },
-    module: {
-        preLoaders: [
-            {
-                test: /\.ts$/,
-                loader: "tslint"
-            }
-        ],
-        loaders: [
-            {
-                test: /\.ts$/,
-                loader: 'awesome-typescript-loader?useBabel=true'
-            }
-        ]
-    },
-    plugins: []
-};
+environment.setAll({
+    env: function () { return process.env.NODE_ENV; }
+});
+
+module.exports = new Config().extend("conf/webpack.[env].config.js");

@@ -1,23 +1,14 @@
-// Karma configuration
-// Generated on Mon Aug 15 2016 13:48:58 GMT+0200 (CEST)
-
-var webpackConfig = require("./webpack.config");
 var process = require("process");
+
 var travis = process.env.TRAVIS;
 var singleRun = process.argv.includes("--single-run");
 var integrationTests = travis || singleRun || false;
 
-if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'test'
-}
-
 const files = [ './test/tests.js' ];
 
-if (singleRun) {
+if (integrationTests) {
     files.push('test/integration-tests.js');
 }
-
-webpackConfig.entry = {};
 
 module.exports = function (config) {
 
@@ -39,10 +30,10 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            "test/*.js": ["webpack", "sourcemap"]
+            "test/*tests.js": ["webpack", "sourcemap"]
         },
 
-        webpack: webpackConfig,
+        webpack: require("./webpack.config.js"),
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
@@ -64,7 +55,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome', 'Firefox', 'Safari'],
+        browsers: ['Chrome', 'Firefox'],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -81,14 +72,8 @@ module.exports = function (config) {
         captureTimeout: 4*60*1000, //default 60000
 
         coverageReporter: {
-            reporters: [
-                {type: 'lcov'},
-                {
-                    type: 'html',
-                    dir: 'coverage/'
-                }
-            ],
-            includeAllSources: true
+            type : 'json',
+            dir : 'coverage/'
         }
     });
 
@@ -175,7 +160,6 @@ module.exports = function (config) {
         };
 
         config.set({
-
             customLaunchers: customLaunchers,
             sauceLabs: {
                 testName: 'Parallel.ES Tests',
