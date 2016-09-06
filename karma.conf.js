@@ -1,14 +1,6 @@
 var process = require("process");
 
 var travis = process.env.TRAVIS;
-var singleRun = process.argv.includes("--single-run");
-var integrationTests = travis || singleRun || false;
-
-const files = [ './test/tests.js' ];
-
-if (singleRun) {
-    files.push('test/integration-tests.js');
-}
 
 module.exports = function (config) {
 
@@ -22,7 +14,10 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
-        files: files,
+        files: [
+            './test/tests.js',
+            'test/integration-tests.js'
+        ],
 
         // list of files to exclude
         exclude: [],
