@@ -180,6 +180,10 @@ module.exports = function (config) {
                 build: process.env.TRAVIS_BUILD_NUMBER + " - "  + process.env.TRAVIS_BRANCH
             },
             browsers: Object.keys(customLaunchers),
+            captureTimeout: 300000,
+            browserNoActivityTimeout: 300000,
+            browserDisconnectTimeout: 300000,
+            browserDisconnectTolerance: 3,
             reporters: ['dots', 'coverage'],
             singleRun: true
         });
