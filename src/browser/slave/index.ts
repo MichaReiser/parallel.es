@@ -5,4 +5,6 @@ import {ParallelWorkerFunctions} from "../../common/parallel/parallel-worker-fun
 staticFunctionRegistry.registerStaticFunctions(ParallelWorkerFunctions);
 
 const slave = new BrowserSlave();
-onmessage = slave.onMessage.bind(slave);
+onmessage = function () {
+    slave.onMessage.apply(slave, arguments);
+};
