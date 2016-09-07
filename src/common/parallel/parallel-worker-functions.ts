@@ -18,7 +18,7 @@ export const ParallelWorkerFunctions = {
         return toArray<TResult>(iterator as any);
     },
 
-    map<T, TResult>(iterator: Iterator<T>, iteratee: (value: T) => TResult): Iterator<TResult> {
+    map<T, TResult>(iterator: Iterator<T>, iteratee: (this: void, value: T) => TResult): Iterator<TResult> {
         return {
             next(): IteratorResult<TResult> {
                 const result = iterator.next();
@@ -33,7 +33,7 @@ export const ParallelWorkerFunctions = {
         };
     },
 
-    filter<T>(iterator: Iterator<T>, predicate: (value: T) => boolean): Iterator<T> {
+    filter<T>(iterator: Iterator<T>, predicate: (this: void, value: T) => boolean): Iterator<T> {
         return {
             next() {
                 let current: IteratorResult<T>;
@@ -48,7 +48,7 @@ export const ParallelWorkerFunctions = {
         };
     },
 
-    reduce<T, TResult>(defaultValue: TResult, iterator: Iterator<T>, iteratee: (accumulatedValue: TResult, value: T | undefined) => TResult): Iterator<TResult> {
+    reduce<T, TResult>(defaultValue: TResult, iterator: Iterator<T>, iteratee: (this: void, accumulatedValue: TResult, value: T | undefined) => TResult): Iterator<TResult> {
         let accumulatedValue = defaultValue;
         let current: IteratorResult<T>;
 
@@ -73,7 +73,7 @@ export const ParallelWorkerFunctions = {
         };
     },
 
-    times<TResult>(start: number, end: number, iteratee: (i: number) => TResult): Iterator<TResult> {
+    times<TResult>(start: number, end: number, iteratee: (this: void, i: number) => TResult): Iterator<TResult> {
         let next = start;
         return {
             next(): IteratorResult<TResult> {

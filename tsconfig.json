@@ -4,6 +4,7 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitReturns": true,
+    "noImplicitThis": true,
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "pretty": true,

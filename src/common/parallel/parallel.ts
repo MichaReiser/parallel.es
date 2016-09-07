@@ -28,7 +28,7 @@ export interface Parallel {
      * @param generator the generator used to create the array elements
      * @param options options configuring the computation behaviou
      */
-    times<TResult>(n: number, generator: (n: number) => TResult, options?: ParallelOptions): ParallelChain<TResult, TResult>;
+    times<TResult>(n: number, generator: (this: void, n: number) => TResult, options?: ParallelOptions): ParallelChain<TResult, TResult>;
 }
 
 export function parallelFactory(configuration: Configuration): Parallel {
@@ -42,8 +42,8 @@ export function parallelFactory(configuration: Configuration): Parallel {
     }
 
     return {
-        collection<T>(data: T[], options?: ParallelOptions): ParallelChain<T, T> {
-            return toParallelChain(new ConstCollectionGenerator<T>(data), initOptions(options));
+        collection<T>(collection: T[], options?: ParallelOptions): ParallelChain<T, T> {
+            return toParallelChain(new ConstCollectionGenerator<T>(collection), initOptions(options));
         },
 
         range(start: number, end?: number, step?: number, options?: ParallelOptions) {
@@ -59,7 +59,7 @@ export function parallelFactory(configuration: Configuration): Parallel {
             return toParallelChain(new RangeGenerator(start, end, step), initOptions(options));
         },
 
-        times<TResult>(n: number, generator: (n: number) => TResult = ParallelWorkerFunctions.identity, options?: ParallelOptions) {
+        times<TResult>(n: number, generator: (this: void, n: number) => TResult = ParallelWorkerFunctions.identity, options?: ParallelOptions) {
             return toParallelChain(new TimesGenerator<TResult>(n, generator), initOptions(options));
         }
     };
