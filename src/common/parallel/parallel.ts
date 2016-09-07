@@ -7,6 +7,20 @@ import {ParallelOptions, DefaultInitializedParallelOptions} from "./parallel-opt
 export interface Parallel {
 
     /**
+     * Returns a copy of the default options
+     * @returns the current default options
+     */
+    defaultOptions(): DefaultInitializedParallelOptions;
+
+    /**
+     * Sets the default options for the parallel instance
+     * @param options the default options. The options are merged with the existing default options.
+     * To unset a value, explicitly assign undefined (not allowed for the mandatory values threadPool and maxConcurrencyLevel).
+     * @returns the current default options
+     */
+    defaultOptions(options: ParallelOptions): DefaultInitializedParallelOptions;
+
+    /**
      * Creates a new parallel chain for the given array
      * @param data the array with the elements
      * @param options options configuring the computation behaviour
@@ -32,18 +46,36 @@ export interface Parallel {
 }
 
 export function parallelFactory(configuration: Configuration): Parallel {
-    const defaultOptions: ParallelOptions = {
+    let defaultOptions: DefaultInitializedParallelOptions = {
         threadPool: configuration.threadPool,
         maxConcurrencyLevel: configuration.maxConcurrencyLevel
     };
 
-    function initOptions(userOptions?: ParallelOptions): DefaultInitializedParallelOptions {
+    function mergeOptions(userOptions?: ParallelOptions): DefaultInitializedParallelOptions {
+        if (userOptions) {
+            if (userOptions.hasOwnProperty("threadPool") && typeof(userOptions.threadPool) === "undefined") {
+                throw new Error("The thread pool is mandatory and cannot be unset");
+            }
+
+            if (userOptions.hasOwnProperty("maxConcurrencyLevel") && typeof(userOptions.maxConcurrencyLevel) !== "number") {
+                throw new Error("The maxConcurrencyLevel is mandatory and has to be a number");
+            }
+        }
+
         return Object.assign({}, defaultOptions, userOptions) as DefaultInitializedParallelOptions;
     }
 
     return {
+        defaultOptions(options?: ParallelOptions): DefaultInitializedParallelOptions {
+            if (options) {
+                defaultOptions = mergeOptions(options);
+            }
+
+            return Object.assign({}, defaultOptions);
+        },
+
         collection<T>(collection: T[], options?: ParallelOptions): ParallelChain<T, T> {
-            return toParallelChain(new ConstCollectionGenerator<T>(collection), initOptions(options));
+            return toParallelChain(new ConstCollectionGenerator<T>(collection), mergeOptions(options));
         },
 
         range(start: number, end?: number, step?: number, options?: ParallelOptions) {
@@ -56,11 +88,11 @@ export function parallelFactory(configuration: Configuration): Parallel {
                 step = end < start ? -1 : 1;
             }
 
-            return toParallelChain(new RangeGenerator(start, end, step), initOptions(options));
+            return toParallelChain(new RangeGenerator(start, end, step), mergeOptions(options));
         },
 
         times<TResult>(n: number, generator: (this: void, n: number) => TResult = ParallelWorkerFunctions.identity, options?: ParallelOptions) {
-            return toParallelChain(new TimesGenerator<TResult>(n, generator), initOptions(options));
+            return toParallelChain(new TimesGenerator<TResult>(n, generator), mergeOptions(options));
         }
     };
 }

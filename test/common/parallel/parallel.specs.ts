@@ -7,12 +7,93 @@ import {
 
 describe("Parallel", function () {
     let parallel: Parallel;
+    let threadPool: any = {};
+    const maxConcurrencyLevel = 2;
 
     beforeEach(function () {
         parallel = parallelFactory({
-            maxConcurrencyLevel: 2,
+            maxConcurrencyLevel: maxConcurrencyLevel,
             functionLookupTable: undefined as any,
-            threadPool: undefined as any
+            threadPool: threadPool
+        });
+    });
+
+    describe("defaultOptions", function () {
+        it("returns the default configuration", function () {
+            // act
+            const options = parallel.defaultOptions();
+
+            // assert
+            expect(options).toBeDefined();
+        });
+
+        it("initializes the maxConcurrencyLevel from the configuration by default", function () {
+            // act
+            const options = parallel.defaultOptions();
+
+            // assert
+            expect(options.maxConcurrencyLevel).toBe(maxConcurrencyLevel);
+        });
+
+        it("initializes the thread pool to the thread pool from the configuration by default", function () {
+            // act
+            const options = parallel.defaultOptions();
+
+            // assert
+            expect(options.threadPool).toBe(threadPool);
+        });
+
+        it("applies the user options as new default options", function () {
+            // act
+            const options = parallel.defaultOptions({
+                maxConcurrencyLevel: 8,
+                minValuesPerWorker: 1000
+            });
+
+            // assert
+            expect(options.maxConcurrencyLevel).toBe(8);
+            expect(options.minValuesPerWorker).toBe(1000);
+        });
+
+        it("merges the given options with the existing options", function () {
+            // act
+            const options = parallel.defaultOptions({
+                maxConcurrencyLevel: 8,
+                minValuesPerWorker: 1000
+            });
+
+            // assert
+            expect(options.threadPool).toBe(threadPool);
+        });
+
+        it("unsets values if undefined is passed as option value", function () {
+            // arrange
+            parallel.defaultOptions({
+                minValuesPerWorker: 1000
+            });
+
+            // act
+            const options = parallel.defaultOptions({
+                minValuesPerWorker: undefined
+            });
+
+            // assert
+            expect(options.minValuesPerWorker).toBeUndefined();
+        });
+
+        it("throws if maxConcurrencyLevel is not a number", function () {
+            // act, assert
+            expect(() => parallel.defaultOptions({ maxConcurrencyLevel: "test" } as any)).toThrowError("The maxConcurrencyLevel is mandatory and has to be a number");
+        });
+
+        it("throws if maxConcurrencyLevel is set to undefined", function () {
+            // act, assert
+            expect(() => parallel.defaultOptions({ maxConcurrencyLevel: undefined } as any)).toThrowError("The maxConcurrencyLevel is mandatory and has to be a number");
+        });
+
+        it("throws if the thread pool is set to undefined", function () {
+            // act, assert
+            expect(() => parallel.defaultOptions({ threadPool: undefined } as any)).toThrowError("The thread pool is mandatory and cannot be unset");
         });
     });
 
