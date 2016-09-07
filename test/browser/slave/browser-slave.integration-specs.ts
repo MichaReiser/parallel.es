@@ -5,7 +5,7 @@ import {
 import {TaskDefinition} from "../../../src/common/task/task-definition";
 
 declare function require(module: string): any;
-const BrowserSlave = require("worker!../../../src/browser/slave/index");
+const BrowserSlave = require("worker?inline=true!../../../src/browser/slave/index");
 
 describe("BrowserSlave IntegrationTests", function () {
     let slave: Worker;
