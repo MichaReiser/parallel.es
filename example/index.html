@@ -2,9 +2,57 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+
 	<title>Test Seite</title>
 </head>
 <body>
+<div class="container-fluid">
+
+	<h1>
+		Parallel ES Examples
+	</h1>
+
+	<input type="button" value="Run all..." id="all-run" class="btn btn-default"/>
+
+	<h2>Mandelbrot</h2>
+
+	<div>
+		<canvas id="mandelbrot-canvas" width="800" height="640">
+		</canvas>
+	</div>
+
+	<input type="button" id="mandelbrot-run-sync" value="Run synchronous..." class="btn btn-default"/>
+	<input type="button" id="mandelbrot-run-async" value="Run asynchronous..." class="btn btn-default"/>
+
+
+	<h2>Times</h2>
+
+	<pre><code>
+parallel
+	.times(100, busyWait)
+	.value()
+	.then(result => console.log("Using times", result));
+	</code></pre>
+
+	<input type="button" id="times-run" value="Run..." class="btn btn-default"/>
+
+
+	<h2>Common Functions</h2>
+	<pre><code>
+function busyWait(x) {
+	let i = 0;
+	for (; i < 10 ** 8; ++i) {
+		// nothing, just consume some cpu time and shorten your battery life.
+	}
+	return x;
+}
+	</code></pre>
+</div>
+
 	<script src="./example.parallel-es.js"></script>
 </body>
 </html>
