@@ -25,7 +25,7 @@ export interface Parallel {
      * @param data the array with the elements
      * @param options options configuring the computation behaviour
      */
-    collection<T>(data: T[], options?: ParallelOptions): ParallelChain<T, T>;
+    from<T>(data: T[], options?: ParallelOptions): ParallelChain<T, T>;
 
     /**
      * Creates an array containing the elements in the range from start (inclusive) to end (exclusive) with the step size of step.
@@ -38,6 +38,7 @@ export interface Parallel {
 
     /**
      * Creates a new array through calling the generator n times
+     * TODO: Add parallel.times overload that accepts a value instead of a generator #15
      * @param n how many elements should be created using the provided generator
      * @param generator the generator used to create the array elements
      * @param options options configuring the computation behaviou
@@ -74,7 +75,7 @@ export function parallelFactory(configuration: Configuration): Parallel {
             return Object.assign({}, defaultOptions);
         },
 
-        collection<T>(collection: T[], options?: ParallelOptions): ParallelChain<T, T> {
+        from<T>(collection: T[], options?: ParallelOptions): ParallelChain<T, T> {
             return toParallelChain(new ConstCollectionGenerator<T>(collection), mergeOptions(options));
         },
 
