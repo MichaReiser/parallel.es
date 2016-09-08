@@ -22,8 +22,13 @@ export class BrowserWorkerThread implements WorkerThread {
     onerror: (error: any) => void;
 
     constructor(private worker: Worker, private functionLookupTable: FunctionRegistry) {
-        this.worker.addEventListener("message", this.onWorkerMessage.bind(this));
-        this.worker.addEventListener("error", this.onError.bind(this));
+        const that = this;
+        this.worker.addEventListener("message", function () {
+            that.onWorkerMessage.apply(that, arguments);
+        });
+        this.worker.addEventListener("error", function () {
+            that.onError.apply(that, arguments);
+        });
     }
 
     /**

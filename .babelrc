@@ -6,17 +6,5 @@
     ["transform-runtime", {
       "regenerator": false
     }]
-  ],
-  "env": {
-    "test": {
-      "plugins": [
-        ["istanbul", {
-          "exclude": [
-            "test/**/*.js",
-            "test/**/*.ts"
-          ]
-        }]
-      ]
-    }
-  }
+  ]
 }

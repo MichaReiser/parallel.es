@@ -1,23 +1,14 @@
-// Karma configuration
-// Generated on Mon Aug 15 2016 13:48:58 GMT+0200 (CEST)
-
-var webpackConfig = require("./webpack.config");
 var process = require("process");
+
 var travis = process.env.TRAVIS;
 var singleRun = process.argv.includes("--single-run");
 var integrationTests = travis || singleRun || false;
-
-if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'test'
-}
 
 const files = [ './test/tests.js' ];
 
 if (singleRun) {
     files.push('test/integration-tests.js');
 }
-
-webpackConfig.entry = {};
 
 module.exports = function (config) {
 
@@ -39,10 +30,10 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            "test/*.js": ["webpack", "sourcemap"]
+            "test/*tests.js": ["webpack", "sourcemap"]
         },
 
-        webpack: webpackConfig,
+        webpack: require("./webpack.config.js"),
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
@@ -64,7 +55,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome', 'Firefox', 'Safari'],
+        browsers: ['Chrome', 'Firefox'],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -74,116 +65,126 @@ module.exports = function (config) {
         // how many browser should be started simultaneous
         concurrency: travis ? 4 : undefined,
 
-        // https://support.saucelabs.com/customer/en/portal/articles/2440724-karma-disconnected-tests-particularly-with-safari
-        browserDisconnectTimeout : 10000, // default 2000
-        browserDisconnectTolerance : 1, // default 0
-        browserNoActivityTimeout : 4*60*1000, //default 10000
-        captureTimeout: 4*60*1000, //default 60000
-
         coverageReporter: {
-            reporters: [
-                {type: 'lcov'},
-                {
-                    type: 'html',
-                    dir: 'coverage/'
-                }
-            ],
-            includeAllSources: true
+            type : 'json',
+            dir : 'coverage/'
         }
     });
 
     if (travis) {
         var customLaunchers = {
-            // see https://saucelabs.com/platforms
+            // see https://www.browserstack.com/list-of-browsers-and-platforms?product=automate
             chrome_latest: {
-                base: "SauceLabs",
-                browserName: "Chrome",
-                platform: "Windows 10",
-                version: ""
+                base: "BrowserStack",
+                browser: "Chrome",
+                os: "Windows",
+                os_version: "10"
             },
             firefox_latest: {
-                base: "SauceLabs",
-                browserName: "firefox",
-                platform: "Windows 10",
-                version: "latest"
+                base: "BrowserStack",
+                browser: "firefox",
+                os: "Windows",
+                os_version: "10"
             },
             opera_latest: {
-                base: "SauceLabs",
-                browserName: "opera",
-                platform: "Windows 7",
-                version: ""
+                base: "BrowserStack",
+                browser: "opera",
+                os: "Windows",
+                os_version: "7"
             },
             ie_latest: {
-                base: "SauceLabs",
-                browserName: "internet explorer",
-                platform: "Windows 10",
-                version: ""
+                base: "BrowserStack",
+                os: "Windows",
+                os_version: "8.1",
+                browser: "ie",
+                browser_version: "11.0"
             },
             ie_10: {
-                base: "SauceLabs",
-                browserName: "internet explorer",
-                platform: "Windows 7",
-                version: "10"
+                base: "BrowserStack",
+                os: "Windows",
+                os_version: "8",
+                browser: "ie",
+                browser_version: "10.0"
             },
             edge_latest: {
-                base: "SauceLabs",
-                browserName: "microsoftedge",
-                platform: "Windows 10",
-                version: ""
+                base: "BrowserStack",
+                browser: "Edge",
+                os: "Windows",
+                os_version: "10"
             },
             safari_latest: {
-                base: "SauceLabs",
-                browserName: "safari",
-                platform: "OS X 10.11",
-                version: ""
+                base: "BrowserStack",
+                browser: "safari",
+                os: "OS X",
+                os_version: "El Capitan"
             },
             ios_latest: {
-                base: "SauceLabs",
-                browserName: "iphone",
-                deviceName: "iPhone 6",
-                platform: "OS X 10.11",
-                version: "9.3"
+                base: "BrowserStack",
+                browser: "iPhone",
+                device: "iPhone 6S",
+                os: "ios",
+                os_version: "9.1"
             },
             ios_8: {
-                base: "SauceLabs",
-                browserName: "iphone",
-                deviceName: "iPhone 6",
-                platform: "OS X 10.11",
-                version: "8.4"
+                base: "BrowserStack",
+                browser: "iPhone",
+                device: "iPhone 6",
+                os: "ios",
+                os_version: "8.3"
             },
             ios_7: {
-                base: "SauceLabs",
-                browserName: "iphone",
-                deviceName: "iPhone 6",
-                platform: "OS X 10.11",
-                version: "7.1"
+                base: "BrowserStack",
+                os: "ios",
+                os_version: "7.0",
+                browser: "iphone",
+                device: "iPhone 5S"
             },
-            android_latest: {
-                base: "SauceLabs",
-                browserName: "android",
-                deviceName: "Android Emulator",
-                version: "5.1",
-                platform: "Linux"
+            ios_6: {
+                base: "BrowserStack",
+                os: "ios",
+                os_version: "6.0",
+                browser: "iphone",
+                device: "iPhone 5"
             },
-            android_44: {
-                base: "SauceLabs",
-                browserName: "android",
-                deviceName: "Android Emulator",
-                version: "4.4",
-                platform: "Linux"
+            ios_51: { // oldest that with web worker support
+                base: "BrowserStack",
+                os: "ios",
+                os_version: "5.1",
+                browser: "iphone",
+                device: "iPhone 4S"
+            },
+            /*android_5: { Not working at the moment, investigate
+                base: "BrowserStack",
+                browser: "android",
+                device: "Google Nexus 5",
+                os: "android",
+                os_version: "5.0"
+            },*/
+            android_44_chrome: {
+                base: "BrowserStack",
+                browser: "android",
+                device: "Samsung Galaxy S5",
+                os: "android",
+                os_version: "4.4"
             }
         };
 
         config.set({
-
             customLaunchers: customLaunchers,
-            sauceLabs: {
-                testName: 'Parallel.ES Tests',
-                startConnect: false,
-                tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
+            browserStack: {
+                project: 'Parallel.ES Tests',
+                username: process.env.BROWSER_STACK_USERNAME,
+                accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
+                startTunnel: false,
+                tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
+                build: process.env.TRAVIS_BUILD_NUMBER + " - "  + process.env.TRAVIS_BRANCH
             },
             browsers: Object.keys(customLaunchers),
-            reporters: ['dots', 'coverage', 'saucelabs'],
+            captureTimeout: 300000,
+            browserNoActivityTimeout: 300000,
+            browserDisconnectTimeout: 300000,
+            browserDisconnectTolerance: 3,
+            reporters: ['dots', 'coverage'],
             singleRun: true
         });
     }

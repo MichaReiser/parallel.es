@@ -1,4 +1,4 @@
-const Parallel = require("../dist/browser.parallel-es");
+const Parallel = require("../src/browser/index-commonjs");
 
 function fibonacci(x) {
     this.info = x;
