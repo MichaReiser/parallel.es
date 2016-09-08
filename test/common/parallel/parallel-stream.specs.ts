@@ -197,12 +197,35 @@ describe("ParallelStream", function () {
                     done();
                 });
             });
+
+            it("cancels all not yet completed tasks", function (done) {
+                // arrange
+                const stream: ParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
+
+                // act
+                task1.resolve("Good");
+                task2.reject("Excuse me, it's already afternoon!");
+                task3.resolve("Morning");
+
+                // assert
+                stream.then(function () {
+                    done.fail("The computation of task 2 failed, therefore the promise should have been rejected");
+                });
+
+                stream.catch(function () {
+                    expect(task3.isCancellationRequested).toBe(true);
+                    done();
+                });
+            });
         });
     });
 
     class FakeTask<T> implements Task<T> {
         taskDefinition: TaskDefinition;
         private promise: Promise<T>;
+        isCanceled = false;
+        isCancellationRequested = false;
+
         resolve: (result: T) => void;
         reject: (reason: any) => void;
 
@@ -211,6 +234,10 @@ describe("ParallelStream", function () {
                 this.resolve = resolve;
                 this.reject = reject;
             });
+        }
+
+        cancel() {
+            this.isCancellationRequested = true;
         }
 
         catch(onrejected?: any): Promise<any> {
