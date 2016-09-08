@@ -15,8 +15,7 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            './test/tests.js',
-            'test/integration-tests.js'
+            './test/tests.js'
         ],
 
         // list of files to exclude
@@ -29,6 +28,11 @@ module.exports = function (config) {
         },
 
         webpack: require("./webpack.config.js"),
+        webpackMiddleware: {
+            stats: {
+                chunks: false
+            }
+        },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'

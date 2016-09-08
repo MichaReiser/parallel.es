@@ -25,17 +25,17 @@ export interface ParallelGenerator {
  * Generator for arrays
  */
 export class ConstCollectionGenerator<T> implements ParallelGenerator {
-    constructor(private __value: T[]) {}
+    constructor(private __collection: T[]) {}
 
     get length(): number {
-        return this.__value.length;
+        return this.__collection.length;
     }
 
     serializeSlice(index: number, numberOfItems: number, functionCallSerializer: FunctionCallSerializer): SerializedFunctionCall {
         const start = numberOfItems * index;
         const end = start + numberOfItems;
 
-        return functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctions.toIterator, this.__value.slice(start, end));
+        return functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctions.toIterator, this.__collection.slice(start, end));
     }
 }
 
@@ -71,9 +71,9 @@ export class RangeGenerator implements ParallelGenerator {
  */
 export class TimesGenerator<T> implements ParallelGenerator {
     readonly times: number;
-    readonly iteratee: (time: number) => T;
+    readonly iteratee: (this: void, time: number) => T;
 
-    constructor(times: number, iteratee: (time: number) => T) {
+    constructor(times: number, iteratee: (this: void, time: number) => T) {
         this.times = times;
         this.iteratee = iteratee;
     }

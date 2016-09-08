@@ -10,12 +10,12 @@ export interface ParallelTaskScheduling {
 }
 
 export interface ParallelChain<TIn, TOut> {
-    map<TResult>(mapper: (element: TOut, index: number) => TResult): ParallelChain<TIn, TResult>;
+    map<TResult>(mapper: (this: void, element: TOut, index: number) => TResult): ParallelChain<TIn, TResult>;
 
-    reduce(defaultValue: TOut, accumulator: (memo: TOut, value: TOut, index: number) => TOut): Promise<TOut>;
-    reduce<TResult>(defaultValue: TResult, accumulator: (memo: TResult, value: TOut, index: number) => TResult, combiner: (subResult1: TResult, subResult2: TResult) => TResult): Promise<TResult>;
+    reduce(defaultValue: TOut, accumulator: (this: void, memo: TOut, value: TOut, index: number) => TOut): Promise<TOut>;
+    reduce<TResult>(defaultValue: TResult, accumulator: (this: void, memo: TResult, value: TOut, index: number) => TResult, combiner: (this: void, subResult1: TResult, subResult2: TResult) => TResult): Promise<TResult>;
 
-    filter(predicate: (value: TOut, index: number) => boolean): ParallelChain<TIn, TOut>;
+    filter(predicate: (this: void, value: TOut, index: number) => boolean): ParallelChain<TIn, TOut>;
 
     // sortBy?
 
@@ -31,11 +31,11 @@ export class ParallelChainImpl<TIn, TOut> implements ParallelChain<TIn, TOut> {
     constructor(public generator: ParallelGenerator, private __actions: ParallelAction[] = [], private options: DefaultInitializedParallelOptions) {
     }
 
-    map<TResult>(mapper: (element: TOut) => TResult): ParallelChain<TIn, TResult> {
+    map<TResult>(mapper: (this: void, element: TOut) => TResult): ParallelChain<TIn, TResult> {
         return this._chain<TResult>(ParallelWorkerFunctions.map, mapper);
     }
 
-    reduce<TResult>(defaultValue: TResult, accumulator: (memo: TResult, value: TOut) => TResult, combiner?: (sub1: TResult, sub2: TResult) => TResult): Promise<TResult> {
+    reduce<TResult>(defaultValue: TResult, accumulator: (this: void, memo: TResult, value: TOut) => TResult, combiner?: (this: void, sub1: TResult, sub2: TResult) => TResult): Promise<TResult> {
         return this._chain(ParallelWorkerFunctions.reduce, accumulator, defaultValue)._schedule((intermediateResults: TResult[][]) => {
             let sum = defaultValue;
             let combineOperation: (accumulatedValue: TResult, value: TResult) => TResult = combiner || accumulator as any;
@@ -48,7 +48,7 @@ export class ParallelChainImpl<TIn, TOut> implements ParallelChain<TIn, TOut> {
         });
     }
 
-    filter(predicate: (value: TOut) => boolean): ParallelChain<TIn, TOut> {
+    filter(predicate: (this: void, value: TOut) => boolean): ParallelChain<TIn, TOut> {
         return this._chain<TOut>(ParallelWorkerFunctions.filter, predicate);
     }
 

@@ -1,6 +1,6 @@
-const Parallel = require("../src/browser/index-commonjs");
+import parallel from "../src/browser/index";
 
-function fibonacci(x) {
+/*function fibonacci(x: number): number {
     this.info = x;
     if (x < 0) {
         return NaN;
@@ -14,7 +14,7 @@ function fibonacci(x) {
     }
 
     return recFib(x);
-}
+} */
 
 /*const data: number[] = [];
  for (let i = 0; i < 40; ++i) {
@@ -23,7 +23,7 @@ function fibonacci(x) {
 
  Parallel.collection(data).map(fibonacci).value().then(result => console.log("Result", result)); */
 
-function busyWait(x) {
+function busyWait<T>(x: T): T {
     let i = 0;
     for (; i < Math.pow(10,  8); ++i) {
         // nothing
@@ -31,13 +31,13 @@ function busyWait(x) {
     return x;
 }
 
-Parallel
+parallel
     .range(0, 99, 2)
     .map(busyWait)
     .reduce(0, (memo, value) => memo + value)
     .then(result => console.log("Using range: ", result));
 
-Parallel.times(100, busyWait).value().then(result => console.log("Using times", result));
+parallel.times(100, busyWait).value().then(result => console.log("Using times", result));
 
 /*console.profile("Sync");
  const results: number[] = [];
