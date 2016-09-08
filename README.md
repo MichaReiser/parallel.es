@@ -10,6 +10,6 @@ Simple parallelization for ES
 | --------- | --------- | --------- | --------- | --------- | --------- | --------- |
 | IE10, IE11, Edge| last 2 versions| last 2 versions| last 2 versions| last 2 versions| iOS 5.1, iOS 6, iOS 7, iOS 8, iOS 9| Chrome, Android 4.4
 
-Automated browser testing is performed using [Browser Stack](https://www.browserstack.com)'s open source offer.
+Automated browser testing is performed using [BrowserStack](https://www.browserstack.com)'s open source offer.
 
-[<img src="./browser-stack.svg?raw=true" height="48" alt="Browserstack">](https://www.browserstack.com)
+[![BrowserStack](./browser-stack.png?raw=true)](https://www.browserstack.com)
