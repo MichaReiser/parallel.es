@@ -4,13 +4,7 @@ describe("ParallelIntegration", function () {
      it("reduce waits for the result to be computed on the workers and returns the reduced value", function (done) {
          parallel
              .range(100)
-             .reduce(0, (memo: number, value: number) => {
-                 for (let i = 0; i < 1e7; ++i) {
-                     // busy wait
-                 }
-
-                 return memo + value;
-             })
+             .reduce(0, (memo: number, value: number) => memo + value)
              .then(result => {
                  expect(result).toBe(4950);
                  done();
