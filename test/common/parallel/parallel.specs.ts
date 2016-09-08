@@ -45,24 +45,27 @@ describe("Parallel", function () {
 
         it("applies the user options as new default options", function () {
             // act
-            const options = parallel.defaultOptions({
+            parallel.defaultOptions({
                 maxConcurrencyLevel: 8,
                 minValuesPerWorker: 1000
             });
 
             // assert
+            const options = parallel.defaultOptions();
+
             expect(options.maxConcurrencyLevel).toBe(8);
             expect(options.minValuesPerWorker).toBe(1000);
         });
 
         it("merges the given options with the existing options", function () {
             // act
-            const options = parallel.defaultOptions({
+            parallel.defaultOptions({
                 maxConcurrencyLevel: 8,
                 minValuesPerWorker: 1000
             });
 
             // assert
+            const options = parallel.defaultOptions();
             expect(options.threadPool).toBe(threadPool);
         });
 
@@ -73,11 +76,12 @@ describe("Parallel", function () {
             });
 
             // act
-            const options = parallel.defaultOptions({
+            parallel.defaultOptions({
                 minValuesPerWorker: undefined
             });
 
             // assert
+            const options = parallel.defaultOptions();
             expect(options.minValuesPerWorker).toBeUndefined();
         });
 

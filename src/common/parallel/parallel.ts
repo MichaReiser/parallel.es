@@ -6,6 +6,11 @@ import {IParallelOptions, IDefaultInitializedParallelOptions} from "./parallel-o
 import {createParallelChain} from "./parallel-chain-impl";
 import {IParallelTaskEnvironment, IEmptyParallelEnvironment} from "./parallel-environment";
 
+/**
+ * Main facade used to start parallel tasks.
+ * Uses a chaining api. A new parallel task is created using a generator function like `from`, `range` or `times`.
+ * This returns an {@link IParallelChain} that is used to define the operations to perform on the elements.
+ */
 export interface IParallel {
 
     /**
@@ -15,17 +20,18 @@ export interface IParallel {
     defaultOptions(): IDefaultInitializedParallelOptions;
 
     /**
-     * Sets the default options for the parallel instance
+     * Sets the default options used whenever a parallel task is started
      * @param options the default options. The options are merged with the existing default options.
      * To unset a value, explicitly assign undefined (not allowed for the mandatory values threadPool and maxConcurrencyLevel).
      * @returns the current default options
      */
-    defaultOptions(options: IParallelOptions): IDefaultInitializedParallelOptions;
+    defaultOptions(options: IParallelOptions): void;
 
     /**
-     * Creates a new parallel chain for the given array
+     * Creates a new parallel chain that transforms the given array. The elements processed are distributed onto different
+     * workers.
      * @param data the array with the elements
-     * @param options options configuring the computation behaviour
+     * @param options options options overriding the default options.
      */
     from<T>(data: T[], options?: IParallelOptions): IParallelChain<T, {}, T>;
 
@@ -70,12 +76,12 @@ export function parallelFactory(configuration: IConfiguration): IParallel {
     }
 
     return {
-        defaultOptions(options?: IParallelOptions): IDefaultInitializedParallelOptions {
+        defaultOptions(options?: IParallelOptions): any {
             if (options) {
                 defaultOptions = mergeOptions(options);
+            } else {
+                return Object.assign({}, defaultOptions);
             }
-
-            return Object.assign({}, defaultOptions);
         },
 
         from<T>(collection: T[], options?: IParallelOptions): IParallelChain<T, {}, T> {

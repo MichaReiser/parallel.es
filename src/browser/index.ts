@@ -7,4 +7,8 @@ const functionLookupTable = new FunctionRegistry();
 const maxConcurrencyLevel = (window.navigator as any)["hardwareConcurrency"] || 4;
 const threadPool = new DefaultThreadPool(new BrowserWorkerThreadFactory(functionLookupTable), functionLookupTable, {maxConcurrencyLevel});
 
-export default parallelFactory({ threadPool, functionLookupTable, maxConcurrencyLevel });
+/**
+ * The global parallel instance.
+ */
+const parallel = parallelFactory({ threadPool, functionLookupTable, maxConcurrencyLevel });
+export default parallel;
