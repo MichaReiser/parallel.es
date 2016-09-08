@@ -9,6 +9,8 @@ export class WorkerTask<T> implements Task<T> {
     private _resolve: (result?: T) => void;
     private _reject: (error: any) => void;
     private _worker?: WorkerThread;
+    isCancellationRequested = false;
+    isCanceled = false;
 
     private promise: Promise<T>;
 
@@ -24,15 +26,29 @@ export class WorkerTask<T> implements Task<T> {
     }
 
     /**
-     * Executes the task on the given worker. Assumes that the worker is not performing any other work at the moment
+     * Executes the task on the given worker. Assumes that the worker is not performing any other work at the moment.
+     * If the task has been cancled in the meantime, no operation is performed and the reject callback is invoked immediately.
      * @param worker the worker thread that should be used to execute this task
      */
     runOn(worker: WorkerThread): void {
         this._worker = worker;
-        this._worker.oncomplete = result => this._resolve(result);
+        this._worker.oncomplete = result => this._taskCompleted(result);
         this._worker.onerror = (error: any) => this._reject(error);
 
-        this._worker.run(this.taskDefinition);
+        if (!this.isCancellationRequested) {
+            this._worker.run(this.taskDefinition);
+        } else {
+            this._taskCompleted(undefined);
+        }
+    }
+
+    private _taskCompleted(result?: T): void {
+        if (this.isCancellationRequested) {
+            this.isCanceled = true;
+            this._reject("Task has been canceled");
+        } else {
+            this._resolve(result);
+        }
     }
 
     /**
@@ -59,6 +75,10 @@ export class WorkerTask<T> implements Task<T> {
 
     catch(onrejected: (reason: any) => (PromiseLike<T>|T)): Promise<T> {
         return this.promise.catch(onrejected);
+    }
+
+    cancel(): void {
+        this.isCancellationRequested = true;
     }
 
     /**

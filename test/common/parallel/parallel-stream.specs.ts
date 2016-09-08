@@ -203,6 +203,9 @@ describe("ParallelStream", function () {
     class FakeTask<T> implements Task<T> {
         taskDefinition: TaskDefinition;
         private promise: Promise<T>;
+        isCanceled = false;
+        isCancellationRequested = false;
+
         resolve: (result: T) => void;
         reject: (reason: any) => void;
 
@@ -212,6 +215,8 @@ describe("ParallelStream", function () {
                 this.reject = reject;
             });
         }
+
+        cancel() {}
 
         catch(onrejected?: any): Promise<any> {
             return this.promise.catch(onrejected);

@@ -28,6 +28,37 @@ describe("WorkerTask", function () {
         workerTask = new WorkerTask<number>(taskDefinition);
     });
 
+    describe("isCanceled", function () {
+        it("is false by default", function () {
+            expect(workerTask.isCanceled).toBe(false);
+        });
+
+        it("is true if the task has not been scheduled because cancellation was requested", function () {
+            // arrange
+            workerTask.cancel();
+
+            // act
+            workerTask.runOn(worker);
+
+            // assert
+            expect(workerTask.isCanceled).toBe(true);
+        });
+    });
+
+    describe("isCancellationRequested", function () {
+        it("is false by default", function () {
+            expect(workerTask.isCancellationRequested).toBe(false);
+        });
+
+        it("is true if the user requested cancellation", function () {
+            // act
+            workerTask.cancel();
+
+            // assert
+            expect(workerTask.isCancellationRequested).toBe(true);
+        });
+    });
+
     describe("runOn", function () {
         it("invokes the run method of the worker and passes the task definition", function () {
             // act
@@ -59,7 +90,7 @@ describe("WorkerTask", function () {
             });
         });
 
-        it("rejects the promise when the task fails (onerror handler is invoked)", function () {
+        it("rejects the promise when the task fails (onerror handler is invoked)", function (done) {
             // arrange
             runSpy.and.callFake(function () {
                 if (worker.onerror) {
@@ -71,9 +102,53 @@ describe("WorkerTask", function () {
             workerTask.runOn(worker);
 
             // assert
-            workerTask.catch(error => {
+            workerTask.then(() => done.fail("Worker should have failed"), error => {
                 expect(error).toEqual("error");
-                return 10;
+                done();
+            });
+        });
+
+        it("rejects the promise when the task has been canceled by the user", function (done) {
+             // arrange
+            workerTask.cancel();
+
+            // act
+            workerTask.runOn(worker);
+
+            // assert
+            workerTask.then(function () {
+                done.fail("task has been canceled, therefore promise should have been rejected");
+            }, function (reason) {
+                expect(reason).toEqual("Task has been canceled");
+                done();
+            });
+        });
+
+        it("does not execute the task on the worker if the task has been canceled", function () {
+            // arrange
+            workerTask.cancel();
+
+            // act
+            workerTask.runOn(worker);
+
+            // assert
+            expect(runSpy).not.toHaveBeenCalled();
+        });
+
+        it("rejects the promise when the worker has completed the computation but the task has been canceled in the meantime", function (done) {
+            // arrange
+            workerTask.runOn(worker);
+
+            // act
+            workerTask.cancel();
+            worker!.oncomplete!.call(undefined, 10);
+
+            // asset
+            workerTask.then(function () {
+                done.fail("Task has been canceled in the meantime, therefore promise should have been rejected");
+            }, function (reason) {
+                expect(reason).toEqual("Task has been canceled");
+                done();
             });
         });
     });
