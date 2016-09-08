@@ -140,6 +140,14 @@ export class ParallelStreamImpl<TSubResult, TEndResult> implements ParallelStrea
 
     private _taskFailed(reason: any): void {
         this._failed = true;
+
+        // Cancel all not yet complted tasks
+        for (let i = 0; i < this._tasks.length; ++i) {
+            if (typeof(this._subResults[i]) === "undefined") {
+                this._tasks[i].cancel();
+            }
+        }
+
         this._reject(reason);
     }
 }

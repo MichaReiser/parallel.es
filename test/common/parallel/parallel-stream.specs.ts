@@ -197,6 +197,26 @@ describe("ParallelStream", function () {
                     done();
                 });
             });
+
+            it("cancels all not yet completed tasks", function (done) {
+                // arrange
+                const stream: ParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
+
+                // act
+                task1.resolve("Good");
+                task2.reject("Excuse me, it's already afternoon!");
+                task3.resolve("Morning");
+
+                // assert
+                stream.then(function () {
+                    done.fail("The computation of task 2 failed, therefore the promise should have been rejected");
+                });
+
+                stream.catch(function () {
+                    expect(task3.isCancellationRequested).toBe(true);
+                    done();
+                });
+            });
         });
     });
 
@@ -216,7 +236,9 @@ describe("ParallelStream", function () {
             });
         }
 
-        cancel() {}
+        cancel() {
+            this.isCancellationRequested = true;
+        }
 
         catch(onrejected?: any): Promise<any> {
             return this.promise.catch(onrejected);
