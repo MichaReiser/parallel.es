@@ -160,13 +160,6 @@ module.exports = function (config) {
                 os: "android",
                 os_version: "5.0"
             },
-            android_44: {
-                base: "BrowserStack",
-                os: "android",
-                os_version: "4.4",
-                browser: "android",
-                device: "HTC One M8"
-            },
             android_44_chrome: {
                 base: "BrowserStack",
                 browser: "android",
