@@ -153,13 +153,13 @@ module.exports = function (config) {
                 browser: "iphone",
                 device: "iPhone 4S"
             },
-            android_5: {
+            /*android_5: { Not working at the moment, investigate
                 base: "BrowserStack",
                 browser: "android",
                 device: "Google Nexus 5",
                 os: "android",
                 os_version: "5.0"
-            },
+            },*/
             android_44_chrome: {
                 base: "BrowserStack",
                 browser: "android",
