@@ -4,7 +4,7 @@ import {BrowserWorkerThread} from "./browser-worker-thread";
 import {FunctionRegistry} from "../../common/serialization/function-registry";
 
 declare function require(module: string): any;
-const SlaveWorker = require("worker?name=worker-slave.parallel-es.js!../slave");
+const SlaveWorker = require("worker?inline=true&name=worker-slave.parallel-es.js!../slave");
 
 /**
  * Thread factory that creates web worker based threads.

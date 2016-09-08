@@ -37,7 +37,11 @@ parallel
     .reduce(0, (memo, value) => memo + value)
     .then(result => console.log("Using range: ", result));
 
-parallel.times(100, busyWait).value().then(result => console.log("Using times", result));
+parallel
+    .times(100, busyWait)
+    .result()
+    .subscribe((next, index) => console.log(`Subresult ${index} of times`, next))
+    .then(result => console.log("Using times", result));
 
 /*console.profile("Sync");
  const results: number[] = [];

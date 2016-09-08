@@ -14,9 +14,9 @@ describe("ParallelIntegration", function () {
     it("maps an input array to an output array", function (done) {
         const data = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-        parallel.collection(data)
+        parallel.from(data)
             .map(value => value ** 2)
-            .value()
+            .result()
             .then(result => {
                 expect(result).toEqual([0, 1, 4, 9, 16, 25, 36, 49, 64, 81]);
                 done();

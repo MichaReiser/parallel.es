@@ -97,13 +97,13 @@ describe("Parallel", function () {
         });
     });
 
-    describe("collection", function () {
+    describe("from", function () {
         it("returns a parallel chain over the passed array", function () {
             // arrange
             const data = [1, 2, 3, 4, 5];
 
             // act
-            const chain = parallel.collection(data);
+            const chain = parallel.from(data);
 
             // assert
             expect(chain).toEqual(jasmine.any(ParallelChainImpl));
