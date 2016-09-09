@@ -3,7 +3,7 @@ interface IComplexNumber {
     real: number;
 }
 
-interface IMandelbrotOptions {
+export interface IMandelbrotOptions {
     imageHeight: number;
     imageWidth: number;
     iterations: number;
