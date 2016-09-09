@@ -2,33 +2,34 @@ import {SimpleMap} from "../util/simple-map";
 
 class StaticFunctionRegistryImpl {
     private lastId = 0;
-    private staticFunctions = new SimpleMap<number, StaticFunction>();
+    private staticFunctions = new SimpleMap<number, IStaticFunction>();
 
-    registerStaticFunctions(object: Object): void {
+    public registerStaticFunctions(object: Object): void {
         Object.keys(object)
             .map(key => (object as any)[key])
             .filter(value => typeof value === "function")
             .forEach(func => this.registerStaticFunction(func));
     }
 
-    registerStaticFunction(func: Function): void {
+    public registerStaticFunction(func: Function): void {
         if (this.has(func)) {
             return;
         }
 
-        const staticFunc = func as StaticFunction;
+        const staticFunc = func as IStaticFunction;
         staticFunc._____id = this.lastId++;
         this.staticFunctions.set(staticFunc._____id, staticFunc);
     }
 
-    getId(func: Function) {
+    public getId(func: Function) {
         if (isStaticFunction(func)) {
             return func._____id;
         }
+
         throw new Error(`The passed in function ${func} is not a static function and therefore is not part of this registry`);
     }
 
-    has(func: Function|number): boolean {
+    public has(func: Function|number): boolean {
         if (typeof func === "number") {
             return this.staticFunctions.has(func);
         }
@@ -36,7 +37,7 @@ class StaticFunctionRegistryImpl {
         return isStaticFunction(func);
     }
 
-    getFunction(id: number): Function {
+    public getFunction(id: number): Function {
         const func = this.staticFunctions.get(id);
         if (!func) {
             throw new Error(`the function with the id ${id} is not registered as static function`);
@@ -44,7 +45,7 @@ class StaticFunctionRegistryImpl {
         return func;
     }
 
-    reset(): void {
+    public reset(): void {
         this.staticFunctions.clear();
         this.lastId = 0;
     }
@@ -52,10 +53,10 @@ class StaticFunctionRegistryImpl {
 
 export const staticFunctionRegistry = new StaticFunctionRegistryImpl();
 
-interface StaticFunction extends Function {
+interface IStaticFunction extends Function {
     _____id: number;
 }
 
-function isStaticFunction(func: any): func is StaticFunction {
+function isStaticFunction(func: any): func is IStaticFunction {
     return typeof(func) === "function" && typeof(func._____id) !== "undefined";
 }

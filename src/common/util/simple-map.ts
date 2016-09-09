@@ -4,20 +4,20 @@
 export class SimpleMap<K, V> {
     private data: { [key: string]: V } = {};
 
-    get(key: K): V | undefined {
+    public get(key: K): V | undefined {
         const internalKey = this.toInternalKey(key);
         return this.has(key) ? this.data[internalKey] : undefined;
     }
 
-    has(key: K): boolean {
+    public has(key: K): boolean {
         return this.hasOwnProperty.call(this.data, this.toInternalKey(key));
     }
 
-    set(key: K, value: V): void {
+    public set(key: K, value: V): void {
         this.data[this.toInternalKey(key)] = value;
     }
 
-    clear(): void {
+    public clear(): void {
         this.data = {};
     }
 

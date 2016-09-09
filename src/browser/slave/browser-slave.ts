@@ -1,9 +1,8 @@
 import {isStopMesssage} from "../../common/worker/worker-messages";
+import {DefaultSlaveState, SlaveState} from "./browser-slave-states";
 import {SlaveFunctionCache} from "./slave-function-cache";
-import {SlaveState, DefaultSlaveState} from "./browser-slave-states";
 
 declare function postMessage(data: any): void;
-
 
 /**
  * Worker thread endpoint executed in the web worker thread.
@@ -11,20 +10,20 @@ declare function postMessage(data: any): void;
  */
 export class BrowserSlave {
 
-    private state: SlaveState = new DefaultSlaveState(this);
-
     /**
      * The unique id of the slave instance
      */
-    id: number = Number.NaN;
+    public id: number = Number.NaN;
 
-    functionCache = new SlaveFunctionCache();
+    public functionCache = new SlaveFunctionCache();
+
+    private state: SlaveState = new DefaultSlaveState(this);
 
     /**
      * Changes the state of the slave to the new state
      * @param state the new state to assign
      */
-    changeState(state: SlaveState): void {
+    public changeState(state: SlaveState): void {
         this.state = state;
         this.state.enter();
     }
@@ -33,7 +32,7 @@ export class BrowserSlave {
      * Executed when the slave receives a message from the ui-thread
      * @param event the received message
      */
-    onMessage(event: MessageEvent): void {
+    public onMessage(event: MessageEvent): void {
         if (isStopMesssage(event.data)) {
             close();
         } else if (!this.state.onMessage(event)) {
@@ -41,11 +40,11 @@ export class BrowserSlave {
         }
     }
 
-    postMessage(message: any): void {
+    public postMessage(message: any): void {
         postMessage(message);
     }
 
-    toString(): string {
+    public toString(): string {
         return `BrowserSlave { id: ${this.id}, state: '${this.state.name}' }`;
     }
 }

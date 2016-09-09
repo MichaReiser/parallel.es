@@ -1,42 +1,42 @@
 import {ParallelAction} from "./parallel-action";
 import {TaskDefinition} from "../task/task-definition";
-import {ParallelGenerator} from "./parallel-generator";
+import {IParallelGenerator} from "./parallel-generator";
 import {ParallelWorkerFunctions} from "./parallel-worker-functions";
 import {DefaultInitializedParallelOptions} from "./parallel-options";
-import {ParallelStream, ParallelStreamImpl} from "./parallel-stream";
+import {IParallelStream, ParallelStreamImpl} from "./parallel-stream";
 
-export interface ParallelTaskScheduling {
+export interface IParallelTaskScheduling {
     numberOfWorkers: number;
     valuesPerWorker: number;
 }
 
-export interface ParallelChain<TIn, TOut> {
-    map<TResult>(mapper: (this: void, element: TOut, index: number) => TResult): ParallelChain<TIn, TResult>;
+export interface IParallelChain<TIn, TOut> {
+    map<TResult>(mapper: (this: void, element: TOut, index: number) => TResult): IParallelChain<TIn, TResult>;
 
     reduce(defaultValue: TOut, accumulator: (this: void, memo: TOut, value: TOut, index: number) => TOut): Promise<TOut>;
     reduce<TResult>(defaultValue: TResult, accumulator: (this: void, memo: TResult, value: TOut, index: number) => TResult, combiner: (this: void, subResult1: TResult, subResult2: TResult) => TResult): Promise<TResult>;
 
-    filter(predicate: (this: void, value: TOut, index: number) => boolean): ParallelChain<TIn, TOut>;
+    filter(predicate: (this: void, value: TOut, index: number) => boolean): IParallelChain<TIn, TOut>;
 
     // sortBy?
 
-    result(): ParallelStream<TOut[], TOut[]>;
+    result(): IParallelStream<TOut[], TOut[]>;
 }
 
-export function toParallelChain<T>(generator: ParallelGenerator, options: DefaultInitializedParallelOptions, actions: ParallelAction[] = []): ParallelChain<T, T> {
+export function toParallelChain<T>(generator: IParallelGenerator, options: DefaultInitializedParallelOptions, actions: ParallelAction[] = []): IParallelChain<T, T> {
     return new ParallelChainImpl<T, T>(generator, actions, options);
 }
 
-export class ParallelChainImpl<TIn, TOut> implements ParallelChain<TIn, TOut> {
+export class ParallelChainImpl<TIn, TOut> implements IParallelChain<TIn, TOut> {
 
-    constructor(public generator: ParallelGenerator, private __actions: ParallelAction[] = [], private options: DefaultInitializedParallelOptions) {
+    constructor(public generator: IParallelGenerator, private actions: ParallelAction[] = [], private options: DefaultInitializedParallelOptions) {
     }
 
-    map<TResult>(mapper: (this: void, element: TOut) => TResult): ParallelChain<TIn, TResult> {
+    public map<TResult>(mapper: (this: void, element: TOut) => TResult): IParallelChain<TIn, TResult> {
         return this._chain<TResult>(ParallelWorkerFunctions.map, mapper);
     }
 
-    reduce<TResult>(defaultValue: TResult, accumulator: (this: void, memo: TResult, value: TOut) => TResult, combiner?: (this: void, sub1: TResult, sub2: TResult) => TResult): Promise<TResult> {
+    public reduce<TResult>(defaultValue: TResult, accumulator: (this: void, memo: TResult, value: TOut) => TResult, combiner?: (this: void, sub1: TResult, sub2: TResult) => TResult): Promise<TResult> {
         const stream = this._chain(ParallelWorkerFunctions.reduce, accumulator, defaultValue)._stream((intermediateResults: TResult[][]) => {
             let sum = defaultValue;
             let combineOperation: (accumulatedValue: TResult, value: TResult) => TResult = combiner || accumulator as any;
@@ -50,11 +50,11 @@ export class ParallelChainImpl<TIn, TOut> implements ParallelChain<TIn, TOut> {
         return Promise.resolve(stream);
     }
 
-    filter(predicate: (this: void, value: TOut) => boolean): ParallelChain<TIn, TOut> {
+    public filter(predicate: (this: void, value: TOut) => boolean): IParallelChain<TIn, TOut> {
         return this._chain<TOut>(ParallelWorkerFunctions.filter, predicate);
     }
 
-    result(): ParallelStream<TOut[], TOut[]> {
+    public result(): IParallelStream<TOut[], TOut[]> {
         return this._stream<TOut[], TOut[]>((intermediateValue: TOut[][]) => {
             if (intermediateValue.length === 0) {
                 return [];
@@ -64,7 +64,24 @@ export class ParallelChainImpl<TIn, TOut> implements ParallelChain<TIn, TOut> {
         });
     }
 
-    private _stream<T, TResult>(joiner: (taskResults: T[]) => TResult | PromiseLike<TResult>): ParallelStream<T, TResult> {
+    public getParallelTaskScheduling(totalItems: number): IParallelTaskScheduling {
+        let itemsPerWorker = totalItems / this.options.maxConcurrencyLevel;
+
+        if (this.options.minValuesPerWorker) {
+            itemsPerWorker = Math.min(Math.max(itemsPerWorker, this.options.minValuesPerWorker), totalItems);
+        }
+
+        if (this.options.maxValuesPerWorker) {
+            itemsPerWorker = Math.min(itemsPerWorker, this.options.maxValuesPerWorker);
+        }
+
+        return {
+            numberOfWorkers: Math.round(totalItems / itemsPerWorker),
+            valuesPerWorker: Math.ceil(itemsPerWorker)
+        };
+    }
+
+    private _stream<T, TResult>(joiner: (taskResults: T[]) => TResult | PromiseLike<TResult>): IParallelStream<T, TResult> {
         const tasks = this.getTaskDefinitions().map(definition => this.options.threadPool.scheduleTask<T>(definition));
 
         return new ParallelStreamImpl<T, TResult>(tasks, joiner);
@@ -75,7 +92,7 @@ export class ParallelChainImpl<TIn, TOut> implements ParallelChain<TIn, TOut> {
 
         const taskDefinitions: TaskDefinition[] = [];
         const scheduling = this.getParallelTaskScheduling(this.generator.length);
-        const serializedActions = this.__actions.map(action => {
+        const serializedActions = this.actions.map(action => {
             return {
                 coordinator: functionCallSerializer.serializeFunctionCall(action.coordinator, ...action.coordinatorParams),
                 iteratee: functionCallSerializer.serializeFunctionCall(action.iteratee)
@@ -94,25 +111,8 @@ export class ParallelChainImpl<TIn, TOut> implements ParallelChain<TIn, TOut> {
         return taskDefinitions;
     }
 
-    getParallelTaskScheduling(totalItems: number): ParallelTaskScheduling {
-        let itemsPerWorker = totalItems / this.options.maxConcurrencyLevel;
-
-        if (this.options.minValuesPerWorker) {
-            itemsPerWorker = Math.min(Math.max(itemsPerWorker, this.options.minValuesPerWorker), totalItems);
-        }
-
-        if (this.options.maxValuesPerWorker) {
-            itemsPerWorker = Math.min(itemsPerWorker, this.options.maxValuesPerWorker);
-        }
-
-        return {
-            valuesPerWorker: Math.ceil(itemsPerWorker),
-            numberOfWorkers: Math.round(totalItems / itemsPerWorker)
-        };
-    }
-
     private _chain<TResult> (func: Function, iteratee: Function, ...params: any[]): ParallelChainImpl<TIn, TResult> {
         const action = { coordinator: func, iteratee, coordinatorParams: params };
-        return new ParallelChainImpl(this.generator, [...this.__actions, action], this.options);
+        return new ParallelChainImpl(this.generator, [...this.actions, action], this.options);
     }
 }

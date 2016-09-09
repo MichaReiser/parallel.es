@@ -53,7 +53,7 @@ describe("Iterator", function () {
     describe("toArray", function () {
         it("converts an empty iterator to an empty array", function () {
             // arrange
-            const iterator = { next: function () { return { done: true } as IteratorResult<number>; }};
+            const iterator = { next() { return { done: true } as IteratorResult<number>; }};
 
             // assert
             expect(toArray(iterator)).toEqual([]);

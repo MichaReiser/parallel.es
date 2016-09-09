@@ -1,5 +1,7 @@
 import parallel from "../src/browser/index";
 
+/* tslint:disable:no-console */
+
 /*function fibonacci(x: number): number {
     this.info = x;
     if (x < 0) {
@@ -62,6 +64,5 @@ parallel
  console.log("All tasks completed");
  console.log(results, threadPool["workers"]);
  });
-
 
  */

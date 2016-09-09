@@ -21,14 +21,14 @@ export class DefaultThreadPool implements ThreadPool {
         this.concurrencyLimit = options.maxConcurrencyLevel;
     }
 
-    schedule<TResult>(func: (this: void, ...params: any[]) => TResult, ...params: any[]): Task<TResult> {
+    public schedule<TResult>(func: (this: void, ...params: any[]) => TResult, ...params: any[]): Task<TResult> {
         const serializer = this.createFunctionSerializer();
         const serializedFunc = serializer.serializeFunctionCall(func, ...params);
         const taskDefinition: TaskDefinition = { main: serializedFunc, usedFunctionIds: serializer.serializedFunctionIds };
         return this.scheduleTask(taskDefinition);
     }
 
-    scheduleTask<TResult>(taskDefinition: TaskDefinition): Task<TResult> {
+    public scheduleTask<TResult>(taskDefinition: TaskDefinition): Task<TResult> {
         taskDefinition.id = ++this.lastTaskId;
         const task = new WorkerTask<TResult>(taskDefinition);
 
@@ -40,18 +40,18 @@ export class DefaultThreadPool implements ThreadPool {
         return task;
     }
 
-    createFunctionSerializer(): FunctionCallSerializer {
+    public createFunctionSerializer(): FunctionCallSerializer {
         return new FunctionCallSerializer(this.functionLookupTable);
     }
 
-    _releaseWorker(task: WorkerTask<any>): void {
+    private _releaseWorker(task: WorkerTask<any>): void {
         const worker = task.releaseWorker();
         this.idleWorkers.push(worker);
 
         this._schedulePendingTasks();
     }
 
-    _schedulePendingTasks(): void {
+    private _schedulePendingTasks(): void {
         while (this.queue.length) {
             let worker: WorkerThread | undefined;
             if (this.idleWorkers.length === 0 && this.workers.length < this.concurrencyLimit) {

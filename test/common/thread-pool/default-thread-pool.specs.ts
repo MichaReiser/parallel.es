@@ -18,7 +18,7 @@ describe("DefaultThreadPool", function () {
     describe("schedule", function () {
         it("registers the function in the function lookup table", function () {
             // arrange
-            const func = function () {};
+            const func = function () { /* ignore */ };
             const getOrSetIdSpy = spyOn(functionLookupTable, "getOrSetId");
 
             // act
@@ -30,7 +30,7 @@ describe("DefaultThreadPool", function () {
 
         it("spawns a new worker until the concurrency limit is reached", function () {
             // arrange
-            const func = function () {};
+            const func = function () { /* ignore */ };
 
             // act
             threadPool.schedule(func);
@@ -43,7 +43,7 @@ describe("DefaultThreadPool", function () {
 
         it("executes the task in a worker thread", function () {
             // arrange
-            const func = function () {};
+            const func = function () { /* ignore */ };
             spyOn(functionLookupTable, "getOrSetId").and.returnValue(1);
 
             const worker = { run: jasmine.createSpy("run") };
@@ -53,12 +53,12 @@ describe("DefaultThreadPool", function () {
             threadPool.schedule(func);
 
             // assert
-            expect(worker.run).toHaveBeenCalledWith({ main: jasmine.objectContaining({ functionId: 1, params: [] }), usedFunctionIds: [ 1 ], id: 0 });
+            expect(worker.run).toHaveBeenCalledWith({ id: 0, main: jasmine.objectContaining({ functionId: 1, params: [] }), usedFunctionIds: [ 1 ]});
         });
 
         it("enqueues the task if no worker thread is available", function () {
             // arrange
-            const func = function () {};
+            const func = function () { /* ignore */ };
 
             const worker1 = { run: jasmine.createSpy("run1"), stop: jasmine.createSpy("stop") };
             const worker2 = { run: jasmine.createSpy("run2"), stop: jasmine.createSpy("stop") };
@@ -78,7 +78,7 @@ describe("DefaultThreadPool", function () {
 
         it("schedules queued tasks when a worker gets available", function (done) {
             // arrange
-            const func = function () {};
+            const func = function () { /* ignore */ };
             const func2 = function add(x: number, y: number): number { return x + y; };
 
             const worker1 = { run: jasmine.createSpy("run1"), stop: jasmine.createSpy("stop") };
@@ -108,7 +108,7 @@ describe("DefaultThreadPool", function () {
             spawn.and.returnValues(worker1, worker2);
 
             // spawn all workers by scheduling tasks up to concurrency limit
-            const func = function () {};
+            const func = function () { /* ignore */ };
             const task1 = threadPool.schedule(func);
             threadPool.schedule(func);
 

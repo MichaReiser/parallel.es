@@ -58,9 +58,9 @@ describe("BrowserSlaveStates", function () {
             const task: TaskDefinition = {
                 id: 1,
                 main: {
+                    ______serializedFunctionCall: true,
                     functionId: 1000,
-                    params: [],
-                    ______serializedFunctionCall: true
+                    params: []
                 },
                 usedFunctionIds: [1000, 1001, 1002]
             };
@@ -82,9 +82,9 @@ describe("BrowserSlaveStates", function () {
             const task: TaskDefinition = {
                 id: 1,
                 main: {
+                    ______serializedFunctionCall: true,
                     functionId: 1000,
-                    params: [],
-                    ______serializedFunctionCall: true
+                    params: []
                 },
                 usedFunctionIds: [1000, 1001, 1002]
             };
@@ -105,9 +105,9 @@ describe("BrowserSlaveStates", function () {
             const task: TaskDefinition = {
                 id: 1,
                 main: {
+                    ______serializedFunctionCall: true,
                     functionId: 1000,
-                    params: [],
-                    ______serializedFunctionCall: true
+                    params: []
                 },
                 usedFunctionIds: [1000, 1001, 1002]
             };
@@ -121,9 +121,9 @@ describe("BrowserSlaveStates", function () {
 
             // act
             state.onMessage(createMessage(functionResponseMessage([{
-                id: 1000,
                 argumentNames: ["x"],
-                body: "return x;"
+                body: "return x;",
+                id: 1000
             }])));
 
             // assert
@@ -136,15 +136,15 @@ describe("BrowserSlaveStates", function () {
             const registerFunctionSpy = spyOn(slave.functionCache, "registerFunction");
 
             const def1 = {
-                id: 1000,
                 argumentNames: ["x"],
-                body: "return x;"
+                body: "return x;",
+                id: 1000
             };
 
             const def2 = {
-                id: 1001,
                 argumentNames: ["x"],
-                body: "return x;"
+                body: "return x;",
+                id: 1001
             };
 
             // act
@@ -161,9 +161,9 @@ describe("BrowserSlaveStates", function () {
             const task: TaskDefinition = {
                 id: 1,
                 main: {
+                    ______serializedFunctionCall: true,
                     functionId: 1000,
-                    params: [],
-                    ______serializedFunctionCall: true
+                    params: []
                 },
                 usedFunctionIds: [1000]
             };

@@ -11,14 +11,14 @@ export const enum WorkerMessageType {
     Stop
 }
 
-export interface WorkerMessage {
+export interface IWorkerMessage {
     type: WorkerMessageType;
 }
 
 /**
  * Sent to initialize the worker with a unique worker id
  */
-export interface InitializeWorkerMessage extends WorkerMessage {
+export interface IInitializeWorkerMessage extends IWorkerMessage {
     /**
      * Unique id that is assigned to the worker
      */
@@ -28,7 +28,7 @@ export interface InitializeWorkerMessage extends WorkerMessage {
 /**
  * Schedules the given task on the target worker
  */
-export interface ScheduleTaskMessage extends WorkerMessage {
+export interface IScheduleTaskMessage extends IWorkerMessage {
     /**
      * Task to execute on the target worker
      */
@@ -38,7 +38,7 @@ export interface ScheduleTaskMessage extends WorkerMessage {
 /**
  * Sent by the worker to request the function definition with the given id from.
  */
-export interface FunctionRequest extends WorkerMessage {
+export interface IFunctionRequest extends IWorkerMessage {
     /**
      * The ids of the requested functions
      */
@@ -48,7 +48,7 @@ export interface FunctionRequest extends WorkerMessage {
 /**
  * Sent to the worker. Contains all needed function definitions to execute the requested function.
  */
-export interface FunctionResponse extends WorkerMessage {
+export interface IFunctionResponse extends IWorkerMessage {
     /**
      * The definition of the needed functions to execute the requested function
      */
@@ -58,7 +58,7 @@ export interface FunctionResponse extends WorkerMessage {
 /**
  * Sent from the worker to report the result of the function.
  */
-export interface WorkerResultMessage extends WorkerMessage {
+export interface IWorkerResultMessage extends IWorkerMessage {
     /**
      * The result of the executed function
      */
@@ -68,7 +68,7 @@ export interface WorkerResultMessage extends WorkerMessage {
 /**
  * Sent from the worker to report an error during the execution of the function.
  */
-export interface FunctionExecutionError extends WorkerMessage {
+export interface IFunctionExecutionError extends IWorkerMessage {
     /**
      * The occurred error. Not an instance of Error. Error is not cloneable.
      */
@@ -80,64 +80,64 @@ export interface FunctionExecutionError extends WorkerMessage {
  * @param id the id assigned to the worker
  * @returns the initialize worker message
  */
-export function initializeWorkerMessage(id: number): InitializeWorkerMessage {
-    return { workerId: id, type: WorkerMessageType.InitializeWorker };
+export function initializeWorkerMessage(id: number): IInitializeWorkerMessage {
+    return { type: WorkerMessageType.InitializeWorker, workerId: id };
 }
 
-export function scheduleTaskMessage(task: TaskDefinition): ScheduleTaskMessage {
+export function scheduleTaskMessage(task: TaskDefinition): IScheduleTaskMessage {
     return { task, type: WorkerMessageType.ScheduleTask};
 }
 
-export function requestFunctionMessage(functionId: number, ...otherFunctionIds: number[]): FunctionRequest {
+export function requestFunctionMessage(functionId: number, ...otherFunctionIds: number[]): IFunctionRequest {
     return { functionIds: [functionId, ...otherFunctionIds], type: WorkerMessageType.FunctionRequest };
 }
 
-export function functionResponseMessage(functions: FunctionDefinition[]): FunctionResponse {
+export function functionResponseMessage(functions: FunctionDefinition[]): IFunctionResponse {
     return { functions, type: WorkerMessageType.FunctionResponse };
 }
 
-export function workerResultMessage(result: any): WorkerResultMessage {
-    return { result: result, type: WorkerMessageType.WorkerResult };
+export function workerResultMessage(result: any): IWorkerResultMessage {
+    return { result, type: WorkerMessageType.WorkerResult };
 }
 
-export function functionExecutionError(error: Error): FunctionExecutionError {
+export function functionExecutionError(error: Error): IFunctionExecutionError {
     let errorObject: {[prop: string]: string} = {};
 
     for (const prop of Object.getOwnPropertyNames(error)) {
-        errorObject[prop] = JSON.stringify((<any>error)[prop]);
+        errorObject[prop] = JSON.stringify((error as any)[prop]);
     }
 
     return { error: errorObject, type: WorkerMessageType.FunctionExecutionError };
 }
 
-export function stopMessage(): WorkerMessage {
+export function stopMessage(): IWorkerMessage {
     return { type: WorkerMessageType.Stop };
 }
 
-export function isScheduleTask(message: WorkerMessage): message is ScheduleTaskMessage {
+export function isScheduleTask(message: IWorkerMessage): message is IScheduleTaskMessage {
     return message.type === WorkerMessageType.ScheduleTask;
 }
 
-export function isInitializeMessage(message: WorkerMessage): message is InitializeWorkerMessage {
+export function isInitializeMessage(message: IWorkerMessage): message is IInitializeWorkerMessage {
     return message.type === WorkerMessageType.InitializeWorker;
 }
 
-export function isFunctionRequest(message: WorkerMessage): message is FunctionRequest {
+export function isFunctionRequest(message: IWorkerMessage): message is IFunctionRequest {
     return message.type === WorkerMessageType.FunctionRequest;
 }
 
-export function isFunctionResponse(message: WorkerMessage): message is FunctionResponse {
+export function isFunctionResponse(message: IWorkerMessage): message is IFunctionResponse {
     return message.type === WorkerMessageType.FunctionResponse;
 }
 
-export function isWorkerResult(message: WorkerMessage): message is WorkerResultMessage {
+export function isWorkerResult(message: IWorkerMessage): message is IWorkerResultMessage {
     return message.type === WorkerMessageType.WorkerResult;
 }
 
-export function isFunctionExecutionError(message: WorkerMessage): message is FunctionExecutionError {
+export function isFunctionExecutionError(message: IWorkerMessage): message is IFunctionExecutionError {
     return message.type === WorkerMessageType.FunctionExecutionError;
 }
 
-export function isStopMesssage(message: WorkerMessage): boolean {
+export function isStopMesssage(message: IWorkerMessage): boolean {
     return message.type === WorkerMessageType.Stop;
 }

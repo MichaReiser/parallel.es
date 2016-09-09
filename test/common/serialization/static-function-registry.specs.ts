@@ -17,9 +17,6 @@ describe("staticFunctionRegistry", function () {
 
     describe("registerStaticFunctions", function () {
         it("registers the methods of the passed object", function () {
-            // arrange
-
-
             // act
             staticFunctionRegistry.registerStaticFunctions(object);
 
@@ -30,7 +27,7 @@ describe("staticFunctionRegistry", function () {
 
         it("does not register inherited methods of the object", function () {
             // arrange
-            const inheritedObject = Object.create(object, { other: function () { return 10; } });
+            const inheritedObject = Object.create(object, { other() { return 10; } });
 
             // act
             staticFunctionRegistry.registerStaticFunctions(inheritedObject);

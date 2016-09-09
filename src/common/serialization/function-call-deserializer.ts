@@ -1,10 +1,10 @@
-import {SerializedFunctionCall, isSerializedFunctionCall} from "./serialized-function-call";
 import {FunctionLookupTable} from "./function-lookup-table";
+import {ISerializedFunctionCall, isSerializedFunctionCall} from "./serialized-function-call";
 
 export class FunctionCallDeserializer {
     constructor(private functionLookupTable: FunctionLookupTable) {}
 
-    deserializeFunctionCall<TResult>(functionCall: SerializedFunctionCall, deserializeParams = false): (...additionalParams: any[]) => TResult {
+    public deserializeFunctionCall<TResult>(functionCall: ISerializedFunctionCall, deserializeParams = false): (...additionalParams: any[]) => TResult {
         const func = this.functionLookupTable.getFunction(functionCall.functionId);
         let params = functionCall.params || [];
 

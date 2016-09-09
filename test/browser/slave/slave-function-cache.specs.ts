@@ -15,7 +15,7 @@ describe("SlaveFunctionCache", function () {
 
         it("returns the reference to the static function with the given id", function () {
             // arrange
-            function func() {}
+            function func() { /* empty */ }
 
             spyOn(staticFunctionRegistry, "has").and.returnValue(true);
             spyOn(staticFunctionRegistry, "getFunction").and.returnValue(func);
@@ -29,8 +29,8 @@ describe("SlaveFunctionCache", function () {
             spyOn(staticFunctionRegistry, "has").and.returnValue(false);
 
             cache.registerFunction({
-                body: "return x;",
                 argumentNames: ["x"],
+                body: "return x;",
                 id: 1
             });
 
@@ -47,8 +47,8 @@ describe("SlaveFunctionCache", function () {
         it("registers the given function definition", function () {
             // act
             cache.registerFunction({
-                body: "return x;",
                 argumentNames: ["x"],
+                body: "return x;",
                 id: 1
             });
 

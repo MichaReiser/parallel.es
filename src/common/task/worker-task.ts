@@ -6,12 +6,12 @@ import {WorkerThread} from "../worker/worker-thread";
  * Implementation of a task.
  */
 export class WorkerTask<T> implements Task<T> {
-    private _resolve: (result?: T) => void;
-    private _reject: (error: any) => void;
-    private _worker?: WorkerThread;
-    isCancellationRequested = false;
-    isCanceled = false;
+    public isCancellationRequested = false;
+    public isCanceled = false;
 
+    private resolve: (result?: T) => void;
+    private reject: (error: any) => void;
+    private worker?: WorkerThread;
     private promise: Promise<T>;
 
     /**
@@ -19,9 +19,9 @@ export class WorkerTask<T> implements Task<T> {
      * @param taskDefinition the definition of the task to execute
      */
     constructor(public taskDefinition: TaskDefinition) {
-        this.promise = new Promise<T>((resolve, reject) => {
-            this._resolve = resolve;
-            this._reject = reject;
+        this.promise = new Promise<T>((resolvePromise, rejectPromise) => {
+            this.resolve = resolvePromise;
+            this.reject = rejectPromise;
         });
     }
 
@@ -30,24 +30,15 @@ export class WorkerTask<T> implements Task<T> {
      * If the task has been cancled in the meantime, no operation is performed and the reject callback is invoked immediately.
      * @param worker the worker thread that should be used to execute this task
      */
-    runOn(worker: WorkerThread): void {
-        this._worker = worker;
-        this._worker.oncomplete = result => this._taskCompleted(result);
-        this._worker.onerror = (error: any) => this._reject(error);
+    public runOn(worker: WorkerThread): void {
+        this.worker = worker;
+        this.worker.oncomplete = result => this._taskCompleted(result);
+        this.worker.onerror = (error: any) => this.reject(error);
 
         if (!this.isCancellationRequested) {
-            this._worker.run(this.taskDefinition);
+            this.worker.run(this.taskDefinition);
         } else {
             this._taskCompleted(undefined);
-        }
-    }
-
-    private _taskCompleted(result?: T): void {
-        if (this.isCancellationRequested) {
-            this.isCanceled = true;
-            this._reject("Task has been canceled");
-        } else {
-            this._resolve(result);
         }
     }
 
@@ -55,29 +46,29 @@ export class WorkerTask<T> implements Task<T> {
      * Releases the used worker.
      * @returns {WorkerThread} the worker used by this task
      */
-    releaseWorker(): WorkerThread {
-        if (!this._worker) {
+    public releaseWorker(): WorkerThread {
+        if (!this.worker) {
             throw new Error("Cannot release a worker task that has no assigned worker thread.");
         }
 
-        const worker = this._worker;
+        const worker = this.worker;
         worker.oncomplete = worker.onerror = undefined;
-        this._worker = undefined;
+        this.worker = undefined;
         return worker;
     }
 
-    then<TResult>(onfulfilled: (value: T) => (PromiseLike<TResult>|TResult), onrejected?: (reason: any) => (PromiseLike<TResult>|TResult)): Promise<TResult> {
+    public then<TResult>(onfulfilled: (value: T) => (PromiseLike<TResult>|TResult), onrejected?: (reason: any) => (PromiseLike<TResult>|TResult)): Promise<TResult> {
         if (onrejected) {
             return this.promise.then(onfulfilled, onrejected);
         }
         return this.promise.then(onfulfilled);
     }
 
-    catch(onrejected: (reason: any) => (PromiseLike<T>|T)): Promise<T> {
+    public catch(onrejected: (reason: any) => (PromiseLike<T>|T)): Promise<T> {
         return this.promise.catch(onrejected);
     }
 
-    cancel(): void {
+    public cancel(): void {
         this.isCancellationRequested = true;
     }
 
@@ -86,7 +77,16 @@ export class WorkerTask<T> implements Task<T> {
      * was successful or not.
      * @param handler The handler to invoke.
      */
-    always(handler: () => void): void {
+    public always(handler: () => void): void {
         this.promise.then(handler, handler);
+    }
+
+    private _taskCompleted(result?: T): void {
+        if (this.isCancellationRequested) {
+            this.isCanceled = true;
+            this.reject("Task has been canceled");
+        } else {
+            this.resolve(result);
+        }
     }
 }

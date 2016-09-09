@@ -1,5 +1,5 @@
 import {FunctionCallDeserializer} from "../../../src/common/serialization/function-call-deserializer";
-import {SerializedFunctionCall} from "../../../src/common/serialization/serialized-function-call";
+import {ISerializedFunctionCall} from "../../../src/common/serialization/serialized-function-call";
 describe("FunctionCallDeserializer", function () {
 
     let getFunctionSpy: jasmine.Spy;
@@ -13,9 +13,9 @@ describe("FunctionCallDeserializer", function () {
     describe("deserializeFunctionCall", function () {
         it("returns a function", function () {
             // arrange
-            const serializedCall: SerializedFunctionCall = {
-                functionId: 1,
+            const serializedCall: ISerializedFunctionCall = {
                 ______serializedFunctionCall: true,
+                functionId: 1,
                 params: []
             };
 
@@ -30,9 +30,9 @@ describe("FunctionCallDeserializer", function () {
 
         it("the returned function calls the deserialized function and passes the serialized params", function () {
             // arrange
-            const serializedCall: SerializedFunctionCall = {
-                functionId: 1,
+            const serializedCall: ISerializedFunctionCall = {
                 ______serializedFunctionCall: true,
+                functionId: 1,
                 params: [2]
             };
 
@@ -47,9 +47,9 @@ describe("FunctionCallDeserializer", function () {
 
         it("passes the additional parameters to the deserialized function", function () {
             // arrange
-            const serializedCall: SerializedFunctionCall = {
-                functionId: 1,
+            const serializedCall: ISerializedFunctionCall = {
                 ______serializedFunctionCall: true,
+                functionId: 1,
                 params: [2]
             };
 
@@ -64,15 +64,15 @@ describe("FunctionCallDeserializer", function () {
 
         it("deserializes the serialized function calls in the params, if deserializeParams is true", function () {
             // arrange
-            const serializedParam: SerializedFunctionCall = {
-                functionId: 1,
+            const serializedParam: ISerializedFunctionCall = {
                 ______serializedFunctionCall: true,
+                functionId: 1,
                 params: [2]
             };
 
-            const serializedCall: SerializedFunctionCall = {
-                functionId: 2,
+            const serializedCall: ISerializedFunctionCall = {
                 ______serializedFunctionCall: true,
+                functionId: 2,
                 params: [serializedParam]
             };
 

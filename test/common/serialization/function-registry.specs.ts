@@ -1,6 +1,8 @@
 import {FunctionRegistry} from "../../../src/common/serialization/function-registry";
 import {staticFunctionRegistry} from "../../../src/common/serialization/static-function-registry";
 
+/* tslint:disable:no-console */
+
 describe("FunctionRegistry", function () {
     function testFunction (x: number, y: number): void {
         console.log(x + y);
