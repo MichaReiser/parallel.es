@@ -13,8 +13,8 @@ export interface IParallelTaskScheduling {
 export interface IParallelChain<TIn, TOut> {
     map<TResult>(mapper: (this: void, element: TOut, index: number) => TResult): IParallelChain<TIn, TResult>;
 
-    reduce(defaultValue: TOut, accumulator: (this: void, memo: TOut, value: TOut, index: number) => TOut): Promise<TOut>;
-    reduce<TResult>(defaultValue: TResult, accumulator: (this: void, memo: TResult, value: TOut, index: number) => TResult, combiner: (this: void, subResult1: TResult, subResult2: TResult) => TResult): Promise<TResult>;
+    reduce(defaultValue: TOut, accumulator: (this: void, memo: TOut, value: TOut, index: number) => TOut): IParallelStream<TOut[], TOut>;
+    reduce<TResult>(defaultValue: TResult, accumulator: (this: void, memo: TResult, value: TOut, index: number) => TResult, combiner: (this: void, subResult1: TResult, subResult2: TResult) => TResult): IParallelStream<TResult[], TResult>;
 
     filter(predicate: (this: void, value: TOut, index: number) => boolean): IParallelChain<TIn, TOut>;
 
@@ -36,7 +36,7 @@ export class ParallelChainImpl<TIn, TOut> implements IParallelChain<TIn, TOut> {
         return this._chain<TResult>(ParallelWorkerFunctions.map, mapper);
     }
 
-    public reduce<TResult>(defaultValue: TResult, accumulator: (this: void, memo: TResult, value: TOut) => TResult, combiner?: (this: void, sub1: TResult, sub2: TResult) => TResult): Promise<TResult> {
+    public reduce<TResult>(defaultValue: TResult, accumulator: (this: void, memo: TResult, value: TOut) => TResult, combiner?: (this: void, sub1: TResult, sub2: TResult) => TResult): IParallelStream<TResult[], TResult> {
         const stream = this._chain(ParallelWorkerFunctions.reduce, accumulator, defaultValue)._stream((intermediateResults: TResult[][]) => {
             let sum = defaultValue;
             let combineOperation: (accumulatedValue: TResult, value: TResult) => TResult = combiner || accumulator as any;
@@ -47,7 +47,7 @@ export class ParallelChainImpl<TIn, TOut> implements IParallelChain<TIn, TOut> {
 
             return sum;
         });
-        return Promise.resolve(stream);
+        return stream;
     }
 
     public filter(predicate: (this: void, value: TOut) => boolean): IParallelChain<TIn, TOut> {
