@@ -24,7 +24,7 @@ module.exports = new Config().merge({
         loaders: [
             {
                 test: /\.ts$/,
-                loader: "babel-loader!ts-loader"
+                loader: "awesome-typescript-loader?useBabel"
             }
         ]
     }

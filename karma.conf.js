@@ -7,15 +7,15 @@ module.exports = function (config) {
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '',
+        basePath: "",
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine'],
+        frameworks: ["jasmine"],
 
         // list of files / patterns to load in the browser
         files: [
-            './test/tests.js'
+            "./test/tests.js"
         ],
 
         // list of files to exclude
@@ -35,9 +35,9 @@ module.exports = function (config) {
         },
 
         // test results reporter to use
-        // possible values: 'dots', 'progress'
+        // possible values: "dots", "progress"
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['dots', "coverage", "kjhtml"],
+        reporters: ["dots", "jasmine-diff", "coverage", "kjhtml"],
 
         // web server port
         port: 9876,
@@ -54,7 +54,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome', 'Firefox'],
+        browsers: ["Chrome", "Firefox"],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -65,8 +65,12 @@ module.exports = function (config) {
         concurrency: travis ? 4 : undefined,
 
         coverageReporter: {
-            type : 'json',
-            dir : 'coverage/'
+            type: "json",
+            dir: "coverage/"
+        },
+
+        jasmineDiffReporter: {
+            multiline: true
         }
     });
 
@@ -145,7 +149,7 @@ module.exports = function (config) {
                 browser: "iphone",
                 device: "iPhone 5"
             },
-            ios_51: { // oldest that with web worker support
+            ios_51: { // oldest  with web worker support
                 base: "BrowserStack",
                 os: "ios",
                 os_version: "5.1",
@@ -171,7 +175,7 @@ module.exports = function (config) {
         config.set({
             customLaunchers: customLaunchers,
             browserStack: {
-                project: 'Parallel.ES Tests',
+                project: "Parallel.ES Tests",
                 username: process.env.BROWSER_STACK_USERNAME,
                 accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
                 startTunnel: false,
@@ -183,7 +187,7 @@ module.exports = function (config) {
             browserNoActivityTimeout: 300000,
             browserDisconnectTimeout: 300000,
             browserDisconnectTolerance: 3,
-            reporters: ['dots', 'coverage'],
+            reporters: ["dots", "jasmine-diff", "coverage"],
             singleRun: true
         });
     }

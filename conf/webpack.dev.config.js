@@ -18,5 +18,10 @@ module.exports = new Config().extend({
     output: {
         pathinfo: true
     },
-    watch: true
+    watch: true,
+    devServer: {
+        stats: {
+            chunks: false
+        }
+    }
 });

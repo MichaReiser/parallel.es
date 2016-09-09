@@ -1,8 +1,10 @@
-import {IParallelChain, toParallelChain} from "./parallel-chain";
+import {IParallelChain} from "./parallel-chain";
 import {Configuration} from "../configuration";
 import {ConstCollectionGenerator, RangeGenerator, TimesGenerator} from "./parallel-generator";
 import {ParallelWorkerFunctions} from "./parallel-worker-functions";
 import {ParallelOptions, DefaultInitializedParallelOptions} from "./parallel-options";
+import {createParallelChain} from "./parallel-chain-impl";
+import {IParallelTaskEnvironment, IEmptyParallelEnvironment} from "./parallel-environment";
 
 export interface IParallel {
 
@@ -25,7 +27,7 @@ export interface IParallel {
      * @param data the array with the elements
      * @param options options configuring the computation behaviour
      */
-    from<T>(data: T[], options?: ParallelOptions): IParallelChain<T, T>;
+    from<T>(data: T[], options?: ParallelOptions): IParallelChain<T, {}, T>;
 
     /**
      * Creates an array containing the elements in the range from start (inclusive) to end (exclusive) with the step size of step.
@@ -34,7 +36,7 @@ export interface IParallel {
      * @param step the step size
      * @param options options configuring the computation behaviour
      */
-    range(start: number, end?: number, step?: number, options?: ParallelOptions): IParallelChain<number, number>;
+    range(start: number, end?: number, step?: number, options?: ParallelOptions): IParallelChain<number, {}, number>;
 
     /**
      * Creates a new array through calling the generator n times
@@ -43,7 +45,8 @@ export interface IParallel {
      * @param generator the generator used to create the array elements
      * @param options options configuring the computation behaviou
      */
-    times<TResult>(n: number, generator: (this: void, n: number) => TResult, options?: ParallelOptions): IParallelChain<TResult, TResult>;
+    times<TResult>(n: number, generator: (this: void, n: number, env: IParallelTaskEnvironment) => TResult): IParallelChain<TResult, IEmptyParallelEnvironment, TResult>;
+    times<TEnv extends IEmptyParallelEnvironment, TResult>(n: number, generator: (this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult, env: TEnv, options?: ParallelOptions): IParallelChain<TResult, TEnv, TResult>;
 }
 
 export function parallelFactory(configuration: Configuration): IParallel {
@@ -75,8 +78,8 @@ export function parallelFactory(configuration: Configuration): IParallel {
             return Object.assign({}, defaultOptions);
         },
 
-        from<T>(collection: T[], options?: ParallelOptions): IParallelChain<T, T> {
-            return toParallelChain(new ConstCollectionGenerator<T>(collection), mergeOptions(options));
+        from<T>(collection: T[], options?: ParallelOptions): IParallelChain<T, {}, T> {
+            return createParallelChain(new ConstCollectionGenerator<T>(collection), mergeOptions(options));
         },
 
         range(start: number, end?: number, step?: number, options?: ParallelOptions) {
@@ -89,11 +92,14 @@ export function parallelFactory(configuration: Configuration): IParallel {
                 step = end < start ? -1 : 1;
             }
 
-            return toParallelChain(new RangeGenerator(start, end, step), mergeOptions(options));
+            return createParallelChain(new RangeGenerator(start, end, step), mergeOptions(options));
         },
 
-        times<TResult>(n: number, generator: (this: void, n: number) => TResult = ParallelWorkerFunctions.identity, options?: ParallelOptions) {
-            return toParallelChain(new TimesGenerator<TResult>(n, generator), mergeOptions(options));
+        times<TEnv, TResult>(n: number, generator: (this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult = ParallelWorkerFunctions.identity, env?: TEnv, options?: ParallelOptions) {
+            if (env) {
+                return createParallelChain(new TimesGenerator<TResult>(n, generator), mergeOptions(options), env);
+            }
+            return createParallelChain(new TimesGenerator<TResult>(n, generator), mergeOptions(options));
         }
     };
 }

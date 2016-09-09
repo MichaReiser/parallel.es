@@ -71,9 +71,9 @@ export class RangeGenerator implements IParallelGenerator {
  */
 export class TimesGenerator<T> implements IParallelGenerator {
     public readonly times: number;
-    public readonly iteratee: (this: void, time: number) => T;
+    public readonly iteratee: (this: void, time: number, env: any) => T;
 
-    constructor(times: number, iteratee: (this: void, time: number) => T) {
+    constructor(times: number, iteratee: (this: void, time: number, env: any) => T) {
         this.times = times;
         this.iteratee = iteratee;
     }
