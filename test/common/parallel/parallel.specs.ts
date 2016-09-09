@@ -108,7 +108,7 @@ describe("Parallel", function () {
             // assert
             expect(chain).toEqual(jasmine.any(ParallelChainImpl));
 
-            const generator = (chain as ParallelChainImpl<number, number>).generator;
+            const generator = (chain as ParallelChainImpl<number, {}, number>).generator;
             expect(generator).toEqual(jasmine.any(ConstCollectionGenerator));
         });
     });
@@ -120,7 +120,7 @@ describe("Parallel", function () {
 
             // assert
             expect(chain).toEqual(jasmine.any(ParallelChainImpl));
-            const generator = (chain as ParallelChainImpl<number, number>).generator as RangeGenerator;
+            const generator = (chain as ParallelChainImpl<number, {}, number>).generator as RangeGenerator;
             expect(generator.start).toBe(0);
             expect(generator.end).toBe(10);
             expect(generator.step).toBe(1);
@@ -131,7 +131,7 @@ describe("Parallel", function () {
             const chain = parallel.range(10);
 
             // assert
-            const generator = (chain as ParallelChainImpl<number, number>).generator as RangeGenerator;
+            const generator = (chain as ParallelChainImpl<number, {}, number>).generator as RangeGenerator;
             expect(generator.start).toBe(0);
             expect(generator.end).toBe(10);
             expect(generator.step).toBe(1);
@@ -142,7 +142,7 @@ describe("Parallel", function () {
             const chain = parallel.range(-10);
 
             // assert
-            const generator = (chain as ParallelChainImpl<number, number>).generator as RangeGenerator;
+            const generator = (chain as ParallelChainImpl<number, {}, number>).generator as RangeGenerator;
             expect(generator.start).toBe(0);
             expect(generator.end).toBe(-10);
             expect(generator.step).toBe(-1);
@@ -153,7 +153,7 @@ describe("Parallel", function () {
             const chain = parallel.range(1, 10);
 
             // assert
-            const generator = (chain as ParallelChainImpl<number, number>).generator as RangeGenerator;
+            const generator = (chain as ParallelChainImpl<number, {}, number>).generator as RangeGenerator;
             expect(generator.start).toBe(1);
             expect(generator.end).toBe(10);
             expect(generator.step).toBe(1);
@@ -164,7 +164,7 @@ describe("Parallel", function () {
             const chain = parallel.range(10, 1);
 
             // assert
-            const generator = (chain as ParallelChainImpl<number, number>).generator as RangeGenerator;
+            const generator = (chain as ParallelChainImpl<number, {}, number>).generator as RangeGenerator;
             expect(generator.start).toBe(10);
             expect(generator.end).toBe(1);
             expect(generator.step).toBe(-1);
@@ -173,14 +173,29 @@ describe("Parallel", function () {
 
     describe("times", function () {
         it("returns a chain with a times generator", function () {
-            // act
+            // arrange
             const generatorFunc = (n: number) => n;
+
+            // act
             const chain = parallel.times(10, generatorFunc);
 
             // assert
-            const generator = (chain as ParallelChainImpl<number, number>).generator as TimesGenerator<number>;
+            const generator = (chain as ParallelChainImpl<number, {}, number>).generator as TimesGenerator<number>;
             expect(generator.times).toBe(10);
             expect(generator.iteratee).toBe(generatorFunc);
+        });
+
+        it("sets the environment of the chain to the passed one", function () {
+            // arrange
+            // arrange
+            const generatorFunc = (n: number, { power }: { power: number}) => n ** power;
+
+            // act
+            const chain = parallel.times(10, generatorFunc, { power: 2 });
+
+            // assert
+            const environment = chain.environment();
+            expect(environment.power).toBe(2);
         });
     });
 });
