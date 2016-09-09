@@ -1,12 +1,13 @@
 import {IParallelChain} from "./parallel-chain";
 import {IParallelStream, ParallelStreamImpl} from "./parallel-stream";
 import {IParallelTaskScheduling} from "./parallel-task-scheduling";
-import {TaskDefinition} from "../task/task-definition";
+import {ITaskDefinition} from "../task/task-definition";
 import {IParallelGenerator} from "./parallel-generator";
 import {IParallelAction} from "./parallel-action";
 import {DefaultInitializedParallelOptions} from "./parallel-options";
 import {ParallelWorkerFunctions} from "./parallel-worker-functions";
 import {IEmptyParallelEnvironment, IParallelTaskEnvironment} from "./parallel-environment";
+import {IParallelTaskDefinition} from "./parallel-task-definition";
 
 export function createParallelChain<TIn, TOut>(generator: IParallelGenerator, options: DefaultInitializedParallelOptions, actions?: IParallelAction[]): ParallelChainImpl<TIn, IEmptyParallelEnvironment, TOut>;
 export function createParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOut>(generator: IParallelGenerator, options: DefaultInitializedParallelOptions, sharedEnv: TEnv, actions?: IParallelAction[]): ParallelChainImpl<TIn, TEnv, TOut>;
@@ -107,8 +108,8 @@ export class ParallelChainImpl<TIn, TEnv extends {}, TOut> implements IParallelC
         return new ParallelStreamImpl<T, TResult>(tasks, joiner);
     }
 
-    private getTaskDefinitions(): TaskDefinition[] {
-        const taskDefinitions: TaskDefinition[] = [];
+    private getTaskDefinitions(): ITaskDefinition[] {
+        const taskDefinitions: ITaskDefinition[] = [];
         const scheduling = this.getParallelTaskScheduling(this.generator.length);
         const functionCallSerializer = this.options.threadPool.createFunctionSerializer();
 
@@ -123,9 +124,11 @@ export class ParallelChainImpl<TIn, TEnv extends {}, TOut> implements IParallelC
             const environment = Object.assign<IParallelTaskEnvironment, TEnv>({ taskIndex: i }, this.sharedEnvironment);
             const generator = this.generator.serializeSlice(i, scheduling.valuesPerWorker, functionCallSerializer);
 
-            const taskDefinition = {
+            const taskDefinition: IParallelTaskDefinition = {
                 main: functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctions.process, generator, serializedActions, environment),
-                usedFunctionIds: functionCallSerializer.serializedFunctionIds
+                taskIndex: i,
+                usedFunctionIds: functionCallSerializer.serializedFunctionIds,
+                valuesPerWorker: scheduling.valuesPerWorker
             };
 
             taskDefinitions.push(taskDefinition);

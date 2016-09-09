@@ -1,6 +1,6 @@
 import {DefaultThreadPool} from "../../../src/common/thread-pool/default-thread-pool";
 import {FunctionRegistry} from "../../../src/common/serialization/function-registry";
-import {WorkerThread} from "../../../src/common/worker/worker-thread";
+import {IWorkerThread} from "../../../src/common/worker/worker-thread";
 
 describe("DefaultThreadPool", function () {
     let spawn: jasmine.Spy;
@@ -136,7 +136,7 @@ describe("DefaultThreadPool", function () {
         });
     });
 
-    function completeTaskOfWorker(worker: WorkerThread, result?: any) {
+    function completeTaskOfWorker(worker: IWorkerThread, result?: any) {
         if (worker.oncomplete) {
             worker.oncomplete(result);
         }

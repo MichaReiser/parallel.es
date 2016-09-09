@@ -1,29 +1,10 @@
 import parallel from "../src/browser/index";
+import {createMandelOptions, computeMandelbrotLine} from "./mandelbrot";
 
 /* tslint:disable:no-console */
-
-/*function fibonacci(x: number): number {
-    this.info = x;
-    if (x < 0) {
-        return NaN;
-    }
-
-    function recFib(n) {
-        if (n === 1) { return 1; }
-        if (n === 0) { return 0; }
-
-        return recFib(n - 1) + recFib(n - 2);
-    }
-
-    return recFib(x);
-} */
-
-/*const data: number[] = [];
- for (let i = 0; i < 40; ++i) {
- data.push(i);
- }
-
- Parallel.collection(data).map(fibonacci).value().then(result => console.log("Result", result)); */
+const mandelbrotCanvas = document.querySelector("#mandelbrot-canvas") as HTMLCanvasElement;
+const mandelbrotContext = mandelbrotCanvas.getContext("2d");
+const mandelbrotOptions = createMandelOptions(mandelbrotCanvas.width, mandelbrotCanvas.height, 10000);
 
 function busyWait<T>(x: T): T {
     let i = 0;
@@ -40,114 +21,39 @@ const examples = {
     }
 };
 
-function mandelbrot(imageWidth: number, imageHeight: number, iterations: number, callback: (slice: ImageData, yStart: number) => void) {
-    interface ComplexNumber {
-        real: number;
-        i: number;
-    }
+document.querySelector("#mandelbrot-run-async").addEventListener("click", function (event) {
+    event.preventDefault();
 
-    // X axis shows real numbers, y axis imaginary
-    const min = { real: -2.0, i: -1.2 };
-    const max = { real: 1.0, i: 0 };
-    max.i = min.i + (max.real - min.real) * imageHeight / imageWidth;
+    mandelbrotContext!.putImageData(mandelbrotContext!.createImageData(mandelbrotCanvas.width, mandelbrotCanvas.height), 0, 0);
+    const maxValuesPerWorker = (document.querySelector("#mandelbrot-values-per-task") as HTMLInputElement).valueAsNumber;
 
-    const scalingFactor = {
-        real: (max.real - min.real) / (imageWidth - 1),
-        i: (max.i - min.i) / (imageHeight - 1)
-    };
-
-    function coordinateToComplex({ x, y }: { x: number, y: number }): ComplexNumber {
-        return {
-            real: min.real + x * scalingFactor.real,
-            i: max.i - y * scalingFactor.i
-        };
-    }
-
-    function calculateZ(c: ComplexNumber): { z: ComplexNumber, n: number } {
-        const z = { real: c.real, i: c.i };
-        let n = 0;
-
-        for (; n < iterations; ++n) {
-            if (z.real ** 2 + z.i ** 2 > 4) {
-                break;
-            }
-
-            // z ** 2 + c
-            const zI = z.i;
-            z.i = 2 * z.real * z.i + c.i;
-            z.real = z.real ** 2 - zI ** 2 + c.real;
-        }
-
-        return { z, n };
-    }
-
-    function fill(x: number, y: number, n: number, imageData: Uint8ClampedArray) {
-        const base = (y * imageWidth + x) * 4;
-        imageData[base] = n & 0xFF;
-        imageData[base + 1] = n & 0xFF00;
-        imageData[base + 2] = n & 0xFF0000;
-        imageData[base + 3] = 255;
-    }
-
-    function calculateArea(yStart: number, yEnd: number): Uint8ClampedArray {
-        const area = new Uint8ClampedArray(imageWidth * (yEnd - yStart) * 4);
-
-        for (let y = yStart; y < yEnd; ++y) {
-            for (let x = 0; x < imageWidth; ++x) {
-                const c = coordinateToComplex({ x, y: y });
-                const { n } = calculateZ(c);
-
-                fill(x, y - yStart, n, area);
-            }
-        }
-
-        return area;
-    }
-
-    const blocks = 10;
-    const blockSize = Math.ceil(imageHeight / blocks);
-
-    for (let block = 0; block < blocks; ++block) {
-        const yStart = block * blockSize;
-        const yEnd = Math.min(yStart + blockSize, imageHeight);
-
-        const data = calculateArea(yStart, yEnd);
-        const imageData = new ImageData(data, imageWidth, yEnd - yStart);
-
-        callback(imageData, yStart);
-    }
-}
-
-
-document.querySelector("#mandelbrot-run-async").addEventListener("click", function () {
-    const canvas = document.querySelector("#mandelbrot-canvas") as HTMLCanvasElement;
-    const context = canvas.getContext("2d");
-
-    context!.putImageData(context!.createImageData(canvas.width, canvas.height), 0, 0);
-
+    console.time("mandelbrot-async");
     parallel
-        .times(10, i => {
-            return { yStart: i * 102, yEnd: (i + 1) * 102 };
+        .range(0, mandelbrotOptions.imageHeight, 1, { maxValuesPerWorker })
+        .environment(mandelbrotOptions)
+        .map(computeMandelbrotLine)
+        .result()
+        .subscribe((lines, index, blockSize) => {
+            for (let i = 0; i < lines.length; ++i) {
+                mandelbrotContext!.putImageData(new ImageData(lines[i], mandelbrotOptions.imageWidth, 1), 0, index * blockSize + i);
+            }
         })
-        .map(block => {
-
-            // needs parameter support.
-        });
-
-    setTimeout(() => {
-        mandelbrot(canvas.width, canvas.height, 30000, (slice, yStart) => context!.putImageData(slice, 0, yStart));
-    }, 0);
-
+        .then(() => console.timeEnd("mandelbrot-async"));
 });
 
 document.querySelector("#mandelbrot-run-sync").addEventListener("click", function () {
     const canvas = document.querySelector("#mandelbrot-canvas") as HTMLCanvasElement;
     const context = canvas.getContext("2d");
 
-   context!.putImageData(context!.createImageData(canvas.width, canvas.height), 0, 0);
+    context!.putImageData(context!.createImageData(canvas.width, canvas.height), 0, 0);
 
     setTimeout(() => {
-        mandelbrot(canvas.width, canvas.height, 30000, (slice, yStart) => context!.putImageData(slice, 0, yStart));
+        console.time("mandelbrot-sync");
+        for (let y = 0; y < mandelbrotOptions.imageHeight; ++y) {
+            const line = computeMandelbrotLine(y, mandelbrotOptions);
+            context!.putImageData(new ImageData(line, mandelbrotOptions.imageWidth, 1), 0, y);
+        }
+        console.timeEnd("mandelbrot-sync");
     }, 0);
 
 });
@@ -181,3 +87,26 @@ document.querySelector("#all-run").addEventListener("click", function () {
  });
 
  */
+
+/*function fibonacci(x: number): number {
+ this.info = x;
+ if (x < 0) {
+ return NaN;
+ }
+
+ function recFib(n) {
+ if (n === 1) { return 1; }
+ if (n === 0) { return 0; }
+
+ return recFib(n - 1) + recFib(n - 2);
+ }
+
+ return recFib(x);
+ } */
+
+/*const data: number[] = [];
+ for (let i = 0; i < 40; ++i) {
+ data.push(i);
+ }
+
+ Parallel.collection(data).map(fibonacci).value().then(result => console.log("Result", result)); */

@@ -1,6 +1,8 @@
-import {Task} from "../../../src/common/task/task";
-import {TaskDefinition} from "../../../src/common/task/task-definition";
+import {ITask} from "../../../src/common/task/task";
+import {ITaskDefinition} from "../../../src/common/task/task-definition";
 import {ParallelStreamImpl, IParallelStream} from "../../../src/common/parallel/parallel-stream";
+import definition = ts.HighlightSpanKind.definition;
+import {IParallelTaskDefinition} from "../../../src/common/parallel/parallel-task-definition";
 
 describe("ParallelStream", function () {
     let tasks: FakeTask<string>[];
@@ -10,7 +12,7 @@ describe("ParallelStream", function () {
     let joiner = (values: string[]) => values.join(" ");
 
     beforeEach(function () {
-        tasks = [new FakeTask(), new FakeTask(), new FakeTask()];
+        tasks = [new FakeTask(0), new FakeTask(1), new FakeTask(2)];
         [task1, task2, task3] = tasks;
     });
 
@@ -29,9 +31,9 @@ describe("ParallelStream", function () {
             // assert
             setTimeout(function () {
                 // wait for next tick
-                expect(onNextSpy).toHaveBeenCalledWith("Good", 0);
-                expect(onNextSpy).toHaveBeenCalledWith("Morning", 1);
-                expect(onNextSpy).toHaveBeenCalledWith("good looking", 2);
+                expect(onNextSpy).toHaveBeenCalledWith("Good", 0, 1);
+                expect(onNextSpy).toHaveBeenCalledWith("Morning", 1, 1);
+                expect(onNextSpy).toHaveBeenCalledWith("good looking", 2, 1);
                 done();
             }, 0);
         });
@@ -50,9 +52,9 @@ describe("ParallelStream", function () {
             // assert
             setTimeout(function () {
                 // wait for next tick
-                expect(onNextSpy).toHaveBeenCalledWith("Good", 0);
-                expect(onNextSpy).toHaveBeenCalledWith("Morning", 1);
-                expect(onNextSpy).toHaveBeenCalledWith("good looking", 2);
+                expect(onNextSpy).toHaveBeenCalledWith("Good", 0, 1);
+                expect(onNextSpy).toHaveBeenCalledWith("Morning", 1, 1);
+                expect(onNextSpy).toHaveBeenCalledWith("good looking", 2, 1);
                 done();
             }, 0);
         });
@@ -220,8 +222,8 @@ describe("ParallelStream", function () {
         });
     });
 
-    class FakeTask<T> implements Task<T> {
-        public taskDefinition: TaskDefinition;
+    class FakeTask<T> implements ITask<T> {
+        public definition: IParallelTaskDefinition;
         public isCanceled = false;
         public isCancellationRequested = false;
 
@@ -229,11 +231,19 @@ describe("ParallelStream", function () {
         public reject: (reason: any) => void;
         private promise: Promise<T>;
 
-        constructor() {
+        constructor(index: number) {
             this.promise = new Promise((resolve, reject) => {
                 this.resolve = resolve;
                 this.reject = reject;
             });
+
+            this.definition = {
+                id: index,
+                main: undefined as any,
+                taskIndex: index,
+                usedFunctionIds: [],
+                valuesPerWorker: 1
+            };
         }
 
         public cancel() {

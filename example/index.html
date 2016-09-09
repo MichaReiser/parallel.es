@@ -25,8 +25,16 @@
 		</canvas>
 	</div>
 
+
 	<input type="button" id="mandelbrot-run-sync" value="Run synchronous..." class="btn btn-default"/>
-	<input type="button" id="mandelbrot-run-async" value="Run asynchronous..." class="btn btn-default"/>
+
+	<form class="form-inline" action="#">
+		<div class="form-group">
+			<label for="mandelbrot-values-per-task">Number of lines calculated by a task</label>
+			<input type="number" value="10" name="mandelbrot-values-per-task" id="mandelbrot-values-per-task"/>
+		</div>
+		<input type="submit" id="mandelbrot-run-async" value="Run asynchronous..." class="btn btn-default"/>
+	</form>
 
 
 	<h2>Times</h2>

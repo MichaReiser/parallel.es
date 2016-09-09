@@ -1,4 +1,5 @@
-import {Task} from "../task/task";
+import {ITask} from "../task/task";
+import {IParallelTaskDefinition} from "./parallel-task-definition";
 
 /**
  * Parallel processing stream.
@@ -14,12 +15,12 @@ import {Task} from "../task/task";
 export interface IParallelStream<TSubResult, TEndResult> extends PromiseLike<TEndResult> {
     /**
      * Registers the given next, error and complete handler.
-     * @param onNext is called with the sub result produced by a completed task. The sub result of this task and the relative
-     * task number is passed to the onNext handler.
+     * @param onNext is called with the sub result produced by a completed task. The sub result of this task, the relative
+     * task number and the values processed by each worker (max) is passed to the onNext handler.
      * @param onError is invoked whenever any task has failed.
      * @param onComplete is invoked with the joined result when all tasks have completed
      */
-    subscribe(onNext: (this: void, subResult: TSubResult, taskIndex: number) => void, onError?: (this: void, reason: any) => void, onComplete?: (this: void, result: TEndResult) => void): IParallelStream<TSubResult, TEndResult>;
+    subscribe(onNext: (this: void, subResult: TSubResult, taskIndex: number, valuesPerWorker: number) => void, onError?: (this: void, reason: any) => void, onComplete?: (this: void, result: TEndResult) => void): IParallelStream<TSubResult, TEndResult>;
 
     catch<TResult>(onrejected: (reason: any) => TResult | PromiseLike<TResult>): Promise<TResult>;
     catch(onrejected: (reason: any) => void): Promise<TEndResult>;
@@ -34,7 +35,7 @@ export class ParallelStreamImpl<TSubResult, TEndResult> implements IParallelStre
     /**
      * The tasks executed by this stream
      */
-    private tasks: Task<TSubResult>[];
+    private tasks: ITask<TSubResult>[];
 
     /**
      * Resolves the _promise with the given end result
@@ -74,9 +75,9 @@ export class ParallelStreamImpl<TSubResult, TEndResult> implements IParallelStre
      * @type {Array}
      * @private
      */
-    private nextHandlers: { (subResult: TSubResult, worker: number): void}[] = [];
+    private nextHandlers: { (subResult: TSubResult, worker: number, valuesPerWorker: number): void}[] = [];
 
-    constructor(tasks: Task<TSubResult>[], join: (subResults: TSubResult[]) => TEndResult | PromiseLike<TEndResult>) {
+    constructor(tasks: ITask<TSubResult>[], join: (subResults: TSubResult[]) => TEndResult | PromiseLike<TEndResult>) {
         this.tasks = tasks;
         this.joiner = join;
         this.subResults = new Array(tasks.length);
@@ -89,12 +90,12 @@ export class ParallelStreamImpl<TSubResult, TEndResult> implements IParallelStre
 
         tasks.forEach(
             (task, index) => task.then(
-                (subResult: TSubResult) => this._taskCompleted(subResult, index),
+                (subResult: TSubResult) => this._taskCompleted(subResult, task.definition as IParallelTaskDefinition),
                 (reason: any) => this._taskFailed(reason))
         );
     }
 
-    public subscribe(onNext: (subResult: TSubResult, worker: number) => void, onError?: (reason: any) => void, onComplete?: (result: TEndResult) => void): IParallelStream<TSubResult, TEndResult> {
+    public subscribe(onNext: (subResult: TSubResult, worker: number, valuesPerWorker: number) => void, onError?: (reason: any) => void, onComplete?: (result: TEndResult) => void): IParallelStream<TSubResult, TEndResult> {
         this.nextHandlers.push(onNext);
 
         if (onError) {
@@ -116,21 +117,21 @@ export class ParallelStreamImpl<TSubResult, TEndResult> implements IParallelStre
         return this.promise.catch(onrejected);
     }
 
-    private _taskCompleted(subResult: TSubResult, index: number): void {
+    private _taskCompleted(subResult: TSubResult, taskDefinition: IParallelTaskDefinition): void {
         if (this.pending === 0) {
             throw new Error("Stream already resolved but taskCompleted called one more time");
         }
 
         --this.pending;
 
-        this.subResults[index] = subResult;
+        this.subResults[taskDefinition.taskIndex] = subResult;
 
         if (this.failed) {
             return;
         }
 
         for (const nextHandler of this.nextHandlers) {
-            nextHandler.apply(undefined, [subResult, index]);
+            nextHandler.apply(undefined, [subResult, taskDefinition.taskIndex, taskDefinition.valuesPerWorker]);
         }
 
         if (this.pending === 0) {
@@ -141,7 +142,7 @@ export class ParallelStreamImpl<TSubResult, TEndResult> implements IParallelStre
     private _taskFailed(reason: any): void {
         this.failed = true;
 
-        // Cancel all not yet complted tasks
+        // Cancel all not yet completed tasks
         for (let i = 0; i < this.tasks.length; ++i) {
             if (typeof(this.subResults[i]) === "undefined") {
                 this.tasks[i].cancel();

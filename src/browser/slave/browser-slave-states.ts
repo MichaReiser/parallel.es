@@ -1,6 +1,6 @@
 import {FunctionCallDeserializer} from "../../common/serialization/function-call-deserializer";
-import {TaskDefinition} from "../../common/task/task-definition";
-import {FunctionDefinition} from "../../common/worker/function-defintion";
+import {ITaskDefinition} from "../../common/task/task-definition";
+import {IFunctionDefinition} from "../../common/worker/function-defintion";
 import {
     functionExecutionError, isFunctionResponse, isInitializeMessage, isScheduleTask, requestFunctionMessage,
     workerResultMessage } from "../../common/worker/worker-messages";
@@ -55,7 +55,7 @@ export class IdleSlaveState extends SlaveState {
             return false;
         }
 
-        const task: TaskDefinition = event.data.task;
+        const task: ITaskDefinition = event.data.task;
         const missingFunctions = task.usedFunctionIds.filter(id => !this.slave.functionCache.has(id));
 
         if (missingFunctions.length === 0) {
@@ -74,14 +74,14 @@ export class IdleSlaveState extends SlaveState {
  * The slave is waiting for the definition of the requested function that is needed to execute the assigned task.
  */
 export class WaitingForFunctionDefinitionState extends SlaveState {
-    constructor(slave: BrowserSlave, private task: TaskDefinition) {
+    constructor(slave: BrowserSlave, private task: ITaskDefinition) {
         super("WaitingForFunctionDefinition", slave);
     }
 
     public onMessage(event: MessageEvent): boolean {
         const message = event.data;
         if (isFunctionResponse(message)) {
-            for (const definition of message.functions as FunctionDefinition[]) {
+            for (const definition of message.functions as IFunctionDefinition[]) {
                 this.slave.functionCache.registerFunction(definition);
             }
 
@@ -96,7 +96,7 @@ export class WaitingForFunctionDefinitionState extends SlaveState {
  * The slave is executing the function
  */
 export class ExecuteFunctionState extends SlaveState {
-    constructor(slave: BrowserSlave, private task: TaskDefinition) {
+    constructor(slave: BrowserSlave, private task: ITaskDefinition) {
         super("Executing", slave);
     }
 

@@ -1,11 +1,11 @@
 import {BrowserWorkerThreadFactory} from "../../../src/browser/worker/browser-worker-thread-factory";
 import {FunctionRegistry} from "../../../src/common/serialization/function-registry";
-import {WorkerThread} from "../../../src/common/worker/worker-thread";
+import {IWorkerThread} from "../../../src/common/worker/worker-thread";
 import {BrowserWorkerThread} from "../../../src/browser/worker/browser-worker-thread";
 
 describe("BrowserWorkerThreadFactory", function () {
     let factory: BrowserWorkerThreadFactory;
-    let workers: WorkerThread[];
+    let workers: IWorkerThread[];
 
     beforeEach(function () {
         factory = new BrowserWorkerThreadFactory(new FunctionRegistry());

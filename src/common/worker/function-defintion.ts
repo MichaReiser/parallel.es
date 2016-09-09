@@ -1,7 +1,7 @@
 /**
  * Definition of a function
  */
-export interface FunctionDefinition {
+export interface IFunctionDefinition {
     /**
      * The unique id of the function
      */

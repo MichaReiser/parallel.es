@@ -2,7 +2,7 @@ import {ISerializedFunctionCall} from "../serialization/serialized-function-call
 /**
  * Definition of a task to execute. A task is uniquely identified by an id.
  */
-export interface TaskDefinition {
+export interface ITaskDefinition {
     /**
      * The unique identification of the task to execute. Is assigned by the thread pool.
      */

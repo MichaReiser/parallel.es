@@ -1,6 +1,6 @@
 import {FunctionLookupTable} from "../../common/serialization/function-lookup-table";
 import {staticFunctionRegistry} from "../../common/serialization/static-function-registry";
-import {FunctionDefinition} from "../../common/worker/function-defintion";
+import {IFunctionDefinition} from "../../common/worker/function-defintion";
 
 export class SlaveFunctionCache implements FunctionLookupTable {
     private cache: { [id: number]: Function} = {};
@@ -12,7 +12,7 @@ export class SlaveFunctionCache implements FunctionLookupTable {
         return this.cache[id];
     }
 
-    public registerFunction(definition: FunctionDefinition): Function {
+    public registerFunction(definition: IFunctionDefinition): Function {
         const f = Function.apply(null, [...definition.argumentNames, definition.body]);
         this.cache[definition.id] = f;
         return f;
