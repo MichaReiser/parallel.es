@@ -1,6 +1,6 @@
 import {DefaultInitializedParallelOptions} from "../../../src/common/parallel/parallel-options";
 import {ThreadPool} from "../../../src/common/thread-pool/thread-pool";
-import {ParallelChainImpl} from "../../../src/common/parallel/parallel-chain";
+import {ParallelChainImpl} from "../../../src/common/parallel/parallel-chain-impl";
 import {IParallelGenerator, ConstCollectionGenerator} from "../../../src/common/parallel/parallel-generator";
 
 describe("ParallelChainImpl", function () {
@@ -21,7 +21,7 @@ describe("ParallelChainImpl", function () {
     describe("getParallelTaskScheduling", function () {
         it("returns the options.maxConcurrencyLevel as numberOfWorkers by default", function () {
             // arrange
-            const chain = new ParallelChainImpl(generator, [], options);
+            const chain = new ParallelChainImpl(generator, options);
 
             // act
             const scheduling = chain.getParallelTaskScheduling(10);
@@ -33,7 +33,7 @@ describe("ParallelChainImpl", function () {
         it("uses options.maxValuesPerWorker as upper items limit", function () {
             // arrange
             options.maxValuesPerWorker = 2;
-            const chain = new ParallelChainImpl(generator, [], options);
+            const chain = new ParallelChainImpl(generator, options);
 
             // act
             const scheduling = chain.getParallelTaskScheduling(10);
@@ -46,7 +46,7 @@ describe("ParallelChainImpl", function () {
         it("ignores maxValuesPerWorker if the calculated count is less then maxValuesPerWorker", function () {
             // arrange
             options.maxValuesPerWorker = 6;
-            const chain = new ParallelChainImpl(generator, [], options);
+            const chain = new ParallelChainImpl(generator, options);
 
             // act
             const scheduling = chain.getParallelTaskScheduling(10);
@@ -59,7 +59,7 @@ describe("ParallelChainImpl", function () {
         it("assigns at least minValuesPerWorker for each worker if the value is set", function () {
             // arrange
             options.minValuesPerWorker = 5;
-            const chain = new ParallelChainImpl(generator, [], options);
+            const chain = new ParallelChainImpl(generator, options);
 
             // act
             const scheduling = chain.getParallelTaskScheduling(8);
@@ -72,7 +72,7 @@ describe("ParallelChainImpl", function () {
         it("limits the number of items to the total items even if minValuesPerWorker is set", function () {
             // arrange
             options.minValuesPerWorker = 10;
-            const chain = new ParallelChainImpl(generator, [], options);
+            const chain = new ParallelChainImpl(generator, options);
 
             // act
             const scheduling = chain.getParallelTaskScheduling(5);

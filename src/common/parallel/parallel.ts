@@ -1,8 +1,9 @@
-import {IParallelChain, toParallelChain} from "./parallel-chain";
+import {IParallelChain} from "./parallel-chain";
 import {Configuration} from "../configuration";
 import {ConstCollectionGenerator, RangeGenerator, TimesGenerator} from "./parallel-generator";
 import {ParallelWorkerFunctions} from "./parallel-worker-functions";
 import {ParallelOptions, DefaultInitializedParallelOptions} from "./parallel-options";
+import {ParallelChainImpl} from "./parallel-chain-impl";
 
 export interface IParallel {
 
@@ -76,7 +77,7 @@ export function parallelFactory(configuration: Configuration): IParallel {
         },
 
         from<T>(collection: T[], options?: ParallelOptions): IParallelChain<T, T> {
-            return toParallelChain(new ConstCollectionGenerator<T>(collection), mergeOptions(options));
+            return new ParallelChainImpl(new ConstCollectionGenerator<T>(collection), mergeOptions(options));
         },
 
         range(start: number, end?: number, step?: number, options?: ParallelOptions) {
@@ -89,11 +90,11 @@ export function parallelFactory(configuration: Configuration): IParallel {
                 step = end < start ? -1 : 1;
             }
 
-            return toParallelChain(new RangeGenerator(start, end, step), mergeOptions(options));
+            return new ParallelChainImpl(new RangeGenerator(start, end, step), mergeOptions(options));
         },
 
         times<TResult>(n: number, generator: (this: void, n: number) => TResult = ParallelWorkerFunctions.identity, options?: ParallelOptions) {
-            return toParallelChain(new TimesGenerator<TResult>(n, generator), mergeOptions(options));
+            return new ParallelChainImpl(new TimesGenerator<TResult>(n, generator), mergeOptions(options));
         }
     };
 }

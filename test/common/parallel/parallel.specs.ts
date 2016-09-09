@@ -1,5 +1,5 @@
 import {IParallel, parallelFactory} from "../../../src/common/parallel/parallel";
-import {ParallelChainImpl} from "../../../src/common/parallel/parallel-chain";
+import {ParallelChainImpl} from "../../../src/common/parallel/parallel-chain-impl";
 import {
     ConstCollectionGenerator, RangeGenerator,
     TimesGenerator
