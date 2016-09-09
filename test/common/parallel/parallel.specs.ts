@@ -1,4 +1,4 @@
-import {Parallel, parallelFactory} from "../../../src/common/parallel/parallel";
+import {IParallel, parallelFactory} from "../../../src/common/parallel/parallel";
 import {ParallelChainImpl} from "../../../src/common/parallel/parallel-chain";
 import {
     ConstCollectionGenerator, RangeGenerator,
@@ -6,15 +6,15 @@ import {
 } from "../../../src/common/parallel/parallel-generator";
 
 describe("Parallel", function () {
-    let parallel: Parallel;
+    let parallel: IParallel;
     let threadPool: any = {};
     const maxConcurrencyLevel = 2;
 
     beforeEach(function () {
         parallel = parallelFactory({
-            maxConcurrencyLevel: maxConcurrencyLevel,
             functionLookupTable: undefined as any,
-            threadPool: threadPool
+            maxConcurrencyLevel,
+            threadPool
         });
     });
 

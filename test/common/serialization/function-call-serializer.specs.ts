@@ -25,7 +25,6 @@ describe("FunctionCallSerializer", function () {
             expect(serialized).not.toBeUndefined();
             expect(serialized.functionId).toBe(1);
             expect(serialized.params).toEqual([]);
-            expect(serialized.name).toEqual((testFunction as any).name);
         });
 
         it("passes the params in the params array", function () {

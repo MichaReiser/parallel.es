@@ -1,4 +1,4 @@
-import {SerializedFunctionCall} from "../serialization/serialized-function-call";
+import {ISerializedFunctionCall} from "../serialization/serialized-function-call";
 /**
  * Definition of a task to execute. A task is uniquely identified by an id.
  */
@@ -11,7 +11,7 @@ export interface TaskDefinition {
     /**
      * The main function to execute
      */
-    readonly main: SerializedFunctionCall;
+    readonly main: ISerializedFunctionCall;
 
     /**
      * IDs of functions used

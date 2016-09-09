@@ -39,7 +39,7 @@ describe("BrowserWorkerThread", function () {
     describe("run", function () {
         it("sends the schedule task message to the slave containing the task definition", function () {
             // arrange
-            const task: TaskDefinition = { usedFunctionIds: [1], main: { functionId: 1, params: [], ______serializedFunctionCall: true }, id: 1};
+            const task: TaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1]};
 
             // act
             browserWorker.run(task);
@@ -50,8 +50,8 @@ describe("BrowserWorkerThread", function () {
 
         it("sends the function definition to the slave if the definition is requested", function () {
             // arrange
-            const task: TaskDefinition = { usedFunctionIds: [1], main: { functionId: 1, params: [], ______serializedFunctionCall: true }, id: 1};
-            const functionDefinition: FunctionDefinition = { id: task.main.functionId, argumentNames: ["x", "y"], body: "x + y;" };
+            const task: TaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
+            const functionDefinition: FunctionDefinition = { argumentNames: ["x", "y"], body: "x + y;", id: task.main.functionId };
             spyOn(functionLookupTable, "getDefinition").and.returnValue(functionDefinition);
             browserWorker.initialize();
             browserWorker.run(task);
@@ -60,12 +60,12 @@ describe("BrowserWorkerThread", function () {
             slaveRespond({ data: requestFunctionMessage(task.main.functionId) } as any);
 
             // assert
-            expect(slave.postMessage).toHaveBeenCalledWith({ type: WorkerMessageType.FunctionResponse, functions: [functionDefinition]});
+            expect(slave.postMessage).toHaveBeenCalledWith({ functions: [functionDefinition], type: WorkerMessageType.FunctionResponse });
         });
 
         it("invokes the oncomplete handler if the slave has sent the result", function () {
             // arrange
-            const task: TaskDefinition = { usedFunctionIds: [1], main: { functionId: 1, params: [], ______serializedFunctionCall: true }, id: 1};
+            const task: TaskDefinition = { id: 1, main: {  ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
 
             browserWorker.run(task);
             const completeSpy = browserWorker.oncomplete = jasmine.createSpy("completeSpy");
@@ -79,7 +79,7 @@ describe("BrowserWorkerThread", function () {
 
         it("does not fail if no oncomplete handler is registered and the result is received from the slave", function () {
             // arrange
-            const task: TaskDefinition = { usedFunctionIds: [1], main: { functionId: 1, params: [], ______serializedFunctionCall: true }, id: 1};
+            const task: TaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
             browserWorker.run(task);
 
             // act, assert
@@ -101,7 +101,7 @@ describe("BrowserWorkerThread", function () {
         it("triggers the onerror handler if an error message has been retrieved from the worker", function () {
             // arrange
             const errorHandler = browserWorker.onerror = jasmine.createSpy("onerror");
-            const task: TaskDefinition = { usedFunctionIds: [1], main: { functionId: 1, params: [], ______serializedFunctionCall: true }, id: 1};
+            const task: TaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
             browserWorker.run(task);
 
             // act
@@ -115,7 +115,7 @@ describe("BrowserWorkerThread", function () {
 
         it("throws an error if the slave sends an unexpected message", function () {
             // act, assert
-            expect(() => slaveRespond({ data: { type: 9999999, txt: "Unknown message" } } as any)).toThrowError("Message from worker cannot be processed 9999999");
+            expect(() => slaveRespond({ data: { txt: "Unknown message", type: 9999999 } } as any)).toThrowError("Message from worker cannot be processed 9999999");
         });
     });
 });

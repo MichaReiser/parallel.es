@@ -1,18 +1,18 @@
 import {DefaultInitializedParallelOptions} from "../../../src/common/parallel/parallel-options";
 import {ThreadPool} from "../../../src/common/thread-pool/thread-pool";
 import {ParallelChainImpl} from "../../../src/common/parallel/parallel-chain";
-import {ParallelGenerator, ConstCollectionGenerator} from "../../../src/common/parallel/parallel-generator";
+import {IParallelGenerator, ConstCollectionGenerator} from "../../../src/common/parallel/parallel-generator";
 
 describe("ParallelChainImpl", function () {
     let options: DefaultInitializedParallelOptions;
-    let generator: ParallelGenerator;
+    let generator: IParallelGenerator;
     let threadPool: ThreadPool;
 
     beforeEach(function () {
         threadPool = jasmine.createSpyObj("threadPool", ["scheduleTask", "createFunctionSerializer"]) as ThreadPool;
         options = {
-            threadPool: threadPool,
-            maxConcurrencyLevel: 2
+            maxConcurrencyLevel: 2,
+            threadPool
         };
 
         generator = new ConstCollectionGenerator([1, 2, 3, 4, 5]);

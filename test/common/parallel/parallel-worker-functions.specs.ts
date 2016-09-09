@@ -14,8 +14,8 @@ describe("ParallelWorkerFunctions", function () {
             // arrange
             const generator = jasmine.createSpy("generator").and.returnValue(toIterator([1, 2, 3]));
             const serializedGenerator = {
-                functionId: 1000,
                 ______serializedFunctionCall: true,
+                functionId: 1000,
                 params: []
             };
             spyOn(deserializer, "deserializeFunctionCall").and.returnValue(generator);
@@ -34,8 +34,8 @@ describe("ParallelWorkerFunctions", function () {
 
             // act
             ParallelWorkerFunctions.process({
-                functionId: 1000,
                 ______serializedFunctionCall: true,
+                functionId: 1000,
                 params: []
             }, [], { functionCallDeserializer: deserializer });
 
@@ -53,19 +53,19 @@ describe("ParallelWorkerFunctions", function () {
 
             // act
             ParallelWorkerFunctions.process({
-                functionId: 1000,
                 ______serializedFunctionCall: true,
+                functionId: 1000,
                 params: []
             }, [{
                 coordinator: {
-                    functionId: 1001,
                     ______serializedFunctionCall: true,
+                    functionId: 1001,
                     params: []
                 },
                 iteratee: {
+                    ______serializedFunctionCall: true,
                     functionId: 1002,
-                    params: [],
-                    ______serializedFunctionCall: true
+                    params: []
                 }
             }], { functionCallDeserializer: deserializer });
 
@@ -83,19 +83,19 @@ describe("ParallelWorkerFunctions", function () {
 
             // act
             const result = ParallelWorkerFunctions.process({
-                functionId: 1000,
                 ______serializedFunctionCall: true,
+                functionId: 1000,
                 params: []
             }, [{
                 coordinator: {
-                    functionId: 1001,
                     ______serializedFunctionCall: true,
+                    functionId: 1001,
                     params: []
                 },
                 iteratee: {
+                    ______serializedFunctionCall: true,
                     functionId: 1002,
-                    params: [],
-                    ______serializedFunctionCall: true
+                    params: []
                 }
             }], { functionCallDeserializer: deserializer });
 

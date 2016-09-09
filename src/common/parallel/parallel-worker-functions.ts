@@ -1,11 +1,11 @@
-import {SerializedParallelAction} from "./parallel-action";
-import {toArray, toIterator} from "../util/iterator";
-import {SerializedFunctionCall} from "../serialization/serialized-function-call";
 import {FunctionCallDeserializer} from "../serialization/function-call-deserializer";
+import {ISerializedFunctionCall} from "../serialization/serialized-function-call";
 import {staticFunctionRegistry} from "../serialization/static-function-registry";
+import {toArray, toIterator} from "../util/iterator";
+import {SerializedParallelAction} from "./parallel-action";
 
 export const ParallelWorkerFunctions = {
-    process<T, TResult>(generator: SerializedFunctionCall, actions: SerializedParallelAction[], options: { functionCallDeserializer: FunctionCallDeserializer }): TResult[] {
+    process<T, TResult>(generator: ISerializedFunctionCall, actions: SerializedParallelAction[], options: { functionCallDeserializer: FunctionCallDeserializer }): TResult[] {
         const generatorFunction = options.functionCallDeserializer.deserializeFunctionCall(generator, true);
         let iterator = generatorFunction() as Iterator<T>;
 
@@ -37,6 +37,7 @@ export const ParallelWorkerFunctions = {
         return {
             next() {
                 let current: IteratorResult<T>;
+                /* tslint:disable:no-conditional-assignment */
                 while (!(current = iterator.next()).done) {
                     if (predicate(current.value)) {
                         return current;
@@ -52,6 +53,7 @@ export const ParallelWorkerFunctions = {
         let accumulatedValue = defaultValue;
         let current: IteratorResult<T>;
 
+        /* tslint:disable:no-conditional-assignment */
         while (!(current = iterator.next()).done) {
             accumulatedValue = iteratee(accumulatedValue, current.value);
         }
@@ -91,7 +93,7 @@ export const ParallelWorkerFunctions = {
         return element;
     },
 
-    toIterator: toIterator
+    toIterator
 };
 
 staticFunctionRegistry.registerStaticFunctions(ParallelWorkerFunctions);

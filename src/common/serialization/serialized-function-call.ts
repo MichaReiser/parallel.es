@@ -1,10 +1,9 @@
-export interface SerializedFunctionCall {
+export interface ISerializedFunctionCall {
     functionId: number;
-    params: any[];
-    ______serializedFunctionCall: boolean;
-    name?: string;
+    readonly params: any[];
+    readonly ______serializedFunctionCall: boolean;
 }
 
-export function isSerializedFunctionCall(potentialFunc: any): potentialFunc is SerializedFunctionCall {
+export function isSerializedFunctionCall(potentialFunc: any): potentialFunc is ISerializedFunctionCall {
     return potentialFunc.______serializedFunctionCall === true;
 }

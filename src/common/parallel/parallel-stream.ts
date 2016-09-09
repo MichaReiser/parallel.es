@@ -11,7 +11,7 @@ import {Task} from "../task/task";
  * Catch can be used to register to task failures. Without a catch handler, task failures are silently ignored.
  * The stream implements a fast fail interface. If any task fail, all other tasks are canceled.
  */
-export interface ParallelStream<TSubResult, TEndResult> extends PromiseLike<TEndResult> {
+export interface IParallelStream<TSubResult, TEndResult> extends PromiseLike<TEndResult> {
     /**
      * Registers the given next, error and complete handler.
      * @param onNext is called with the sub result produced by a completed task. The sub result of this task and the relative
@@ -19,37 +19,37 @@ export interface ParallelStream<TSubResult, TEndResult> extends PromiseLike<TEnd
      * @param onError is invoked whenever any task has failed.
      * @param onComplete is invoked with the joined result when all tasks have completed
      */
-    subscribe(onNext: (this: void, subResult: TSubResult, taskIndex: number) => void, onError?: (this: void, reason: any) => void, onComplete?: (this: void, result: TEndResult) => void): ParallelStream<TSubResult, TEndResult>;
+    subscribe(onNext: (this: void, subResult: TSubResult, taskIndex: number) => void, onError?: (this: void, reason: any) => void, onComplete?: (this: void, result: TEndResult) => void): IParallelStream<TSubResult, TEndResult>;
 
     catch<TResult>(onrejected: (reason: any) => TResult | PromiseLike<TResult>): Promise<TResult>;
     catch(onrejected: (reason: any) => void): Promise<TEndResult>;
 }
 
-export class ParallelStreamImpl<TSubResult, TEndResult> implements ParallelStream<TSubResult, TEndResult> {
+export class ParallelStreamImpl<TSubResult, TEndResult> implements IParallelStream<TSubResult, TEndResult> {
     /**
      * Internal promise, is resolved as soon as all sub results have been calculated and are joined
      */
-    private _promise: Promise<TEndResult>;
+    private promise: Promise<TEndResult>;
 
     /**
      * The tasks executed by this stream
      */
-    private _tasks: Task<TSubResult>[];
+    private tasks: Task<TSubResult>[];
 
     /**
      * Resolves the _promise with the given end result
      */
-    private _resolve: (result: TEndResult) => void;
+    private resolve: (result: TEndResult) => void;
 
     /**
      * Rejects the _promise with the given reason
      */
-    private _reject: (reason: any) => void;
+    private reject: (reason: any) => void;
 
     /**
      * Number of still pending tasks
      */
-    private _pending: number;
+    private pending: number;
 
     /**
      * Indicator if any task has failed. If this is the case, then registered next handlers are no longer called
@@ -57,34 +57,34 @@ export class ParallelStreamImpl<TSubResult, TEndResult> implements ParallelStrea
      * @type {boolean}
      * @private
      */
-    private _failed: boolean = false;
+    private failed: boolean = false;
 
     /**
      * Array containing the retrieved sub results. Not yet retrieved sub results are default initialized
      */
-    private _subResults: TSubResult[];
+    private subResults: TSubResult[];
 
     /**
      * Function used to join the sub results to the end result
      */
-    private _joiner: (subResults: TSubResult[]) => TEndResult | PromiseLike<TEndResult>;
+    private joiner: (subResults: TSubResult[]) => TEndResult | PromiseLike<TEndResult>;
 
     /**
      * Registered handlers that should be called for each sub result
      * @type {Array}
      * @private
      */
-    private _nextHandlers: { (subResult: TSubResult, worker: number): void}[] = [];
+    private nextHandlers: { (subResult: TSubResult, worker: number): void}[] = [];
 
     constructor(tasks: Task<TSubResult>[], join: (subResults: TSubResult[]) => TEndResult | PromiseLike<TEndResult>) {
-        this._tasks = tasks;
-        this._joiner = join;
-        this._subResults = new Array(tasks.length);
-        this._pending = tasks.length;
+        this.tasks = tasks;
+        this.joiner = join;
+        this.subResults = new Array(tasks.length);
+        this.pending = tasks.length;
 
-        this._promise = new Promise((resolve, reject) => {
-            this._resolve = resolve;
-            this._reject = reject;
+        this.promise = new Promise((resolvePromise, rejectPromise) => {
+            this.resolve = resolvePromise;
+            this.reject = rejectPromise;
         });
 
         tasks.forEach(
@@ -94,60 +94,60 @@ export class ParallelStreamImpl<TSubResult, TEndResult> implements ParallelStrea
         );
     }
 
-    subscribe(onNext: (subResult: TSubResult, worker: number) => void, onError?: (reason: any) => void, onComplete?: (result: TEndResult) => void): ParallelStream<TSubResult, TEndResult> {
-        this._nextHandlers.push(onNext);
+    public subscribe(onNext: (subResult: TSubResult, worker: number) => void, onError?: (reason: any) => void, onComplete?: (result: TEndResult) => void): IParallelStream<TSubResult, TEndResult> {
+        this.nextHandlers.push(onNext);
 
         if (onError) {
-            this._promise.catch(onError);
+            this.promise.catch(onError);
         }
 
         if (onComplete) {
-            this._promise.then(onComplete);
+            this.promise.then(onComplete);
         }
 
         return this;
     }
 
-    then(onfulfilled?: any, onrejected?: any): Promise<any> {
-        return this._promise.then(onfulfilled, onrejected);
+    public then(onfulfilled?: any, onrejected?: any): Promise<any> {
+        return this.promise.then(onfulfilled, onrejected);
     }
 
-    catch(onrejected: any): Promise<any> {
-        return this._promise.catch(onrejected);
+    public catch(onrejected: any): Promise<any> {
+        return this.promise.catch(onrejected);
     }
 
     private _taskCompleted(subResult: TSubResult, index: number): void {
-        if (this._pending === 0) {
+        if (this.pending === 0) {
             throw new Error("Stream already resolved but taskCompleted called one more time");
         }
 
-        --this._pending;
+        --this.pending;
 
-        this._subResults[index] = subResult;
+        this.subResults[index] = subResult;
 
-        if (this._failed) {
+        if (this.failed) {
             return;
         }
 
-        for (const nextHandler of this._nextHandlers) {
+        for (const nextHandler of this.nextHandlers) {
             nextHandler.apply(undefined, [subResult, index]);
         }
 
-        if (this._pending === 0) {
-            this._resolve(this._joiner.apply(undefined, [this._subResults]));
+        if (this.pending === 0) {
+            this.resolve(this.joiner.apply(undefined, [this.subResults]));
         }
     }
 
     private _taskFailed(reason: any): void {
-        this._failed = true;
+        this.failed = true;
 
         // Cancel all not yet complted tasks
-        for (let i = 0; i < this._tasks.length; ++i) {
-            if (typeof(this._subResults[i]) === "undefined") {
-                this._tasks[i].cancel();
+        for (let i = 0; i < this.tasks.length; ++i) {
+            if (typeof(this.subResults[i]) === "undefined") {
+                this.tasks[i].cancel();
             }
         }
 
-        this._reject(reason);
+        this.reject(reason);
     }
 }

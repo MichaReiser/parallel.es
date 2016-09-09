@@ -1,11 +1,10 @@
-import {FunctionDefinition} from "../../common/worker/function-defintion";
 import {FunctionCallDeserializer} from "../../common/serialization/function-call-deserializer";
 import {TaskDefinition} from "../../common/task/task-definition";
-import {BrowserSlave} from "./browser-slave";
+import {FunctionDefinition} from "../../common/worker/function-defintion";
 import {
-    isFunctionResponse, workerResultMessage, functionExecutionError,
-    isInitializeMessage, isScheduleTask, requestFunctionMessage
-} from "../../common/worker/worker-messages";
+    functionExecutionError, isFunctionResponse, isInitializeMessage, isScheduleTask, requestFunctionMessage,
+    workerResultMessage } from "../../common/worker/worker-messages";
+import {BrowserSlave} from "./browser-slave";
 
 export abstract class SlaveState {
     constructor(public name: string, protected slave: BrowserSlave) {}
@@ -13,14 +12,16 @@ export abstract class SlaveState {
     /**
      * Executed when the slave changes its state to this state.
      */
-    enter(): void {}
+    public enter(): void {
+        // intentionally empty
+    }
 
     /**
      * Executed whenever the slave receives a message from the ui-thread while being in this state
      * @param event the received message
      * @returns {boolean} true if the state has handled the message, false otherwise
      */
-    onMessage(event: MessageEvent): boolean { return false; }
+    public onMessage(event: MessageEvent): boolean { return false; }
 }
 
 /**
@@ -31,7 +32,7 @@ export class DefaultSlaveState extends SlaveState {
         super("Default", slave);
     }
 
-    onMessage(event: MessageEvent): boolean {
+    public onMessage(event: MessageEvent): boolean {
         if (isInitializeMessage(event.data)) {
             this.slave.id = event.data.workerId;
             this.slave.changeState(new IdleSlaveState(this.slave));
@@ -49,7 +50,7 @@ export class IdleSlaveState extends SlaveState {
         super("Idle", slave);
     }
 
-    onMessage(event: MessageEvent): boolean {
+    public onMessage(event: MessageEvent): boolean {
         if (!isScheduleTask(event.data)) {
             return false;
         }
@@ -77,7 +78,7 @@ export class WaitingForFunctionDefinitionState extends SlaveState {
         super("WaitingForFunctionDefinition", slave);
     }
 
-    onMessage(event: MessageEvent): boolean {
+    public onMessage(event: MessageEvent): boolean {
         const message = event.data;
         if (isFunctionResponse(message)) {
             for (const definition of message.functions as FunctionDefinition[]) {
@@ -95,12 +96,11 @@ export class WaitingForFunctionDefinitionState extends SlaveState {
  * The slave is executing the function
  */
 export class ExecuteFunctionState extends SlaveState {
-    name = "Executing";
     constructor(slave: BrowserSlave, private task: TaskDefinition) {
         super("Executing", slave);
     }
 
-    enter(): void {
+    public enter(): void {
         const functionDeserializer = new FunctionCallDeserializer(this.slave.functionCache);
 
         try {

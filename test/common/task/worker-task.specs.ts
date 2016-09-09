@@ -9,9 +9,9 @@ describe("WorkerTask", function () {
     let taskDefinition: TaskDefinition = {
         id: 1,
         main: {
+            ______serializedFunctionCall: true,
             functionId: 2,
-            params: [5, 10],
-            ______serializedFunctionCall: true
+            params: [5, 10]
         },
         usedFunctionIds: [2]
     };
@@ -73,8 +73,7 @@ describe("WorkerTask", function () {
             runSpy.and.callFake(function () {
                 if (worker.oncomplete) {
                     worker.oncomplete(10);
-                }
-                else {
+                } else {
                     fail("The worker thread has not registered to the oncomplete event");
                 }
             });

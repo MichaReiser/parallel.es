@@ -8,14 +8,14 @@ describe("SimpleMap", function () {
     });
 
     describe("set", function () {
-       it("adds a new element to the map if the key has not been in the map before", function () {
+        it("adds a new element to the map if the key has not been in the map before", function () {
             // act
             map.set("test", "value");
 
             // assert
             expect(map.has("test")).toBe(true);
             expect(map.get("test")).toEqual("value");
-       });
+        });
 
         it("overrides an existing element in the map", function () {
             // arrange
@@ -37,10 +37,10 @@ describe("SimpleMap", function () {
     });
 
     describe("get", function () {
-       it("returns undefined for not existing keys", function () {
+        it("returns undefined for not existing keys", function () {
            // act, assert
            expect(map.get("test")).toBeUndefined();
-       });
+        });
 
         it("does not return internal properties", function () {
             // act, assert

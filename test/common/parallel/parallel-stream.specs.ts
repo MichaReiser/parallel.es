@@ -1,6 +1,6 @@
 import {Task} from "../../../src/common/task/task";
 import {TaskDefinition} from "../../../src/common/task/task-definition";
-import {ParallelStreamImpl, ParallelStream} from "../../../src/common/parallel/parallel-stream";
+import {ParallelStreamImpl, IParallelStream} from "../../../src/common/parallel/parallel-stream";
 
 describe("ParallelStream", function () {
     let tasks: FakeTask<string>[];
@@ -17,7 +17,7 @@ describe("ParallelStream", function () {
     describe("subscribe", function () {
         it("calls the onNext handler for every resolved sub result", function (done) {
             // arrange
-            const stream: ParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
             const onNextSpy = jasmine.createSpy("onNext");
             stream.subscribe(onNextSpy);
 
@@ -38,7 +38,7 @@ describe("ParallelStream", function () {
 
         it("passes the correct task index even if the tasks are resolved out of order", function (done) {
             // arrange
-            const stream: ParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
             const onNextSpy = jasmine.createSpy("onNext");
             stream.subscribe(onNextSpy);
 
@@ -59,7 +59,7 @@ describe("ParallelStream", function () {
 
         it("does not trigger the onNext callback after the first task has failed (fail fast)", function (done) {
             // arrange
-            const stream: ParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
             const onNextSpy = jasmine.createSpy("onNext");
             stream.subscribe(onNextSpy);
 
@@ -78,7 +78,7 @@ describe("ParallelStream", function () {
 
         it("multiple onNext handlers can be registered", function (done) {
             // arrange
-            const stream: ParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
             const onNextSpy = jasmine.createSpy("onNext");
             const onNextSpy2 = jasmine.createSpy("onNext2");
             stream.subscribe(onNextSpy);
@@ -100,7 +100,7 @@ describe("ParallelStream", function () {
 
         it("The onError callback is called if a task fails", function (done) {
             // arrange
-            const stream: ParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
             const onNextSpy = jasmine.createSpy("onNext");
             const onError = jasmine.createSpy("onError");
             stream.subscribe(onNextSpy, onError);
@@ -117,7 +117,7 @@ describe("ParallelStream", function () {
 
         it("Calls the onComplete handler if all tasks have been completed", function (done) {
             // arrange
-            const stream: ParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
             const onNextSpy = jasmine.createSpy("onNext");
             const onError = jasmine.createSpy("onError");
             const onComplete = jasmine.createSpy("onComplete");
@@ -139,7 +139,7 @@ describe("ParallelStream", function () {
         describe("then", function () {
             it("calls the onFulfilled handler if all tasks have been completed", function (done) {
                 // arrange
-                const stream: ParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
+                const stream: IParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
                 const onFulfilled = jasmine.createSpy("onFulfilled");
                 const completed = stream.then(onFulfilled);
 
@@ -160,7 +160,7 @@ describe("ParallelStream", function () {
 
             it("calls the onRejected handler if any tasks failed", function (done) {
                 // arrange
-                const stream: ParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
+                const stream: IParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
 
                 // act
                 task1.resolve("Good");
@@ -180,7 +180,7 @@ describe("ParallelStream", function () {
         describe("catch", function () {
             it("calls the onrejected handler if any task failed", function (done) {
                 // arrange
-                const stream: ParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
+                const stream: IParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
 
                 // act
                 task1.resolve("Good");
@@ -200,7 +200,7 @@ describe("ParallelStream", function () {
 
             it("cancels all not yet completed tasks", function (done) {
                 // arrange
-                const stream: ParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
+                const stream: IParallelStream<string, string> = new ParallelStreamImpl(tasks, joiner);
 
                 // act
                 task1.resolve("Good");
@@ -221,13 +221,13 @@ describe("ParallelStream", function () {
     });
 
     class FakeTask<T> implements Task<T> {
-        taskDefinition: TaskDefinition;
-        private promise: Promise<T>;
-        isCanceled = false;
-        isCancellationRequested = false;
+        public taskDefinition: TaskDefinition;
+        public isCanceled = false;
+        public isCancellationRequested = false;
 
-        resolve: (result: T) => void;
-        reject: (reason: any) => void;
+        public resolve: (result: T) => void;
+        public reject: (reason: any) => void;
+        private promise: Promise<T>;
 
         constructor() {
             this.promise = new Promise((resolve, reject) => {
@@ -236,15 +236,15 @@ describe("ParallelStream", function () {
             });
         }
 
-        cancel() {
+        public cancel() {
             this.isCancellationRequested = true;
         }
 
-        catch(onrejected?: any): Promise<any> {
+        public catch(onrejected?: any): Promise<any> {
             return this.promise.catch(onrejected);
         }
 
-        then(onfulfilled?: any, onrejected?: any): PromiseLike<any> {
+        public then(onfulfilled?: any, onrejected?: any): PromiseLike<any> {
             return this.promise.then(onfulfilled, onrejected);
         }
     }

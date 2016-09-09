@@ -1,4 +1,4 @@
-import {SerializedFunctionCall} from "../serialization/serialized-function-call";
+import {ISerializedFunctionCall} from "../serialization/serialized-function-call";
 export interface ParallelAction {
     readonly iteratee: Function;
     readonly coordinator: Function;
@@ -6,6 +6,6 @@ export interface ParallelAction {
 }
 
 export interface SerializedParallelAction {
-    readonly iteratee: SerializedFunctionCall;
-    readonly coordinator: SerializedFunctionCall;
+    readonly iteratee: ISerializedFunctionCall;
+    readonly coordinator: ISerializedFunctionCall;
 }

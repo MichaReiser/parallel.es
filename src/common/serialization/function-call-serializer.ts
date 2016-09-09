@@ -1,23 +1,22 @@
-import {SerializedFunctionCall} from "./serialized-function-call";
+import {ISerializedFunctionCall} from "./serialized-function-call";
 import {FunctionRegistry} from "./function-registry";
 
 export class FunctionCallSerializer {
-    private _serializedFunctionIds: { [id: string]: number } = {};
+    private serializedFunctionIdsMap: { [id: string]: number } = {};
 
     constructor(private functionRegistry: FunctionRegistry) {}
 
-    serializeFunctionCall(func: Function, ...params: any[]): SerializedFunctionCall {
+    public serializeFunctionCall(func: Function, ...params: any[]): ISerializedFunctionCall {
         const funcId = this.functionRegistry.getOrSetId(func);
-        this._serializedFunctionIds[funcId] = funcId;
+        this.serializedFunctionIdsMap[funcId] = funcId;
         return {
-            functionId: funcId,
-            params: params,
             ______serializedFunctionCall: true,
-            name: (func as any).name
+            functionId: funcId,
+            params
         };
     }
 
     get serializedFunctionIds(): number[] {
-        return Object.keys(this._serializedFunctionIds).map(key => this._serializedFunctionIds[key]);
+        return Object.keys(this.serializedFunctionIdsMap).map(key => this.serializedFunctionIdsMap[key]);
     }
 }
