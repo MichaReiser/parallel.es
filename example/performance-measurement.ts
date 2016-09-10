@@ -38,9 +38,9 @@ function createAsyncMandelbrotTasks(mandelbrotOptions: IMandelbrotOptions, ...ma
 }
 
 function createExamples(): IExample[] {
-    const mandelbrotHeight = (document.querySelector("#mandelbrot-height") as HTMLInputElement).valueAsNumber;
-    const mandelbrotWidth = (document.querySelector("#mandelbrot-width") as HTMLInputElement).valueAsNumber;
-    const mandelbrotIterations = (document.querySelector("#mandelbrot-iterations") as HTMLInputElement).valueAsNumber;
+    const mandelbrotHeight = parseInt((document.querySelector("#mandelbrot-height") as HTMLInputElement).value, 10)
+    const mandelbrotWidth = parseInt((document.querySelector("#mandelbrot-width") as HTMLInputElement).value, 10);
+    const mandelbrotIterations = parseInt((document.querySelector("#mandelbrot-iterations") as HTMLInputElement).value, 10);
 
     const mandelbrotOptions = createMandelOptions(mandelbrotWidth, mandelbrotHeight, mandelbrotIterations);
 
