@@ -29,27 +29,6 @@ describe("ParallelChainImpl", function () {
         generator = new ConstCollectionGenerator([1, 2, 3, 4, 5]);
     });
 
-    describe("environment", function () {
-        it("returns the environment of the chain if called without any arguments", function () {
-            // arrange
-            const chain = createParallelChain(generator, options, { test: 10 });
-
-            // act, assert
-            expect(chain.environment()).toEqual({ test: 10 });
-        });
-
-        it("sets the new environment if called with an argument", function () {
-            // arrange
-            let chain = createParallelChain(generator, options, { test: 10 });
-
-            // act
-            chain = chain.environment({ power: 3, test: 15 });
-
-            // assert
-            expect(chain.environment()).toEqual({ power: 3, test: 15 });
-        });
-    });
-
     describe("getParallelTaskScheduling", function () {
         it("returns the options.maxConcurrencyLevel as numberOfWorkers by default", function () {
             // arrange
@@ -169,6 +148,7 @@ describe("ParallelChainImpl", function () {
 
             const powerOf = (value: number) => value ** 2;
             const even = (value: number) => value % 2 === 0;
+            const initializer = () => { return { abc: "abcdefghijklmnopqrstuvwxyz" }; };
 
             createFunctionSerializerSpy.and.returnValue(functionSerializer);
 
@@ -188,6 +168,9 @@ describe("ParallelChainImpl", function () {
                 if (func === powerOf) {
                     return { ______serializedFunctionCall: true, functionId: 5, params };
                 }
+                if (func === initializer) {
+                    return { ______serializedFunctionCall: true, functionId: 6, params };
+                }
                 throw new Error("Unknown function " + func);
             });
 
@@ -203,6 +186,7 @@ describe("ParallelChainImpl", function () {
             // act
             createParallelChain<number, number>(generator, options)
                 .environment({ test: 10 })
+                .initializer(initializer)
                 .map(powerOf)
                 .filter(even)
                 .result();
@@ -214,18 +198,21 @@ describe("ParallelChainImpl", function () {
                     ______serializedFunctionCall: true,
                     functionId: 1, // process
                     params: [
-                        generatorSlice1,
-                        [  // actions
-                            {
-                                coordinator: { ______serializedFunctionCall: true, functionId: 2, params: [] }, // map
-                                iteratee: { ______serializedFunctionCall: true, functionId: 5, params: [] } // powerOf
-                            },
-                            {
-                                coordinator: { ______serializedFunctionCall: true, functionId: 3, params: [] }, // filter
-                                iteratee: { ______serializedFunctionCall: true, functionId: 4, params: [] } // even callback
-                            }
-                        ],
-                        { taskIndex: 0, test: 10 }
+                        {
+                            actions: [
+                                {
+                                    coordinator: { ______serializedFunctionCall: true, functionId: 2, params: [] }, // map
+                                    iteratee: { ______serializedFunctionCall: true, functionId: 5, params: [] } // powerOf
+                                },
+                                {
+                                    coordinator: { ______serializedFunctionCall: true, functionId: 3, params: [] }, // filter
+                                    iteratee: { ______serializedFunctionCall: true, functionId: 4, params: [] } // even callback
+                                }
+                            ],
+                            environment: { taskIndex: 0, test: 10 },
+                            generator: generatorSlice1,
+                            initializer: { ______serializedFunctionCall: true, functionId: 6, params: [] }
+                        }
                     ]
                 },
                 taskIndex: 0,
@@ -239,18 +226,21 @@ describe("ParallelChainImpl", function () {
                     ______serializedFunctionCall: true,
                     functionId: 1, // process
                     params: [
-                        generatorSlice2,
-                        [  // actions
-                            {
-                                coordinator: { ______serializedFunctionCall: true, functionId: 2, params: [] }, // map
-                                iteratee: { ______serializedFunctionCall: true, functionId: 5, params: [] } // powerOf
-                            },
-                            {
-                                coordinator: { ______serializedFunctionCall: true, functionId: 3, params: [] }, // filter
-                                iteratee: { ______serializedFunctionCall: true, functionId: 4, params: [] } // even callback
-                            }
-                        ],
-                        { taskIndex: 1, test: 10 },
+                        {
+                            actions: [  // actions
+                                {
+                                    coordinator: { ______serializedFunctionCall: true, functionId: 2, params: [] }, // map
+                                    iteratee: { ______serializedFunctionCall: true, functionId: 5, params: [] } // powerOf
+                                },
+                                {
+                                    coordinator: { ______serializedFunctionCall: true, functionId: 3, params: [] }, // filter
+                                    iteratee: { ______serializedFunctionCall: true, functionId: 4, params: [] } // even callback
+                                }
+                            ],
+                            environment: { taskIndex: 1, test: 10 },
+                            generator: generatorSlice2,
+                            initializer: { ______serializedFunctionCall: true, functionId: 6, params: [] }
+                        }
                     ]
                 },
                 taskIndex: 1,

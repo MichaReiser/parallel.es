@@ -5,12 +5,26 @@ import {toArray, toIterator} from "../util/iterator";
 import {ISerializedParallelAction} from "./parallel-action";
 import {IParallelTaskEnvironment} from "./parallel-environment";
 
-export const ParallelWorkerFunctions = {
-    process<T, TResult>(generator: ISerializedFunctionCall, actions: ISerializedParallelAction[], environment: IParallelTaskEnvironment, options: { functionCallDeserializer: FunctionCallDeserializer }): TResult[] {
-        const generatorFunction = options.functionCallDeserializer.deserializeFunctionCall(generator, true);
-        let iterator = generatorFunction(environment) as Iterator<T>;
+export interface IParallelProcessParams {
+    generator: ISerializedFunctionCall;
+    actions: ISerializedParallelAction[];
+    environment: IParallelTaskEnvironment;
+    initializer?: ISerializedFunctionCall;
+}
 
-        for (const action of actions) {
+export const ParallelWorkerFunctions = {
+    process<T, TResult>(definition: IParallelProcessParams, options: { functionCallDeserializer: FunctionCallDeserializer }): TResult[] {
+        let environment = definition.environment;
+
+        if (definition.initializer) {
+            const initializer = options.functionCallDeserializer.deserializeFunctionCall(definition.initializer);
+            environment = Object.assign(environment, initializer(environment));
+        }
+
+        const generatorFunction = options.functionCallDeserializer.deserializeFunctionCall(definition.generator, true);
+        let iterator = generatorFunction(definition.environment) as Iterator<T>;
+
+        for (const action of definition.actions) {
             const coordinator = options.functionCallDeserializer.deserializeFunctionCall<Iterator<T>>(action.coordinator);
             const iteratee = options.functionCallDeserializer.deserializeFunctionCall(action.iteratee);
             iterator = coordinator(iterator, iteratee, environment);

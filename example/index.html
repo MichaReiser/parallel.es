@@ -19,6 +19,9 @@
 	<input type="button" value="Run all..." id="all-run" class="btn btn-primary"/>
 
 	<h2>Mandelbrot</h2>
+	<p class="muted">
+		Requires IE Edge, Firefox, Chrome or Safari (full Canvas support)
+	</p>
 
 	<div>
 		<canvas id="mandelbrot-canvas" width="800" height="640">
@@ -33,32 +36,21 @@
 			<label for="mandelbrot-values-per-task">Number of lines calculated by a task</label>
 			<input type="number" value="10" name="mandelbrot-values-per-task" id="mandelbrot-values-per-task"/>
 		</div>
-		<input type="submit" id="mandelbrot-run-async" value="Run asynchronous..." class="btn btn-primary"/>
+		<input type="submit" id="mandelbrot-run-async" value="Run parallel..." class="btn btn-primary"/>
 	</form>
 
 
-	<h2>Times</h2>
+	<h2>Montecarlo</h2>
+	<table class="table" id="montecarlo-results">
+		<thead>
+			<tr>
+				<th>Run/Year</th>
+			</tr>
+		</thead>
+	</table>
 
-	<pre><code>
-parallel
-	.times(100, busyWait)
-	.value()
-	.then(result => console.log("Using times", result));
-	</code></pre>
-
-	<input type="button" id="times-run" value="Run..." class="btn btn-primary"/>
-
-
-	<h2>Common Functions</h2>
-	<pre><code>
-function busyWait(x) {
-	let i = 0;
-	for (; i < 10 ** 8; ++i) {
-		// nothing, just consume some cpu time and shorten your battery life.
-	}
-	return x;
-}
-	</code></pre>
+	<input type="button" id="montecarlo-run-sync" value="Run sync..." class="btn btn-primary"/>
+	<input type="button" id="montecarlo-run-parallel" value="Run parallel..." class="btn btn-primary"/>
 </div>
 
 	<script src="./example.parallel-es.js"></script>

@@ -27,7 +27,11 @@ describe("ParallelWorkerFunctions", function () {
             spyOn(deserializer, "deserializeFunctionCall").and.returnValue(generator);
 
             // act
-            ParallelWorkerFunctions.process(serializedGenerator, [], environment, { functionCallDeserializer: deserializer });
+            ParallelWorkerFunctions.process({
+                actions: [],
+                environment,
+                generator: serializedGenerator
+            }, { functionCallDeserializer: deserializer });
 
             // assert
             expect(deserializer.deserializeFunctionCall).toHaveBeenCalledWith(serializedGenerator, true);
@@ -40,10 +44,14 @@ describe("ParallelWorkerFunctions", function () {
 
             // act
             ParallelWorkerFunctions.process({
-                ______serializedFunctionCall: true,
-                functionId: 1000,
-                params: []
-            }, [], environment, { functionCallDeserializer: deserializer });
+                actions: [],
+                environment,
+                generator: {
+                    ______serializedFunctionCall: true,
+                        functionId: 1000,
+                    params: []
+                }
+            }, { functionCallDeserializer: deserializer });
 
             // assert
             expect(generator).toHaveBeenCalledWith(environment);
@@ -59,21 +67,25 @@ describe("ParallelWorkerFunctions", function () {
 
             // act
             ParallelWorkerFunctions.process({
-                ______serializedFunctionCall: true,
-                functionId: 1000,
-                params: []
-            }, [{
-                coordinator: {
+                environment,
+                actions: [{
+                    coordinator: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1001,
+                        params: []
+                    },
+                    iteratee: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1002,
+                        params: []
+                    }
+                }],
+                generator: {
                     ______serializedFunctionCall: true,
-                    functionId: 1001,
-                    params: []
-                },
-                iteratee: {
-                    ______serializedFunctionCall: true,
-                    functionId: 1002,
+                    functionId: 1000,
                     params: []
                 }
-            }], environment, { functionCallDeserializer: deserializer });
+            }, { functionCallDeserializer: deserializer });
 
             // assert
             expect(coordinator).toHaveBeenCalledWith(iterator, iteratee, environment);
@@ -89,24 +101,70 @@ describe("ParallelWorkerFunctions", function () {
 
             // act
             const result = ParallelWorkerFunctions.process({
-                ______serializedFunctionCall: true,
-                functionId: 1000,
-                params: []
-            }, [{
-                coordinator: {
+                environment,
+                actions: [{
+                    coordinator: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1001,
+                        params: []
+                    },
+                    iteratee: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1002,
+                        params: []
+                    }
+                }],
+                generator: {
                     ______serializedFunctionCall: true,
-                    functionId: 1001,
-                    params: []
-                },
-                iteratee: {
-                    ______serializedFunctionCall: true,
-                    functionId: 1002,
+                    functionId: 1000,
                     params: []
                 }
-            }], environment, { functionCallDeserializer: deserializer });
+            }, { functionCallDeserializer: deserializer });
 
             // assert
             expect(result).toEqual([2, 4]);
+        });
+
+        it("joins the passed in environment with the result of the initializer", function () {
+            // arrange
+            const iterator = toIterator([1, 2, 3]);
+            const generator = jasmine.createSpy("generator").and.returnValue(iterator);
+            const coordinator = jasmine.createSpy("coordinator").and.returnValue(toIterator([2, 4]));
+            const iteratee = jasmine.createSpy("iteratee");
+            const initializer = jasmine.createSpy("initializer");
+            spyOn(deserializer, "deserializeFunctionCall").and.returnValues(initializer, generator, coordinator, iteratee);
+
+            initializer.and.returnValues({ fromInitializer: true });
+
+            // act
+            ParallelWorkerFunctions.process({
+                actions: [{
+                    coordinator: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1001,
+                        params: []
+                    },
+                    iteratee: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1002,
+                        params: []
+                    }
+                }],
+                environment,
+                generator: {
+                    ______serializedFunctionCall: true,
+                    functionId: 1000,
+                    params: []
+                },
+                initializer: {
+                    ______serializedFunctionCall: true,
+                    functionId: 1003,
+                    params: []
+                }
+            }, { functionCallDeserializer: deserializer });
+
+            // assert
+            expect(coordinator).toHaveBeenCalledWith(iterator, iteratee, { fromInitializer: true, taskIndex: 2 });
         });
     });
 

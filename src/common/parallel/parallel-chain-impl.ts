@@ -1,11 +1,11 @@
-import {IParallelChain} from "./parallel-chain";
+import {IParallelChain, IParallelChainInitializer} from "./parallel-chain";
 import {IParallelStream, ParallelStreamImpl} from "./parallel-stream";
 import {IParallelTaskScheduling} from "./parallel-task-scheduling";
 import {ITaskDefinition} from "../task/task-definition";
 import {IParallelGenerator} from "./parallel-generator";
 import {IParallelAction} from "./parallel-action";
 import {DefaultInitializedParallelOptions} from "./parallel-options";
-import {ParallelWorkerFunctions} from "./parallel-worker-functions";
+import {ParallelWorkerFunctions, IParallelProcessParams} from "./parallel-worker-functions";
 import {IEmptyParallelEnvironment, IParallelTaskEnvironment} from "./parallel-environment";
 import {IParallelTaskDefinition} from "./parallel-task-definition";
 
@@ -24,28 +24,31 @@ export function createParallelChain<TIn, TEnv extends IEmptyParallelEnvironment,
         environment = sharedEnv;
     }
 
-    return new ParallelChainImpl(generator, options, environment, actions);
+    return new ParallelChainImpl(generator, options, environment, undefined, actions);
 }
 
-export class ParallelChainImpl<TIn, TEnv extends {}, TOut> implements IParallelChain<TIn, TEnv, TOut> {
+export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut> implements IParallelChain<TIn, TEnv, TOut> {
 
     public generator: IParallelGenerator;
+    private initializerFunc?: IParallelChainInitializer<TEnv, any>;
     private options: DefaultInitializedParallelOptions;
-    private sharedEnvironment: TEnv;
+    private sharedEnvironment: IEmptyParallelEnvironment;
     private actions: IParallelAction[];
 
-    constructor(generator: IParallelGenerator, options: DefaultInitializedParallelOptions, sharedEnv: TEnv, actions: IParallelAction[] = []) {
+    constructor(generator: IParallelGenerator, options: DefaultInitializedParallelOptions, sharedEnv: IEmptyParallelEnvironment, initializerFunc?: IParallelChainInitializer<TEnv, any>, actions: IParallelAction[] = []) {
         this.generator = generator;
         this.options = options;
         this.sharedEnvironment = sharedEnv;
+        this.initializerFunc = initializerFunc;
         this.actions = actions;
     }
 
-    public environment<TEnvNew extends TEnv>(newEnv?: TEnvNew): any {
-        if (!newEnv) {
-            return this.sharedEnvironment;
-        }
-        return new ParallelChainImpl<TIn, TEnvNew, TOut>(this.generator, this.options, newEnv, this.actions);
+    public environment<TEnvNew extends TEnv>(newEnv: TEnvNew): IParallelChain<TIn, TEnvNew, TOut> {
+        return new ParallelChainImpl<TIn, TEnvNew, TOut>(this.generator, this.options, newEnv, this.initializerFunc, this.actions);
+    }
+
+    public initializer<TEnvAdditional>(initializer: IParallelChainInitializer<TEnv, TEnvAdditional>): IParallelChain<TIn, TEnv & TEnvAdditional, TOut> {
+        return new ParallelChainImpl<TIn, TEnv & TEnvAdditional, TOut>(this.generator, this.options, this.sharedEnvironment, initializer, this.actions);
     }
 
     public map<TResult>(mapper: (this: void, element: TOut, env: TEnv & IParallelTaskEnvironment) => TResult): IParallelChain<TIn, TEnv, TResult> {
@@ -53,16 +56,16 @@ export class ParallelChainImpl<TIn, TEnv extends {}, TOut> implements IParallelC
     }
 
     public reduce<TResult>(defaultValue: TResult, accumulator: (this: void, memo: TResult, value: TOut, env: TEnv & IParallelTaskEnvironment) => TResult, combiner?: (this: void, sub1: TResult, sub2: TResult) => TResult): IParallelStream<TResult[], TResult> {
-        let combineOperation: (accumulatedValue: TResult, value: TResult) => TResult;
-
-        if (!combiner) {
-            combineOperation = accumulator as any;
-        }
-
+        const combineOperation: (accumulatedValue: TResult, value: TResult) => TResult = combiner || accumulator as any;
         const stream = this._chain(ParallelWorkerFunctions.reduce, accumulator, defaultValue)._stream((intermediateResults: TResult[][]) => {
-            let sum = defaultValue;
+            if (intermediateResults.length === 0) {
+                return defaultValue;
+            }
 
-            for (const temp of intermediateResults) {
+            const [head, ...tail] = intermediateResults;
+            let sum = head[0];
+
+            for (const temp of tail) {
                 sum = combineOperation(sum, temp[0]);
             }
 
@@ -119,13 +122,21 @@ export class ParallelChainImpl<TIn, TEnv extends {}, TOut> implements IParallelC
                 iteratee: functionCallSerializer.serializeFunctionCall(action.iteratee)
             };
         });
+        const initializer = this.initializerFunc ? functionCallSerializer.serializeFunctionCall(this.initializerFunc) : undefined;
 
         for (let i = 0; i < scheduling.numberOfWorkers; ++i) {
-            const environment = Object.assign<IParallelTaskEnvironment, TEnv>({ taskIndex: i }, this.sharedEnvironment);
+            const environment = Object.assign<IParallelTaskEnvironment, IEmptyParallelEnvironment>({ taskIndex: i }, this.sharedEnvironment);
             const generator = this.generator.serializeSlice(i, scheduling.valuesPerWorker, functionCallSerializer);
 
+            const processParams: IParallelProcessParams = {
+                actions: serializedActions,
+                environment,
+                generator,
+                initializer
+            };
+
             const taskDefinition: IParallelTaskDefinition = {
-                main: functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctions.process, generator, serializedActions, environment),
+                main: functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctions.process, processParams),
                 taskIndex: i,
                 usedFunctionIds: functionCallSerializer.serializedFunctionIds,
                 valuesPerWorker: scheduling.valuesPerWorker
@@ -138,6 +149,6 @@ export class ParallelChainImpl<TIn, TEnv extends {}, TOut> implements IParallelC
 
     private _chain<TResult> (func: Function, iteratee: Function, ...params: any[]): ParallelChainImpl<TIn, TEnv, TResult> {
         const action = { coordinator: func, iteratee, coordinatorParams: params };
-        return new ParallelChainImpl(this.generator, this.options, this.sharedEnvironment, [...this.actions, action]);
+        return new ParallelChainImpl(this.generator, this.options, this.sharedEnvironment, this.initializerFunc, [...this.actions, action]);
     }
 }
