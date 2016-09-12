@@ -58,12 +58,13 @@ function createMontecarloExamples(options: IMonteCarloSimulationOptions, ...numb
     const examples: IExample[] = [];
 
     for (const projectCount of numberOfProjects) {
-        const runOptions = Object.assign(options, {
-            projects: createProjects(projectCount)
-        });
         examples.push({
             title: `Montecarlo ${projectCount} sync`,
             func() {
+                const runOptions = Object.assign(options, {
+                    projects: createProjects(projectCount)
+                });
+
                 const start = performance.now();
                 syncMonteCarlo(runOptions);
                 return Promise.resolve(performance.now() - start);
@@ -71,8 +72,12 @@ function createMontecarloExamples(options: IMonteCarloSimulationOptions, ...numb
         }, {
             title: `Monte carlo ${projectCount} parallel`,
             func() {
+                const runOptions = Object.assign(options, {
+                    projects: createProjects(projectCount)
+                });
+
                 const start = performance.now();
-                return parallelMonteCarlo(runOptions).then(complet => performance.now() - start);
+                return parallelMonteCarlo(runOptions).then(() => performance.now() - start);
             }
         }
         );
@@ -82,7 +87,7 @@ function createMontecarloExamples(options: IMonteCarloSimulationOptions, ...numb
 }
 
 function createExamples(): IExample[] {
-    const mandelbrotHeight = parseInt((document.querySelector("#mandelbrot-height") as HTMLInputElement).value, 10)
+    const mandelbrotHeight = parseInt((document.querySelector("#mandelbrot-height") as HTMLInputElement).value, 10);
     const mandelbrotWidth = parseInt((document.querySelector("#mandelbrot-width") as HTMLInputElement).value, 10);
     const mandelbrotIterations = parseInt((document.querySelector("#mandelbrot-iterations") as HTMLInputElement).value, 10);
 
@@ -116,7 +121,7 @@ function createExamples(): IExample[] {
     return [
         ...result,
         ...createAsyncMandelbrotTasks(mandelbrotOptions, 1, 75, 150, 300, 600, 1200),
-        ...createMontecarloExamples(monteCarloOptions, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+        ...createMontecarloExamples(monteCarloOptions, 1, 2, 4, 6, 8, 10, 15)
     ];
 }
 
