@@ -4,8 +4,8 @@ import {
     WorkerMessageType, requestFunctionMessage, workerResultMessage,
     functionExecutionError
 } from "../../../src/common/worker/worker-messages";
-import {FunctionDefinition} from "../../../src/common/worker/function-defintion";
-import {TaskDefinition} from "../../../src/common/task/task-definition";
+import {IFunctionDefinition} from "../../../src/common/worker/function-defintion";
+import {ITaskDefinition} from "../../../src/common/task/task-definition";
 
 describe("BrowserWorkerThread", function () {
     let slave: { postMessage: jasmine.Spy, addEventListener(event: string, handler: (event: MessageEvent) => void): void };
@@ -39,7 +39,7 @@ describe("BrowserWorkerThread", function () {
     describe("run", function () {
         it("sends the schedule task message to the slave containing the task definition", function () {
             // arrange
-            const task: TaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1]};
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1]};
 
             // act
             browserWorker.run(task);
@@ -50,8 +50,8 @@ describe("BrowserWorkerThread", function () {
 
         it("sends the function definition to the slave if the definition is requested", function () {
             // arrange
-            const task: TaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
-            const functionDefinition: FunctionDefinition = { argumentNames: ["x", "y"], body: "x + y;", id: task.main.functionId };
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
+            const functionDefinition: IFunctionDefinition = { argumentNames: ["x", "y"], body: "x + y;", id: task.main.functionId };
             spyOn(functionLookupTable, "getDefinition").and.returnValue(functionDefinition);
             browserWorker.initialize();
             browserWorker.run(task);
@@ -65,7 +65,7 @@ describe("BrowserWorkerThread", function () {
 
         it("invokes the oncomplete handler if the slave has sent the result", function () {
             // arrange
-            const task: TaskDefinition = { id: 1, main: {  ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
+            const task: ITaskDefinition = { id: 1, main: {  ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
 
             browserWorker.run(task);
             const completeSpy = browserWorker.oncomplete = jasmine.createSpy("completeSpy");
@@ -79,7 +79,7 @@ describe("BrowserWorkerThread", function () {
 
         it("does not fail if no oncomplete handler is registered and the result is received from the slave", function () {
             // arrange
-            const task: TaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
             browserWorker.run(task);
 
             // act, assert
@@ -101,7 +101,7 @@ describe("BrowserWorkerThread", function () {
         it("triggers the onerror handler if an error message has been retrieved from the worker", function () {
             // arrange
             const errorHandler = browserWorker.onerror = jasmine.createSpy("onerror");
-            const task: TaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
             browserWorker.run(task);
 
             // act

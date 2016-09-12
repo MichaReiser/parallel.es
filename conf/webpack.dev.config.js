@@ -11,7 +11,8 @@ module.exports = new Config().extend({
     }
 }).merge({
     entry: {
-        example: "./example/browser-example.ts"
+        example: "./example/browser-example.ts",
+        "performance-measurement": "./example/performance-measurement.ts"
     },
     debug: true,
     devtool: "#inline-source-map",

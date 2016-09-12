@@ -1,4 +1,4 @@
-import {FunctionDefinition} from "../worker/function-defintion";
+import {IFunctionDefinition} from "../worker/function-defintion";
 import {SimpleMap} from "../util/simple-map";
 import {staticFunctionRegistry} from "./static-function-registry";
 
@@ -7,7 +7,7 @@ import {staticFunctionRegistry} from "./static-function-registry";
  */
 export class FunctionRegistry {
     private ids = new SimpleMap<string, number>();
-    private definitions = new SimpleMap<number, FunctionDefinition>();
+    private definitions = new SimpleMap<number, IFunctionDefinition>();
     private lastId = 999;
 
     /**
@@ -27,7 +27,7 @@ export class FunctionRegistry {
      * @param id the id of the function to resolve
      * @returns the resolved function definition or undefined
      */
-    public getDefinition(id: number): FunctionDefinition | undefined {
+    public getDefinition(id: number): IFunctionDefinition | undefined {
         if (staticFunctionRegistry.has(id)) {
             throw new Error("The definition of a static function is not available");
         }

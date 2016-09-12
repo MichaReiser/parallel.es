@@ -1,9 +1,9 @@
-import {TaskDefinition} from "../task/task-definition";
+import {ITaskDefinition} from "../task/task-definition";
 
 /**
  * Abstraction of a thread that is used to execute tasks. Abstracts the actual used environment (node, browser...)
  */
-export interface WorkerThread {
+export interface IWorkerThread {
     /**
      * Invoked when the task has completed successfully
      * @param result the result returned by the executed function
@@ -20,7 +20,7 @@ export interface WorkerThread {
      * Executes the given task using this worker
      * @param task the task to execute
      */
-    run(task: TaskDefinition): void;
+    run(task: ITaskDefinition): void;
 
     /**
      * Stops the worker as soon as possible. Does not wait until the current assigned task is processed completely
@@ -28,4 +28,4 @@ export interface WorkerThread {
     stop(): void;
 }
 
-export default WorkerThread;
+export default IWorkerThread;

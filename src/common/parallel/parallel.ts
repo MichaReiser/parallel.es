@@ -1,5 +1,5 @@
 import {IParallelChain} from "./parallel-chain";
-import {Configuration} from "../configuration";
+import {IConfiguration} from "../configuration";
 import {ConstCollectionGenerator, RangeGenerator, TimesGenerator} from "./parallel-generator";
 import {ParallelWorkerFunctions} from "./parallel-worker-functions";
 import {ParallelOptions, DefaultInitializedParallelOptions} from "./parallel-options";
@@ -49,7 +49,7 @@ export interface IParallel {
     times<TEnv extends IEmptyParallelEnvironment, TResult>(n: number, generator: (this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult, env: TEnv, options?: ParallelOptions): IParallelChain<TResult, TEnv, TResult>;
 }
 
-export function parallelFactory(configuration: Configuration): IParallel {
+export function parallelFactory(configuration: IConfiguration): IParallel {
     let defaultOptions: DefaultInitializedParallelOptions = {
         maxConcurrencyLevel: configuration.maxConcurrencyLevel,
         threadPool: configuration.threadPool

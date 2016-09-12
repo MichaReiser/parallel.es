@@ -1,4 +1,4 @@
-import {ThreadPool} from "../thread-pool/thread-pool";
+import {IThreadPool} from "../thread-pool/thread-pool";
 
 export interface ParallelOptions {
     /**
@@ -9,7 +9,7 @@ export interface ParallelOptions {
     /**
      * The thread pool to use
      */
-    threadPool?: ThreadPool;
+    threadPool?: IThreadPool;
 
     /**
      * The minimum number of values assigned to a single worker before another worker is created.
@@ -24,5 +24,5 @@ export interface ParallelOptions {
 
 export interface DefaultInitializedParallelOptions extends ParallelOptions {
     maxConcurrencyLevel: number;
-    threadPool: ThreadPool;
+    threadPool: IThreadPool;
 }

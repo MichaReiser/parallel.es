@@ -1,10 +1,10 @@
 import {FunctionRegistry} from "../../common/serialization/function-registry";
-import {TaskDefinition} from "../../common/task/task-definition";
+import {ITaskDefinition} from "../../common/task/task-definition";
 import {
     IFunctionRequest, initializeWorkerMessage, isFunctionExecutionError, isFunctionRequest, isWorkerResult, IWorkerMessage,
     functionResponseMessage, stopMessage, scheduleTaskMessage
 } from "../../common/worker/worker-messages";
-import {WorkerThread} from "../../common/worker/worker-thread";
+import {IWorkerThread} from "../../common/worker/worker-thread";
 
 let workerThreadId = 0;
 
@@ -12,7 +12,7 @@ let workerThreadId = 0;
  * Worker Thread Endpoint in the UI-Thread.
  * Implements the communication with the web worker endpoint in the worker thread.
  */
-export class BrowserWorkerThread implements WorkerThread {
+export class BrowserWorkerThread implements IWorkerThread {
 
     /**
      * Unique id of this worker thread
@@ -42,7 +42,7 @@ export class BrowserWorkerThread implements WorkerThread {
      * Executes the given task on the worker
      * @param task the task to execute
      */
-    public run(task: TaskDefinition): void {
+    public run(task: ITaskDefinition): void {
         this.sendMessage(scheduleTaskMessage(task));
     }
 

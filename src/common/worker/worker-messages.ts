@@ -1,5 +1,5 @@
-import {TaskDefinition} from "../task/task-definition";
-import {FunctionDefinition} from "./function-defintion";
+import {ITaskDefinition} from "../task/task-definition";
+import {IFunctionDefinition} from "./function-defintion";
 
 export const enum WorkerMessageType {
     InitializeWorker,
@@ -32,7 +32,7 @@ export interface IScheduleTaskMessage extends IWorkerMessage {
     /**
      * Task to execute on the target worker
      */
-    task: TaskDefinition;
+    task: ITaskDefinition;
 }
 
 /**
@@ -52,7 +52,7 @@ export interface IFunctionResponse extends IWorkerMessage {
     /**
      * The definition of the needed functions to execute the requested function
      */
-    functions: FunctionDefinition[];
+    functions: IFunctionDefinition[];
 }
 
 /**
@@ -84,7 +84,7 @@ export function initializeWorkerMessage(id: number): IInitializeWorkerMessage {
     return { type: WorkerMessageType.InitializeWorker, workerId: id };
 }
 
-export function scheduleTaskMessage(task: TaskDefinition): IScheduleTaskMessage {
+export function scheduleTaskMessage(task: ITaskDefinition): IScheduleTaskMessage {
     return { task, type: WorkerMessageType.ScheduleTask};
 }
 
@@ -92,7 +92,7 @@ export function requestFunctionMessage(functionId: number, ...otherFunctionIds: 
     return { functionIds: [functionId, ...otherFunctionIds], type: WorkerMessageType.FunctionRequest };
 }
 
-export function functionResponseMessage(functions: FunctionDefinition[]): IFunctionResponse {
+export function functionResponseMessage(functions: IFunctionDefinition[]): IFunctionResponse {
     return { functions, type: WorkerMessageType.FunctionResponse };
 }
 

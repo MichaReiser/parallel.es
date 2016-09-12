@@ -7,7 +7,7 @@ import {
     IdleSlaveState, DefaultSlaveState, SlaveState,
     WaitingForFunctionDefinitionState, ExecuteFunctionState
 } from "../../../src/browser/slave/browser-slave-states";
-import {TaskDefinition} from "../../../src/common/task/task-definition";
+import {ITaskDefinition} from "../../../src/common/task/task-definition";
 import {FunctionCallDeserializer} from "../../../src/common/serialization/function-call-deserializer";
 
 describe("BrowserSlaveStates", function () {
@@ -55,7 +55,7 @@ describe("BrowserSlaveStates", function () {
 
         it("requests the definitions of the functions used in the task definition but yet missing in the slave cache", function () {
             // arrange
-            const task: TaskDefinition = {
+            const task: ITaskDefinition = {
                 id: 1,
                 main: {
                     ______serializedFunctionCall: true,
@@ -79,7 +79,7 @@ describe("BrowserSlaveStates", function () {
 
         it("changes to the execution state if the slave already has all functions cached", function () {
             // arrange
-            const task: TaskDefinition = {
+            const task: ITaskDefinition = {
                 id: 1,
                 main: {
                     ______serializedFunctionCall: true,
@@ -102,7 +102,7 @@ describe("BrowserSlaveStates", function () {
 
     describe("WaitingForFunctionDefinitionState", function () {
         beforeEach(function () {
-            const task: TaskDefinition = {
+            const task: ITaskDefinition = {
                 id: 1,
                 main: {
                     ______serializedFunctionCall: true,
@@ -158,7 +158,7 @@ describe("BrowserSlaveStates", function () {
 
     describe("ExecuteFunctionState", function () {
         beforeEach(function () {
-            const task: TaskDefinition = {
+            const task: ITaskDefinition = {
                 id: 1,
                 main: {
                     ______serializedFunctionCall: true,

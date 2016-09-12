@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+
+	<title>Performance Measurement</title>
+</head>
+<body>
+<div class="container-fluid">
+
+	<h3>Mandelbrot Field</h3>
+	<form action="#">
+		<div class="form-group">
+			<label for="mandelbrot-height">Height</label>
+			<input type="number" class="form-control" id="mandelbrot-height" value="10000"/>
+		</div>
+
+		<div class="form-group">
+			<label for="mandelbrot-width">Width</label>
+			<input type="number" class="form-control" id="mandelbrot-width" value="10000" />
+		</div>
+
+		<div class="form-group">
+			<label for="mandelbrot-iterations">Iterations</label>
+			<input type="number" class="form-control" id="mandelbrot-iterations" value="1000"/>
+		</div>
+
+	</form>
+
+	<input type="button" class="btn btn-primary" value="run..." id="run"/>
+
+	<h3>Results</h3>
+	<table id="output-table" class="table table-striped table-sm">
+		<thead>
+		<tr>
+			<th>Example / Round</th>
+			<th>1</th>
+			<th>2</th>
+			<th>3</th>
+			<th>4</th>
+			<th>5</th>
+			<th>6</th>
+			<th>7</th>
+			<th>8</th>
+			<th>9</th>
+			<th>10</th>
+			<th>average</th>
+		</tr>
+		</thead>
+	</table>
+</div>
+<script src="./performance-measurement.parallel-es.js"></script>
+</body>
+</html>

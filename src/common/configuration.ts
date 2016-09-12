@@ -1,8 +1,8 @@
-import {ThreadPool} from "./thread-pool/thread-pool";
+import {IThreadPool} from "./thread-pool/thread-pool";
 import {FunctionRegistry} from "./serialization/function-registry";
 
-export interface Configuration {
-    threadPool: ThreadPool;
+export interface IConfiguration {
+    threadPool: IThreadPool;
     functionLookupTable: FunctionRegistry;
     maxConcurrencyLevel: number;
 }

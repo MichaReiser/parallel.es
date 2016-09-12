@@ -1,10 +1,10 @@
-import {TaskDefinition} from "./task-definition";
+import {ITaskDefinition} from "./task-definition";
 /**
  * Represents a running or scheduled task on the thread pool. Behaves like a promise.
  */
-export interface Task<T> extends PromiseLike<T> {
+export interface ITask<T> extends PromiseLike<T> {
 
-    taskDefinition: TaskDefinition;
+    definition: ITaskDefinition;
 
     /**
      * Indicator if this task has been canceled.

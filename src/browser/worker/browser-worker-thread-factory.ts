@@ -1,5 +1,5 @@
-import {WorkerThreadFactory} from "../../common/worker/worker-thread-factory";
-import {WorkerThread} from "../../common/worker/worker-thread";
+import {IWorkerThreadFactory} from "../../common/worker/worker-thread-factory";
+import {IWorkerThread} from "../../common/worker/worker-thread";
 import {BrowserWorkerThread} from "./browser-worker-thread";
 import {FunctionRegistry} from "../../common/serialization/function-registry";
 
@@ -10,10 +10,10 @@ const SlaveWorker = require("worker?inline=true&name=worker-slave.parallel-es.js
 /**
  * Thread factory that creates web worker based threads.
  */
-export class BrowserWorkerThreadFactory implements WorkerThreadFactory {
+export class BrowserWorkerThreadFactory implements IWorkerThreadFactory {
     constructor(private functionLookupTable: FunctionRegistry) {}
 
-    public spawn(): WorkerThread {
+    public spawn(): IWorkerThread {
         if (!(window as any)["Worker"]) {
             throw new Error("Missing Web Worker support");
         }

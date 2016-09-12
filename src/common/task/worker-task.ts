@@ -1,24 +1,24 @@
-import {Task} from "./task";
-import {TaskDefinition} from "./task-definition";
-import {WorkerThread} from "../worker/worker-thread";
+import {ITask} from "./task";
+import {ITaskDefinition} from "./task-definition";
+import {IWorkerThread} from "../worker/worker-thread";
 
 /**
  * Implementation of a task.
  */
-export class WorkerTask<T> implements Task<T> {
+export class WorkerTask<T> implements ITask<T> {
     public isCancellationRequested = false;
     public isCanceled = false;
 
     private resolve: (result?: T) => void;
     private reject: (error: any) => void;
-    private worker?: WorkerThread;
+    private worker?: IWorkerThread;
     private promise: Promise<T>;
 
     /**
      * Creates a new task that is used to execute the passed in task
-     * @param taskDefinition the definition of the task to execute
+     * @param definition the definition of the task to execute
      */
-    constructor(public taskDefinition: TaskDefinition) {
+    constructor(public definition: ITaskDefinition) {
         this.promise = new Promise<T>((resolvePromise, rejectPromise) => {
             this.resolve = resolvePromise;
             this.reject = rejectPromise;
@@ -30,13 +30,13 @@ export class WorkerTask<T> implements Task<T> {
      * If the task has been cancled in the meantime, no operation is performed and the reject callback is invoked immediately.
      * @param worker the worker thread that should be used to execute this task
      */
-    public runOn(worker: WorkerThread): void {
+    public runOn(worker: IWorkerThread): void {
         this.worker = worker;
         this.worker.oncomplete = result => this._taskCompleted(result);
         this.worker.onerror = (error: any) => this.reject(error);
 
         if (!this.isCancellationRequested) {
-            this.worker.run(this.taskDefinition);
+            this.worker.run(this.definition);
         } else {
             this._taskCompleted(undefined);
         }
@@ -44,9 +44,9 @@ export class WorkerTask<T> implements Task<T> {
 
     /**
      * Releases the used worker.
-     * @returns {WorkerThread} the worker used by this task
+     * @returns {IWorkerThread} the worker used by this task
      */
-    public releaseWorker(): WorkerThread {
+    public releaseWorker(): IWorkerThread {
         if (!this.worker) {
             throw new Error("Cannot release a worker task that has no assigned worker thread.");
         }

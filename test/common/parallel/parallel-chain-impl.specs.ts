@@ -1,5 +1,5 @@
 import {DefaultInitializedParallelOptions} from "../../../src/common/parallel/parallel-options";
-import {ThreadPool} from "../../../src/common/thread-pool/thread-pool";
+import {IThreadPool} from "../../../src/common/thread-pool/thread-pool";
 import {createParallelChain} from "../../../src/common/parallel/parallel-chain-impl";
 import {IParallelGenerator, ConstCollectionGenerator} from "../../../src/common/parallel/parallel-generator";
 import {FunctionCallSerializer} from "../../../src/common/serialization/function-call-serializer";
@@ -11,7 +11,7 @@ describe("ParallelChainImpl", function () {
     let generator: IParallelGenerator;
     let createFunctionSerializerSpy: jasmine.Spy;
     let scheduleTaskSpy: jasmine.Spy;
-    let threadPool: ThreadPool;
+    let threadPool: IThreadPool;
 
     beforeEach(function () {
         createFunctionSerializerSpy = jasmine.createSpy("createFunctionSerializer");
@@ -228,7 +228,9 @@ describe("ParallelChainImpl", function () {
                         { taskIndex: 0, test: 10 }
                     ]
                 },
-                usedFunctionIds: [1, 2, 3, 4, 5, 9]
+                taskIndex: 0,
+                usedFunctionIds: [1, 2, 3, 4, 5, 9],
+                valuesPerWorker: 3
             });
 
             // slice 2
@@ -248,10 +250,12 @@ describe("ParallelChainImpl", function () {
                                 iteratee: { ______serializedFunctionCall: true, functionId: 4, params: [] } // even callback
                             }
                         ],
-                        { taskIndex: 1, test: 10 }
+                        { taskIndex: 1, test: 10 },
                     ]
                 },
-                usedFunctionIds: [1, 2, 3, 4, 5, 9]
+                taskIndex: 1,
+                usedFunctionIds: [1, 2, 3, 4, 5, 9],
+                valuesPerWorker: 3
             });
         });
     });
