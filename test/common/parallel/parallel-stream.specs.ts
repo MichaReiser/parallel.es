@@ -1,7 +1,5 @@
 import {ITask} from "../../../src/common/task/task";
-import {ITaskDefinition} from "../../../src/common/task/task-definition";
 import {ParallelStreamImpl, IParallelStream} from "../../../src/common/parallel/parallel-stream";
-import definition = ts.HighlightSpanKind.definition;
 import {IParallelTaskDefinition} from "../../../src/common/parallel/parallel-task-definition";
 
 describe("ParallelStream", function () {

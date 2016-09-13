@@ -184,18 +184,5 @@ describe("Parallel", function () {
             expect(generator.times).toBe(10);
             expect(generator.iteratee).toBe(generatorFunc);
         });
-
-        it("sets the environment of the chain to the passed one", function () {
-            // arrange
-            // arrange
-            const generatorFunc = (n: number, { power }: { power: number}) => n ** power;
-
-            // act
-            const chain = parallel.times(10, generatorFunc, { power: 2 });
-
-            // assert
-            const environment = chain.environment();
-            expect(environment.power).toBe(2);
-        });
     });
 });

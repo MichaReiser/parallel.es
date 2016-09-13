@@ -1,5 +1,9 @@
 import {computeMandelbrotLine, createMandelOptions, IMandelbrotOptions} from "./mandelbrot";
 import parallel from "../src/browser/index";
+import {
+    IMonteCarloSimulationOptions, syncMonteCarlo, parallelMonteCarlo,
+    IProject
+} from "./monte-carlo";
 const runButton = document.querySelector("#run") as HTMLInputElement;
 const outputTable = document.querySelector("#output-table") as HTMLTableElement;
 
@@ -37,12 +41,66 @@ function createAsyncMandelbrotTasks(mandelbrotOptions: IMandelbrotOptions, ...ma
     return result;
 }
 
+function createMontecarloExamples(options: IMonteCarloSimulationOptions, ...numberOfProjects: number[]) {
+    function createProjects(count: number): IProject[] {
+        const projects: IProject[] = [];
+
+        for (let i = 0; i < count; ++i) {
+            projects.push({
+                startYear: Math.round(Math.random() * 15),
+                totalAmount: Math.round(Math.random() * 100000)
+            });
+        }
+
+        return projects;
+    }
+
+    const examples: IExample[] = [];
+
+    for (const projectCount of numberOfProjects) {
+        examples.push({
+            title: `Montecarlo ${projectCount} sync`,
+            func() {
+                const runOptions = Object.assign(options, {
+                    projects: createProjects(projectCount)
+                });
+
+                const start = performance.now();
+                syncMonteCarlo(runOptions);
+                return Promise.resolve(performance.now() - start);
+            }
+        }, {
+            title: `Monte carlo ${projectCount} parallel`,
+            func() {
+                const runOptions = Object.assign(options, {
+                    projects: createProjects(projectCount)
+                });
+
+                const start = performance.now();
+                return parallelMonteCarlo(runOptions).then(() => performance.now() - start);
+            }
+        }
+        );
+    }
+
+    return examples;
+}
+
 function createExamples(): IExample[] {
-    const mandelbrotHeight = parseInt((document.querySelector("#mandelbrot-height") as HTMLInputElement).value, 10)
+    const mandelbrotHeight = parseInt((document.querySelector("#mandelbrot-height") as HTMLInputElement).value, 10);
     const mandelbrotWidth = parseInt((document.querySelector("#mandelbrot-width") as HTMLInputElement).value, 10);
     const mandelbrotIterations = parseInt((document.querySelector("#mandelbrot-iterations") as HTMLInputElement).value, 10);
 
     const mandelbrotOptions = createMandelOptions(mandelbrotWidth, mandelbrotHeight, mandelbrotIterations);
+
+    const monteCarloOptions = {
+        investmentAmount: 620000,
+        numRuns: 10000,
+        numYears: 15,
+        performance: 0.0340000,
+        seed: 10,
+        volatility: 0.0896000
+    };
 
     const result = [
         {
@@ -60,7 +118,11 @@ function createExamples(): IExample[] {
         }
     ];
 
-    return [...result, ...createAsyncMandelbrotTasks(mandelbrotOptions, 1, 75, 150, 300, 600, 1200)];
+    return [
+        ...result,
+        ...createAsyncMandelbrotTasks(mandelbrotOptions, 1, 75, 150, 300, 600, 1200),
+        ...createMontecarloExamples(monteCarloOptions, 1, 2, 4, 6, 8, 10, 15)
+    ];
 }
 
 function measure() {

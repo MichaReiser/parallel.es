@@ -1,24 +1,37 @@
 import parallel from "../src/browser/index";
 import {createMandelOptions, computeMandelbrotLine} from "./mandelbrot";
+import {syncMonteCarlo, parallelMonteCarlo} from "./monte-carlo";
 
 /* tslint:disable:no-console */
 const mandelbrotCanvas = document.querySelector("#mandelbrot-canvas") as HTMLCanvasElement;
 const mandelbrotContext = mandelbrotCanvas.getContext("2d");
 const mandelbrotOptions = createMandelOptions(mandelbrotCanvas.width, mandelbrotCanvas.height, 10000);
 
-function busyWait<T>(x: T): T {
-    let i = 0;
-    for (; i < 10 ** 8; ++i) {
-        // nothing, just consume some cpu time and shorten your battery life.
-    }
-    return x;
-}
-
-const examples = {
-    times() {
-        console.log("times started");
-        parallel.times(100, busyWait).result().then(result => console.log("Using times", result));
-    }
+const monteCarloOptions = {
+    investmentAmount: 620000,
+    numRuns: 10000,
+    numYears: 15,
+    performance: 0.0340000,
+    projects: [
+        {
+            startYear: 0,
+            totalAmount: 10000
+        }, {
+            startYear: 1,
+            totalAmount: 10000
+        }, {
+            startYear: 2,
+            totalAmount: 10000
+        }, {
+            startYear: 5,
+            totalAmount: 50000
+        }, {
+            startYear: 15,
+            totalAmount: 800000
+        }
+    ],
+    seed: 10,
+    volatility: 0.0896000
 };
 
 document.querySelector("#mandelbrot-run-async").addEventListener("click", function (event) {
@@ -58,12 +71,22 @@ document.querySelector("#mandelbrot-run-sync").addEventListener("click", functio
 
 });
 
-document.querySelector("#times-run").addEventListener("click", function () {
-    examples.times();
+document.querySelector("#montecarlo-run-sync").addEventListener("click", function () {
+    console.time("montecarlo-sync");
+    const result = syncMonteCarlo(monteCarloOptions);
+    console.timeEnd("montecarlo-sync");
+
+    console.log(result);
 });
 
-document.querySelector("#all-run").addEventListener("click", function () {
-    Object.keys(examples).forEach(example => (examples as any)[example]());
+document.querySelector("#montecarlo-run-parallel").addEventListener("click", function () {
+    console.time("montecarlo-parallel");
+    const chain = parallelMonteCarlo(monteCarloOptions);
+    chain.then((result) => {
+        console.timeEnd("montecarlo-parallel");
+        console.log(result);
+    });
+    chain.catch(error => console.error(error));
 });
 
 /*console.profile("Sync");
