@@ -125,7 +125,7 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
         const initializer = this.initializerFunc ? functionCallSerializer.serializeFunctionCall(this.initializerFunc) : undefined;
 
         for (let i = 0; i < scheduling.numberOfWorkers; ++i) {
-            const environment = Object.assign<IParallelTaskEnvironment, IEmptyParallelEnvironment>({ taskIndex: i }, this.sharedEnvironment);
+            const environment = Object.assign<IParallelTaskEnvironment, IEmptyParallelEnvironment>({ taskIndex: i, valuesPerWorker: scheduling.valuesPerWorker }, this.sharedEnvironment);
             const generator = this.generator.serializeSlice(i, scheduling.valuesPerWorker, functionCallSerializer);
 
             const processParams: IParallelProcessParams = {

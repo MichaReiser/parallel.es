@@ -16,8 +16,6 @@
 		Parallel ES Examples
 	</h1>
 
-	<input type="button" value="Run all..." id="all-run" class="btn btn-primary"/>
-
 	<h2>Mandelbrot</h2>
 	<p class="muted">
 		Requires IE Edge, Firefox, Chrome or Safari (full Canvas support)
@@ -41,12 +39,15 @@
 
 
 	<h2>Montecarlo</h2>
-	<table class="table" id="montecarlo-results">
-		<thead>
-			<tr>
-				<th>Run/Year</th>
-			</tr>
-		</thead>
+	<table class="table table-striped" id="montecarlo-table">
+		<tr>
+			<th>Project Start /Groups</th>
+			<th>Investment Amount</th>
+			<th>Green</th>
+			<th>Yellow</th>
+			<th>Gray</th>
+			<th>Red</th>
+		</tr>
 	</table>
 
 	<input type="button" id="montecarlo-run-sync" value="Run sync..." class="btn btn-primary"/>

@@ -109,8 +109,10 @@ interface IInitializedMonteCarloSimulationOptions {
     investmentAmount: number;
     performance: number;
     seed?: number;
-    volatility: number;
+    taskIndex?: number;
+    valuesPerWorker?: number;
     liquidity: number;
+    volatility: number;
 }
 
 function initializeOptions(options?: IMonteCarloSimulationOptions): IInitializedMonteCarloSimulationOptions {
@@ -132,7 +134,7 @@ function createMonteCarloEnvironment(options: IInitializedMonteCarloSimulationOp
      * @param cashFlows the cash flows
      * @returns {number[][]} the simulated outcomes grouped by year
      */
-    function simulateOutcomes(cashFlows: number[]): number[][]  {
+    function simulateOutcomes(cashFlows: number[], numYears: number): number[][]  {
         function toAbsoluteIndices(indices: number[]) {
             let currentPortfolioValue = options.investmentAmount;
             let previousYearIndex = 100;
@@ -153,10 +155,14 @@ function createMonteCarloEnvironment(options: IInitializedMonteCarloSimulationOp
         }
 
         const result: number[][] = new Array(options.numYears);
+        for (let year = 0; year <= numYears; ++year) {
+            result[year] = new Array(options.numRuns);
+        }
+
         for (let run = 0; run < options.numRuns; run++) {
             const indices = [100];
 
-            for (let i = 1; i <= options.numYears; i++) {
+            for (let i = 1; i <= numYears; i++) {
                 // const randomPerformance = 1 + random.normal(options.performance, options.volatility);
                 const randomPerformance = 1 + Math.random();
                 indices.push(indices[i - 1] * randomPerformance);
@@ -166,13 +172,13 @@ function createMonteCarloEnvironment(options: IInitializedMonteCarloSimulationOp
             toAbsoluteIndices(indices);
 
             for (let year = 0; year < indices.length; ++year) {
-                result[year] = result[year] || [];
-                result[year].push(indices[year]);
+                result[year][run] = indices[year];
             }
         }
 
         return result;
     }
+
     function projectsToCashFlows() {
         const cashFlows: number[] = [];
         for (let year = 0; year < options.numYears; ++year) {
@@ -194,7 +200,13 @@ function createMonteCarloEnvironment(options: IInitializedMonteCarloSimulationOp
         return noInterestReferenceLine;
     }
 
-    const projects = options.projects.sort((a, b) => a.totalAmount - b.totalAmount);
+    let projectsToSimulate: IProject[] = options.projects;
+
+    if (options.taskIndex && options.valuesPerWorker) {
+        projectsToSimulate = options.projects.slice(options.taskIndex * options.valuesPerWorker, (options.taskIndex + 1) * options.valuesPerWorker);
+    }
+
+    const projects = options.projects.sort((a, b) => a.startYear - b.startYear);
 
     // Group projects by startYear, use lodash groupBy instead
     const projectsByStartYear: Dictionary<IProject[]> = {};
@@ -207,14 +219,16 @@ function createMonteCarloEnvironment(options: IInitializedMonteCarloSimulationOp
     const cashFlows = projectsToCashFlows();
     const noInterestReferenceLine = calculateNoInterestReferenceLine(cashFlows);
 
+    const numYears = projectsToSimulate.reduce((memo, project) => Math.max(memo, project.startYear), 0);
+
     return {
         investmentAmount: options.investmentAmount,
         liquidity: options.liquidity,
         noInterestReferenceLine,
         numRuns: options.numRuns,
-        numYears: options.numYears,
+        numYears,
         projectsByStartYear,
-        simulatedValues: simulateOutcomes(cashFlows)
+        simulatedValues: simulateOutcomes(cashFlows, numYears)
     };
 }
 
