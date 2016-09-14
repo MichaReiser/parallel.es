@@ -6,7 +6,7 @@ describe("ParallelWorkerFunctions", function () {
     let environment: IParallelTaskEnvironment;
 
     beforeEach(function () {
-        environment = { taskIndex: 2 };
+        environment = { taskIndex: 2, valuesPerWorker: 2 };
     });
 
     describe("process", function () {
@@ -164,7 +164,7 @@ describe("ParallelWorkerFunctions", function () {
             }, { functionCallDeserializer: deserializer });
 
             // assert
-            expect(coordinator).toHaveBeenCalledWith(iterator, iteratee, { fromInitializer: true, taskIndex: 2 });
+            expect(coordinator).toHaveBeenCalledWith(iterator, iteratee, { fromInitializer: true, taskIndex: 2, valuesPerWorker: 2 });
         });
     });
 

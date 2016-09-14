@@ -14,6 +14,19 @@ describe("ParallelStream", function () {
         [task1, task2, task3] = tasks;
     });
 
+    it("resolves immediately if the passed tasks array is empty", function (done) {
+        // arrange, act
+        const stream: IParallelStream<string, string> = new ParallelStreamImpl([], joiner);
+
+        // assert
+        stream.then((value) => {
+            expect(value).toEqual([]);
+            done();
+        },
+            (reason) => done.fail(reason)
+        );
+    });
+
     describe("subscribe", function () {
         it("calls the onNext handler for every resolved sub result", function (done) {
             // arrange

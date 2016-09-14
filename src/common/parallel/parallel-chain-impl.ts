@@ -100,7 +100,7 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
         }
 
         return {
-            numberOfWorkers: Math.round(totalItems / itemsPerWorker),
+            numberOfWorkers: itemsPerWorker === 0 ? 0 : Math.round(totalItems / itemsPerWorker),
             valuesPerWorker: Math.ceil(itemsPerWorker)
         };
     }

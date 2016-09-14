@@ -92,6 +92,18 @@ describe("ParallelChainImpl", function () {
             expect(scheduling.valuesPerWorker).toBe(5);
             expect(scheduling.numberOfWorkers).toBe(1);
         });
+
+        it("sets valuesPerWorker and numberOfWorkers to 0 if the generator does not return any values", function () {
+            // arrange
+            const chain = createParallelChain(new ConstCollectionGenerator([]), options);
+
+            // act
+            const scheduling = chain.getParallelTaskScheduling(0);
+
+            // assert
+            expect(scheduling.valuesPerWorker).toBe(0);
+            expect(scheduling.numberOfWorkers).toBe(0);
+        });
     });
 
     describe("result", function () {
@@ -209,7 +221,7 @@ describe("ParallelChainImpl", function () {
                                     iteratee: { ______serializedFunctionCall: true, functionId: 4, params: [] } // even callback
                                 }
                             ],
-                            environment: { taskIndex: 0, test: 10 },
+                            environment: { taskIndex: 0, test: 10, valuesPerWorker: 3 },
                             generator: generatorSlice1,
                             initializer: { ______serializedFunctionCall: true, functionId: 6, params: [] }
                         }
@@ -237,7 +249,7 @@ describe("ParallelChainImpl", function () {
                                     iteratee: { ______serializedFunctionCall: true, functionId: 4, params: [] } // even callback
                                 }
                             ],
-                            environment: { taskIndex: 1, test: 10 },
+                            environment: { taskIndex: 1, test: 10, valuesPerWorker: 3 },
                             generator: generatorSlice2,
                             initializer: { ______serializedFunctionCall: true, functionId: 6, params: [] }
                         }
