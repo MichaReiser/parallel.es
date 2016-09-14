@@ -4,15 +4,15 @@ import {IParallelTaskScheduling} from "./parallel-task-scheduling";
 import {ITaskDefinition} from "../task/task-definition";
 import {IParallelGenerator} from "./parallel-generator";
 import {IParallelAction} from "./parallel-action";
-import {DefaultInitializedParallelOptions} from "./parallel-options";
+import {IDefaultInitializedParallelOptions} from "./parallel-options";
 import {ParallelWorkerFunctions, IParallelProcessParams} from "./parallel-worker-functions";
 import {IEmptyParallelEnvironment, IParallelTaskEnvironment} from "./parallel-environment";
 import {IParallelTaskDefinition} from "./parallel-task-definition";
 
-export function createParallelChain<TIn, TOut>(generator: IParallelGenerator, options: DefaultInitializedParallelOptions, actions?: IParallelAction[]): ParallelChainImpl<TIn, IEmptyParallelEnvironment, TOut>;
-export function createParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOut>(generator: IParallelGenerator, options: DefaultInitializedParallelOptions, sharedEnv: TEnv, actions?: IParallelAction[]): ParallelChainImpl<TIn, TEnv, TOut>;
+export function createParallelChain<TIn, TOut>(generator: IParallelGenerator, options: IDefaultInitializedParallelOptions, actions?: IParallelAction[]): ParallelChainImpl<TIn, IEmptyParallelEnvironment, TOut>;
+export function createParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOut>(generator: IParallelGenerator, options: IDefaultInitializedParallelOptions, sharedEnv: TEnv, actions?: IParallelAction[]): ParallelChainImpl<TIn, TEnv, TOut>;
 
-export function createParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOut>(generator: IParallelGenerator, options: DefaultInitializedParallelOptions, sharedEnv?: TEnv | IParallelAction[], actions: IParallelAction[] = []): ParallelChainImpl<TIn, TEnv, TOut> {
+export function createParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOut>(generator: IParallelGenerator, options: IDefaultInitializedParallelOptions, sharedEnv?: TEnv | IParallelAction[], actions: IParallelAction[] = []): ParallelChainImpl<TIn, TEnv, TOut> {
     let environment: TEnv;
 
     if (!sharedEnv) {
@@ -31,11 +31,11 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
 
     public generator: IParallelGenerator;
     private initializerFunc?: IParallelChainInitializer<TEnv, any>;
-    private options: DefaultInitializedParallelOptions;
+    private options: IDefaultInitializedParallelOptions;
     private sharedEnvironment: IEmptyParallelEnvironment;
     private actions: IParallelAction[];
 
-    constructor(generator: IParallelGenerator, options: DefaultInitializedParallelOptions, sharedEnv: IEmptyParallelEnvironment, initializerFunc?: IParallelChainInitializer<TEnv, any>, actions: IParallelAction[] = []) {
+    constructor(generator: IParallelGenerator, options: IDefaultInitializedParallelOptions, sharedEnv: IEmptyParallelEnvironment, initializerFunc?: IParallelChainInitializer<TEnv, any>, actions: IParallelAction[] = []) {
         this.generator = generator;
         this.options = options;
         this.sharedEnvironment = sharedEnv;
@@ -100,7 +100,7 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
         }
 
         return {
-            numberOfWorkers: Math.round(totalItems / itemsPerWorker),
+            numberOfWorkers: itemsPerWorker === 0 ? 0 : Math.round(totalItems / itemsPerWorker),
             valuesPerWorker: Math.ceil(itemsPerWorker)
         };
     }
@@ -125,7 +125,7 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
         const initializer = this.initializerFunc ? functionCallSerializer.serializeFunctionCall(this.initializerFunc) : undefined;
 
         for (let i = 0; i < scheduling.numberOfWorkers; ++i) {
-            const environment = Object.assign<IParallelTaskEnvironment, IEmptyParallelEnvironment>({ taskIndex: i }, this.sharedEnvironment);
+            const environment = Object.assign<IParallelTaskEnvironment, IEmptyParallelEnvironment>({ taskIndex: i, valuesPerWorker: scheduling.valuesPerWorker }, this.sharedEnvironment);
             const generator = this.generator.serializeSlice(i, scheduling.valuesPerWorker, functionCallSerializer);
 
             const processParams: IParallelProcessParams = {

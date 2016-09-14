@@ -93,6 +93,10 @@ export class ParallelStreamImpl<TSubResult, TEndResult> implements IParallelStre
                 (subResult: TSubResult) => this._taskCompleted(subResult, task.definition as IParallelTaskDefinition),
                 (reason: any) => this._taskFailed(reason))
         );
+
+        if (tasks.length === 0) {
+            this.resolve([] as any);
+        }
     }
 
     public subscribe(onNext: (subResult: TSubResult, worker: number, valuesPerWorker: number) => void, onError?: (reason: any) => void, onComplete?: (result: TEndResult) => void): IParallelStream<TSubResult, TEndResult> {

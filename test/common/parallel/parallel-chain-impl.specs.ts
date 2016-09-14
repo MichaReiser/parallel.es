@@ -1,4 +1,4 @@
-import {DefaultInitializedParallelOptions} from "../../../src/common/parallel/parallel-options";
+import {IDefaultInitializedParallelOptions} from "../../../src/common/parallel/parallel-options";
 import {IThreadPool} from "../../../src/common/thread-pool/thread-pool";
 import {createParallelChain} from "../../../src/common/parallel/parallel-chain-impl";
 import {IParallelGenerator, ConstCollectionGenerator} from "../../../src/common/parallel/parallel-generator";
@@ -7,7 +7,7 @@ import {ParallelWorkerFunctions} from "../../../src/common/parallel/parallel-wor
 import {ISerializedFunctionCall} from "../../../src/common/serialization/serialized-function-call";
 
 describe("ParallelChainImpl", function () {
-    let options: DefaultInitializedParallelOptions;
+    let options: IDefaultInitializedParallelOptions;
     let generator: IParallelGenerator;
     let createFunctionSerializerSpy: jasmine.Spy;
     let scheduleTaskSpy: jasmine.Spy;
@@ -91,6 +91,18 @@ describe("ParallelChainImpl", function () {
             // assert
             expect(scheduling.valuesPerWorker).toBe(5);
             expect(scheduling.numberOfWorkers).toBe(1);
+        });
+
+        it("sets valuesPerWorker and numberOfWorkers to 0 if the generator does not return any values", function () {
+            // arrange
+            const chain = createParallelChain(new ConstCollectionGenerator([]), options);
+
+            // act
+            const scheduling = chain.getParallelTaskScheduling(0);
+
+            // assert
+            expect(scheduling.valuesPerWorker).toBe(0);
+            expect(scheduling.numberOfWorkers).toBe(0);
         });
     });
 
@@ -209,7 +221,7 @@ describe("ParallelChainImpl", function () {
                                     iteratee: { ______serializedFunctionCall: true, functionId: 4, params: [] } // even callback
                                 }
                             ],
-                            environment: { taskIndex: 0, test: 10 },
+                            environment: { taskIndex: 0, test: 10, valuesPerWorker: 3 },
                             generator: generatorSlice1,
                             initializer: { ______serializedFunctionCall: true, functionId: 6, params: [] }
                         }
@@ -237,7 +249,7 @@ describe("ParallelChainImpl", function () {
                                     iteratee: { ______serializedFunctionCall: true, functionId: 4, params: [] } // even callback
                                 }
                             ],
-                            environment: { taskIndex: 1, test: 10 },
+                            environment: { taskIndex: 1, test: 10, valuesPerWorker: 3 },
                             generator: generatorSlice2,
                             initializer: { ______serializedFunctionCall: true, functionId: 6, params: [] }
                         }

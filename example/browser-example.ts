@@ -1,6 +1,7 @@
 import parallel from "../src/browser/index";
 import {createMandelOptions, computeMandelbrotLine} from "./mandelbrot";
-import {syncMonteCarlo, parallelMonteCarlo} from "./monte-carlo";
+import {syncMonteCarlo, parallelMonteCarlo, IProjectResult} from "./monte-carlo";
+import {syncKnightTours, parallelKnightTours} from "./knights-tour";
 
 /* tslint:disable:no-console */
 const mandelbrotCanvas = document.querySelector("#mandelbrot-canvas") as HTMLCanvasElement;
@@ -33,6 +34,7 @@ const monteCarloOptions = {
     seed: 10,
     volatility: 0.0896000
 };
+const monteCarloTable = document.querySelector("#montecarlo-table") as HTMLTableElement;
 
 document.querySelector("#mandelbrot-run-async").addEventListener("click", function (event) {
     event.preventDefault();
@@ -51,7 +53,7 @@ document.querySelector("#mandelbrot-run-async").addEventListener("click", functi
                 mandelbrotContext!.putImageData(new ImageData(lines[i], mandelbrotOptions.imageWidth, 1), 0, index * blockSize + i);
             }
         })
-        .then(() => console.timeEnd("mandelbrot-async"));
+        .then(() => console.timeEnd("mandelbrot-async"), reason => console.error(reason));
 });
 
 document.querySelector("#mandelbrot-run-sync").addEventListener("click", function () {
@@ -75,7 +77,7 @@ document.querySelector("#montecarlo-run-sync").addEventListener("click", functio
     console.time("montecarlo-sync");
     const result = syncMonteCarlo(monteCarloOptions);
     console.timeEnd("montecarlo-sync");
-
+    paintMonteCarloResult(result);
     console.log(result);
 });
 
@@ -84,52 +86,52 @@ document.querySelector("#montecarlo-run-parallel").addEventListener("click", fun
     const chain = parallelMonteCarlo(monteCarloOptions);
     chain.then((result) => {
         console.timeEnd("montecarlo-parallel");
+        paintMonteCarloResult(result);
         console.log(result);
     });
     chain.catch(error => console.error(error));
 });
 
-/*console.profile("Sync");
- const results: number[] = [];
- for (let i = 0; i <= 40; ++i) {
- results.push(fibonacci(i));
- }
- console.profileEnd();
- console.log("Sync completed", results); */
-/*
- console.profile("Async");
- const promises: Promise<number>[] = [];
- for (let i = 0; i <= 40; ++i) {
- promises.push((threadPool as ThreadPool).schedule(fibonacci, i).catch(error => console.error("Computation failed", error)));
- }
+function paintMonteCarloResult(results: IProjectResult[]) {
+    while (monteCarloTable.rows.length > 1) {
+        monteCarloTable.deleteRow(1);
+    }
 
- Promise.all(promises).then((results: number[]) => {
- console.profileEnd();
- console.log("All tasks completed");
- console.log(results, threadPool["workers"]);
- });
+    for (const result of results) {
+        const row = monteCarloTable.insertRow();
+        row.insertCell().innerText = result.project.startYear.toLocaleString();
+        row.insertCell().innerText = result.project.totalAmount.toLocaleString();
 
- */
+        for (const groupName of ["green", "yellow", "gray", "red"]) {
+            const group = result.groups.find(g => g.name === groupName);
+            row.insertCell().innerText = group ? (group.percentage * 100).toFixed(2) : "-";
+        }
+    }
+}
 
-/*function fibonacci(x: number): number {
- this.info = x;
- if (x < 0) {
- return NaN;
- }
+const knightBoardResult = document.querySelector("#knight-board-result") as HTMLParagraphElement;
 
- function recFib(n) {
- if (n === 1) { return 1; }
- if (n === 0) { return 0; }
+document.querySelector("#knight-run-sync").addEventListener("click", function () {
+    const boardSize = parseInt((document.querySelector("#knight-board-size")  as HTMLInputElement).value, 10);
+    knightBoardResult.innerText = "Calculating...";
 
- return recFib(n - 1) + recFib(n - 2);
- }
+    setTimeout(() => {
+        console.time("knight-run-sync");
+        const solutions = syncKnightTours({ x: 0, y: 0}, boardSize);
+        console.timeEnd("knight-run-sync");
 
- return recFib(x);
- } */
+        knightBoardResult.innerText = `Found ${solutions} solutions for ${boardSize}x${boardSize} board`;
+    }, 0);
+});
 
-/*const data: number[] = [];
- for (let i = 0; i < 40; ++i) {
- data.push(i);
- }
+document.querySelector("#knight-run-parallel").addEventListener("click", function () {
+    const boardSize = parseInt((document.querySelector("#knight-board-size")  as HTMLInputElement).value, 10);
+    knightBoardResult.innerText = "Calculating...";
 
- Parallel.collection(data).map(fibonacci).value().then(result => console.log("Result", result)); */
+    console.time("knight-run-parallel");
+    parallelKnightTours({ x: 0, y: 0}, boardSize)
+        .then(solutions => {
+            console.timeEnd("knight-run-parallel");
+            knightBoardResult.innerText = `Found ${solutions} solutions for ${boardSize}x${boardSize} board`;
+        }, (reason) => console.log(reason));
+});
