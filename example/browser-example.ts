@@ -117,7 +117,7 @@ document.querySelector("#knight-run-sync").addEventListener("click", function ()
 
     setTimeout(() => {
         console.time("knight-run-sync");
-        const solutions = syncKnightTours(boardSize);
+        const solutions = syncKnightTours({ x: 0, y: 0}, boardSize);
         console.timeEnd("knight-run-sync");
 
         knightBoardResult.innerText = `Found ${solutions} solutions for ${boardSize}x${boardSize} board`;
@@ -129,7 +129,7 @@ document.querySelector("#knight-run-parallel").addEventListener("click", functio
     knightBoardResult.innerText = "Calculating...";
 
     console.time("knight-run-parallel");
-    parallelKnightTours(boardSize)
+    parallelKnightTours({ x: 0, y: 0}, boardSize)
         .then(solutions => {
             console.timeEnd("knight-run-parallel");
             knightBoardResult.innerText = `Found ${solutions} solutions for ${boardSize}x${boardSize} board`;

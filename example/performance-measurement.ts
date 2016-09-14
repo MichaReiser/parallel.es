@@ -10,7 +10,7 @@ const outputTable = document.querySelector("#output-table") as HTMLTableElement;
 
 const iterations = 10;
 
-function measureAsyncMandelbrot(options: IMandelbrotOptions, maxValuesPerWorker?: number) {
+function measureParallelMandelbrot(options: IMandelbrotOptions, maxValuesPerWorker?: number) {
     const start = performance.now();
     return parallel
         .range(0, options.imageHeight, 1, { maxValuesPerWorker })
@@ -28,13 +28,13 @@ interface IPerformanceMeasurement {
     func: () => PromiseLike<number>;
 }
 
-function createAsyncMandelbrotMeasurements(mandelbrotOptions: IMandelbrotOptions, ...maxValuesPerWorkers: number[]) {
+function createParallelMandelbrotMeasurements(mandelbrotOptions: IMandelbrotOptions, ...maxValuesPerWorkers: number[]) {
     const result: IPerformanceMeasurement[] = [];
     for (const maxValuesPerWorker of [undefined, ...maxValuesPerWorkers]) {
         result.push({
-            title: `Mandelbrot ${mandelbrotOptions.imageWidth}x${mandelbrotOptions.imageHeight}, ${mandelbrotOptions.iterations} async (${maxValuesPerWorker})`,
+            title: `Mandelbrot ${mandelbrotOptions.imageWidth}x${mandelbrotOptions.imageHeight}, ${mandelbrotOptions.iterations} parallel (${maxValuesPerWorker})`,
             func() {
-                return measureAsyncMandelbrot(mandelbrotOptions, maxValuesPerWorker);
+                return measureParallelMandelbrot(mandelbrotOptions, maxValuesPerWorker);
             }
         });
     }
@@ -87,24 +87,23 @@ function createMonteCarloMeasurements(options: IMonteCarloSimulationOptions, ...
     return measurements;
 }
 
-function createKnightBoardMeasurements(boardSize: number, ...maxValuesPerWorker: number[]) {
+function createKnightBoardMeasurements(...boardSizes: number[]) {
     const measurements: IPerformanceMeasurement[] = [];
-
-    measurements.push({
-        title: `Knights Tour (${boardSize}x${boardSize}) sync`,
-        func() {
-            const start = performance.now();
-            syncKnightTours(boardSize);
-            return Promise.resolve(performance.now() - start);
-        }
-    });
-
-    for (const maxValues of [undefined, ...maxValuesPerWorker]) {
+    for (const boardSize of boardSizes) {
         measurements.push({
-            title: `Knights Tour (${boardSize}x${boardSize}, ${maxValues}) async`,
+            title: `Knights Tour (${boardSize}x${boardSize}) sync`,
             func() {
                 const start = performance.now();
-                return parallelKnightTours(boardSize, { maxValuesPerWorker: maxValues })
+                syncKnightTours({x: 0, y: 0}, boardSize);
+                return Promise.resolve(performance.now() - start);
+            }
+        });
+
+        measurements.push({
+            title: `Knights Tour (${boardSize}x${boardSize}) parallel`,
+            func() {
+                const start = performance.now();
+                return parallelKnightTours({x: 0, y: 0}, boardSize)
                     .then(() => performance.now() - start);
             }
         });
@@ -147,7 +146,7 @@ function createExamples(): IPerformanceMeasurement[] {
 
     return [
         ...result,
-        ...createAsyncMandelbrotMeasurements(mandelbrotOptions, 1, 75, 150, 300, 600, 1200),
+        ...createParallelMandelbrotMeasurements(mandelbrotOptions, 1, 75, 150, 300, 600, 1200),
         ...createMonteCarloMeasurements(monteCarloOptions, 1, 2, 4, 6, 8, 10, 15),
         ...createKnightBoardMeasurements(5, 1, 5, 10, 13)
     ];

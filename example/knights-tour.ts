@@ -22,14 +22,19 @@ function createEnvironment({ boardSize }: { boardSize: number }): IKnightTourEnv
     };
 }
 
-export function knightTours(start: ICoordinate, { board, boardSize }: IKnightTourEnvironment): number {
+export function knightTours(startPath: ICoordinate[], { board, boardSize }: IKnightTourEnvironment): number {
     const moves = [
         { x: -2, y: -1 }, { x: -2, y: 1}, { x: -1, y: -2 }, { x: -1, y: 2 },
         { x: 1, y: -2 }, { x: 1, y: 2}, { x: 2, y: -1 }, { x: 2, y: 1 }
     ];
     const numberOfFields = boardSize * boardSize;
     let results: number = 0;
-    const stack: { coordinate: ICoordinate, n: number }[] = [ { coordinate: start, n : 1 }];
+    const stack: { coordinate: ICoordinate, n: number }[] = startPath.map((pos, index) => ({ coordinate: pos, n: index + 1 }));
+
+    for (let index = 0; index < startPath.length - 1; ++index) {
+        const fieldIndex = startPath[index].x * boardSize + startPath[index].y;
+        board[fieldIndex] = index + 1;
+    }
 
     while (stack.length > 0) {
         const { coordinate, n } = stack[stack.length - 1];
@@ -41,6 +46,7 @@ export function knightTours(start: ICoordinate, { board, boardSize }: IKnightTou
             stack.pop(); // remove current value
             continue;
         }
+
         // entry
         if (n === numberOfFields) {
             ++results;
@@ -65,27 +71,48 @@ export function knightTours(start: ICoordinate, { board, boardSize }: IKnightTou
     return results;
 }
 
-export function syncKnightTours(boardSize: number): number {
+export function syncKnightTours(start: ICoordinate, boardSize: number): number {
     const environment = createEnvironment({ boardSize });
-    let numberOfSolutions = 0;
-
-    for (let x = 0; x < environment.boardSize; ++x) {
-        for (let y = 0; y < environment.boardSize; ++y) {
-            numberOfSolutions += knightTours({ x, y }, environment);
-        }
-    }
-
-    return numberOfSolutions;
+    return knightTours([start], environment);
 }
 
-export function parallelKnightTours(boardSize: number, options?: IParallelOptions): PromiseLike<number> {
-    let start = performance.now();
+export function parallelKnightTours(start: ICoordinate, boardSize: number, options?: IParallelOptions): PromiseLike<number> {
+
+    function successors(coordinate: ICoordinate) {
+        const moves = [
+            { x: -2, y: -1 }, { x: -2, y: 1}, { x: -1, y: -2 }, { x: -1, y: 2 },
+            { x: 1, y: -2 }, { x: 1, y: 2}, { x: 2, y: -1 }, { x: 2, y: 1 }
+        ];
+        const result: ICoordinate[] = [];
+
+        for (const move of moves) {
+            const successor = { x: coordinate.x + move.x, y: coordinate.y + move.y };
+            const accessible = successor.x >= 0 && successor.y >= 0 && successor.x < boardSize &&  successor.y < boardSize &&
+                (successor.x !== start.x || successor.y !== start.y) && (successor.x !== coordinate.x && successor.y !== coordinate.y);
+            if (accessible) {
+                result.push(successor);
+            }
+        }
+
+        return result;
+    }
+
+    function computeStartFields() {
+        const result: ICoordinate[][] = [];
+        for (const directSuccessor of successors(start)) {
+            for (const indirectSuccessor of successors(directSuccessor)) {
+                result.push([start, directSuccessor, indirectSuccessor]);
+            }
+        }
+        return result;
+    }
+
     let total = 0;
+    let startTime = performance.now();
     return parallel
-        .range(0, boardSize * boardSize, 1, options)
+        .from(computeStartFields(), options)
         .environment({ boardSize })
         .initializer(createEnvironment)
-        .map((index, env) => { return { x: Math.floor(index / env.boardSize), y: index % env.boardSize }; })
         .map(knightTours)
         .reduce(0, (memo, count) => memo + count)
         .subscribe(subResults => {
@@ -93,7 +120,7 @@ export function parallelKnightTours(boardSize: number, options?: IParallelOption
                 total += tours;
             }
             /* tslint:disable:no-console */
-            console.log(`${total / (performance.now() - start) * 1000} results per second`);
+            console.log(`${total / (performance.now() - startTime) * 1000} results per second`);
         });
 }
 
