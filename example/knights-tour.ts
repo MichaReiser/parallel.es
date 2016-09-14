@@ -28,7 +28,6 @@ export function knightTours(start: ICoordinate, { board, boardSize }: IKnightTou
         { x: 1, y: -2 }, { x: 1, y: 2}, { x: 2, y: -1 }, { x: 2, y: 1 }
     ];
     const numberOfFields = boardSize * boardSize;
-
     let results: number = 0;
     const stack: { coordinate: ICoordinate, n: number }[] = [ { coordinate: start, n : 1 }];
 
@@ -80,13 +79,22 @@ export function syncKnightTours(boardSize: number): number {
 }
 
 export function parallelKnightTours(boardSize: number, options?: IParallelOptions): PromiseLike<number> {
+    let start = performance.now();
+    let total = 0;
     return parallel
         .range(0, boardSize * boardSize, 1, options)
         .environment({ boardSize })
         .initializer(createEnvironment)
         .map((index, env) => { return { x: Math.floor(index / env.boardSize), y: index % env.boardSize }; })
         .map(knightTours)
-        .reduce(0, (memo, count) => memo + count);
+        .reduce(0, (memo, count) => memo + count)
+        .subscribe(subResults => {
+            for (const tours of subResults) {
+                total += tours;
+            }
+            /* tslint:disable:no-console */
+            console.log(`${total / (performance.now() - start) * 1000} results per second`);
+        });
 }
 
 export function formatPath(path: IPath) {

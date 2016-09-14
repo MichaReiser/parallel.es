@@ -38,7 +38,7 @@
 	</form>
 
 
-	<h2>Montecarlo</h2>
+	<h2>Monte Carlo</h2>
 	<table class="table table-striped" id="montecarlo-table">
 		<tr>
 			<th>Project Start /Groups</th>
@@ -52,6 +52,21 @@
 
 	<input type="button" id="montecarlo-run-sync" value="Run sync..." class="btn btn-primary"/>
 	<input type="button" id="montecarlo-run-parallel" value="Run parallel..." class="btn btn-primary"/>
+
+
+	<h2>Knight Tours</h2>
+
+	<form class="form-inline">
+		<div class="form-group">
+			<label for="knight-board-size">Board Size</label>
+			<input type="number" value="5" name="knight-board-size" id="knight-board-size" />
+		</div>
+	</form>
+
+	<p id="knight-board-result"></p>
+
+	<input type="button" id="knight-run-sync" value="Run sync..." class="btn btn-primary"/>
+	<input type="button" id="knight-run-parallel" value="Run parallel..." class="btn btn-primary"/>
 </div>
 
 	<script src="./example.parallel-es.js"></script>

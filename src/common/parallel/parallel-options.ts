@@ -1,6 +1,6 @@
 import {IThreadPool} from "../thread-pool/thread-pool";
 
-export interface ParallelOptions {
+export interface IParallelOptions {
     /**
      * Maximum number of workers that can run in parallel (without blocking each other)
      */
@@ -22,7 +22,7 @@ export interface ParallelOptions {
     maxValuesPerWorker?: number;
 }
 
-export interface DefaultInitializedParallelOptions extends ParallelOptions {
+export interface IDefaultInitializedParallelOptions extends IParallelOptions {
     maxConcurrencyLevel: number;
     threadPool: IThreadPool;
 }

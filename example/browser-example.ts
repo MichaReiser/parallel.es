@@ -1,6 +1,7 @@
 import parallel from "../src/browser/index";
 import {createMandelOptions, computeMandelbrotLine} from "./mandelbrot";
 import {syncMonteCarlo, parallelMonteCarlo, IProjectResult} from "./monte-carlo";
+import {syncKnightTours, parallelKnightTours} from "./knights-tour";
 
 /* tslint:disable:no-console */
 const mandelbrotCanvas = document.querySelector("#mandelbrot-canvas") as HTMLCanvasElement;
@@ -52,7 +53,7 @@ document.querySelector("#mandelbrot-run-async").addEventListener("click", functi
                 mandelbrotContext!.putImageData(new ImageData(lines[i], mandelbrotOptions.imageWidth, 1), 0, index * blockSize + i);
             }
         })
-        .then(() => console.timeEnd("mandelbrot-async"));
+        .then(() => console.timeEnd("mandelbrot-async"), reason => console.error(reason));
 });
 
 document.querySelector("#mandelbrot-run-sync").addEventListener("click", function () {
@@ -76,7 +77,7 @@ document.querySelector("#montecarlo-run-sync").addEventListener("click", functio
     console.time("montecarlo-sync");
     const result = syncMonteCarlo(monteCarloOptions);
     console.timeEnd("montecarlo-sync");
-    paintMontecarloResult(result);
+    paintMonteCarloResult(result);
     console.log(result);
 });
 
@@ -85,13 +86,13 @@ document.querySelector("#montecarlo-run-parallel").addEventListener("click", fun
     const chain = parallelMonteCarlo(monteCarloOptions);
     chain.then((result) => {
         console.timeEnd("montecarlo-parallel");
-        paintMontecarloResult(result);
+        paintMonteCarloResult(result);
         console.log(result);
     });
     chain.catch(error => console.error(error));
 });
 
-function paintMontecarloResult(results: IProjectResult[]) {
+function paintMonteCarloResult(results: IProjectResult[]) {
     while (monteCarloTable.rows.length > 1) {
         monteCarloTable.deleteRow(1);
     }
@@ -107,3 +108,30 @@ function paintMontecarloResult(results: IProjectResult[]) {
         }
     }
 }
+
+const knightBoardResult = document.querySelector("#knight-board-result") as HTMLParagraphElement;
+
+document.querySelector("#knight-run-sync").addEventListener("click", function () {
+    const boardSize = parseInt((document.querySelector("#knight-board-size")  as HTMLInputElement).value, 10);
+    knightBoardResult.innerText = "Calculating...";
+
+    setTimeout(() => {
+        console.time("knight-run-sync");
+        const solutions = syncKnightTours(boardSize);
+        console.timeEnd("knight-run-sync");
+
+        knightBoardResult.innerText = `Found ${solutions} solutions for ${boardSize}x${boardSize} board`;
+    }, 0);
+});
+
+document.querySelector("#knight-run-parallel").addEventListener("click", function () {
+    const boardSize = parseInt((document.querySelector("#knight-board-size")  as HTMLInputElement).value, 10);
+    knightBoardResult.innerText = "Calculating...";
+
+    console.time("knight-run-parallel");
+    parallelKnightTours(boardSize)
+        .then(solutions => {
+            console.timeEnd("knight-run-parallel");
+            knightBoardResult.innerText = `Found ${solutions} solutions for ${boardSize}x${boardSize} board`;
+        }, (reason) => console.log(reason));
+});

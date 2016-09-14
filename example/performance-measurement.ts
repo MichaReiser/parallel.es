@@ -4,6 +4,7 @@ import {
     IMonteCarloSimulationOptions, syncMonteCarlo, parallelMonteCarlo,
     IProject
 } from "./monte-carlo";
+import {syncKnightTours, parallelKnightTours} from "./knights-tour";
 const runButton = document.querySelector("#run") as HTMLInputElement;
 const outputTable = document.querySelector("#output-table") as HTMLTableElement;
 
@@ -22,13 +23,13 @@ function measureAsyncMandelbrot(options: IMandelbrotOptions, maxValuesPerWorker?
         });
 }
 
-interface IExample {
+interface IPerformanceMeasurement {
     title: string;
     func: () => PromiseLike<number>;
 }
 
-function createAsyncMandelbrotTasks(mandelbrotOptions: IMandelbrotOptions, ...maxValuesPerWorkers: number[]) {
-    const result: IExample[] = [];
+function createAsyncMandelbrotMeasurements(mandelbrotOptions: IMandelbrotOptions, ...maxValuesPerWorkers: number[]) {
+    const result: IPerformanceMeasurement[] = [];
     for (const maxValuesPerWorker of [undefined, ...maxValuesPerWorkers]) {
         result.push({
             title: `Mandelbrot ${mandelbrotOptions.imageWidth}x${mandelbrotOptions.imageHeight}, ${mandelbrotOptions.iterations} async (${maxValuesPerWorker})`,
@@ -41,7 +42,7 @@ function createAsyncMandelbrotTasks(mandelbrotOptions: IMandelbrotOptions, ...ma
     return result;
 }
 
-function createMontecarloExamples(options: IMonteCarloSimulationOptions, ...numberOfProjects: number[]) {
+function createMonteCarloMeasurements(options: IMonteCarloSimulationOptions, ...numberOfProjects: number[]) {
     function createProjects(count: number): IProject[] {
         const projects: IProject[] = [];
 
@@ -55,10 +56,10 @@ function createMontecarloExamples(options: IMonteCarloSimulationOptions, ...numb
         return projects;
     }
 
-    const examples: IExample[] = [];
+    const measurements: IPerformanceMeasurement[] = [];
 
     for (const projectCount of numberOfProjects) {
-        examples.push({
+        measurements.push({
             title: `Montecarlo ${projectCount} sync`,
             func() {
                 const runOptions = Object.assign(options, {
@@ -83,10 +84,36 @@ function createMontecarloExamples(options: IMonteCarloSimulationOptions, ...numb
         );
     }
 
-    return examples;
+    return measurements;
 }
 
-function createExamples(): IExample[] {
+function createKnightBoardMeasurements(boardSize: number, ...maxValuesPerWorker: number[]) {
+    const measurements: IPerformanceMeasurement[] = [];
+
+    measurements.push({
+        title: `Knights Tour (${boardSize}x${boardSize}) sync`,
+        func() {
+            const start = performance.now();
+            syncKnightTours(boardSize);
+            return Promise.resolve(performance.now() - start);
+        }
+    });
+
+    for (const maxValues of [undefined, ...maxValuesPerWorker]) {
+        measurements.push({
+            title: `Knights Tour (${boardSize}x${boardSize}, ${maxValues}) async`,
+            func() {
+                const start = performance.now();
+                return parallelKnightTours(boardSize, { maxValuesPerWorker: maxValues })
+                    .then(() => performance.now() - start);
+            }
+        });
+    }
+
+    return measurements;
+}
+
+function createExamples(): IPerformanceMeasurement[] {
     const mandelbrotHeight = parseInt((document.querySelector("#mandelbrot-height") as HTMLInputElement).value, 10);
     const mandelbrotWidth = parseInt((document.querySelector("#mandelbrot-width") as HTMLInputElement).value, 10);
     const mandelbrotIterations = parseInt((document.querySelector("#mandelbrot-iterations") as HTMLInputElement).value, 10);
@@ -120,8 +147,9 @@ function createExamples(): IExample[] {
 
     return [
         ...result,
-        ...createAsyncMandelbrotTasks(mandelbrotOptions, 1, 75, 150, 300, 600, 1200),
-        ...createMontecarloExamples(monteCarloOptions, 1, 2, 4, 6, 8, 10, 15)
+        ...createAsyncMandelbrotMeasurements(mandelbrotOptions, 1, 75, 150, 300, 600, 1200),
+        ...createMonteCarloMeasurements(monteCarloOptions, 1, 2, 4, 6, 8, 10, 15),
+        ...createKnightBoardMeasurements(5, 1, 5, 10, 13)
     ];
 }
 

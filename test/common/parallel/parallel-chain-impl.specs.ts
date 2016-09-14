@@ -1,4 +1,4 @@
-import {DefaultInitializedParallelOptions} from "../../../src/common/parallel/parallel-options";
+import {IDefaultInitializedParallelOptions} from "../../../src/common/parallel/parallel-options";
 import {IThreadPool} from "../../../src/common/thread-pool/thread-pool";
 import {createParallelChain} from "../../../src/common/parallel/parallel-chain-impl";
 import {IParallelGenerator, ConstCollectionGenerator} from "../../../src/common/parallel/parallel-generator";
@@ -7,7 +7,7 @@ import {ParallelWorkerFunctions} from "../../../src/common/parallel/parallel-wor
 import {ISerializedFunctionCall} from "../../../src/common/serialization/serialized-function-call";
 
 describe("ParallelChainImpl", function () {
-    let options: DefaultInitializedParallelOptions;
+    let options: IDefaultInitializedParallelOptions;
     let generator: IParallelGenerator;
     let createFunctionSerializerSpy: jasmine.Spy;
     let scheduleTaskSpy: jasmine.Spy;
