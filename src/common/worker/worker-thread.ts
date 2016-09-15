@@ -6,11 +6,11 @@
 import {ITaskDefinition} from "../task/task-definition";
 
 /**
- * Abstraction of a thread that is used to execute a task. A worker thread
- * can execute on task at a time. A worker thread may consist of two parts. The worker thread that resists
+ * Abstraction of a thread that is used to execute a {@link ITask}. A worker thread
+ * can execute one {@link ITask} at a time. It may consist of two parts. The worker thread that resists
  * in the main thread and acts as facade to the underlining worker slave. The worker slave executes the tasks
  * scheduled on the worker thread in a dedicated environment, e.g. a web worker or child process. The worker slave
- * normally does not resist in the main thread memory
+ * normally does not resist in the main thread memory and communicates with the worker thread using messaging
  *
  * Acts as abstraction of the actually used environment (node, browser...)
  */

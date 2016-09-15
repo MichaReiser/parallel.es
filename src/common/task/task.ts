@@ -6,7 +6,7 @@
 import {ITaskDefinition} from "./task-definition";
 
 /**
- * Represents a task that has been scheduled on a thread pool or is actually in execution.
+ * Represents a task that has been scheduled on a {@link IThreadPool} or is actually in execution.
  * The task result can be retrieved by registering a callback using {@link PromiseLike.then} that is invoked with the task result.
  * Any occurring errors are silently ignored if no explicit exception handler is registered using {@link ITask.catch}.
  * @param T type of the computed result
