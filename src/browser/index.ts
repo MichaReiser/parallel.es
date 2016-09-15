@@ -11,6 +11,8 @@ import {BrowserWorkerThreadFactory} from "./worker/browser-worker-thread-factory
 
 export {ITaskDefinition} from "../common/task/task-definition";
 export {ITask} from "../common/task/task";
+export {IFunctionDefinition} from "../common/worker/function-defintion";
+export {ISerializedFunctionCall, isSerializedFunctionCall} from "../common/serialization/serialized-function-call";
 export {IThreadPool} from "../common/thread-pool/thread-pool";
 export {IParallel} from "../common/parallel/parallel";
 export {IParallelOptions} from "../common/parallel/parallel-options";
@@ -25,5 +27,5 @@ const threadPool = new DefaultThreadPool(new BrowserWorkerThreadFactory(function
 /**
  * The global parallel instance.
  */
-const parallel = parallelFactory({ threadPool, functionLookupTable, maxConcurrencyLevel });
+const parallel = parallelFactory({ threadPool, maxConcurrencyLevel });
 export default parallel;

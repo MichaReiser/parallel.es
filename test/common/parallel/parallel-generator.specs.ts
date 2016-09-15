@@ -62,7 +62,7 @@ describe("ParallelGenerators", function () {
                 const slice = generator.serializeSlice(0, 3, functionCallSerializer);
 
                 // assert
-                expect(slice.params).toEqual([[0, 1, 2]]);
+                expect(slice.parameters).toEqual([[0, 1, 2]]);
             });
 
             it("passes a sub slice not starting at the end of the array", function () {
@@ -74,7 +74,7 @@ describe("ParallelGenerators", function () {
                 const slice = generator.serializeSlice(1, 3, functionCallSerializer);
 
                 // assert
-                expect(slice.params).toEqual([[3, 4, 5]]);
+                expect(slice.parameters).toEqual([[3, 4, 5]]);
             });
 
             it("reduces the slice size if it goes over the end of the array", function () {
@@ -86,7 +86,7 @@ describe("ParallelGenerators", function () {
                 const slice = generator.serializeSlice(3, 3, functionCallSerializer);
 
                 // assert
-                expect(slice.params).toEqual([[9]]);
+                expect(slice.parameters).toEqual([[9]]);
             });
         });
     });
@@ -141,7 +141,7 @@ describe("ParallelGenerators", function () {
                 const func = generator.serializeSlice(1, 3, functionCallSerializer);
 
                 // assert
-                expect(func.params).toEqual([3 /* start */, 6 /* end */, 1 /* step */]);
+                expect(func.parameters).toEqual([3 /* start */, 6 /* end */, 1 /* step */]);
             });
 
             it("sets the slice end to end if it is the last slice and adding the full slice sice would exceed the limit", function () {
@@ -153,7 +153,7 @@ describe("ParallelGenerators", function () {
                 const func = generator.serializeSlice(2, 4, functionCallSerializer);
 
                 // assert
-                expect(func.params).toEqual([8 /* start */, 10 /* end */, 1 /* step */]);
+                expect(func.parameters).toEqual([8 /* start */, 10 /* end */, 1 /* step */]);
             });
         });
     });
@@ -193,7 +193,7 @@ describe("ParallelGenerators", function () {
                 const func = generator.serializeSlice(1, 5, functionCallSerializer);
 
                 // assert
-                expect(func.params).toEqual([5, 10, jasmine.objectContaining({ functionId: 1000 })]);
+                expect(func.parameters).toEqual([5, 10, jasmine.objectContaining({ functionId: 1000 })]);
                 expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctions.times);
                 expect(getOrSetIdSpy).toHaveBeenCalledWith(generatorFunction);
             });
@@ -208,7 +208,7 @@ describe("ParallelGenerators", function () {
                 const func = generator.serializeSlice(2, 4, functionCallSerializer);
 
                 // assert
-                expect(func.params).toEqual([8, 10, jasmine.objectContaining({ functionId: 1000 })]);
+                expect(func.parameters).toEqual([8, 10, jasmine.objectContaining({ functionId: 1000 })]);
             });
         });
     });

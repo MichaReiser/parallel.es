@@ -6,7 +6,7 @@ describe("ParallelWorkerFunctions", function () {
     let environment: IParallelTaskEnvironment;
 
     beforeEach(function () {
-        environment = { taskIndex: 2, valuesPerWorker: 2 };
+        environment = { taskIndex: 2, valuesPerTask: 2 };
     });
 
     describe("process", function () {
@@ -22,15 +22,15 @@ describe("ParallelWorkerFunctions", function () {
             const serializedGenerator = {
                 ______serializedFunctionCall: true,
                 functionId: 1000,
-                params: []
+                parameters: []
             };
             spyOn(deserializer, "deserializeFunctionCall").and.returnValue(generator);
 
             // act
             ParallelWorkerFunctions.process({
-                actions: [],
                 environment,
-                generator: serializedGenerator
+                generator: serializedGenerator,
+                operations: []
             }, { functionCallDeserializer: deserializer });
 
             // assert
@@ -44,13 +44,13 @@ describe("ParallelWorkerFunctions", function () {
 
             // act
             ParallelWorkerFunctions.process({
-                actions: [],
                 environment,
                 generator: {
                     ______serializedFunctionCall: true,
                         functionId: 1000,
-                    params: []
-                }
+                    parameters: []
+                },
+                operations: []
             }, { functionCallDeserializer: deserializer });
 
             // assert
@@ -68,23 +68,23 @@ describe("ParallelWorkerFunctions", function () {
             // act
             ParallelWorkerFunctions.process({
                 environment,
-                actions: [{
-                    coordinator: {
-                        ______serializedFunctionCall: true,
-                        functionId: 1001,
-                        params: []
-                    },
-                    iteratee: {
-                        ______serializedFunctionCall: true,
-                        functionId: 1002,
-                        params: []
-                    }
-                }],
                 generator: {
                     ______serializedFunctionCall: true,
                     functionId: 1000,
-                    params: []
-                }
+                    parameters: []
+                },
+                operations: [{
+                    iteratee: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1002,
+                        parameters: []
+                    },
+                    iterator: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1001,
+                        parameters: []
+                    }
+                }]
             }, { functionCallDeserializer: deserializer });
 
             // assert
@@ -102,23 +102,23 @@ describe("ParallelWorkerFunctions", function () {
             // act
             const result = ParallelWorkerFunctions.process({
                 environment,
-                actions: [{
-                    coordinator: {
-                        ______serializedFunctionCall: true,
-                        functionId: 1001,
-                        params: []
-                    },
-                    iteratee: {
-                        ______serializedFunctionCall: true,
-                        functionId: 1002,
-                        params: []
-                    }
-                }],
                 generator: {
                     ______serializedFunctionCall: true,
                     functionId: 1000,
-                    params: []
-                }
+                    parameters: []
+                },
+                operations: [{
+                    iteratee: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1002,
+                        parameters: []
+                    },
+                    iterator: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1001,
+                        parameters: []
+                    }
+                }]
             }, { functionCallDeserializer: deserializer });
 
             // assert
@@ -138,33 +138,33 @@ describe("ParallelWorkerFunctions", function () {
 
             // act
             ParallelWorkerFunctions.process({
-                actions: [{
-                    coordinator: {
-                        ______serializedFunctionCall: true,
-                        functionId: 1001,
-                        params: []
-                    },
-                    iteratee: {
-                        ______serializedFunctionCall: true,
-                        functionId: 1002,
-                        params: []
-                    }
-                }],
                 environment,
                 generator: {
                     ______serializedFunctionCall: true,
                     functionId: 1000,
-                    params: []
+                    parameters: []
                 },
                 initializer: {
                     ______serializedFunctionCall: true,
                     functionId: 1003,
-                    params: []
-                }
+                    parameters: []
+                },
+                operations: [{
+                    iteratee: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1002,
+                        parameters: []
+                    },
+                    iterator: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1001,
+                        parameters: []
+                    }
+                }]
             }, { functionCallDeserializer: deserializer });
 
             // assert
-            expect(coordinator).toHaveBeenCalledWith(iterator, iteratee, { fromInitializer: true, taskIndex: 2, valuesPerWorker: 2 });
+            expect(coordinator).toHaveBeenCalledWith(iterator, iteratee, { fromInitializer: true, taskIndex: 2, valuesPerTask: 2 });
         });
     });
 
@@ -215,7 +215,7 @@ describe("ParallelWorkerFunctions", function () {
             accumulator.and.callFake((memo: number, value: number) => memo + value);
 
             // act
-            ParallelWorkerFunctions.reduce(0, iterator, accumulator, environment).next().value;
+            ParallelWorkerFunctions.reduce(0, iterator, accumulator, environment).next();
 
             // assert
             expect(accumulator).toHaveBeenCalledWith(0, 1, environment);

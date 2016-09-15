@@ -40,11 +40,11 @@ document.querySelector("#mandelbrot-run-async").addEventListener("click", functi
     event.preventDefault();
 
     mandelbrotContext!.putImageData(mandelbrotContext!.createImageData(mandelbrotCanvas.width, mandelbrotCanvas.height), 0, 0);
-    const maxValuesPerWorker = parseInt((document.querySelector("#mandelbrot-values-per-task") as HTMLInputElement).value, 10);
+    const maxValuesPerTask = parseInt((document.querySelector("#mandelbrot-values-per-task") as HTMLInputElement).value, 10);
 
     console.time("mandelbrot-async");
     parallel
-        .range(0, mandelbrotOptions.imageHeight, 1, { maxValuesPerWorker })
+        .range(0, mandelbrotOptions.imageHeight, 1, { maxValuesPerTask })
         .environment(mandelbrotOptions)
         .map(computeMandelbrotLine)
         .result()

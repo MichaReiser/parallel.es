@@ -1,6 +1,7 @@
 import {ITask} from "../../../src/common/task/task";
-import {ParallelStreamImpl, IParallelStream} from "../../../src/common/parallel/parallel-stream";
+import {IParallelStream} from "../../../src/common/parallel/parallel-stream";
 import {IParallelTaskDefinition} from "../../../src/common/parallel/parallel-task-definition";
+import {ParallelStreamImpl} from "../../../src/common/parallel/parallel-stream-impl";
 
 describe("ParallelStream", function () {
     let tasks: FakeTask<string>[];
@@ -253,7 +254,7 @@ describe("ParallelStream", function () {
                 main: undefined as any,
                 taskIndex: index,
                 usedFunctionIds: [],
-                valuesPerWorker: 1
+                valuesPerTask: 1
             };
         }
 

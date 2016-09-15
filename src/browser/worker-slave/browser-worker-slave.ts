@@ -1,5 +1,5 @@
 import {isStopMesssage} from "../../common/worker/worker-messages";
-import {DefaultSlaveState, SlaveState} from "./browser-slave-states";
+import {DefaultBrowserWorkerSlaveState, BrowserWorkerSlaveState} from "./browser-worker-slave-states";
 import {SlaveFunctionCache} from "./slave-function-cache";
 
 declare function postMessage(data: any): void;
@@ -8,7 +8,7 @@ declare function postMessage(data: any): void;
  * Worker thread endpoint executed in the web worker thread.
  * Executes the tasks assigned by the thread pool via the {@link BrowserWorkerThread}.
  */
-export class BrowserSlave {
+export class BrowserWorkerSlave {
 
     /**
      * The unique id of the slave instance
@@ -17,13 +17,13 @@ export class BrowserSlave {
 
     public functionCache = new SlaveFunctionCache();
 
-    private state: SlaveState = new DefaultSlaveState(this);
+    private state: BrowserWorkerSlaveState = new DefaultBrowserWorkerSlaveState(this);
 
     /**
      * Changes the state of the slave to the new state
      * @param state the new state to assign
      */
-    public changeState(state: SlaveState): void {
+    public changeState(state: BrowserWorkerSlaveState): void {
         this.state = state;
         this.state.enter();
     }

@@ -1,18 +1,18 @@
 import {initializeWorkerMessage} from "../../../src/common/worker/worker-messages";
-import {BrowserSlave} from "../../../src/browser/slave/browser-slave";
-import {IdleSlaveState} from "../../../src/browser/slave/browser-slave-states";
+import {BrowserWorkerSlave} from "../../../src/browser/worker-slave/browser-worker-slave";
+import {IdleBrowserWorkerSlaveState} from "../../../src/browser/worker-slave/browser-worker-slave-states";
 
-describe("BrowserSlave", function () {
-    let slave: BrowserSlave;
+describe("BrowserWorkerSlave", function () {
+    let slave: BrowserWorkerSlave;
 
     beforeEach(function () {
-        slave = new BrowserSlave();
+        slave = new BrowserWorkerSlave();
     });
 
     describe("changeState", function () {
         it("calls enter on the passed state", function () {
             // arrange
-            const state = new IdleSlaveState(slave);
+            const state = new IdleBrowserWorkerSlaveState(slave);
             const enterSpy = spyOn(state, "enter");
 
             // act
@@ -26,7 +26,7 @@ describe("BrowserSlave", function () {
     describe("onMessage", function () {
         it("calls onMessage of the current state", function () {
             // arrange
-            const state = new IdleSlaveState(slave);
+            const state = new IdleBrowserWorkerSlaveState(slave);
             spyOn(state, "enter");
             const onMessageSpy = spyOn(state, "onMessage").and.returnValue(true);
             const message = initializeWorkerMessage(10);
@@ -41,7 +41,7 @@ describe("BrowserSlave", function () {
 
         it("throws an error if the state cannot handle the given message", function () {
             // arrange
-            const state = new IdleSlaveState(slave);
+            const state = new IdleBrowserWorkerSlaveState(slave);
             spyOn(state, "enter");
             spyOn(state, "onMessage").and.returnValue(false);
             const message = initializeWorkerMessage(10);

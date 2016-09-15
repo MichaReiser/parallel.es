@@ -33,6 +33,7 @@ export interface IParallel {
      * workers.
      * @param data the array with the elements
      * @param options options options overriding the default options.
+     * @param T type of the array elements
      */
     from<T>(data: T[], options?: IParallelOptions): IParallelChain<T, {}, T>;
 
@@ -50,8 +51,14 @@ export interface IParallel {
      * TODO: Add parallel.times overload that accepts a value instead of a generator #15
      * @param n how many elements should be created using the provided generator
      * @param generator the generator used to create the array elements
-     * @param options options configuring the computation behaviou
+     * @param TResult type of the elements returned by the generator
      */
     times<TResult>(n: number, generator: (this: void, n: number, env: IParallelTaskEnvironment) => TResult): IParallelChain<TResult, IEmptyParallelEnvironment, TResult>;
+
+    /**
+     * @param env environment that is provided to the iteratee function
+     * @param options options configuring the computation behaviour
+     * @param TEnv type of the environment
+     */
     times<TEnv extends IEmptyParallelEnvironment, TResult>(n: number, generator: (this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult, env: TEnv, options?: IParallelOptions): IParallelChain<TResult, TEnv, TResult>;
 }

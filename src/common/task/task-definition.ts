@@ -1,11 +1,12 @@
 /**
- * @module parallel-es
+ * @module parallel
  */
-/** needed, typedoc issue */
+/** */
 
 import {ISerializedFunctionCall} from "../serialization/serialized-function-call";
+
 /**
- * Definition of a task to execute. A task is uniquely identified by an id.
+ * Definition of a task to execute. A task is uniquely identified by its id.
  */
 export interface ITaskDefinition {
     /**
@@ -19,7 +20,9 @@ export interface ITaskDefinition {
     readonly main: ISerializedFunctionCall;
 
     /**
-     * IDs of functions used
+     * The unique function ids ({@link IFunctionDefinition.id}) of all the functions used in this task.
+     * The array always contains the id of the main function to execute but may contain additional function ids, e.g.
+     * if the main function accepts a serialized function as parameter.
      */
     readonly usedFunctionIds: number[];
 }

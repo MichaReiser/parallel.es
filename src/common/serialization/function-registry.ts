@@ -3,7 +3,7 @@ import {SimpleMap} from "../util/simple-map";
 import {staticFunctionRegistry} from "./static-function-registry";
 
 /**
- * Lookup Table that assigns a unique id to dynamically resolved functions.
+ * Lookup table for resolving the unique id of a function.
  */
 export class FunctionRegistry {
     private ids = new SimpleMap<string, number>();
@@ -11,7 +11,7 @@ export class FunctionRegistry {
     private lastId = 999;
 
     /**
-     * Returns the unique id for the passed in function or assigns a new id to this function and returns the newly assigned id
+     * Returns the unique id for the passed in function or assigns a new id to the given function and returns the newly assigned id
      * @param func the function for which the unique id should be determined
      * @returns {number} the unique id of this function
      */
@@ -26,6 +26,7 @@ export class FunctionRegistry {
      * Returns the definition of the function with the given id or undefined, if the id is not assigned to any function definition
      * @param id the id of the function to resolve
      * @returns the resolved function definition or undefined
+     * @throws if the function is a static function and therefore no definition exists.
      */
     public getDefinition(id: number): IFunctionDefinition | undefined {
         if (staticFunctionRegistry.has(id)) {

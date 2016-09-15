@@ -30,7 +30,7 @@ describe("ParallelChainImpl", function () {
     });
 
     describe("getParallelTaskScheduling", function () {
-        it("returns the options.maxConcurrencyLevel as numberOfWorkers by default", function () {
+        it("returns the options.maxConcurrencyLevel as numberOfTasks by default", function () {
             // arrange
             const chain = createParallelChain(generator, options);
 
@@ -38,62 +38,62 @@ describe("ParallelChainImpl", function () {
             const scheduling = chain.getParallelTaskScheduling(10);
 
             // assert
-            expect(scheduling.numberOfWorkers).toBe(options.maxConcurrencyLevel);
+            expect(scheduling.numberOfTasks).toBe(options.maxConcurrencyLevel);
         });
 
-        it("uses options.maxValuesPerWorker as upper items limit", function () {
+        it("uses options.maxvaluesPerTask as upper items limit", function () {
             // arrange
-            options.maxValuesPerWorker = 2;
+            options.maxValuesPerTask = 2;
             const chain = createParallelChain(generator, options);
 
             // act
             const scheduling = chain.getParallelTaskScheduling(10);
 
             // assert
-            expect(scheduling.valuesPerWorker).toBe(2);
-            expect(scheduling.numberOfWorkers).toBe(5);
+            expect(scheduling.valuesPerTask).toBe(2);
+            expect(scheduling.numberOfTasks).toBe(5);
         });
 
-        it("ignores maxValuesPerWorker if the calculated count is less then maxValuesPerWorker", function () {
+        it("ignores maxValuesPerTask if the calculated count is less then maxvaluesPerTask", function () {
             // arrange
-            options.maxValuesPerWorker = 6;
+            options.maxValuesPerTask = 6;
             const chain = createParallelChain(generator, options);
 
             // act
             const scheduling = chain.getParallelTaskScheduling(10);
 
             // assert
-            expect(scheduling.valuesPerWorker).toBe(5);
-            expect(scheduling.numberOfWorkers).toBe(2);
+            expect(scheduling.valuesPerTask).toBe(5);
+            expect(scheduling.numberOfTasks).toBe(2);
         });
 
-        it("assigns at least minValuesPerWorker for each worker if the value is set", function () {
+        it("assigns at least minValuesPerTask for each worker if the value is set", function () {
             // arrange
-            options.minValuesPerWorker = 5;
+            options.minValuesPerTask = 5;
             const chain = createParallelChain(generator, options);
 
             // act
             const scheduling = chain.getParallelTaskScheduling(8);
 
             // assert
-            expect(scheduling.valuesPerWorker).toBe(5);
-            expect(scheduling.numberOfWorkers).toBe(2);
+            expect(scheduling.valuesPerTask).toBe(5);
+            expect(scheduling.numberOfTasks).toBe(2);
         });
 
-        it("limits the number of items to the total items even if minValuesPerWorker is set", function () {
+        it("limits the number of items to the total items even if minValuesPerTask is set", function () {
             // arrange
-            options.minValuesPerWorker = 10;
+            options.minValuesPerTask = 10;
             const chain = createParallelChain(generator, options);
 
             // act
             const scheduling = chain.getParallelTaskScheduling(5);
 
             // assert
-            expect(scheduling.valuesPerWorker).toBe(5);
-            expect(scheduling.numberOfWorkers).toBe(1);
+            expect(scheduling.valuesPerTask).toBe(5);
+            expect(scheduling.numberOfTasks).toBe(1);
         });
 
-        it("sets valuesPerWorker and numberOfWorkers to 0 if the generator does not return any values", function () {
+        it("sets valuesPerTask and numberOfTasks to 0 if the generator does not return any values", function () {
             // arrange
             const chain = createParallelChain(new ConstCollectionGenerator([]), options);
 
@@ -101,8 +101,8 @@ describe("ParallelChainImpl", function () {
             const scheduling = chain.getParallelTaskScheduling(0);
 
             // assert
-            expect(scheduling.valuesPerWorker).toBe(0);
-            expect(scheduling.numberOfWorkers).toBe(0);
+            expect(scheduling.valuesPerTask).toBe(0);
+            expect(scheduling.numberOfTasks).toBe(0);
         });
     });
 
@@ -166,22 +166,22 @@ describe("ParallelChainImpl", function () {
 
             serializeFunctionCallSpy.and.callFake((func: Function, ...params: any[]): ISerializedFunctionCall => {
                 if (func === ParallelWorkerFunctions.process) {
-                    return { ______serializedFunctionCall: true, functionId: 1, params };
+                    return { ______serializedFunctionCall: true, functionId: 1, parameters: params };
                 }
                 if (func === ParallelWorkerFunctions.map) {
-                    return { ______serializedFunctionCall: true, functionId: 2, params };
+                    return { ______serializedFunctionCall: true, functionId: 2, parameters: params };
                 }
                 if (func === ParallelWorkerFunctions.filter) {
-                    return { ______serializedFunctionCall: true, functionId: 3, params };
+                    return { ______serializedFunctionCall: true, functionId: 3, parameters: params };
                 }
                 if (func === even) {
-                    return { ______serializedFunctionCall: true, functionId: 4, params };
+                    return { ______serializedFunctionCall: true, functionId: 4, parameters: params };
                 }
                 if (func === powerOf) {
-                    return { ______serializedFunctionCall: true, functionId: 5, params };
+                    return { ______serializedFunctionCall: true, functionId: 5, parameters: params };
                 }
                 if (func === initializer) {
-                    return { ______serializedFunctionCall: true, functionId: 6, params };
+                    return { ______serializedFunctionCall: true, functionId: 6, parameters: params };
                 }
                 throw new Error("Unknown function " + func);
             });
@@ -191,8 +191,8 @@ describe("ParallelChainImpl", function () {
 
             scheduleTaskSpy.and.returnValues(task1, task2);
 
-            const generatorSlice1 = { ______serializedFunctionCall: true, functionId: 9, params: [[1, 2, 3]] };
-            const generatorSlice2 = { ______serializedFunctionCall: true, functionId: 9, params: [[4, 5]] };
+            const generatorSlice1 = { ______serializedFunctionCall: true, functionId: 9, parameters: [[1, 2, 3]] };
+            const generatorSlice2 = { ______serializedFunctionCall: true, functionId: 9, parameters: [[4, 5]] };
             spyOn(generator, "serializeSlice").and.returnValues(generatorSlice1, generatorSlice2);
 
             // act
@@ -209,27 +209,27 @@ describe("ParallelChainImpl", function () {
                 main: {
                     ______serializedFunctionCall: true,
                     functionId: 1, // process
-                    params: [
+                    parameters: [
                         {
-                            actions: [
+                            environment: { taskIndex: 0, test: 10, valuesPerTask: 3 },
+                            generator: generatorSlice1,
+                            initializer: { ______serializedFunctionCall: true, functionId: 6, parameters: [] },
+                            operations: [
                                 {
-                                    coordinator: { ______serializedFunctionCall: true, functionId: 2, params: [] }, // map
-                                    iteratee: { ______serializedFunctionCall: true, functionId: 5, params: [] } // powerOf
+                                    iteratee: { ______serializedFunctionCall: true, functionId: 5, parameters: [] }, // powerOf
+                                    iterator: { ______serializedFunctionCall: true, functionId: 2, parameters: [] } // map
                                 },
                                 {
-                                    coordinator: { ______serializedFunctionCall: true, functionId: 3, params: [] }, // filter
-                                    iteratee: { ______serializedFunctionCall: true, functionId: 4, params: [] } // even callback
+                                    iteratee: { ______serializedFunctionCall: true, functionId: 4, parameters: [] }, // even callback
+                                    iterator: { ______serializedFunctionCall: true, functionId: 3, parameters: [] } // filter
                                 }
-                            ],
-                            environment: { taskIndex: 0, test: 10, valuesPerWorker: 3 },
-                            generator: generatorSlice1,
-                            initializer: { ______serializedFunctionCall: true, functionId: 6, params: [] }
+                            ]
                         }
                     ]
                 },
                 taskIndex: 0,
                 usedFunctionIds: [1, 2, 3, 4, 5, 9],
-                valuesPerWorker: 3
+                valuesPerTask: 3
             });
 
             // slice 2
@@ -237,27 +237,27 @@ describe("ParallelChainImpl", function () {
                 main: {
                     ______serializedFunctionCall: true,
                     functionId: 1, // process
-                    params: [
+                    parameters: [
                         {
-                            actions: [  // actions
+                            environment: { taskIndex: 1, test: 10, valuesPerTask: 3 },
+                            generator: generatorSlice2,
+                            initializer: { ______serializedFunctionCall: true, functionId: 6, parameters: [] },
+                            operations: [
                                 {
-                                    coordinator: { ______serializedFunctionCall: true, functionId: 2, params: [] }, // map
-                                    iteratee: { ______serializedFunctionCall: true, functionId: 5, params: [] } // powerOf
+                                    iteratee: { ______serializedFunctionCall: true, functionId: 5, parameters: [] }, // powerOf
+                                    iterator: { ______serializedFunctionCall: true, functionId: 2, parameters: [] } // map
                                 },
                                 {
-                                    coordinator: { ______serializedFunctionCall: true, functionId: 3, params: [] }, // filter
-                                    iteratee: { ______serializedFunctionCall: true, functionId: 4, params: [] } // even callback
+                                    iteratee: { ______serializedFunctionCall: true, functionId: 4, parameters: [] }, // even callback
+                                    iterator: { ______serializedFunctionCall: true, functionId: 3, parameters: [] } // filter
                                 }
-                            ],
-                            environment: { taskIndex: 1, test: 10, valuesPerWorker: 3 },
-                            generator: generatorSlice2,
-                            initializer: { ______serializedFunctionCall: true, functionId: 6, params: [] }
+                            ]
                         }
                     ]
                 },
                 taskIndex: 1,
                 usedFunctionIds: [1, 2, 3, 4, 5, 9],
-                valuesPerWorker: 3
+                valuesPerTask: 3
             });
         });
     });

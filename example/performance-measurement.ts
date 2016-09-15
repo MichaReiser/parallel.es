@@ -10,10 +10,10 @@ const outputTable = document.querySelector("#output-table") as HTMLTableElement;
 
 const iterations = 10;
 
-function measureParallelMandelbrot(options: IMandelbrotOptions, maxValuesPerWorker?: number) {
+function measureParallelMandelbrot(options: IMandelbrotOptions, maxValuesPerTask?: number) {
     const start = performance.now();
     return parallel
-        .range(0, options.imageHeight, 1, { maxValuesPerWorker })
+        .range(0, options.imageHeight, 1, { maxValuesPerTask })
         .environment(options)
         .map(computeMandelbrotLine)
         .result()
@@ -28,13 +28,13 @@ interface IPerformanceMeasurement {
     func: () => PromiseLike<number>;
 }
 
-function createParallelMandelbrotMeasurements(mandelbrotOptions: IMandelbrotOptions, ...maxValuesPerWorkers: number[]) {
+function createParallelMandelbrotMeasurements(mandelbrotOptions: IMandelbrotOptions, ...maxValuesPerTasks: number[]) {
     const result: IPerformanceMeasurement[] = [];
-    for (const maxValuesPerWorker of [undefined, ...maxValuesPerWorkers]) {
+    for (const maxValuesPerTask of [undefined, ...maxValuesPerTasks]) {
         result.push({
-            title: `Mandelbrot ${mandelbrotOptions.imageWidth}x${mandelbrotOptions.imageHeight}, ${mandelbrotOptions.iterations} parallel (${maxValuesPerWorker})`,
+            title: `Mandelbrot ${mandelbrotOptions.imageWidth}x${mandelbrotOptions.imageHeight}, ${mandelbrotOptions.iterations} parallel (${maxValuesPerTask})`,
             func() {
-                return measureParallelMandelbrot(mandelbrotOptions, maxValuesPerWorker);
+                return measureParallelMandelbrot(mandelbrotOptions, maxValuesPerTask);
             }
         });
     }
@@ -148,7 +148,7 @@ function createExamples(): IPerformanceMeasurement[] {
         ...result,
         ...createParallelMandelbrotMeasurements(mandelbrotOptions, 1, 75, 150, 300, 600, 1200),
         ...createMonteCarloMeasurements(monteCarloOptions, 1, 2, 4, 6, 8, 10, 15),
-        ...createKnightBoardMeasurements(5, 1, 5, 10, 13)
+        ...createKnightBoardMeasurements(5, 6)
     ];
 }
 

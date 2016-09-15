@@ -10,7 +10,7 @@ module.exports = new Config()
                     test: /\.ts$/,
                     loader: "istanbul-instrumenter?esModules=true",
                     include: path.resolve("./src"),
-                    exclude: path.resolve("./src/browser/slave/index")
+                    exclude: path.resolve("./src/browser/worker-slave/index")
                 }
             ]
         }

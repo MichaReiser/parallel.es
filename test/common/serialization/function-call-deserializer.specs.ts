@@ -16,7 +16,7 @@ describe("FunctionCallDeserializer", function () {
             const serializedCall: ISerializedFunctionCall = {
                 ______serializedFunctionCall: true,
                 functionId: 1,
-                params: []
+                parameters: []
             };
 
             getFunctionSpy.and.returnValue(function () { return 2; });
@@ -28,12 +28,26 @@ describe("FunctionCallDeserializer", function () {
             expect(typeof func).toBe("function");
         });
 
+        it("throws if the function is not in the registry", function () {
+            // arrange
+            const serializedCall: ISerializedFunctionCall = {
+                ______serializedFunctionCall: true,
+                functionId: 1,
+                parameters: []
+            };
+
+            getFunctionSpy.and.returnValue(undefined);
+
+            // act, assert
+            expect(() => deserializer.deserializeFunctionCall(serializedCall)).toThrowError("The function with the id 1 could not be retrieved while deserializing the function call. Is the function correctly registered?");
+        });
+
         it("the returned function calls the deserialized function and passes the serialized params", function () {
             // arrange
             const serializedCall: ISerializedFunctionCall = {
                 ______serializedFunctionCall: true,
                 functionId: 1,
-                params: [2]
+                parameters: [2]
             };
 
             getFunctionSpy.and.returnValue(function (x: number) { return x; });
@@ -50,7 +64,7 @@ describe("FunctionCallDeserializer", function () {
             const serializedCall: ISerializedFunctionCall = {
                 ______serializedFunctionCall: true,
                 functionId: 1,
-                params: [2]
+                parameters: [2]
             };
 
             getFunctionSpy.and.returnValue(function (x: number, y: number) { return x + y; });
@@ -67,13 +81,13 @@ describe("FunctionCallDeserializer", function () {
             const serializedParam: ISerializedFunctionCall = {
                 ______serializedFunctionCall: true,
                 functionId: 1,
-                params: [2]
+                parameters: [2]
             };
 
             const serializedCall: ISerializedFunctionCall = {
                 ______serializedFunctionCall: true,
                 functionId: 2,
-                params: [serializedParam]
+                parameters: [serializedParam]
             };
 
             getFunctionSpy.and.callFake(function (funcId: number): Function | undefined {

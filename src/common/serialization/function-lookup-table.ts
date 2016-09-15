@@ -1,3 +1,12 @@
-export interface FunctionLookupTable {
-    getFunction(id: number): Function;
+/**
+ * Allows looking up a function by its {@link IFunctionDefinition.id} id.
+ */
+export interface IFunctionLookupTable {
+
+    /**
+     * Returns the function with the given id or undefined if no such function is registered.
+     * @param id the id of the function to look up
+     * @returns the function with the given id, if available, undefined otherwise
+     */
+    getFunction(id: number): Function | undefined;
 }

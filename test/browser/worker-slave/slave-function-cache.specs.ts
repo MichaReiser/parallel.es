@@ -1,4 +1,4 @@
-import {SlaveFunctionCache} from "../../../src/browser/slave/slave-function-cache";
+import {SlaveFunctionCache} from "../../../src/browser/worker-slave/slave-function-cache";
 import {staticFunctionRegistry} from "../../../src/common/serialization/static-function-registry";
 
 describe("SlaveFunctionCache", function () {
@@ -39,7 +39,7 @@ describe("SlaveFunctionCache", function () {
 
             // assert
             expect(func).toBeDefined();
-            expect(func(10)).toEqual(10);
+            expect(func!(10)).toEqual(10);
         });
     });
 

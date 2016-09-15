@@ -1,6 +1,6 @@
 import {DefaultThreadPool} from "../../../src/common/thread-pool/default-thread-pool";
 import {FunctionRegistry} from "../../../src/common/serialization/function-registry";
-import {IWorkerThread} from "../../../src/common/worker/worker-thread";
+import {WorkerTask} from "../../../src/common/task/worker-task";
 
 describe("DefaultThreadPool", function () {
     let spawn: jasmine.Spy;
@@ -45,6 +45,7 @@ describe("DefaultThreadPool", function () {
             // arrange
             const func = function () { /* ignore */ };
             spyOn(functionLookupTable, "getOrSetId").and.returnValue(1);
+            const runOnSpy = spyOn(WorkerTask.prototype, "runOn");
 
             const worker = { run: jasmine.createSpy("run") };
             spawn.and.returnValue(worker);
@@ -53,7 +54,7 @@ describe("DefaultThreadPool", function () {
             threadPool.schedule(func);
 
             // assert
-            expect(worker.run).toHaveBeenCalledWith({ id: 0, main: jasmine.objectContaining({ functionId: 1, params: [] }), usedFunctionIds: [ 1 ]});
+            expect(runOnSpy).toHaveBeenCalledWith(worker);
         });
 
         it("enqueues the task if no worker thread is available", function () {
@@ -76,52 +77,60 @@ describe("DefaultThreadPool", function () {
             expect(worker2.run).toHaveBeenCalled();
         });
 
-        it("schedules queued tasks when a worker gets available", function (done) {
+        it("schedules queued tasks when a worker gets available", function () {
             // arrange
             const func = function () { /* ignore */ };
             const func2 = function add(x: number, y: number): number { return x + y; };
 
             const worker1 = { run: jasmine.createSpy("run1"), stop: jasmine.createSpy("stop") };
             const worker2 = { run: jasmine.createSpy("run2"), stop: jasmine.createSpy("stop") };
+            const runOnSpy = spyOn(WorkerTask.prototype, "runOn");
+            const alwaysSpy = spyOn(WorkerTask.prototype, "always");
+            spyOn(WorkerTask.prototype, "releaseWorker").and.returnValue(worker1);
+
             spawn.and.returnValues(worker1, worker2);
 
             // schedule worker until no worker is available...
-            const task1 = threadPool.schedule(func);
+            threadPool.schedule(func);
             threadPool.schedule(func);
             threadPool.schedule(func2); // queue third function
 
             // act
-            completeTaskOfWorker(worker1); // complete first task, third task should now be scheduled
+            // complete task of first worker so that the third task is scheduled on worker 1
+            alwaysSpy.calls.argsFor(0)[0].call(undefined, 10);
 
             // assert
-            task1.then(() => {
-                expect(worker1.run).toHaveBeenCalledTimes(2);
-                expect(worker2.run).toHaveBeenCalledTimes(1);
-                done();
-            });
+            expect(runOnSpy.calls.count()).toEqual(3);
+            expect(runOnSpy.calls.argsFor(0)).toEqual([worker1]);
+            expect(runOnSpy.calls.argsFor(1)).toEqual([worker2]);
+            expect(runOnSpy.calls.argsFor(2)).toEqual([worker1]);
         });
 
-        it("reuses an idle worker if available", function (done) {
+        it("reuses an idle worker if available", function () {
             // arrange
             const worker1 = { run: jasmine.createSpy("run1"), stop: jasmine.createSpy("stop") };
             const worker2 = { run: jasmine.createSpy("run2"), stop: jasmine.createSpy("stop") };
             spawn.and.returnValues(worker1, worker2);
 
+            const runOnSpy = spyOn(WorkerTask.prototype, "runOn");
+            const alwaysSpy = spyOn(WorkerTask.prototype, "always");
+            spyOn(WorkerTask.prototype, "releaseWorker").and.returnValues(worker1, worker2);
+
             // spawn all workers by scheduling tasks up to concurrency limit
             const func = function () { /* ignore */ };
-            const task1 = threadPool.schedule(func);
+            threadPool.schedule(func);
             threadPool.schedule(func);
 
-            completeTaskOfWorker(worker1); // complete first task, third task should now be scheduled
+            // complete first task, third task can now be scheduled on worker1 as this worker is idle
+            alwaysSpy.calls.argsFor(0)[0].call(undefined, 10);
 
-            // assert
-            task1.then(() => {
-                // act
-                threadPool.schedule(func);
-                expect(worker1.run).toHaveBeenCalledTimes(2);
-                expect(worker2.run).toHaveBeenCalledTimes(1);
-                done();
-            });
+            // act
+            threadPool.schedule(func);
+
+            expect(runOnSpy).toHaveBeenCalledTimes(3);
+            expect(runOnSpy.calls.argsFor(0)).toEqual([ worker1 ]);
+            expect(runOnSpy.calls.argsFor(1)).toEqual([ worker2]);
+            expect(runOnSpy.calls.argsFor(0)).toEqual([ worker1 ]);
         });
     });
 
@@ -135,10 +144,4 @@ describe("DefaultThreadPool", function () {
             expect(threadPool.createFunctionSerializer()).not.toBe(serializer);
         });
     });
-
-    function completeTaskOfWorker(worker: IWorkerThread, result?: any) {
-        if (worker.oncomplete) {
-            worker.oncomplete(result);
-        }
-    }
 });

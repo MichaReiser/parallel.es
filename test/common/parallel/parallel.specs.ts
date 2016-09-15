@@ -13,7 +13,6 @@ describe("Parallel", function () {
 
     beforeEach(function () {
         parallel = parallelFactory({
-            functionLookupTable: undefined as any,
             maxConcurrencyLevel,
             threadPool
         });
@@ -48,21 +47,21 @@ describe("Parallel", function () {
             // act
             parallel.defaultOptions({
                 maxConcurrencyLevel: 8,
-                minValuesPerWorker: 1000
+                minValuesPerTask: 1000
             });
 
             // assert
             const options = parallel.defaultOptions();
 
             expect(options.maxConcurrencyLevel).toBe(8);
-            expect(options.minValuesPerWorker).toBe(1000);
+            expect(options.minValuesPerTask).toBe(1000);
         });
 
         it("merges the given options with the existing options", function () {
             // act
             parallel.defaultOptions({
                 maxConcurrencyLevel: 8,
-                minValuesPerWorker: 1000
+                minValuesPerTask: 1000
             });
 
             // assert
@@ -73,17 +72,17 @@ describe("Parallel", function () {
         it("unsets values if undefined is passed as option value", function () {
             // arrange
             parallel.defaultOptions({
-                minValuesPerWorker: 1000
+                minValuesPerTask: 1000
             });
 
             // act
             parallel.defaultOptions({
-                minValuesPerWorker: undefined
+                minValuesPerTask: undefined
             });
 
             // assert
             const options = parallel.defaultOptions();
-            expect(options.minValuesPerWorker).toBeUndefined();
+            expect(options.minValuesPerTask).toBeUndefined();
         });
 
         it("throws if maxConcurrencyLevel is not a number", function () {
