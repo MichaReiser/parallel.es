@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+
+	<title>Test Seite</title>
+</head>
+<body>
+<div class="container-fluid">
+
+	<h1>
+		Parallel ES Examples
+	</h1>
+
+	<h2>Mandelbrot</h2>
+	<p class="muted">
+		Requires IE Edge, Firefox, Chrome or Safari (full Canvas support)
+	</p>
+
+	<div>
+		<canvas id="mandelbrot-canvas" width="800" height="640">
+		</canvas>
+	</div>
+
+
+	<input type="button" id="mandelbrot-run-sync" value="Run synchronous..." class="btn btn-primary"/>
+
+	<form class="form-inline" action="#">
+		<div class="form-group">
+			<label for="mandelbrot-values-per-task">Number of lines calculated by a task</label>
+			<input type="number" value="10" name="mandelbrot-values-per-task" id="mandelbrot-values-per-task"/>
+		</div>
+		<input type="submit" id="mandelbrot-run-async" value="Run parallel..." class="btn btn-primary"/>
+	</form>
+
+
+	<h2>Monte Carlo</h2>
+	<table class="table table-striped" id="montecarlo-table">
+		<tr>
+			<th>Project Start /Groups</th>
+			<th>Investment Amount</th>
+			<th>Green</th>
+			<th>Yellow</th>
+			<th>Gray</th>
+			<th>Red</th>
+		</tr>
+	</table>
+
+	<input type="button" id="montecarlo-run-sync" value="Run sync..." class="btn btn-primary"/>
+	<input type="button" id="montecarlo-run-parallel" value="Run parallel..." class="btn btn-primary"/>
+
+
+	<h2>Knight Tours</h2>
+
+	<form class="form-inline">
+		<div class="form-group">
+			<label for="knight-board-size">Board Size</label>
+			<input type="number" value="5" name="knight-board-size" id="knight-board-size" />
+		</div>
+	</form>
+
+	<p id="knight-board-result"></p>
+
+	<input type="button" id="knight-run-sync" value="Run sync..." class="btn btn-primary"/>
+	<input type="button" id="knight-run-parallel" value="Run parallel..." class="btn btn-primary"/>
+</div>
+
+	<script src="./browser.parallel-es.js"></script>
+	<script src="./example.parallel-es.js"></script>
+</body>
+</html>
