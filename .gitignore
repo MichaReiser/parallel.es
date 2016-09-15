@@ -1,5 +1,5 @@
-.idea
-coverage
-dist
-docs
-node_modules
+/.idea
+/coverage
+/dist
+/docs
+/node_modules
