@@ -25,5 +25,5 @@ const threadPool = new DefaultThreadPool(new BrowserWorkerThreadFactory(function
 /**
  * The global parallel instance.
  */
-const parallel = parallelFactory({ threadPool, functionLookupTable, maxConcurrencyLevel });
+const parallel = parallelFactory({ threadPool, maxConcurrencyLevel });
 export default parallel;

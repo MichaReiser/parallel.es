@@ -1,5 +1,4 @@
 import {IParallel} from "./parallel";
-import {IConfiguration} from "../configuration";
 import {IDefaultInitializedParallelOptions, IParallelOptions} from "./parallel-options";
 import {IParallelChain} from "./parallel-chain";
 import {ConstCollectionGenerator, RangeGenerator, TimesGenerator} from "./parallel-generator";
@@ -7,12 +6,7 @@ import {IParallelTaskEnvironment} from "./parallel-environment";
 import {ParallelWorkerFunctions} from "./parallel-worker-functions";
 import {createParallelChain} from "./parallel-chain-impl";
 
-export function parallelFactory(configuration: IConfiguration): IParallel {
-    let defaultOptions: IDefaultInitializedParallelOptions = {
-        maxConcurrencyLevel: configuration.maxConcurrencyLevel,
-        threadPool: configuration.threadPool
-    };
-
+export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptions): IParallel {
     function mergeOptions(userOptions?: IParallelOptions): IDefaultInitializedParallelOptions {
         if (userOptions) {
             if (userOptions.hasOwnProperty("threadPool") && typeof(userOptions.threadPool) === "undefined") {
