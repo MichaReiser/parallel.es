@@ -1,3 +1,8 @@
+/**
+ * @module parallel
+ */
+/** needed, typedoc issue */
+
 import {ITask} from "../task/task";
 import {IParallelTaskDefinition} from "./parallel-task-definition";
 

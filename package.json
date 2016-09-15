@@ -6,7 +6,7 @@
   "browser": "./dist/browser-es5-commonjs.parallel-es.js",
   "scripts": {
     "build": "cross-env NODE_ENV=prod webpack --progress &np& npm run build:doc",
-    "build:doc": "typedoc --out ./docs --module umd --target es6 --name \"Parallel ES\" ./src",
+    "build:doc": "typedoc --out ./docs --module umd --target es6 --name \"Parallel ES\" ./src --entryPoint parallel",
     "prepublish": "npm run-script build",
     "start": "cross-env NODE_ENV=dev webpack-dev-server --progress --content-base example --hot",
     "test": "cross-env NODE_ENV=test-ci karma start --single-run && npm run coverage:remap",
@@ -59,6 +59,7 @@
     "tslint": "^3.14.0",
     "tslint-loader": "^2.1.5",
     "typedoc": "github:datenmetzgerx/typedoc#typescript-2-build",
+    "typedoc-plugin-external-module-name": "^1.0.2",
     "typescript": "^2.0.2",
     "webpack": "^2.1.0-beta.21",
     "webpack-config": "^6.1.2",

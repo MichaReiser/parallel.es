@@ -1,4 +1,5 @@
-import {IParallel, parallelFactory} from "../../../src/common/parallel/parallel";
+import {IParallel} from "../../../src/common/parallel/parallel";
+import {parallelFactory} from "../../../src/common/parallel/parallel-impl";
 import {ParallelChainImpl} from "../../../src/common/parallel/parallel-chain-impl";
 import {
     ConstCollectionGenerator, RangeGenerator,

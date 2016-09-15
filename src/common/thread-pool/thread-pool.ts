@@ -1,3 +1,8 @@
+/**
+ * @module parallel-es
+ */
+/** needed, typedoc issue */
+
 import {ITask} from "../task/task";
 import {ITaskDefinition} from "../task/task-definition";
 import {FunctionCallSerializer} from "../serialization/function-call-serializer";

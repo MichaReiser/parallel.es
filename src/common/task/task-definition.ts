@@ -1,3 +1,8 @@
+/**
+ * @module parallel-es
+ */
+/** needed, typedoc issue */
+
 import {ISerializedFunctionCall} from "../serialization/serialized-function-call";
 /**
  * Definition of a task to execute. A task is uniquely identified by an id.
