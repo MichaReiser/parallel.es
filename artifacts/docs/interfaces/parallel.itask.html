@@ -54,7 +54,10 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">parallel</a>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/parallel.html">parallel</a>
 				</li>
 				<li>
 					<a href="parallel.itask.html">ITask</a>
@@ -70,7 +73,9 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Represents a running or scheduled task on the thread pool. Behaves like a promise.</p>
+						<p>Represents a task that has been scheduled on a thread pool or is actually in execution.
+							The task result can be retrieved by registering a callback using {@link PromiseLike.then} that is invoked with the task result.
+						Any occurring errors are silently ignored if no explicit exception handler is registered using <a href="parallel.itask.html#catch">ITask.catch</a>.</p>
 					</div>
 				</div>
 			</section>
@@ -79,6 +84,11 @@
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>T</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>type of the computed result</p>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -98,7 +108,7 @@
 			<section class="tsd-panel">
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="" class="tsd-signature-type">WorkerTask</a></li>
+					<li><a href="../classes/_common_task_worker_task_.workertask.html" class="tsd-signature-type">WorkerTask</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -132,9 +142,14 @@
 					<div class="tsd-signature tsd-kind-icon">definition<span class="tsd-signature-symbol">:</span> <a href="parallel.itaskdefinition.html" class="tsd-signature-type">ITaskDefinition</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/task/task.ts#L12">common/task/task.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/task/task.ts#L19">common/task/task.ts:19</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The underlining task definition that describes the executed task</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="iscanceled" class="tsd-anchor"></a>
@@ -142,7 +157,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Canceled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/task/task.ts#L17">common/task/task.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/task/task.ts#L24">common/task/task.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -157,12 +172,12 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Cancellation<wbr>Requested<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/task/task.ts#L22">common/task/task.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/task/task.ts#L29">common/task/task.ts:29</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Indicator if this task should be canceled</p>
+							<p>Indicator if this task should be canceled but has not yet</p>
 						</div>
 					</div>
 				</section>
@@ -179,14 +194,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/task/task.ts#L32">common/task/task.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/task/task.ts#L50">common/task/task.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Cancels the given task.
-										This has only an effect if the task has not yet been scheduled. Already
-									scheduled tasks cannot be terminated.</p>
+									<p>Cancels the given task. Triggers an error that the task has been canceled.
+										This has only an effect if the task has not yet been scheduled. An already scheduled task will compute till the end, but
+									the then handler will not be invoked.</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -204,9 +219,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/task/task.ts#L24">common/task/task.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/task/task.ts#L36">common/task/task.ts:36</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Attaches a callback for only the rejection of the Promise.</p>
+								</div>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -217,23 +237,36 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> onrejected: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The callback to execute when the Promise is rejected.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A Promise for the completion of the callback.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/task/task.ts#L25">common/task/task.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/task/task.ts#L43">common/task/task.ts:43</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Attaches a callback for only the rejection of the Promise.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> onrejected: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The callback to execute when the Promise is rejected.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A Promise for the completion of the callback.</p>
 						</li>
 					</ul>
 				</section>
@@ -312,15 +345,24 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../globals.html">parallel</a>
+						<a href="../modules/parallel.html">parallel</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/parallel.parallelstreamimpl.html" class="tsd-kind-icon">Parallel<wbr>Stream<wbr>Impl</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.idefaultinitializedparalleloptions.html" class="tsd-kind-icon">IDefault<wbr>Initialized<wbr>Parallel<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iemptyparallelenvironment.html" class="tsd-kind-icon">IEmpty<wbr>Parallel<wbr>Environment</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.ifunctiondefinition.html" class="tsd-kind-icon">IFunction<wbr>Definition</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="parallel.iparallel.html" class="tsd-kind-icon">IParallel</a>
@@ -331,8 +373,17 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="parallel.iparallelchaininitializer.html" class="tsd-kind-icon">IParallel<wbr>Chain<wbr>Initializer</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iparalleloptions.html" class="tsd-kind-icon">IParallel<wbr>Options</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="parallel.iparallelstream.html" class="tsd-kind-icon">IParallel<wbr>Stream</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iparalleltaskenvironment.html" class="tsd-kind-icon">IParallel<wbr>Task<wbr>Environment</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iserializedfunctioncall.html" class="tsd-kind-icon">ISerialized<wbr>Function<wbr>Call</a>
 					</li>
 				</ul>
 				<ul class="current">
@@ -367,17 +418,23 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="parallel.ithreadpool.html" class="tsd-kind-icon">IThread<wbr>Pool</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../globals.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iworkerthread.html" class="tsd-kind-icon">IWorker<wbr>Thread</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../globals.html#maxconcurrencylevel" class="tsd-kind-icon">max<wbr>Concurrency<wbr>Level</a>
+						<a href="../modules/parallel.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/parallel.html#maxconcurrencylevel" class="tsd-kind-icon">max<wbr>Concurrency<wbr>Level</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
-						<a href="../globals.html#parallel-1" class="tsd-kind-icon">parallel</a>
+						<a href="../modules/parallel.html#parallel-1" class="tsd-kind-icon">parallel</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../globals.html#threadpool" class="tsd-kind-icon">thread<wbr>Pool</a>
+						<a href="../modules/parallel.html#threadpool" class="tsd-kind-icon">thread<wbr>Pool</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/parallel.html#isserializedfunctioncall" class="tsd-kind-icon">is<wbr>Serialized<wbr>Function<wbr>Call</a>
 					</li>
 				</ul>
 			</nav>

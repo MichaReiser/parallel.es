@@ -54,7 +54,10 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">parallel</a>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/parallel.html">parallel</a>
 				</li>
 				<li>
 					<a href="parallel.ithreadpool.html">IThreadPool</a>
@@ -70,8 +73,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The thread pool is responsible for scheduling the work onto different workers. The thread pool defines
-						the used scheduling strategy.</p>
+						<p>The thread pool is responsible for distributing the scheduled tasks onto different workers. The thread pool defines how the
+						queued tasks are scheduled onto the available workers and how many workers are created.</p>
 					</div>
 				</div>
 			</section>
@@ -86,7 +89,7 @@
 			<section class="tsd-panel">
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="" class="tsd-signature-type">DefaultThreadPool</a></li>
+					<li><a href="../classes/_common_thread_pool_default_thread_pool_.defaultthreadpool.html" class="tsd-signature-type">DefaultThreadPool</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -110,16 +113,22 @@
 					<a name="createfunctionserializer" class="tsd-anchor"></a>
 					<h3>create<wbr>Function<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Function<wbr>Serializer<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="" class="tsd-signature-type">FunctionCallSerializer</a></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Function<wbr>Serializer<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/_common_serialization_function_call_serializer_.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L36">common/thread-pool/thread-pool.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/thread-pool/thread-pool.ts#L119">common/thread-pool/thread-pool.ts:119</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type">FunctionCallSerializer</a></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a function serializer that can be used to serialize function calls.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/_common_serialization_function_call_serializer_.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a></h4>
+							<p>a new function serializer</p>
 						</li>
 					</ul>
 				</section>
@@ -134,28 +143,28 @@
 						<li class="tsd-signature tsd-kind-icon">schedule&lt;TParam1, TParam2, TParam3, TParam4, TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 						<li class="tsd-signature tsd-kind-icon">schedule&lt;TParam1, TParam2, TParam3, TParam4, TParam5, TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 						<li class="tsd-signature tsd-kind-icon">schedule&lt;TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">schedule&lt;TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span>, param7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">schedule&lt;TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span>, param7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam7</span>, param8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">schedule&lt;TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span>, param7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam7</span>, param8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam8</span>, param9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam9</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">schedule&lt;TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span>, param7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam7</span>, param8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam8</span>, param9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam9</span>, param10<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam10</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">schedule&lt;TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span>, <span class="tsd-signature-symbol">...</span>furtherParams<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L22">common/thread-pool/thread-pool.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/thread-pool/thread-pool.ts#L24">common/thread-pool/thread-pool.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Schedules the passed in function to be processed on an available worker. If no worker is available, then the
-									function is queued until another function completes and a worker is released.</p>
+									<p>Schedules the passed in function on an available worker. If no worker is available, then the
+									function is queued until another task completes and therefore a worker is released.</p>
 								</div>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>TResult</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>the type of the result returned by the scheduled function</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -187,17 +196,23 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>the scheduled task.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L23">common/thread-pool/thread-pool.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/thread-pool/thread-pool.ts#L30">common/thread-pool/thread-pool.ts:30</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>TParam1</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the parameter passed to the function</p>
+									</div>
 								</li>
 								<li>
 									<h4>TResult</h4>
@@ -231,6 +246,9 @@
 								</li>
 								<li>
 									<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>sole parameter that is passed to the function</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -238,16 +256,24 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L24">common/thread-pool/thread-pool.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/thread-pool/thread-pool.ts#L38">common/thread-pool/thread-pool.ts:38</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>TParam1</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the first parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam2</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the second function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TResult</h4>
@@ -284,9 +310,15 @@
 								</li>
 								<li>
 									<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the first parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param2: <span class="tsd-signature-type">TParam2</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the second parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -294,19 +326,30 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L25">common/thread-pool/thread-pool.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/thread-pool/thread-pool.ts#L48">common/thread-pool/thread-pool.ts:48</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>TParam1</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the first parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam2</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the second function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam3</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the third function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TResult</h4>
@@ -346,12 +389,21 @@
 								</li>
 								<li>
 									<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the first parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param2: <span class="tsd-signature-type">TParam2</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the second parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param3: <span class="tsd-signature-type">TParam3</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the third parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -359,22 +411,36 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L26">common/thread-pool/thread-pool.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/thread-pool/thread-pool.ts#L60">common/thread-pool/thread-pool.ts:60</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>TParam1</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the first parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam2</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the second function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam3</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the third function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam4</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the fourth function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TResult</h4>
@@ -417,15 +483,27 @@
 								</li>
 								<li>
 									<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the first parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param2: <span class="tsd-signature-type">TParam2</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the second parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param3: <span class="tsd-signature-type">TParam3</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the third parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param4: <span class="tsd-signature-type">TParam4</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the fourth parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -433,25 +511,42 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L27">common/thread-pool/thread-pool.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/thread-pool/thread-pool.ts#L74">common/thread-pool/thread-pool.ts:74</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>TParam1</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the first parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam2</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the second function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam3</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the third function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam4</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the fourth function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam5</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the fifth function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TResult</h4>
@@ -497,18 +592,33 @@
 								</li>
 								<li>
 									<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the first parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param2: <span class="tsd-signature-type">TParam2</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the second parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param3: <span class="tsd-signature-type">TParam3</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the third parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param4: <span class="tsd-signature-type">TParam4</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the fourth parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param5: <span class="tsd-signature-type">TParam5</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the fifth parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -516,28 +626,48 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L28">common/thread-pool/thread-pool.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/thread-pool/thread-pool.ts#L90">common/thread-pool/thread-pool.ts:90</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>TParam1</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the first parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam2</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the second function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam3</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the third function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam4</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the fourth function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam5</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the fifth function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam6</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the sixth function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TResult</h4>
@@ -586,21 +716,39 @@
 								</li>
 								<li>
 									<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the first parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param2: <span class="tsd-signature-type">TParam2</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the second parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param3: <span class="tsd-signature-type">TParam3</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the third parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param4: <span class="tsd-signature-type">TParam4</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the fourth parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param5: <span class="tsd-signature-type">TParam5</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the fifth parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param6: <span class="tsd-signature-type">TParam6</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the sixth parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -608,31 +756,48 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L29">common/thread-pool/thread-pool.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/thread-pool/thread-pool.ts#L107">common/thread-pool/thread-pool.ts:107</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>TParam1</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the first parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam2</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the second function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam3</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the third function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam4</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the fourth function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam5</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the fifth function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TParam6</h4>
-								</li>
-								<li>
-									<h4>TParam7</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the sixth function parameter</p>
+									</div>
 								</li>
 								<li>
 									<h4>TResult</h4>
@@ -645,7 +810,7 @@
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span>, param7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span>, <span class="tsd-signature-symbol">...</span>furtherParams<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -673,7 +838,7 @@
 															<h5>param6: <span class="tsd-signature-type">TParam6</span></h5>
 														</li>
 														<li>
-															<h5>param7: <span class="tsd-signature-type">TParam7</span></h5>
+															<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>furtherParams: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span></h4>
@@ -684,381 +849,45 @@
 								</li>
 								<li>
 									<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the first parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param2: <span class="tsd-signature-type">TParam2</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the second parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param3: <span class="tsd-signature-type">TParam3</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the third parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param4: <span class="tsd-signature-type">TParam4</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the fourth parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param5: <span class="tsd-signature-type">TParam5</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the fifth parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
 									<h5>param6: <span class="tsd-signature-type">TParam6</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the sixth parameter that is passed to the scheduled function</p>
+									</div>
 								</li>
 								<li>
-									<h5>param7: <span class="tsd-signature-type">TParam7</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L30">common/thread-pool/thread-pool.ts:30</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>TParam1</h4>
-								</li>
-								<li>
-									<h4>TParam2</h4>
-								</li>
-								<li>
-									<h4>TParam3</h4>
-								</li>
-								<li>
-									<h4>TParam4</h4>
-								</li>
-								<li>
-									<h4>TParam5</h4>
-								</li>
-								<li>
-									<h4>TParam6</h4>
-								</li>
-								<li>
-									<h4>TParam7</h4>
-								</li>
-								<li>
-									<h4>TParam8</h4>
-								</li>
-								<li>
-									<h4>TResult</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>func: <span class="tsd-signature-type">function</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span>, param7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam7</span>, param8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>this: <span class="tsd-signature-type">void</span></h5>
-														</li>
-														<li>
-															<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
-														</li>
-														<li>
-															<h5>param2: <span class="tsd-signature-type">TParam2</span></h5>
-														</li>
-														<li>
-															<h5>param3: <span class="tsd-signature-type">TParam3</span></h5>
-														</li>
-														<li>
-															<h5>param4: <span class="tsd-signature-type">TParam4</span></h5>
-														</li>
-														<li>
-															<h5>param5: <span class="tsd-signature-type">TParam5</span></h5>
-														</li>
-														<li>
-															<h5>param6: <span class="tsd-signature-type">TParam6</span></h5>
-														</li>
-														<li>
-															<h5>param7: <span class="tsd-signature-type">TParam7</span></h5>
-														</li>
-														<li>
-															<h5>param8: <span class="tsd-signature-type">TParam8</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
-								</li>
-								<li>
-									<h5>param2: <span class="tsd-signature-type">TParam2</span></h5>
-								</li>
-								<li>
-									<h5>param3: <span class="tsd-signature-type">TParam3</span></h5>
-								</li>
-								<li>
-									<h5>param4: <span class="tsd-signature-type">TParam4</span></h5>
-								</li>
-								<li>
-									<h5>param5: <span class="tsd-signature-type">TParam5</span></h5>
-								</li>
-								<li>
-									<h5>param6: <span class="tsd-signature-type">TParam6</span></h5>
-								</li>
-								<li>
-									<h5>param7: <span class="tsd-signature-type">TParam7</span></h5>
-								</li>
-								<li>
-									<h5>param8: <span class="tsd-signature-type">TParam8</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L31">common/thread-pool/thread-pool.ts:31</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>TParam1</h4>
-								</li>
-								<li>
-									<h4>TParam2</h4>
-								</li>
-								<li>
-									<h4>TParam3</h4>
-								</li>
-								<li>
-									<h4>TParam4</h4>
-								</li>
-								<li>
-									<h4>TParam5</h4>
-								</li>
-								<li>
-									<h4>TParam6</h4>
-								</li>
-								<li>
-									<h4>TParam7</h4>
-								</li>
-								<li>
-									<h4>TParam8</h4>
-								</li>
-								<li>
-									<h4>TParam9</h4>
-								</li>
-								<li>
-									<h4>TResult</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>func: <span class="tsd-signature-type">function</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span>, param7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam7</span>, param8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam8</span>, param9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam9</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>this: <span class="tsd-signature-type">void</span></h5>
-														</li>
-														<li>
-															<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
-														</li>
-														<li>
-															<h5>param2: <span class="tsd-signature-type">TParam2</span></h5>
-														</li>
-														<li>
-															<h5>param3: <span class="tsd-signature-type">TParam3</span></h5>
-														</li>
-														<li>
-															<h5>param4: <span class="tsd-signature-type">TParam4</span></h5>
-														</li>
-														<li>
-															<h5>param5: <span class="tsd-signature-type">TParam5</span></h5>
-														</li>
-														<li>
-															<h5>param6: <span class="tsd-signature-type">TParam6</span></h5>
-														</li>
-														<li>
-															<h5>param7: <span class="tsd-signature-type">TParam7</span></h5>
-														</li>
-														<li>
-															<h5>param8: <span class="tsd-signature-type">TParam8</span></h5>
-														</li>
-														<li>
-															<h5>param9: <span class="tsd-signature-type">TParam9</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
-								</li>
-								<li>
-									<h5>param2: <span class="tsd-signature-type">TParam2</span></h5>
-								</li>
-								<li>
-									<h5>param3: <span class="tsd-signature-type">TParam3</span></h5>
-								</li>
-								<li>
-									<h5>param4: <span class="tsd-signature-type">TParam4</span></h5>
-								</li>
-								<li>
-									<h5>param5: <span class="tsd-signature-type">TParam5</span></h5>
-								</li>
-								<li>
-									<h5>param6: <span class="tsd-signature-type">TParam6</span></h5>
-								</li>
-								<li>
-									<h5>param7: <span class="tsd-signature-type">TParam7</span></h5>
-								</li>
-								<li>
-									<h5>param8: <span class="tsd-signature-type">TParam8</span></h5>
-								</li>
-								<li>
-									<h5>param9: <span class="tsd-signature-type">TParam9</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L32">common/thread-pool/thread-pool.ts:32</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>TParam1</h4>
-								</li>
-								<li>
-									<h4>TParam2</h4>
-								</li>
-								<li>
-									<h4>TParam3</h4>
-								</li>
-								<li>
-									<h4>TParam4</h4>
-								</li>
-								<li>
-									<h4>TParam5</h4>
-								</li>
-								<li>
-									<h4>TParam6</h4>
-								</li>
-								<li>
-									<h4>TParam7</h4>
-								</li>
-								<li>
-									<h4>TParam8</h4>
-								</li>
-								<li>
-									<h4>TParam9</h4>
-								</li>
-								<li>
-									<h4>TParam10</h4>
-								</li>
-								<li>
-									<h4>TResult</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>func: <span class="tsd-signature-type">function</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span>, param7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam7</span>, param8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam8</span>, param9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam9</span>, param10<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam10</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>this: <span class="tsd-signature-type">void</span></h5>
-														</li>
-														<li>
-															<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
-														</li>
-														<li>
-															<h5>param2: <span class="tsd-signature-type">TParam2</span></h5>
-														</li>
-														<li>
-															<h5>param3: <span class="tsd-signature-type">TParam3</span></h5>
-														</li>
-														<li>
-															<h5>param4: <span class="tsd-signature-type">TParam4</span></h5>
-														</li>
-														<li>
-															<h5>param5: <span class="tsd-signature-type">TParam5</span></h5>
-														</li>
-														<li>
-															<h5>param6: <span class="tsd-signature-type">TParam6</span></h5>
-														</li>
-														<li>
-															<h5>param7: <span class="tsd-signature-type">TParam7</span></h5>
-														</li>
-														<li>
-															<h5>param8: <span class="tsd-signature-type">TParam8</span></h5>
-														</li>
-														<li>
-															<h5>param9: <span class="tsd-signature-type">TParam9</span></h5>
-														</li>
-														<li>
-															<h5>param10: <span class="tsd-signature-type">TParam10</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<h5>param1: <span class="tsd-signature-type">TParam1</span></h5>
-								</li>
-								<li>
-									<h5>param2: <span class="tsd-signature-type">TParam2</span></h5>
-								</li>
-								<li>
-									<h5>param3: <span class="tsd-signature-type">TParam3</span></h5>
-								</li>
-								<li>
-									<h5>param4: <span class="tsd-signature-type">TParam4</span></h5>
-								</li>
-								<li>
-									<h5>param5: <span class="tsd-signature-type">TParam5</span></h5>
-								</li>
-								<li>
-									<h5>param6: <span class="tsd-signature-type">TParam6</span></h5>
-								</li>
-								<li>
-									<h5>param7: <span class="tsd-signature-type">TParam7</span></h5>
-								</li>
-								<li>
-									<h5>param8: <span class="tsd-signature-type">TParam8</span></h5>
-								</li>
-								<li>
-									<h5>param9: <span class="tsd-signature-type">TParam9</span></h5>
-								</li>
-								<li>
-									<h5>param10: <span class="tsd-signature-type">TParam10</span></h5>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>furtherParams: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>further params that are passed to the scheduled function</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1075,9 +904,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/db5c4be/src/common/thread-pool/thread-pool.ts#L34">common/thread-pool/thread-pool.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8147d45/src/common/thread-pool/thread-pool.ts#L113">common/thread-pool/thread-pool.ts:113</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Schedules the passed in task definition onto an available worker or enqueues the task to be scheduled as soon as a worker gets available.</p>
+								</div>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -1088,6 +922,9 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>task: <a href="parallel.itaskdefinition.html" class="tsd-signature-type">ITaskDefinition</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the task to schedule</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1099,15 +936,24 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../globals.html">parallel</a>
+						<a href="../modules/parallel.html">parallel</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/parallel.parallelstreamimpl.html" class="tsd-kind-icon">Parallel<wbr>Stream<wbr>Impl</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.idefaultinitializedparalleloptions.html" class="tsd-kind-icon">IDefault<wbr>Initialized<wbr>Parallel<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iemptyparallelenvironment.html" class="tsd-kind-icon">IEmpty<wbr>Parallel<wbr>Environment</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.ifunctiondefinition.html" class="tsd-kind-icon">IFunction<wbr>Definition</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="parallel.iparallel.html" class="tsd-kind-icon">IParallel</a>
@@ -1118,8 +964,17 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="parallel.iparallelchaininitializer.html" class="tsd-kind-icon">IParallel<wbr>Chain<wbr>Initializer</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iparalleloptions.html" class="tsd-kind-icon">IParallel<wbr>Options</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="parallel.iparallelstream.html" class="tsd-kind-icon">IParallel<wbr>Stream</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iparalleltaskenvironment.html" class="tsd-kind-icon">IParallel<wbr>Task<wbr>Environment</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iserializedfunctioncall.html" class="tsd-kind-icon">ISerialized<wbr>Function<wbr>Call</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="parallel.itask.html" class="tsd-kind-icon">ITask</a>
@@ -1145,17 +1000,23 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../globals.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iworkerthread.html" class="tsd-kind-icon">IWorker<wbr>Thread</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../globals.html#maxconcurrencylevel" class="tsd-kind-icon">max<wbr>Concurrency<wbr>Level</a>
+						<a href="../modules/parallel.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/parallel.html#maxconcurrencylevel" class="tsd-kind-icon">max<wbr>Concurrency<wbr>Level</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
-						<a href="../globals.html#parallel-1" class="tsd-kind-icon">parallel</a>
+						<a href="../modules/parallel.html#parallel-1" class="tsd-kind-icon">parallel</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../globals.html#threadpool" class="tsd-kind-icon">thread<wbr>Pool</a>
+						<a href="../modules/parallel.html#threadpool" class="tsd-kind-icon">thread<wbr>Pool</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/parallel.html#isserializedfunctioncall" class="tsd-kind-icon">is<wbr>Serialized<wbr>Function<wbr>Call</a>
 					</li>
 				</ul>
 			</nav>
