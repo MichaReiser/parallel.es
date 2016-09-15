@@ -1,3 +1,8 @@
+/**
+ * @module parallel-es
+ */
+/** needed, typedoc issue */
+
 import {ITaskDefinition} from "./task-definition";
 /**
  * Represents a running or scheduled task on the thread pool. Behaves like a promise.
