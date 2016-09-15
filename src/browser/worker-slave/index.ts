@@ -1,10 +1,10 @@
 import {ParallelWorkerFunctions} from "../../common/parallel/parallel-worker-functions";
 import {staticFunctionRegistry} from "../../common/serialization/static-function-registry";
-import {BrowserSlave} from "./browser-slave";
+import {BrowserWorkerSlave} from "./browser-worker-slave";
 
 staticFunctionRegistry.registerStaticFunctions(ParallelWorkerFunctions);
 
-const slave = new BrowserSlave();
+const slave = new BrowserWorkerSlave();
 onmessage = function () {
     slave.onMessage.apply(slave, arguments);
 };

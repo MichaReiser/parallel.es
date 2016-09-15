@@ -3,7 +3,8 @@ import {ITaskDefinition} from "./task-definition";
 import {IWorkerThread} from "../worker/worker-thread";
 
 /**
- * Implementation of a task.
+ * Default implementation of a task.
+ * Executes the task on a {@link IWorkerThread}.
  */
 export class WorkerTask<T> implements ITask<T> {
     public isCancellationRequested = false;
@@ -15,8 +16,8 @@ export class WorkerTask<T> implements ITask<T> {
     private promise: Promise<T>;
 
     /**
-     * Creates a new task that is used to execute the passed in task
-     * @param definition the definition of the task to execute
+     * Creates a new worker task that executes the operation defined by the given definition
+     * @param definition the definition of the operation to execute
      */
     constructor(public definition: ITaskDefinition) {
         this.promise = new Promise<T>((resolvePromise, rejectPromise) => {
@@ -27,16 +28,22 @@ export class WorkerTask<T> implements ITask<T> {
 
     /**
      * Executes the task on the given worker. Assumes that the worker is not performing any other work at the moment.
-     * If the task has been cancled in the meantime, no operation is performed and the reject callback is invoked immediately.
+     * If the task has been canceled in the meantime, no operation is performed and the reject callback is invoked immediately.
      * @param worker the worker thread that should be used to execute this task
      */
     public runOn(worker: IWorkerThread): void {
         this.worker = worker;
-        this.worker.oncomplete = result => this._taskCompleted(result);
-        this.worker.onerror = (error: any) => this.reject(error);
 
         if (!this.isCancellationRequested) {
-            this.worker.run(this.definition);
+            const callback = (error: any, result: any) => {
+                if (error) {
+                    this.reject(error);
+                } else {
+                    this._taskCompleted(result);
+                }
+            };
+
+            this.worker.run(this.definition, callback);
         } else {
             this._taskCompleted(undefined);
         }
@@ -52,7 +59,6 @@ export class WorkerTask<T> implements ITask<T> {
         }
 
         const worker = this.worker;
-        worker.oncomplete = worker.onerror = undefined;
         this.worker = undefined;
         return worker;
     }
@@ -73,8 +79,7 @@ export class WorkerTask<T> implements ITask<T> {
     }
 
     /**
-     * Registers a handler that is invoked when the task is always invoked when the task has completed, independently if it
-     * was successful or not.
+     * Registers a handler that is invoked always invoked when the task has completed, independently if the execution was successful or not
      * @param handler The handler to invoke.
      */
     public always(handler: () => void): void {

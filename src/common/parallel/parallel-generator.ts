@@ -4,17 +4,17 @@ import {FunctionCallSerializer} from "../serialization/function-call-serializer"
 
 /**
  * Generator that creates a sequence of values and is capable
- * to distribute the value generations onto various workers
+ * to distribute the value generations onto various tasks
  */
 export interface IParallelGenerator {
     /**
-     * Total number of elements that this worker return
+     * Total number of elements that this generator return
      */
     length: number;
 
     /**
-     * Serializes the generation of a single slice that can be executed on a worker
-     * @param index the slice index (start 0)
+     * Serializes the generation of a single slice that can be executed as separate task
+     * @param index the slice/task index (start 0)
      * @param numberOfItems the number of items to include in this slice
      * @param functionCallSerializer the serialized function call
      */
@@ -22,7 +22,9 @@ export interface IParallelGenerator {
 }
 
 /**
- * Generator for arrays
+ * Generator for arrays.
+ * Splits the array elements onto separate tasks.
+ * @param T type of the array elements
  */
 export class ConstCollectionGenerator<T> implements IParallelGenerator {
     constructor(private collection: T[]) {}
@@ -68,6 +70,7 @@ export class RangeGenerator implements IParallelGenerator {
 
 /**
  * Generic generator that calls a passed in function n times to create n values
+ * @param T type of the values returned by the iteratee function
  */
 export class TimesGenerator<T> implements IParallelGenerator {
     public readonly times: number;

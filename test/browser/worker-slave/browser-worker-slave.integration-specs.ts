@@ -6,7 +6,7 @@ import {ITaskDefinition} from "../../../src/common/task/task-definition";
 
 declare function require(module: string): any;
 /* tslint:disable:no-var-requires */
-const BrowserSlave = require("worker?inline=true!../../../src/browser/slave/index");
+const BrowserSlave = require("worker?inline=true!../../../src/browser/worker-slave/index");
 
 describe("BrowserSlave IntegrationTests", function () {
     let slave: Worker;
@@ -25,7 +25,7 @@ describe("BrowserSlave IntegrationTests", function () {
     describe("task execution", function () {
         it("requests missing function definitions", function (done) {
             // arrange
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1000, params: [] }, usedFunctionIds: [1000]};
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1000, parameters: [] }, usedFunctionIds: [1000]};
             slave.postMessage(initializeWorkerMessage(1));
 
             // act
@@ -41,7 +41,7 @@ describe("BrowserSlave IntegrationTests", function () {
 
         it("it executes the function as soon as the function definition has been retrieved", function (done) {
             // arrange
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1000, params: [10] }, usedFunctionIds: [1000] };
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1000, parameters: [10] }, usedFunctionIds: [1000] };
 
             let promise = new Promise((resolve, reject) => {
                 (onresponse as jasmine.Spy).and.callFake(function (event: MessageEvent) {
@@ -84,7 +84,7 @@ describe("BrowserSlave IntegrationTests", function () {
                 });
             });
 
-            const firstTask: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1000, params: [10] }, usedFunctionIds: [1000] };
+            const firstTask: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1000, parameters: [10] }, usedFunctionIds: [1000] };
             slave.postMessage(initializeWorkerMessage(1));
             slave.postMessage(scheduleTaskMessage(firstTask));
 
@@ -102,7 +102,7 @@ describe("BrowserSlave IntegrationTests", function () {
                 });
 
                 // act
-                const secondTask: ITaskDefinition = { id: 2, main: { ______serializedFunctionCall: true, functionId: 1000, params: [20] }, usedFunctionIds: [1000]};
+                const secondTask: ITaskDefinition = { id: 2, main: { ______serializedFunctionCall: true, functionId: 1000, parameters: [20] }, usedFunctionIds: [1000]};
                 slave.postMessage(scheduleTaskMessage(secondTask));
                 return promise;
             });
@@ -118,7 +118,7 @@ describe("BrowserSlave IntegrationTests", function () {
 
         it("reports any errors occurring during the function execution", function (done) {
             // arrange
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1000, params: [10] }, usedFunctionIds: [1000] };
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1000, parameters: [10] }, usedFunctionIds: [1000] };
 
             let promise = new Promise((resolve, reject) => {
                 (onresponse as jasmine.Spy).and.callFake(function (event: MessageEvent) {

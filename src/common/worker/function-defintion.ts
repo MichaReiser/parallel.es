@@ -1,9 +1,14 @@
 /**
- * Definition of a function
+ * @module parallel
+ */
+/** */
+
+/**
+ * Serialized representation of a function.
  */
 export interface IFunctionDefinition {
     /**
-     * The unique id of the function
+     * Unique identification of the function
      */
     id: number;
 

@@ -2,17 +2,46 @@ import {FunctionCallDeserializer} from "../serialization/function-call-deseriali
 import {ISerializedFunctionCall} from "../serialization/serialized-function-call";
 import {staticFunctionRegistry} from "../serialization/static-function-registry";
 import {toArray, toIterator} from "../util/iterator";
-import {ISerializedParallelAction} from "./parallel-action";
+import {ISerializedParallelOperation} from "./parallel-operation";
 import {IParallelTaskEnvironment} from "./parallel-environment";
 
+/**
+ * Defines the parallel operation to perform
+ */
 export interface IParallelProcessParams {
+    /**
+     * The generator that is used to create the array that is "manipulated" by applying the given actions.
+     */
     generator: ISerializedFunctionCall;
-    actions: ISerializedParallelAction[];
+
+    /**
+     * The operations to perform on the array elements
+     */
+    operations: ISerializedParallelOperation[];
+
+    /**
+     * The environment. Object hash that is passed to all iteratee functions and allows to access external data
+     */
     environment: IParallelTaskEnvironment;
+
+    /**
+     * Initializer that is called before any operation is performed to initialize the environment of this worker.
+     */
     initializer?: ISerializedFunctionCall;
 }
 
+/**
+ * Functions that are executed in the worker slave
+ */
 export const ParallelWorkerFunctions = {
+    /**
+     * Main coordination function for any operation performed using {@link IParallel}.
+     * @param definition the definition of the operation to performed
+     * @param options options passed from the thread pool
+     * @param T type of the elements created by the generator
+     * @param TResult type of the resulting elements
+     * @returns the result of the operation from this worker
+     */
     process<T, TResult>(definition: IParallelProcessParams, options: { functionCallDeserializer: FunctionCallDeserializer }): TResult[] {
         let environment = definition.environment;
 
@@ -24,15 +53,23 @@ export const ParallelWorkerFunctions = {
         const generatorFunction = options.functionCallDeserializer.deserializeFunctionCall(definition.generator, true);
         let iterator = generatorFunction(definition.environment) as Iterator<T>;
 
-        for (const action of definition.actions) {
-            const coordinator = options.functionCallDeserializer.deserializeFunctionCall<Iterator<T>>(action.coordinator);
-            const iteratee = options.functionCallDeserializer.deserializeFunctionCall(action.iteratee);
-            iterator = coordinator(iterator, iteratee, environment);
+        for (const operation of definition.operations) {
+            const iteratorFunction = options.functionCallDeserializer.deserializeFunctionCall<Iterator<T>>(operation.iterator);
+            const iteratee = options.functionCallDeserializer.deserializeFunctionCall(operation.iteratee);
+            iterator = iteratorFunction(iterator, iteratee, environment);
         }
 
         return toArray<TResult>(iterator as any);
     },
 
+    /**
+     * Performs the map operation
+     * @param iterator the iterator of the previous step
+     * @param iteratee the iteratee to apply to each element in the iterator
+     * @param T the type of the input elements
+     * @param TResult the type of the returned element of the iteratee
+     * @returns a new iterator where each element has been mapped using the iteratee
+     */
     map<T, TResult>(iterator: Iterator<T>, iteratee: (this: void, value: T, env: IParallelTaskEnvironment) => TResult, env: IParallelTaskEnvironment): Iterator<TResult> {
         return {
             next(): IteratorResult<TResult> {
@@ -48,6 +85,13 @@ export const ParallelWorkerFunctions = {
         };
     },
 
+    /**
+     * Returns a new iterator that only contains all elements for which the given predicate returns true
+     * @param iterator the iterator to filter
+     * @param predicate the predicate to use for filtering the elements
+     * @param T type of the elements to filter
+     * @returns an iterator only containing the elements where the predicate is true
+     */
     filter<T>(iterator: Iterator<T>, predicate: (this: void, value: T, env: IParallelTaskEnvironment) => boolean, env: IParallelTaskEnvironment): Iterator<T> {
         return {
             next() {
@@ -64,6 +108,15 @@ export const ParallelWorkerFunctions = {
         };
     },
 
+    /**
+     * Reduces the elements of the given iterator to a single value by applying the given iteratee to each element
+     * @param defaultValue a default value that is as accumulator or for the case that the iterator is empty
+     * @param iteratee iteratee that is applied for each element. The iteratee is passed the accumulated value (sum of all previous values)
+     * and the current element and has to return a new accumulated value.
+     * @param T type of the elements to process
+     * @param TResult type of the reduced value
+     * @returns an array with a single value, the reduced value
+     */
     reduce<T, TResult>(defaultValue: TResult, iterator: Iterator<T>, iteratee: (this: void, accumulatedValue: TResult, value: T | undefined, env: IParallelTaskEnvironment) => TResult, env: IParallelTaskEnvironment): Iterator<TResult> {
         let accumulatedValue = defaultValue;
         let current: IteratorResult<T>;
@@ -76,6 +129,13 @@ export const ParallelWorkerFunctions = {
         return toIterator([accumulatedValue]);
     },
 
+    /**
+     * Generator function that creates an iterator containing all elements in the range [start, end) with a step size of step.
+     * @param from start value of the range (inclusive)
+     * @param end end value of the range (exclusive)
+     * @param step step size between two values
+     * @returns iterator with the values [start, end)
+     */
     range(start: number, end: number, step: number): Iterator<number> {
         let next = start;
         return {
@@ -90,6 +150,14 @@ export const ParallelWorkerFunctions = {
         };
     },
 
+    /**
+     * Generator that creates an iterator containing end - start elements that are created by calling the iteratee
+     * @param start the start value (inclusive)
+     * @param end end value (exclusive)
+     * @param iteratee that is to be called to create the elements
+     * @param TResult type of the created elements by the iteratee
+     * @returns iterator for the created elements
+     */
     times<TResult>(start: number, end: number, iteratee: (this: void, i: number, env: IParallelTaskEnvironment) => TResult, env: IParallelTaskEnvironment): Iterator<TResult> {
         let next = start;
         return {
@@ -104,6 +172,10 @@ export const ParallelWorkerFunctions = {
         };
     },
 
+    /**
+     * identity function. Returns the passed in value
+     * @param T type of the element
+     */
     identity<T>(element: T): T {
         return element;
     },

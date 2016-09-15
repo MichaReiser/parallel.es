@@ -26,6 +26,10 @@ describe("BrowserWorkerThread", function () {
         browserWorker = new BrowserWorkerThread(slave as any, functionLookupTable);
     });
 
+    it("is in default state by default", function () {
+        expect(browserWorker.state.name).toBe("default");
+    });
+
     describe("initialize", function () {
         it("sends an initialize message to the slave containing the worker id", function () {
             // act
@@ -34,27 +38,56 @@ describe("BrowserWorkerThread", function () {
             // assert
             expect(slave.postMessage).toHaveBeenCalledWith({ type: WorkerMessageType.InitializeWorker, workerId: browserWorker.id });
         });
+
+        it("is in idle state thereafter", function () {
+            // act
+            browserWorker.initialize();
+
+            // assert
+            expect(browserWorker.state.name).toBe("idle");
+        });
+
+        it("fails if the worker is not in the default state", function () {
+            // arrange
+            browserWorker.initialize();
+
+            // act, assert
+            expect(() => browserWorker.initialize()).toThrowError("The browser worker thread can only be initialized if in state default but actual state is 'idle'.");
+        });
     });
 
     describe("run", function () {
         it("sends the schedule task message to the slave containing the task definition", function () {
             // arrange
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1]};
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, parameters: [] }, usedFunctionIds: [1]};
+            browserWorker.initialize();
 
             // act
-            browserWorker.run(task);
+            browserWorker.run(task, () => undefined);
 
             // assert
             expect(slave.postMessage).toHaveBeenCalledWith({ type: WorkerMessageType.ScheduleTask, task });
         });
 
+        it("is in executing state while executing", function () {
+            // arrange
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, parameters: [] }, usedFunctionIds: [1]};
+            browserWorker.initialize();
+
+            // act
+            browserWorker.run(task, () => undefined);
+
+            // assert
+            expect(browserWorker.state.name).toBe("executing");
+        });
+
         it("sends the function definition to the slave if the definition is requested", function () {
             // arrange
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, parameters: [] }, usedFunctionIds: [1] };
             const functionDefinition: IFunctionDefinition = { argumentNames: ["x", "y"], body: "x + y;", id: task.main.functionId };
             spyOn(functionLookupTable, "getDefinition").and.returnValue(functionDefinition);
             browserWorker.initialize();
-            browserWorker.run(task);
+            browserWorker.run(task, () => undefined);
 
             // act
             slaveRespond({ data: requestFunctionMessage(task.main.functionId) } as any);
@@ -63,27 +96,80 @@ describe("BrowserWorkerThread", function () {
             expect(slave.postMessage).toHaveBeenCalledWith({ functions: [functionDefinition], type: WorkerMessageType.FunctionResponse });
         });
 
-        it("invokes the oncomplete handler if the slave has sent the result", function () {
+        it("invokes the callback with the result received from the worker slave", function () {
             // arrange
-            const task: ITaskDefinition = { id: 1, main: {  ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
+            const task: ITaskDefinition = { id: 1, main: {  ______serializedFunctionCall: true, functionId: 1, parameters: [] }, usedFunctionIds: [1] };
+            const callback = jasmine.createSpy("callback");
+            browserWorker.initialize();
 
-            browserWorker.run(task);
-            const completeSpy = browserWorker.oncomplete = jasmine.createSpy("completeSpy");
+            browserWorker.run(task, callback);
 
             // act
             slaveRespond({ data: workerResultMessage(10) } as any);
 
             // assert
-            expect(completeSpy).toHaveBeenCalledWith(10);
+            expect(callback).toHaveBeenCalledWith(undefined, 10);
         });
 
-        it("does not fail if no oncomplete handler is registered and the result is received from the slave", function () {
+        it("triggers the callback if an error message has been retrieved from the worker", function () {
             // arrange
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
-            browserWorker.run(task);
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, parameters: [] }, usedFunctionIds: [1] };
+            const callback = jasmine.createSpy("callback");
+            browserWorker.initialize();
+            browserWorker.run(task, callback);
+
+            // act
+            slaveRespond({ data: functionExecutionError(new Error("Failed to execute the function"))} as any);
+
+            // assert
+            expect(callback).toHaveBeenCalledWith(jasmine.objectContaining({
+                message: jasmine.stringMatching("Failed to execute the function")
+            }), undefined);
+        });
+
+        it("throws an error if the slave sends an unexpected message", function () {
+            // act, assert
+            expect(() => slaveRespond({ data: { txt: "Unknown message", type: 9999999 } } as any)).toThrowError("Browser worker thread in state 'default' cannot handle the received message (9999999).");
+        });
+
+        it("fails if the browser worker thread is not in idle state", function () {
+            // arrange
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, parameters: [] }, usedFunctionIds: [1] };
+            const callback = jasmine.createSpy("callback");
 
             // act, assert
-            slaveRespond({ data: workerResultMessage(10) } as any);
+            expect(() => browserWorker.run(task, callback)).toThrowError("The browser worker thread can only execute a new task if in state idle but actual state is 'default'.");
+        });
+
+        it("switches back to idle state if execution has completed", function () {
+            // arrange
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, parameters: [] }, usedFunctionIds: [1] };
+            const callback = jasmine.createSpy("callback");
+
+            browserWorker.initialize();
+            browserWorker.run(task, callback);
+
+            // act
+            slaveRespond({ data: workerResultMessage(10 )} as any);
+
+            // assert
+            expect(browserWorker.state.name).toEqual("idle");
+        });
+
+        it("is in stopped state after function completed but when stop was requested", function () {
+            // arrange
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, parameters: [] }, usedFunctionIds: [1] };
+            const callback = jasmine.createSpy("callback");
+
+            browserWorker.initialize();
+            browserWorker.run(task, callback);
+
+            // act
+            browserWorker.stop();
+            slaveRespond({ data: workerResultMessage(10 )} as any);
+
+            // assert
+            expect(browserWorker.state.name).toEqual("stopped");
         });
     });
 
@@ -95,27 +181,37 @@ describe("BrowserWorkerThread", function () {
             // assert
             expect(slave.postMessage).toHaveBeenCalledWith({ type: WorkerMessageType.Stop });
         });
-    });
 
-    describe("onmessage", function () {
-        it("triggers the onerror handler if an error message has been retrieved from the worker", function () {
-            // arrange
-            const errorHandler = browserWorker.onerror = jasmine.createSpy("onerror");
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, params: [] }, usedFunctionIds: [1] };
-            browserWorker.run(task);
-
+        it("is in stopped state thereafter", function () {
             // act
-            slaveRespond({ data: functionExecutionError(new Error("Failed to execute the function"))} as any);
+            browserWorker.stop();
 
             // assert
-            expect(errorHandler).toHaveBeenCalledWith(jasmine.objectContaining({
-                message: jasmine.stringMatching("Failed to execute the function")
-            }));
+            expect(browserWorker.state.name).toBe("stopped");
         });
 
-        it("throws an error if the slave sends an unexpected message", function () {
-            // act, assert
-            expect(() => slaveRespond({ data: { txt: "Unknown message", type: 9999999 } } as any)).toThrowError("Message from worker cannot be processed 9999999");
+        it("does not resent the stop message if already stopped", function () {
+            // act
+            browserWorker.stop();
+            browserWorker.stop();
+
+            // assert
+            expect(slave.postMessage).toHaveBeenCalledTimes(1);
+        });
+
+        it("is still in executing state if stopped while executing", function () {
+            // arrange
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: 1, parameters: [] }, usedFunctionIds: [1] };
+            const callback = jasmine.createSpy("callback");
+
+            browserWorker.initialize();
+            browserWorker.run(task, callback);
+
+            // act
+            browserWorker.stop();
+
+            // assert
+            expect(browserWorker.state.name).toEqual("executing");
         });
     });
 });

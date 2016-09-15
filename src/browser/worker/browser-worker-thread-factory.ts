@@ -5,10 +5,10 @@ import {FunctionRegistry} from "../../common/serialization/function-registry";
 
 declare function require(module: string): any;
 /* tslint:disable:no-var-requires */
-const SlaveWorker = require("worker?inline=true&name=worker-slave.parallel-es.js!../slave");
+const SlaveWorker = require("worker?inline=true&name=worker-slave.parallel-es.js!../worker-slave");
 
 /**
- * Thread factory that creates web worker based threads.
+ * Thread factory that creates web worker based threads using {@link BrowserWorkerThread}.
  */
 export class BrowserWorkerThreadFactory implements IWorkerThreadFactory {
     constructor(private functionLookupTable: FunctionRegistry) {}

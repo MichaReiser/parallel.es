@@ -11,7 +11,7 @@ describe("WorkerTask", function () {
         main: {
             ______serializedFunctionCall: true,
             functionId: 2,
-            params: [5, 10]
+            parameters: [5, 10]
         },
         usedFunctionIds: [2]
     };
@@ -19,8 +19,6 @@ describe("WorkerTask", function () {
     beforeEach(function () {
         runSpy = jasmine.createSpy("run");
         worker = {
-            oncomplete: undefined,
-            onerror: undefined,
             run: runSpy,
             stop: jasmine.createSpy("stop")
         };
@@ -65,17 +63,13 @@ describe("WorkerTask", function () {
             workerTask.runOn(worker);
 
             // assert
-            expect(runSpy).toHaveBeenCalledWith(taskDefinition);
+            expect(runSpy).toHaveBeenCalledWith(taskDefinition, jasmine.any(Function));
         });
 
         it("resolves the promise when the task has completed (oncomplete handler is invoked)", function (done) {
             // arrange
-            runSpy.and.callFake(function () {
-                if (worker.oncomplete) {
-                    worker.oncomplete(10);
-                } else {
-                    fail("The worker thread has not registered to the oncomplete event");
-                }
+            runSpy.and.callFake(function (task: any, callback: (error: any, result: any) => void) {
+                callback(undefined, 10);
             });
 
             // act
@@ -91,10 +85,8 @@ describe("WorkerTask", function () {
 
         it("rejects the promise when the task fails (onerror handler is invoked)", function (done) {
             // arrange
-            runSpy.and.callFake(function () {
-                if (worker.onerror) {
-                    worker.onerror("error");
-                }
+            runSpy.and.callFake(function (task: any, callback: (error: any, result: any) => void) {
+                callback("error reason", undefined);
             });
 
             // act
@@ -102,7 +94,7 @@ describe("WorkerTask", function () {
 
             // assert
             workerTask.then(() => done.fail("Worker should have failed"), error => {
-                expect(error).toEqual("error");
+                expect(error).toEqual("error reason");
                 done();
             });
         });
@@ -140,7 +132,7 @@ describe("WorkerTask", function () {
 
             // act
             workerTask.cancel();
-            worker!.oncomplete!.call(undefined, 10);
+            runSpy.calls.argsFor(0)[1].call(undefined, undefined, 10);
 
             // asset
             workerTask.then(function () {
@@ -153,18 +145,6 @@ describe("WorkerTask", function () {
     });
 
     describe("releaseWorker", function () {
-        it("unregistered the onerror and oncomplete handlers", function () {
-            // arrange
-            workerTask.runOn(worker);
-
-            // act
-            workerTask.releaseWorker();
-
-            // assert
-            expect(worker.oncomplete).toBeUndefined();
-            expect(worker.onerror).toBeUndefined();
-        });
-
         it("returns the worker used to execute the task", function () {
             // arrange
             workerTask.runOn(worker);
