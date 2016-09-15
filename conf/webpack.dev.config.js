@@ -24,5 +24,8 @@ module.exports = new Config().extend({
         stats: {
             chunks: false
         }
-    }
+    },
+    plugins: [
+        new CommonsChunkPlugin("browser")
+    ]
 });
