@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IFunctionResponse | Parallel ES</title>
+	<title>DefaultParallelScheduler | Parallel ES</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,13 +57,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_common_worker_worker_messages_.html">&quot;common/worker/worker-messages&quot;</a>
+					<a href="../modules/_common_parallel_default_parallel_scheduler_.html">&quot;common/parallel/default-parallel-scheduler&quot;</a>
 				</li>
 				<li>
-					<a href="_common_worker_worker_messages_.ifunctionresponse.html">IFunctionResponse</a>
+					<a href="_common_parallel_default_parallel_scheduler_.defaultparallelscheduler.html">DefaultParallelScheduler</a>
 				</li>
 			</ul>
-			<h1>Interface IFunctionResponse</h1>
+			<h1>Class DefaultParallelScheduler</h1>
 		</div>
 	</div>
 </header>
@@ -73,21 +73,25 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Response to a <a href="_common_worker_worker_messages_.ifunctionrequest.html">IFunctionRequest</a>. Contains the definitions for all requested functions.</p>
+						<p>Default implementation of a parallel scheduler.
+						By default, creates as many tasks as the hardware concurrency allows (<a href="../interfaces/parallel.iparalleloptions.html#maxconcurrencylevel">IParallelOptions.maxConcurrencyLevel</a>).</p>
 					</div>
+					<p>If the options define <a href="../interfaces/parallel.iparalleloptions.html#maxvaluespertask">IParallelOptions.maxValuesPerTask</a> or <a href="../interfaces/parallel.iparalleloptions.html#minvaluespertask">IParallelOptions.minValuesPerTask</a>, then the
+					values are adjusted accordingly.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="_common_worker_worker_messages_.iworkermessage.html" class="tsd-signature-type">IWorkerMessage</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">IFunctionResponse</span>
-							</li>
-						</ul>
+						<span class="target">DefaultParallelScheduler</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/_common_parallel_parallel_scheduler_.iparallelscheduler.html" class="tsd-signature-type">IParallelScheduler</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -95,47 +99,42 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_common_worker_worker_messages_.ifunctionresponse.html#functions" class="tsd-kind-icon">functions</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_common_worker_worker_messages_.ifunctionresponse.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_common_parallel_default_parallel_scheduler_.defaultparallelscheduler.html#getscheduling" class="tsd-kind-icon">get<wbr>Scheduling</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="functions" class="tsd-anchor"></a>
-					<h3>functions</h3>
-					<div class="tsd-signature tsd-kind-icon">functions<span class="tsd-signature-symbol">:</span> <a href="parallel.ifunctiondefinition.html" class="tsd-signature-type">IFunctionDefinition</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/worker/worker-messages.ts#L92">common/worker/worker-messages.ts:92</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The definition of the requested functions</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/_common_worker_worker_messages_.workermessagetype.html" class="tsd-signature-type">WorkerMessageType</a></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="_common_worker_worker_messages_.iworkermessage.html">IWorkerMessage</a>.<a href="_common_worker_worker_messages_.iworkermessage.html#type">type</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/worker/worker-messages.ts#L52">common/worker/worker-messages.ts:52</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The type of the message.</p>
-						</div>
-					</div>
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getscheduling" class="tsd-anchor"></a>
+					<h3>get<wbr>Scheduling</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Scheduling<span class="tsd-signature-symbol">(</span>totalNumberOfValues<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, options<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.idefaultinitializedparalleloptions.html" class="tsd-signature-type">IDefaultInitializedParallelOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_common_parallel_parallel_scheduler_.iparalleltaskscheduling.html" class="tsd-signature-type">IParallelTaskScheduling</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_common_parallel_parallel_scheduler_.iparallelscheduler.html">IParallelScheduler</a>.<a href="../interfaces/_common_parallel_parallel_scheduler_.iparallelscheduler.html#getscheduling">getScheduling</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/parallel/default-parallel-scheduler.ts#L13">common/parallel/default-parallel-scheduler.ts:13</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>totalNumberOfValues: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>options: <a href="../interfaces/parallel.idefaultinitializedparalleloptions.html" class="tsd-signature-type">IDefaultInitializedParallelOptions</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_common_parallel_parallel_scheduler_.iparalleltaskscheduling.html" class="tsd-signature-type">IParallelTaskScheduling</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -146,90 +145,24 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html">"common/worker/worker-<wbr>messages"</a>
+						<a href="../modules/_common_parallel_default_parallel_scheduler_.html">"common/parallel/default-<wbr>parallel-<wbr>scheduler"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
-						<a href="../enums/_common_worker_worker_messages_.workermessagetype.html" class="tsd-kind-icon">Worker<wbr>Message<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_common_worker_worker_messages_.ifunctionexecutionerror.html" class="tsd-kind-icon">IFunction<wbr>Execution<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_common_worker_worker_messages_.ifunctionrequest.html" class="tsd-kind-icon">IFunction<wbr>Request</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_common_worker_worker_messages_.ifunctionresponse.html" class="tsd-kind-icon">IFunction<wbr>Response</a>
+					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+						<a href="_common_parallel_default_parallel_scheduler_.defaultparallelscheduler.html" class="tsd-kind-icon">Default<wbr>Parallel<wbr>Scheduler</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_common_worker_worker_messages_.ifunctionresponse.html#functions" class="tsd-kind-icon">functions</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="_common_worker_worker_messages_.ifunctionresponse.html#type" class="tsd-kind-icon">type</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_common_parallel_default_parallel_scheduler_.defaultparallelscheduler.html#getscheduling" class="tsd-kind-icon">get<wbr>Scheduling</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_common_worker_worker_messages_.iinitializeworkermessage.html" class="tsd-kind-icon">IInitialize<wbr>Worker<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_common_worker_worker_messages_.ischeduletaskmessage.html" class="tsd-kind-icon">ISchedule<wbr>Task<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_common_worker_worker_messages_.iworkermessage.html" class="tsd-kind-icon">IWorker<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_common_worker_worker_messages_.iworkerresultmessage.html" class="tsd-kind-icon">IWorker<wbr>Result<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#functionexecutionerror" class="tsd-kind-icon">function<wbr>Execution<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#functionresponsemessage" class="tsd-kind-icon">function<wbr>Response<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#initializeworkermessage" class="tsd-kind-icon">initialize<wbr>Worker<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#isfunctionexecutionerror" class="tsd-kind-icon">is<wbr>Function<wbr>Execution<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#isfunctionrequest" class="tsd-kind-icon">is<wbr>Function<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#isfunctionresponse" class="tsd-kind-icon">is<wbr>Function<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#isinitializemessage" class="tsd-kind-icon">is<wbr>Initialize<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#isscheduletask" class="tsd-kind-icon">is<wbr>Schedule<wbr>Task</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#isstopmesssage" class="tsd-kind-icon">is<wbr>Stop<wbr>Messsage</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#isworkerresult" class="tsd-kind-icon">is<wbr>Worker<wbr>Result</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#requestfunctionmessage" class="tsd-kind-icon">request<wbr>Function<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#scheduletaskmessage" class="tsd-kind-icon">schedule<wbr>Task<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#stopmessage" class="tsd-kind-icon">stop<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_common_worker_worker_messages_.html#workerresultmessage" class="tsd-kind-icon">worker<wbr>Result<wbr>Message</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

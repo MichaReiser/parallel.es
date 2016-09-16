@@ -73,11 +73,11 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Abstraction of a thread that is used to execute a <a href="parallel.itask.html">ITask</a>. A worker thread
-							can execute one <a href="parallel.itask.html">ITask</a> at a time. It may consist of two parts. The worker thread that resists
+						<p>Abstraction of a thread that is used to execute a task. A worker thread
+							can execute on task at a time. A worker thread may consist of two parts. The worker thread that resists
 							in the main thread and acts as facade to the underlining worker slave. The worker slave executes the tasks
 							scheduled on the worker thread in a dedicated environment, e.g. a web worker or child process. The worker slave
-						normally does not resist in the main thread memory and communicates with the worker thread using messaging</p>
+						normally does not resist in the main thread memory</p>
 					</div>
 					<p>Acts as abstraction of the actually used environment (node, browser...)</p>
 				</div>
@@ -122,7 +122,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/0128de3/src/common/worker/worker-thread.ts#L24">common/worker/worker-thread.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/worker/worker-thread.ts#L24">common/worker/worker-thread.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -181,7 +181,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/0128de3/src/common/worker/worker-thread.ts#L29">common/worker/worker-thread.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/worker/worker-thread.ts#L29">common/worker/worker-thread.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -222,9 +222,6 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="parallel.iparallelchain.html" class="tsd-kind-icon">IParallel<wbr>Chain</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="parallel.iparallelchaininitializer.html" class="tsd-kind-icon">IParallel<wbr>Chain<wbr>Initializer</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="parallel.iparalleloptions.html" class="tsd-kind-icon">IParallel<wbr>Options</a>
