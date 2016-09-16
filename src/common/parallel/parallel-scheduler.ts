@@ -1,4 +1,10 @@
+/**
+ * @module parallel
+ */
+/** needed, typedoc issue */
+
 import {IDefaultInitializedParallelOptions} from "./parallel-options";
+
 /**
  * Defines how a parallel task should be scheduled on the thread pool
  */

@@ -10,12 +10,11 @@ import {IParallelTaskDefinition} from "./parallel-task-definition";
 import {ParallelStreamImpl} from "./parallel-stream-impl";
 import {FunctionCallSerializer} from "../serialization/function-call-serializer";
 
-class EnvironmentProvider {
-    constructor(public func: Function, public params: any[]) {
-    }
+export interface IParallelChainEnvironment {
+    func?: Function;
+    params?: any[];
+    value?: IEmptyParallelEnvironment;
 }
-
-type IEnvironment = EnvironmentProvider | IEmptyParallelEnvironment;
 
 export function createParallelChain<TIn, TOut>(generator: IParallelGenerator, options: IDefaultInitializedParallelOptions, operations?: IParallelOperation[]): IParallelChain<TIn, IEmptyParallelEnvironment, TOut>;
 export function createParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOut>(generator: IParallelGenerator, options: IDefaultInitializedParallelOptions, sharedEnv: TEnv, operations?: IParallelOperation[]): IParallelChain<TIn, TEnv, TOut>;
@@ -38,10 +37,10 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
 
     public generator: IParallelGenerator;
     private options: IDefaultInitializedParallelOptions;
-    private sharedEnvironment?: IEnvironment;
+    private sharedEnvironment?: IParallelChainEnvironment;
     private operations: IParallelOperation[];
 
-    constructor(generator: IParallelGenerator, options: IDefaultInitializedParallelOptions, sharedEnv?: IEnvironment, operations: IParallelOperation[] = []) {
+    constructor(generator: IParallelGenerator, options: IDefaultInitializedParallelOptions, sharedEnv?: IParallelChainEnvironment, operations: IParallelOperation[] = []) {
         this.generator = generator;
         this.options = options;
         this.sharedEnvironment = sharedEnv;
@@ -49,11 +48,11 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
     }
 
     public inEnvironment<TEnvNew extends TEnv>(newEnv: Function | IEmptyParallelEnvironment, ...params: any[]): IParallelChain<TIn, TEnvNew, TOut> {
-        let env: IEnvironment;
+        let env: IParallelChainEnvironment;
         if (typeof newEnv === "function") {
-            env = new EnvironmentProvider(newEnv, params);
+            env = { func: newEnv, params };
         } else {
-            env = newEnv;
+            env = { value: newEnv };
         }
 
         return new ParallelChainImpl<TIn, TEnvNew, TOut>(this.generator, this.options, env, this.operations);
@@ -132,10 +131,11 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
 
     private serializeEnvironment(functionCallSerializer: FunctionCallSerializer) {
         if (this.sharedEnvironment) {
-            if (this.sharedEnvironment instanceof EnvironmentProvider) {
-                return functionCallSerializer.serializeFunctionCall(this.sharedEnvironment.func, ...this.sharedEnvironment.params);
+            if (this.sharedEnvironment.func) {
+                const params = this.sharedEnvironment.params || [];
+                return functionCallSerializer.serializeFunctionCall(this.sharedEnvironment.func, ...params);
             }
-            return this.sharedEnvironment;
+            return this.sharedEnvironment.value;
         }
 
         return undefined;

@@ -6,7 +6,7 @@ import {SimpleMap} from "../util/simple-map";
  * as the function is available on the worker slave. The registry ensures that the worker thread and worker slave
  * use consistent ids for the same functions
  */
-class StaticFunctionRegistryImpl {
+export class StaticFunctionRegistryImpl {
     private lastId = 0;
     private staticFunctions = new SimpleMap<number, IStaticFunction>();
 
