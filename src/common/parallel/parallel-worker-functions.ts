@@ -1,9 +1,9 @@
 import {FunctionCallDeserializer} from "../serialization/function-call-deserializer";
-import {ISerializedFunctionCall} from "../serialization/serialized-function-call";
+import {ISerializedFunctionCall, isSerializedFunctionCall} from "../serialization/serialized-function-call";
 import {staticFunctionRegistry} from "../serialization/static-function-registry";
 import {toArray, toIterator} from "../util/iterator";
 import {ISerializedParallelOperation} from "./parallel-operation";
-import {IParallelTaskEnvironment} from "./parallel-environment";
+import {IParallelTaskEnvironment, IEmptyParallelEnvironment} from "./parallel-environment";
 
 /**
  * Defines the parallel operation to perform
@@ -22,12 +22,25 @@ export interface IParallelProcessParams {
     /**
      * The environment. Object hash that is passed to all iteratee functions and allows to access external data
      */
-    environment: IParallelTaskEnvironment;
+    environment?: ISerializedFunctionCall | IEmptyParallelEnvironment;
 
-    /**
-     * Initializer that is called before any operation is performed to initialize the environment of this worker.
-     */
-    initializer?: ISerializedFunctionCall;
+    taskIndex: number;
+    valuesPerTask: number;
+}
+
+function createTaskEnvironment(definition: IParallelProcessParams, functionCallDeserializer: FunctionCallDeserializer): IParallelTaskEnvironment {
+    let userDefinedEnvironment: IEmptyParallelEnvironment = {};
+
+    if (definition.environment) {
+        if (isSerializedFunctionCall(definition.environment)) {
+            const environmentProvider = functionCallDeserializer.deserializeFunctionCall(definition.environment);
+            userDefinedEnvironment = environmentProvider();
+        } else {
+            userDefinedEnvironment = definition.environment;
+        }
+    }
+
+    return Object.assign({}, { taskIndex: definition.taskIndex, valuesPerTask: definition.valuesPerTask }, userDefinedEnvironment);
 }
 
 /**
@@ -42,20 +55,14 @@ export const ParallelWorkerFunctions = {
      * @param TResult type of the resulting elements
      * @returns the result of the operation from this worker
      */
-    process<T, TResult>(definition: IParallelProcessParams, options: { functionCallDeserializer: FunctionCallDeserializer }): TResult[] {
-        let environment = definition.environment;
-
-        if (definition.initializer) {
-            const initializer = options.functionCallDeserializer.deserializeFunctionCall(definition.initializer);
-            environment = Object.assign(environment, initializer(environment));
-        }
-
-        const generatorFunction = options.functionCallDeserializer.deserializeFunctionCall(definition.generator, true);
-        let iterator = generatorFunction(definition.environment) as Iterator<T>;
+    process<T, TResult>(definition: IParallelProcessParams, { functionCallDeserializer }: { functionCallDeserializer: FunctionCallDeserializer }): TResult[] {
+        const environment = createTaskEnvironment(definition, functionCallDeserializer);
+        const generatorFunction = functionCallDeserializer.deserializeFunctionCall(definition.generator, true);
+        let iterator = generatorFunction(environment) as Iterator<T>;
 
         for (const operation of definition.operations) {
-            const iteratorFunction = options.functionCallDeserializer.deserializeFunctionCall<Iterator<T>>(operation.iterator);
-            const iteratee = options.functionCallDeserializer.deserializeFunctionCall(operation.iteratee);
+            const iteratorFunction = functionCallDeserializer.deserializeFunctionCall<Iterator<T>>(operation.iterator);
+            const iteratee = functionCallDeserializer.deserializeFunctionCall(operation.iteratee);
             iterator = iteratorFunction(iterator, iteratee, environment);
         }
 

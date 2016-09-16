@@ -1,3 +1,6 @@
+import parallel from "../src/browser/index";
+import {IParallelOptions} from "../src/common/parallel/parallel-options";
+
 interface IComplexNumber {
     i: number;
     real: number;
@@ -70,4 +73,19 @@ export function computeMandelbrotLine(y: number, { min, max, scalingFactor, iter
         line[base + 3] = 255;
     }
     return line;
+}
+
+export function parallelMandelbrot(mandelbrotOptions: IMandelbrotOptions, options?: IParallelOptions) {
+    return parallel
+        .range(0, mandelbrotOptions.imageHeight, 1, options)
+        .inEnvironment(mandelbrotOptions)
+        .map(computeMandelbrotLine)
+        .result();
+}
+
+export function syncMandelbrot(mandelbrotOptions: IMandelbrotOptions, callback: (line: Uint8ClampedArray, y: number) => void) {
+    for (let y = 0; y < mandelbrotOptions.imageHeight; ++y) {
+        const line = computeMandelbrotLine(y, mandelbrotOptions);
+        callback(line, y);
+    }
 }

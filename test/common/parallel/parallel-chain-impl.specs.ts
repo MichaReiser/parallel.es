@@ -11,6 +11,7 @@ describe("ParallelChainImpl", function () {
     let generator: IParallelGenerator;
     let createFunctionSerializerSpy: jasmine.Spy;
     let scheduleTaskSpy: jasmine.Spy;
+    let getSchedulingSpy: jasmine.Spy;
     let threadPool: IThreadPool;
 
     beforeEach(function () {
@@ -21,94 +22,22 @@ describe("ParallelChainImpl", function () {
             schedule: jasmine.createSpy("schedule"),
             scheduleTask: scheduleTaskSpy
         };
+
+        getSchedulingSpy = jasmine.createSpy("getScheduling");
+
         options = {
             maxConcurrencyLevel: 2,
+            scheduler: { getScheduling: getSchedulingSpy },
             threadPool
         };
 
         generator = new ConstCollectionGenerator([1, 2, 3, 4, 5]);
     });
 
-    describe("getParallelTaskScheduling", function () {
-        it("returns the options.maxConcurrencyLevel as numberOfTasks by default", function () {
-            // arrange
-            const chain = createParallelChain(generator, options);
-
-            // act
-            const scheduling = chain.getParallelTaskScheduling(10);
-
-            // assert
-            expect(scheduling.numberOfTasks).toBe(options.maxConcurrencyLevel);
-        });
-
-        it("uses options.maxvaluesPerTask as upper items limit", function () {
-            // arrange
-            options.maxValuesPerTask = 2;
-            const chain = createParallelChain(generator, options);
-
-            // act
-            const scheduling = chain.getParallelTaskScheduling(10);
-
-            // assert
-            expect(scheduling.valuesPerTask).toBe(2);
-            expect(scheduling.numberOfTasks).toBe(5);
-        });
-
-        it("ignores maxValuesPerTask if the calculated count is less then maxvaluesPerTask", function () {
-            // arrange
-            options.maxValuesPerTask = 6;
-            const chain = createParallelChain(generator, options);
-
-            // act
-            const scheduling = chain.getParallelTaskScheduling(10);
-
-            // assert
-            expect(scheduling.valuesPerTask).toBe(5);
-            expect(scheduling.numberOfTasks).toBe(2);
-        });
-
-        it("assigns at least minValuesPerTask for each worker if the value is set", function () {
-            // arrange
-            options.minValuesPerTask = 5;
-            const chain = createParallelChain(generator, options);
-
-            // act
-            const scheduling = chain.getParallelTaskScheduling(8);
-
-            // assert
-            expect(scheduling.valuesPerTask).toBe(5);
-            expect(scheduling.numberOfTasks).toBe(2);
-        });
-
-        it("limits the number of items to the total items even if minValuesPerTask is set", function () {
-            // arrange
-            options.minValuesPerTask = 10;
-            const chain = createParallelChain(generator, options);
-
-            // act
-            const scheduling = chain.getParallelTaskScheduling(5);
-
-            // assert
-            expect(scheduling.valuesPerTask).toBe(5);
-            expect(scheduling.numberOfTasks).toBe(1);
-        });
-
-        it("sets valuesPerTask and numberOfTasks to 0 if the generator does not return any values", function () {
-            // arrange
-            const chain = createParallelChain(new ConstCollectionGenerator([]), options);
-
-            // act
-            const scheduling = chain.getParallelTaskScheduling(0);
-
-            // assert
-            expect(scheduling.valuesPerTask).toBe(0);
-            expect(scheduling.numberOfTasks).toBe(0);
-        });
-    });
-
     describe("result", function () {
         it("schedules the tasks on the thread pool", function () {
             // arrange
+            getSchedulingSpy.and.returnValue({ numberOfTasks: 2, valuesPerTask: 3 });
             const functionSerializer = new FunctionCallSerializer(undefined as any);
             createFunctionSerializerSpy.and.returnValue(functionSerializer);
 
@@ -130,6 +59,7 @@ describe("ParallelChainImpl", function () {
 
         it("calls serializeSlice for each slice", function () {
             // arrange
+            getSchedulingSpy.and.returnValue({ numberOfTasks: 2, valuesPerTask: 3 });
             const functionSerializer = new FunctionCallSerializer(undefined as any);
             createFunctionSerializerSpy.and.returnValue(functionSerializer);
 
@@ -150,8 +80,9 @@ describe("ParallelChainImpl", function () {
             expect(serializeSliceSpy).toHaveBeenCalledWith(1, 3, functionSerializer);
         });
 
-        it("serializes the actions and environment", function () {
+        it("serializes the environment", function () {
             // arrange
+            getSchedulingSpy.and.returnValue({ numberOfTasks: 1, valuesPerTask: 3 });
             const serializeFunctionCallSpy = jasmine.createSpy("serializeFunction");
             const functionSerializer = {
                 serializeFunctionCall: serializeFunctionCallSpy,
@@ -159,8 +90,6 @@ describe("ParallelChainImpl", function () {
             };
 
             const powerOf = (value: number) => value ** 2;
-            const even = (value: number) => value % 2 === 0;
-            const initializer = () => { return { abc: "abcdefghijklmnopqrstuvwxyz" }; };
 
             createFunctionSerializerSpy.and.returnValue(functionSerializer);
 
@@ -171,11 +100,73 @@ describe("ParallelChainImpl", function () {
                 if (func === ParallelWorkerFunctions.map) {
                     return { ______serializedFunctionCall: true, functionId: 2, parameters: params };
                 }
-                if (func === ParallelWorkerFunctions.filter) {
-                    return { ______serializedFunctionCall: true, functionId: 3, parameters: params };
+                if (func === powerOf) {
+                    return { ______serializedFunctionCall: true, functionId: 5, parameters: params };
                 }
-                if (func === even) {
-                    return { ______serializedFunctionCall: true, functionId: 4, parameters: params };
+                throw new Error("Unknown function " + func);
+            });
+
+            const task1 = new Promise(() => undefined);
+            const task2 = new Promise(() => undefined);
+
+            scheduleTaskSpy.and.returnValues(task1, task2);
+
+            const generatorSlice1 = { ______serializedFunctionCall: true, functionId: 9, parameters: [[1, 2, 3]] };
+            spyOn(generator, "serializeSlice").and.returnValue(generatorSlice1);
+
+            // act
+            createParallelChain<number, number>(generator, options)
+                .inEnvironment({ test: 10 })
+                .map(powerOf)
+                .result();
+
+            // assert
+            // slice 1
+            expect(scheduleTaskSpy).toHaveBeenCalledWith({
+                main: {
+                    ______serializedFunctionCall: true,
+                    functionId: 1, // process
+                    parameters: [
+                        {
+                            environment: { test: 10 },
+                            generator: generatorSlice1,
+                            operations: [
+                                {
+                                    iteratee: { ______serializedFunctionCall: true, functionId: 5, parameters: [] }, // powerOf
+                                    iterator: { ______serializedFunctionCall: true, functionId: 2, parameters: [] } // map
+                                }
+                            ],
+                            taskIndex: 0,
+                            valuesPerTask: 3
+                        }
+                    ]
+                },
+                taskIndex: 0,
+                usedFunctionIds: [1, 2, 3, 4, 5, 9],
+                valuesPerTask: 3
+            });
+        });
+
+        it("serializes the environment provider as serialized function", function () {
+            // arrange
+            getSchedulingSpy.and.returnValue({ numberOfTasks: 1, valuesPerTask: 3 });
+            const serializeFunctionCallSpy = jasmine.createSpy("serializeFunction");
+            const functionSerializer = {
+                serializeFunctionCall: serializeFunctionCallSpy,
+                serializedFunctionIds: [1, 2, 3, 4, 5, 9]
+            };
+
+            const powerOf = (value: number) => value ** 2;
+            const initializer = (test: number) => { return { abc: "abcdefghijklmnopqrstuvwxyz", test }; };
+
+            createFunctionSerializerSpy.and.returnValue(functionSerializer);
+
+            serializeFunctionCallSpy.and.callFake((func: Function, ...params: any[]): ISerializedFunctionCall => {
+                if (func === ParallelWorkerFunctions.process) {
+                    return { ______serializedFunctionCall: true, functionId: 1, parameters: params };
+                }
+                if (func === ParallelWorkerFunctions.map) {
+                    return { ______serializedFunctionCall: true, functionId: 2, parameters: params };
                 }
                 if (func === powerOf) {
                     return { ______serializedFunctionCall: true, functionId: 5, parameters: params };
@@ -192,15 +183,12 @@ describe("ParallelChainImpl", function () {
             scheduleTaskSpy.and.returnValues(task1, task2);
 
             const generatorSlice1 = { ______serializedFunctionCall: true, functionId: 9, parameters: [[1, 2, 3]] };
-            const generatorSlice2 = { ______serializedFunctionCall: true, functionId: 9, parameters: [[4, 5]] };
-            spyOn(generator, "serializeSlice").and.returnValues(generatorSlice1, generatorSlice2);
+            spyOn(generator, "serializeSlice").and.returnValue(generatorSlice1);
 
             // act
             createParallelChain<number, number>(generator, options)
-                .environment({ test: 10 })
-                .initializer(initializer)
+                .inEnvironment(initializer, 10)
                 .map(powerOf)
-                .filter(even)
                 .result();
 
             // assert
@@ -211,19 +199,85 @@ describe("ParallelChainImpl", function () {
                     functionId: 1, // process
                     parameters: [
                         {
-                            environment: { taskIndex: 0, test: 10, valuesPerTask: 3 },
+                            environment: { ______serializedFunctionCall: true, functionId: 6, parameters: [ 10 ] },
                             generator: generatorSlice1,
-                            initializer: { ______serializedFunctionCall: true, functionId: 6, parameters: [] },
                             operations: [
                                 {
                                     iteratee: { ______serializedFunctionCall: true, functionId: 5, parameters: [] }, // powerOf
                                     iterator: { ______serializedFunctionCall: true, functionId: 2, parameters: [] } // map
-                                },
-                                {
-                                    iteratee: { ______serializedFunctionCall: true, functionId: 4, parameters: [] }, // even callback
-                                    iterator: { ______serializedFunctionCall: true, functionId: 3, parameters: [] } // filter
                                 }
-                            ]
+                            ],
+                            taskIndex: 0,
+                            valuesPerTask: 3
+                        }
+                    ]
+                },
+                taskIndex: 0,
+                usedFunctionIds: [1, 2, 3, 4, 5, 9],
+                valuesPerTask: 3
+            });
+        });
+
+        it("schedules a task for each slice according to the scheduling", function () {
+            // arrange
+            getSchedulingSpy.and.returnValue({ numberOfTasks: 2, valuesPerTask: 3 });
+            const serializeFunctionCallSpy = jasmine.createSpy("serializeFunction");
+            const functionSerializer = {
+                serializeFunctionCall: serializeFunctionCallSpy,
+                serializedFunctionIds: [1, 2, 3, 4, 5, 9]
+            };
+
+            const powerOf = (value: number) => value ** 2;
+            createFunctionSerializerSpy.and.returnValue(functionSerializer);
+
+            serializeFunctionCallSpy.and.callFake((func: Function, ...params: any[]): ISerializedFunctionCall => {
+                if (func === ParallelWorkerFunctions.process) {
+                    return { ______serializedFunctionCall: true, functionId: 1, parameters: params };
+                }
+                if (func === ParallelWorkerFunctions.map) {
+                    return { ______serializedFunctionCall: true, functionId: 2, parameters: params };
+                }
+                if (func === ParallelWorkerFunctions.filter) {
+                    return { ______serializedFunctionCall: true, functionId: 3, parameters: params };
+                }
+                if (func === powerOf) {
+                    return { ______serializedFunctionCall: true, functionId: 5, parameters: params };
+                }
+                throw new Error("Unknown function " + func);
+            });
+
+            const task1 = new Promise(() => undefined);
+            const task2 = new Promise(() => undefined);
+
+            scheduleTaskSpy.and.returnValues(task1, task2);
+
+            const generatorSlice1 = { ______serializedFunctionCall: true, functionId: 9, parameters: [[1, 2, 3]] };
+            const generatorSlice2 = { ______serializedFunctionCall: true, functionId: 9, parameters: [[4, 5]] };
+            spyOn(generator, "serializeSlice").and.returnValues(generatorSlice1, generatorSlice2);
+
+            // act
+            createParallelChain<number, number>(generator, options)
+                .map(powerOf)
+                .result();
+
+            // assert
+            // slice 1
+            expect(scheduleTaskSpy).toHaveBeenCalledWith({
+                main: {
+                    ______serializedFunctionCall: true,
+                    functionId: 1, // process
+                    parameters: [
+                        {
+                            environment: undefined,
+                            generator: generatorSlice1,
+                            operations: [
+                                {
+                                    iteratee: { ______serializedFunctionCall: true, functionId: 5, parameters: [] }, // powerOf
+                                    iterator: { ______serializedFunctionCall: true, functionId: 2, parameters: [] } // map
+                                }
+                            ],
+                            taskIndex: 0,
+                            valuesPerTask: 3
                         }
                     ]
                 },
@@ -239,19 +293,16 @@ describe("ParallelChainImpl", function () {
                     functionId: 1, // process
                     parameters: [
                         {
-                            environment: { taskIndex: 1, test: 10, valuesPerTask: 3 },
+                            environment: undefined,
                             generator: generatorSlice2,
-                            initializer: { ______serializedFunctionCall: true, functionId: 6, parameters: [] },
                             operations: [
                                 {
                                     iteratee: { ______serializedFunctionCall: true, functionId: 5, parameters: [] }, // powerOf
                                     iterator: { ______serializedFunctionCall: true, functionId: 2, parameters: [] } // map
-                                },
-                                {
-                                    iteratee: { ______serializedFunctionCall: true, functionId: 4, parameters: [] }, // even callback
-                                    iterator: { ______serializedFunctionCall: true, functionId: 3, parameters: [] } // filter
                                 }
-                            ]
+                            ],
+                            taskIndex: 1,
+                            valuesPerTask: 3
                         }
                     ]
                 },

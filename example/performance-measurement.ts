@@ -1,27 +1,10 @@
-import {computeMandelbrotLine, createMandelOptions, IMandelbrotOptions} from "./mandelbrot";
-import parallel from "../src/browser/index";
-import {
-    IMonteCarloSimulationOptions, syncMonteCarlo, parallelMonteCarlo,
-    IProject
-} from "./monte-carlo";
+import { createMandelOptions, IMandelbrotOptions, parallelMandelbrot, syncMandelbrot } from "./mandelbrot";
+import { IMonteCarloSimulationOptions, syncMonteCarlo, parallelMonteCarlo, IProject } from "./monte-carlo";
 import {syncKnightTours, parallelKnightTours} from "./knights-tour";
 const runButton = document.querySelector("#run") as HTMLInputElement;
 const outputTable = document.querySelector("#output-table") as HTMLTableElement;
 
 const iterations = 10;
-
-function measureParallelMandelbrot(options: IMandelbrotOptions, maxValuesPerTask?: number) {
-    const start = performance.now();
-    return parallel
-        .range(0, options.imageHeight, 1, { maxValuesPerTask })
-        .environment(options)
-        .map(computeMandelbrotLine)
-        .result()
-        .then(() => {
-            const end = performance.now();
-            return end - start;
-        });
-}
 
 interface IPerformanceMeasurement {
     title: string;
@@ -34,7 +17,11 @@ function createParallelMandelbrotMeasurements(mandelbrotOptions: IMandelbrotOpti
         result.push({
             title: `Mandelbrot ${mandelbrotOptions.imageWidth}x${mandelbrotOptions.imageHeight}, ${mandelbrotOptions.iterations} parallel (${maxValuesPerTask})`,
             func() {
-                return measureParallelMandelbrot(mandelbrotOptions, maxValuesPerTask);
+                const start = performance.now();
+                return parallelMandelbrot(mandelbrotOptions, { maxValuesPerTask }).then(() => {
+                        const end = performance.now();
+                        return end - start;
+                    });
             }
         });
     }
@@ -134,9 +121,7 @@ function createExamples(): IPerformanceMeasurement[] {
             func(): PromiseLike<number> {
                 const start = performance.now();
 
-                for (let y = 0; y < mandelbrotOptions.imageHeight; ++y) {
-                    computeMandelbrotLine(y, mandelbrotOptions);
-                }
+                syncMandelbrot(mandelbrotOptions, () => undefined);
 
                 const end = performance.now();
                 return Promise.resolve(end - start);

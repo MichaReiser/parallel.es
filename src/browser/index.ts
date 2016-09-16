@@ -8,6 +8,7 @@ import {parallelFactory} from "../common/parallel/parallel-impl";
 import {FunctionRegistry} from "../common/serialization/function-registry";
 import {DefaultThreadPool} from "../common/thread-pool/default-thread-pool";
 import {BrowserWorkerThreadFactory} from "./worker/browser-worker-thread-factory";
+import {DefaultParallelScheduler} from "../common/parallel/default-parallel-scheduler";
 
 export {ITaskDefinition} from "../common/task/task-definition";
 export {ITask} from "../common/task/task";
@@ -27,5 +28,5 @@ const threadPool = new DefaultThreadPool(new BrowserWorkerThreadFactory(function
 /**
  * The global parallel instance.
  */
-const parallel = parallelFactory({ threadPool, maxConcurrencyLevel });
+const parallel = parallelFactory({ maxConcurrencyLevel, scheduler: new DefaultParallelScheduler(), threadPool });
 export default parallel;

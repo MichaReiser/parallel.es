@@ -1,5 +1,4 @@
-import parallel from "../src/browser/index";
-import {createMandelOptions, computeMandelbrotLine} from "./mandelbrot";
+import {parallelMandelbrot, syncMandelbrot, createMandelOptions} from "./mandelbrot";
 import {syncMonteCarlo, parallelMonteCarlo, IProjectResult} from "./monte-carlo";
 import {syncKnightTours, parallelKnightTours} from "./knights-tour";
 
@@ -43,31 +42,23 @@ document.querySelector("#mandelbrot-run-async").addEventListener("click", functi
     const maxValuesPerTask = parseInt((document.querySelector("#mandelbrot-values-per-task") as HTMLInputElement).value, 10);
 
     console.time("mandelbrot-async");
-    parallel
-        .range(0, mandelbrotOptions.imageHeight, 1, { maxValuesPerTask })
-        .environment(mandelbrotOptions)
-        .map(computeMandelbrotLine)
-        .result()
+    parallelMandelbrot(mandelbrotOptions, { maxValuesPerTask })
         .subscribe((lines, index, blockSize) => {
             for (let i = 0; i < lines.length; ++i) {
-                mandelbrotContext!.putImageData(new ImageData(lines[i], mandelbrotOptions.imageWidth, 1), 0, index * blockSize + i);
+                mandelbrotContext!.putImageData(new ImageData(lines[i], mandelbrotCanvas.width, 1), 0, index * blockSize + i);
             }
         })
         .then(() => console.timeEnd("mandelbrot-async"), reason => console.error(reason));
 });
 
 document.querySelector("#mandelbrot-run-sync").addEventListener("click", function () {
-    const canvas = document.querySelector("#mandelbrot-canvas") as HTMLCanvasElement;
-    const context = canvas.getContext("2d");
-
-    context!.putImageData(context!.createImageData(canvas.width, canvas.height), 0, 0);
+    mandelbrotContext!.putImageData(mandelbrotContext!.createImageData(mandelbrotCanvas.width, mandelbrotCanvas.height), 0, 0);
 
     setTimeout(() => {
         console.time("mandelbrot-sync");
-        for (let y = 0; y < mandelbrotOptions.imageHeight; ++y) {
-            const line = computeMandelbrotLine(y, mandelbrotOptions);
-            context!.putImageData(new ImageData(line, mandelbrotOptions.imageWidth, 1), 0, y);
-        }
+        syncMandelbrot(mandelbrotOptions, function (line, y) {
+            mandelbrotContext!.putImageData(new ImageData(line, mandelbrotCanvas.width, 1), 0, y);
+        });
         console.timeEnd("mandelbrot-sync");
     }, 0);
 
