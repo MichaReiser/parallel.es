@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EnvironmentProvider | Parallel ES</title>
+	<title>IParallelChainInitializer | Parallel ES</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,98 +57,70 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_common_parallel_parallel_chain_impl_.html">&quot;common/parallel/parallel-chain-impl&quot;</a>
+					<a href="../modules/parallel.html">parallel</a>
 				</li>
 				<li>
-					<a href="_common_parallel_parallel_chain_impl_.environmentprovider.html">EnvironmentProvider</a>
+					<a href="parallel.iparallelchaininitializer.html">IParallelChainInitializer</a>
 				</li>
 			</ul>
-			<h1>Class EnvironmentProvider</h1>
+			<h1>Interface IParallelChainInitializer&lt;TEnv, TEnvAdditional&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>TEnv</h4>
+					</li>
+					<li>
+						<h4>TEnvAdditional</h4>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">EnvironmentProvider</span>
+						<span class="target">IParallelChainInitializer</span>
 					</li>
 				</ul>
 			</section>
-			<section class="tsd-panel-group tsd-index-group">
-				<h2>Index</h2>
-				<section class="tsd-panel tsd-index-panel">
-					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-not-exported">
-							<h3>Constructors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported"><a href="_common_parallel_parallel_chain_impl_.environmentprovider.html#constructor" class="tsd-kind-icon">constructor</a></li>
+			<section class="tsd-panel">
+				<h3 class="tsd-before-signature">Callable</h3>
+				<ul class="tsd-signatures tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEnv &amp; IParallelTaskEnvironment</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEnvAdditional</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain.ts#L9">common/parallel/parallel-chain.ts:9</a></li>
 							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-not-exported">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-not-exported"><a href="_common_parallel_parallel_chain_impl_.environmentprovider.html#func" class="tsd-kind-icon">func</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-not-exported"><a href="_common_parallel_parallel_chain_impl_.environmentprovider.html#params" class="tsd-kind-icon">params</a></li>
-							</ul>
-						</section>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Environment<wbr>Provider<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span>, params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_parallel_parallel_chain_impl_.environmentprovider.html" class="tsd-signature-type">EnvironmentProvider</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/parallel/parallel-chain-impl.ts#L13">common/parallel/parallel-chain-impl.ts:13</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>func: <span class="tsd-signature-type">Function</span></h5>
-								</li>
-								<li>
-									<h5>params: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_common_parallel_parallel_chain_impl_.environmentprovider.html" class="tsd-signature-type">EnvironmentProvider</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
-					<a name="func" class="tsd-anchor"></a>
-					<h3>func</h3>
-					<div class="tsd-signature tsd-kind-icon">func<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/parallel/parallel-chain-impl.ts#L14">common/parallel/parallel-chain-impl.ts:14</a></li>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Initializes the environment for a single task</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>this: <span class="tsd-signature-type">void</span></h5>
+							</li>
+							<li>
+								<h5>env: <span class="tsd-signature-type">TEnv &amp; IParallelTaskEnvironment</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>the current environment</p>
+								</div>
+							</li>
 						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
-					<a name="params" class="tsd-anchor"></a>
-					<h3>params</h3>
-					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/parallel/parallel-chain-impl.ts#L14">common/parallel/parallel-chain-impl.ts:14</a></li>
-						</ul>
-					</aside>
-				</section>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TEnvAdditional</span></h4>
+					</li>
+				</ul>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -158,38 +130,72 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_common_parallel_parallel_chain_impl_.html">"common/parallel/parallel-<wbr>chain-<wbr>impl"</a>
+						<a href="../modules/parallel.html">parallel</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.idefaultinitializedparalleloptions.html" class="tsd-kind-icon">IDefault<wbr>Initialized<wbr>Parallel<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iemptyparallelenvironment.html" class="tsd-kind-icon">IEmpty<wbr>Parallel<wbr>Environment</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.ifunctiondefinition.html" class="tsd-kind-icon">IFunction<wbr>Definition</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iparallel.html" class="tsd-kind-icon">IParallel</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="parallel.iparallelchain.html" class="tsd-kind-icon">IParallel<wbr>Chain</a>
+					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_common_parallel_parallel_chain_impl_.environmentprovider.html" class="tsd-kind-icon">Environment<wbr>Provider</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported">
-								<a href="_common_parallel_parallel_chain_impl_.environmentprovider.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
-								<a href="_common_parallel_parallel_chain_impl_.environmentprovider.html#func" class="tsd-kind-icon">func</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
-								<a href="_common_parallel_parallel_chain_impl_.environmentprovider.html#params" class="tsd-kind-icon">params</a>
-							</li>
-						</ul>
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="parallel.iparallelchaininitializer.html" class="tsd-kind-icon">IParallel<wbr>Chain<wbr>Initializer</a>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html" class="tsd-kind-icon">Parallel<wbr>Chain<wbr>Impl</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iparalleloptions.html" class="tsd-kind-icon">IParallel<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_common_parallel_parallel_chain_impl_.html#ienvironment" class="tsd-kind-icon">IEnvironment</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="parallel.iparallelstream.html" class="tsd-kind-icon">IParallel<wbr>Stream</a>
 					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../modules/_common_parallel_parallel_chain_impl_.html#createparallelchain" class="tsd-kind-icon">create<wbr>Parallel<wbr>Chain</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iparalleltaskenvironment.html" class="tsd-kind-icon">IParallel<wbr>Task<wbr>Environment</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iserializedfunctioncall.html" class="tsd-kind-icon">ISerialized<wbr>Function<wbr>Call</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="parallel.itask.html" class="tsd-kind-icon">ITask</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.itaskdefinition.html" class="tsd-kind-icon">ITask<wbr>Definition</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.ithreadpool.html" class="tsd-kind-icon">IThread<wbr>Pool</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.iworkerthread.html" class="tsd-kind-icon">IWorker<wbr>Thread</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/parallel.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/parallel.html#maxconcurrencylevel" class="tsd-kind-icon">max<wbr>Concurrency<wbr>Level</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
+						<a href="../modules/parallel.html#parallel-1" class="tsd-kind-icon">parallel</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/parallel.html#threadpool" class="tsd-kind-icon">thread<wbr>Pool</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/parallel.html#isserializedfunctioncall" class="tsd-kind-icon">is<wbr>Serialized<wbr>Function<wbr>Call</a>
 					</li>
 				</ul>
 			</nav>

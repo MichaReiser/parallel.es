@@ -94,9 +94,8 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_common_parallel_parallel_worker_functions_.iparallelprocessparams.html#environment" class="tsd-kind-icon">environment</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_common_parallel_parallel_worker_functions_.iparallelprocessparams.html#generator" class="tsd-kind-icon">generator</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_common_parallel_parallel_worker_functions_.iparallelprocessparams.html#initializer" class="tsd-kind-icon">initializer</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_common_parallel_parallel_worker_functions_.iparallelprocessparams.html#operations" class="tsd-kind-icon">operations</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_common_parallel_parallel_worker_functions_.iparallelprocessparams.html#taskindex" class="tsd-kind-icon">task<wbr>Index</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_common_parallel_parallel_worker_functions_.iparallelprocessparams.html#valuespertask" class="tsd-kind-icon">values<wbr>Per<wbr>Task</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,11 +105,11 @@
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="environment" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> environment</h3>
-					<div class="tsd-signature tsd-kind-icon">environment<span class="tsd-signature-symbol">:</span> <a href="parallel.iserializedfunctioncall.html" class="tsd-signature-type">ISerializedFunctionCall</a><span class="tsd-signature-symbol"> | </span><a href="parallel.iemptyparallelenvironment.html" class="tsd-signature-type">IEmptyParallelEnvironment</a></div>
+					<h3>environment</h3>
+					<div class="tsd-signature tsd-kind-icon">environment<span class="tsd-signature-symbol">:</span> <a href="parallel.iparalleltaskenvironment.html" class="tsd-signature-type">IParallelTaskEnvironment</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/parallel/parallel-worker-functions.ts#L25">common/parallel/parallel-worker-functions.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-worker-functions.ts#L25">common/parallel/parallel-worker-functions.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -125,7 +124,7 @@
 					<div class="tsd-signature tsd-kind-icon">generator<span class="tsd-signature-symbol">:</span> <a href="parallel.iserializedfunctioncall.html" class="tsd-signature-type">ISerializedFunctionCall</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/parallel/parallel-worker-functions.ts#L15">common/parallel/parallel-worker-functions.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-worker-functions.ts#L15">common/parallel/parallel-worker-functions.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -135,12 +134,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="initializer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> initializer</h3>
+					<div class="tsd-signature tsd-kind-icon">initializer<span class="tsd-signature-symbol">:</span> <a href="parallel.iserializedfunctioncall.html" class="tsd-signature-type">ISerializedFunctionCall</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-worker-functions.ts#L30">common/parallel/parallel-worker-functions.ts:30</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Initializer that is called before any operation is performed to initialize the environment of this worker.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="operations" class="tsd-anchor"></a>
 					<h3>operations</h3>
 					<div class="tsd-signature tsd-kind-icon">operations<span class="tsd-signature-symbol">:</span> <a href="_common_parallel_parallel_operation_.iserializedparalleloperation.html" class="tsd-signature-type">ISerializedParallelOperation</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/parallel/parallel-worker-functions.ts#L20">common/parallel/parallel-worker-functions.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-worker-functions.ts#L20">common/parallel/parallel-worker-functions.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -148,26 +162,6 @@
 							<p>The operations to perform on the array elements</p>
 						</div>
 					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="taskindex" class="tsd-anchor"></a>
-					<h3>task<wbr>Index</h3>
-					<div class="tsd-signature tsd-kind-icon">task<wbr>Index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/parallel/parallel-worker-functions.ts#L27">common/parallel/parallel-worker-functions.ts:27</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="valuespertask" class="tsd-anchor"></a>
-					<h3>values<wbr>Per<wbr>Task</h3>
-					<div class="tsd-signature tsd-kind-icon">values<wbr>Per<wbr>Task<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/778f7af/src/common/parallel/parallel-worker-functions.ts#L28">common/parallel/parallel-worker-functions.ts:28</a></li>
-						</ul>
-					</aside>
 				</section>
 			</section>
 		</div>
@@ -196,21 +190,15 @@
 								<a href="_common_parallel_parallel_worker_functions_.iparallelprocessparams.html#generator" class="tsd-kind-icon">generator</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_common_parallel_parallel_worker_functions_.iparallelprocessparams.html#initializer" class="tsd-kind-icon">initializer</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_common_parallel_parallel_worker_functions_.iparallelprocessparams.html#operations" class="tsd-kind-icon">operations</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_common_parallel_parallel_worker_functions_.iparallelprocessparams.html#taskindex" class="tsd-kind-icon">task<wbr>Index</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_common_parallel_parallel_worker_functions_.iparallelprocessparams.html#valuespertask" class="tsd-kind-icon">values<wbr>Per<wbr>Task</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_common_parallel_parallel_worker_functions_.html#createtaskenvironment" class="tsd-kind-icon">create<wbr>Task<wbr>Environment</a>
-					</li>
 					<li class=" tsd-kind-object-literal tsd-parent-kind-external-module">
 						<a href="../modules/_common_parallel_parallel_worker_functions_.html#parallelworkerfunctions" class="tsd-kind-icon">Parallel<wbr>Worker<wbr>Functions</a>
 					</li>
