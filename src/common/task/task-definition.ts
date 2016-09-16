@@ -3,7 +3,7 @@
  */
 /** */
 
-import {ISerializedFunctionCall} from "../serialization/serialized-function-call";
+import {ISerializedFunctionCall} from "../function/serialized-function-call";
 
 /**
  * Definition of a task to execute. A task is uniquely identified by its id.

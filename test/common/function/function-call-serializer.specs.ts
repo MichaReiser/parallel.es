@@ -1,5 +1,5 @@
-import {FunctionRegistry} from "../../../src/common/serialization/function-registry";
-import {FunctionCallSerializer} from "../../../src/common/serialization/function-call-serializer";
+import {FunctionRegistry} from "../../../src/common/function/function-registry";
+import {FunctionCallSerializer} from "../../../src/common/function/function-call-serializer";
 describe("FunctionCallSerializer", function () {
 
     let functionRegistry: FunctionRegistry;

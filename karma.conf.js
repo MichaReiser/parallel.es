@@ -172,18 +172,6 @@ module.exports = function (config) {
             }
         };
 
-        var browsers = Object.keys(customLaunchers);
-
-        if (!process.env.TRAVIS_PULL_REQUEST) {
-            // To speed up the test execution, only test against some browsers
-            browsers = [
-                "firefox_latest",
-                "chrome_latest",
-                "edge_latest",
-                "safari_latest"
-            ];
-        }
-
         config.set({
             customLaunchers: customLaunchers,
             browserStack: {
@@ -194,7 +182,7 @@ module.exports = function (config) {
                 tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
                 build: process.env.TRAVIS_BUILD_NUMBER + " - "  + process.env.TRAVIS_BRANCH
             },
-            browsers: browsers,
+            browsers: Object.keys(customLaunchers),
             captureTimeout: 300000,
             browserNoActivityTimeout: 300000,
             browserDisconnectTimeout: 300000,

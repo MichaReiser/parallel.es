@@ -1,5 +1,5 @@
-import {IParallelScheduler, IParallelTaskScheduling} from "./parallel-scheduler";
 import {IDefaultInitializedParallelOptions} from "./parallel-options";
+import {AbstractParallelScheduler, IParallelTaskScheduling} from "./abstract-parallel-scheduler";
 
 /**
  * Default implementation of a parallel scheduler.
@@ -8,7 +8,7 @@ import {IDefaultInitializedParallelOptions} from "./parallel-options";
  * If the options define {@link IParallelOptions.maxValuesPerTask} or {@link IParallelOptions.minValuesPerTask}, then the
  * values are adjusted accordingly.
  */
-export class DefaultParallelScheduler implements IParallelScheduler {
+export class DefaultParallelScheduler extends AbstractParallelScheduler {
 
     public getScheduling(totalNumberOfValues: number, options: IDefaultInitializedParallelOptions): IParallelTaskScheduling {
         let itemsPerTask = totalNumberOfValues / options.maxConcurrencyLevel;

@@ -1,5 +1,5 @@
 import {DefaultThreadPool} from "../../../src/common/thread-pool/default-thread-pool";
-import {FunctionRegistry} from "../../../src/common/serialization/function-registry";
+import {FunctionRegistry} from "../../../src/common/function/function-registry";
 import {WorkerTask} from "../../../src/common/task/worker-task";
 
 describe("DefaultThreadPool", function () {

@@ -1,3 +1,8 @@
+/**
+ * @module parallel
+ */
+/** */
+
 import {ISerializedFunctionCall} from "./serialized-function-call";
 import {FunctionRegistry} from "./function-registry";
 

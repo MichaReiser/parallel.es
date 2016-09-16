@@ -1,5 +1,5 @@
 import {isFunctionRequest, IFunctionRequest, functionResponseMessage, isWorkerResult, isFunctionExecutionError} from "../../common/worker/worker-messages";
-import {FunctionRegistry} from "../../common/serialization/function-registry";
+import {FunctionRegistry} from "../../common/function/function-registry";
 
 /**
  * State of the browser worker thread

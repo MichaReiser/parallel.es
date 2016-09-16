@@ -1,4 +1,4 @@
-import {ISerializedFunctionCall} from "../serialization/serialized-function-call";
+import {ISerializedFunctionCall} from "../function/serialized-function-call";
 
 /**
  * Single parallel operation to perform

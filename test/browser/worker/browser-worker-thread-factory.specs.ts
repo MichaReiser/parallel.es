@@ -1,5 +1,5 @@
 import {BrowserWorkerThreadFactory} from "../../../src/browser/worker/browser-worker-thread-factory";
-import {FunctionRegistry} from "../../../src/common/serialization/function-registry";
+import {FunctionRegistry} from "../../../src/common/function/function-registry";
 import {IWorkerThread} from "../../../src/common/worker/worker-thread";
 import {BrowserWorkerThread} from "../../../src/browser/worker/browser-worker-thread";
 

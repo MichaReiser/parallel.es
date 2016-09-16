@@ -2,8 +2,8 @@ import {
     ConstCollectionGenerator, RangeGenerator,
     TimesGenerator
 } from "../../../src/common/parallel/parallel-generator";
-import {FunctionCallSerializer} from "../../../src/common/serialization/function-call-serializer";
-import {FunctionRegistry} from "../../../src/common/serialization/function-registry";
+import {FunctionCallSerializer} from "../../../src/common/function/function-call-serializer";
+import {FunctionRegistry} from "../../../src/common/function/function-registry";
 import {ParallelWorkerFunctions} from "../../../src/common/parallel/parallel-worker-functions";
 
 describe("ParallelGenerators", function () {

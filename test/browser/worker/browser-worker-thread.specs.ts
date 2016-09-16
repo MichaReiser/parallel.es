@@ -1,10 +1,10 @@
 import {BrowserWorkerThread} from "../../../src/browser/worker/browser-worker-thread";
-import {FunctionRegistry} from "../../../src/common/serialization/function-registry";
+import {FunctionRegistry} from "../../../src/common/function/function-registry";
 import {
     WorkerMessageType, requestFunctionMessage, workerResultMessage,
     functionExecutionError
 } from "../../../src/common/worker/worker-messages";
-import {IFunctionDefinition} from "../../../src/common/worker/function-defintion";
+import {IFunctionDefinition} from "../../../src/common/function/function-defintion";
 import {ITaskDefinition} from "../../../src/common/task/task-definition";
 
 describe("BrowserWorkerThread", function () {

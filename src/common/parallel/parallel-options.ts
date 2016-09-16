@@ -4,7 +4,7 @@
 /** needed, typedoc issue */
 
 import {IThreadPool} from "../thread-pool/thread-pool";
-import {IParallelScheduler} from "./parallel-scheduler";
+import {IParallelJobScheduler} from "./parallel-job-scheduler";
 
 /**
  * Options that affect how a parallel operation is executed.
@@ -34,7 +34,7 @@ export interface IParallelOptions {
     /**
      * The scheduler that should be used to determine the number of tasks to create.
      */
-    scheduler?: IParallelScheduler;
+    scheduler?: IParallelJobScheduler;
 }
 
 /**
@@ -43,5 +43,5 @@ export interface IParallelOptions {
 export interface IDefaultInitializedParallelOptions extends IParallelOptions {
     maxConcurrencyLevel: number;
     threadPool: IThreadPool;
-    scheduler: IParallelScheduler;
+    scheduler: IParallelJobScheduler;
 }

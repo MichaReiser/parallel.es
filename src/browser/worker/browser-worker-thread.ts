@@ -1,4 +1,4 @@
-import {FunctionRegistry} from "../../common/serialization/function-registry";
+import {FunctionRegistry} from "../../common/function/function-registry";
 import {ITaskDefinition} from "../../common/task/task-definition";
 import {initializeWorkerMessage, IWorkerMessage, stopMessage, scheduleTaskMessage} from "../../common/worker/worker-messages";
 import {IWorkerThread} from "../../common/worker/worker-thread";

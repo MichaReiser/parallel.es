@@ -1,5 +1,5 @@
 import {ITaskDefinition} from "../task/task-definition";
-import {IFunctionDefinition} from "./function-defintion";
+import {IFunctionDefinition} from "../function/function-defintion";
 
 /**
  * Message types

@@ -1,6 +1,6 @@
 import {ParallelWorkerFunctions} from "../../../src/common/parallel/parallel-worker-functions";
 import {toArray, toIterator} from "../../../src/common/util/iterator";
-import {FunctionCallDeserializer} from "../../../src/common/serialization/function-call-deserializer";
+import {FunctionCallDeserializer} from "../../../src/common/function/function-call-deserializer";
 import {IParallelTaskEnvironment} from "../../../src/common/parallel/parallel-environment";
 
 describe("ParallelWorkerFunctions", function () {

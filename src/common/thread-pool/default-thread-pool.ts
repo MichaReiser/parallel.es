@@ -1,11 +1,11 @@
 import {IThreadPool} from "./thread-pool";
 import {IWorkerThread} from "../worker/worker-thread";
 import {ITaskDefinition} from "../task/task-definition";
-import {FunctionRegistry} from "../serialization/function-registry";
+import {FunctionRegistry} from "../function/function-registry";
 import {IWorkerThreadFactory} from "../worker/worker-thread-factory";
 import {WorkerTask} from "../task/worker-task";
 import {ITask} from "../task/task";
-import {FunctionCallSerializer} from "../serialization/function-call-serializer";
+import {FunctionCallSerializer} from "../function/function-call-serializer";
 
 /**
  * Default thread pool implementation that processes the scheduled functions in FIFO order.
