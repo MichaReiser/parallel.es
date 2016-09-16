@@ -1,7 +1,7 @@
 {
   "name": "parallel.es",
   "version": "1.0.0",
-  "description": "Simple parallelization for ES",
+  "description": "Simple parallelization for EcmaScript",
   "main": "index.js",
   "browser": "./dist/browser-es5-commonjs.parallel-es.js",
   "scripts": {
