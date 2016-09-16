@@ -41,7 +41,7 @@ cp -r ./docs $OUT_DIR/artifacts/docs
 cd $OUT_DIR
 git config user.name "Travis CI"
 git config user.email "$COMMIT_AUTHOR_EMAIL"
-git add -N --all
+git add -N *
 
 # If there are no changes to the compiled out (e.g. this is a README update) then just bail.
 if [ -z `git diff --exit-code` ]; then
