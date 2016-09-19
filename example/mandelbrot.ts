@@ -80,7 +80,7 @@ export function parallelMandelbrot(mandelbrotOptions: IMandelbrotOptions, option
         .range(0, mandelbrotOptions.imageHeight, 1, options)
         .inEnvironment(mandelbrotOptions)
         .map(computeMandelbrotLine)
-        .result();
+        .run();
 }
 
 export function syncMandelbrot(mandelbrotOptions: IMandelbrotOptions, callback: (line: Uint8ClampedArray, y: number) => void) {

@@ -35,7 +35,7 @@ describe("ParallelChainImpl", function () {
             const chain = createParallelChain(generator, options, operations);
 
             // act
-            chain.result();
+            chain.run();
 
             // assert
             expect(scheduler.schedule).toHaveBeenCalledWith({
@@ -54,7 +54,7 @@ describe("ParallelChainImpl", function () {
             const chain = createParallelChain(generator, options, env);
 
             // act
-            chain.result();
+            chain.run();
 
             // assert
             expect(scheduler.schedule).toHaveBeenCalledWith({
@@ -75,7 +75,7 @@ describe("ParallelChainImpl", function () {
             // act
             chain
                 .inEnvironment({ test: 10 })
-                .result();
+                .run();
 
             // assert
             expect(scheduler.schedule).toHaveBeenCalledWith({
@@ -95,7 +95,7 @@ describe("ParallelChainImpl", function () {
             // act
             chain
                 .inEnvironment(environmentProvider, 10)
-                .result();
+                .run();
 
             // assert
             expect(scheduler.schedule).toHaveBeenCalledWith({
@@ -115,7 +115,7 @@ describe("ParallelChainImpl", function () {
             scheduleSpy.and.returnValue([]);
 
             // act
-            chain.result();
+            chain.run();
 
             // assert
             expect(scheduler.schedule).toHaveBeenCalledWith({
@@ -139,7 +139,7 @@ describe("ParallelChainImpl", function () {
             scheduleSpy.and.returnValue([]);
 
             // act
-            chain.result();
+            chain.run();
 
             // assert
             expect(scheduler.schedule).toHaveBeenCalledWith({

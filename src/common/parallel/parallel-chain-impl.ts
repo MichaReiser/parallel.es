@@ -73,7 +73,7 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
         return this._chain<TOut>(ParallelWorkerFunctions.filter, predicate);
     }
 
-    public result(): IParallelStream<TOut[], TOut[]> {
+    public run(): IParallelStream<TOut[], TOut[]> {
         return this._stream<TOut[], TOut[]>((intermediateValue: TOut[][]) => {
             const [head, ...tail] = intermediateValue;
             return Array.prototype.concat.apply(head, tail);

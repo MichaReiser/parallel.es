@@ -98,8 +98,8 @@ export interface IParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOu
     // split? Allows to reuse the same intermediate result for multiple succeeding calls.
 
     /**
-     * Returns the result of the defined chain.
+     * Starts the job and returns a stream that can be used to access the sub results or the end result.
      * @returns a stream that can be used to access the result
      */
-    result(): IParallelStream<TOut[], TOut[]>;
+    run(): IParallelStream<TOut[], TOut[]>;
 }

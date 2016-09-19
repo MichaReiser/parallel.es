@@ -15,7 +15,7 @@ export interface IEmptyParallelEnvironment {
  */
 export interface IParallelTaskEnvironment extends IEmptyParallelEnvironment {
     /**
-     * The index of the task. The index is relative to the other tasks created to process a single parallel operation.
+     * The index of the task. The index is relative to the other tasks created to process a single parallel job.
      */
     taskIndex: number;
 

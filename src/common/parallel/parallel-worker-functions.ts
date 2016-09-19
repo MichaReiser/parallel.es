@@ -24,7 +24,14 @@ export interface IParallelProcessParams {
      */
     environment?: ISerializedFunctionCall | IEmptyParallelEnvironment;
 
+    /**
+     * The job-relative index of the task
+     */
     taskIndex: number;
+
+    /**
+     * The number of values processed by each task (at most)
+     */
     valuesPerTask: number;
 }
 
@@ -73,6 +80,7 @@ export const ParallelWorkerFunctions = {
      * Performs the map operation
      * @param iterator the iterator of the previous step
      * @param iteratee the iteratee to apply to each element in the iterator
+     * @param env the environment of the job
      * @param T the type of the input elements
      * @param TResult the type of the returned element of the iteratee
      * @returns a new iterator where each element has been mapped using the iteratee
@@ -96,6 +104,7 @@ export const ParallelWorkerFunctions = {
      * Returns a new iterator that only contains all elements for which the given predicate returns true
      * @param iterator the iterator to filter
      * @param predicate the predicate to use for filtering the elements
+     * @param env the environment of the job
      * @param T type of the elements to filter
      * @returns an iterator only containing the elements where the predicate is true
      */
@@ -118,8 +127,10 @@ export const ParallelWorkerFunctions = {
     /**
      * Reduces the elements of the given iterator to a single value by applying the given iteratee to each element
      * @param defaultValue a default value that is as accumulator or for the case that the iterator is empty
+     * @param iterator the iterator with the values to reduce
      * @param iteratee iteratee that is applied for each element. The iteratee is passed the accumulated value (sum of all previous values)
      * and the current element and has to return a new accumulated value.
+     * @param env the environment of the job
      * @param T type of the elements to process
      * @param TResult type of the reduced value
      * @returns an array with a single value, the reduced value
@@ -138,7 +149,7 @@ export const ParallelWorkerFunctions = {
 
     /**
      * Generator function that creates an iterator containing all elements in the range [start, end) with a step size of step.
-     * @param from start value of the range (inclusive)
+     * @param start start value of the range (inclusive)
      * @param end end value of the range (exclusive)
      * @param step step size between two values
      * @returns iterator with the values [start, end)
@@ -162,6 +173,7 @@ export const ParallelWorkerFunctions = {
      * @param start the start value (inclusive)
      * @param end end value (exclusive)
      * @param iteratee that is to be called to create the elements
+     * @param env the environment of the job
      * @param TResult type of the created elements by the iteratee
      * @returns iterator for the created elements
      */
@@ -181,6 +193,7 @@ export const ParallelWorkerFunctions = {
 
     /**
      * identity function. Returns the passed in value
+     * @param element the value to return
      * @param T type of the element
      */
     identity<T>(element: T): T {
