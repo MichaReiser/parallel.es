@@ -5,20 +5,20 @@
  */ /** */
 
 import {parallelFactory} from "../common/parallel/parallel-impl";
-import {FunctionRegistry} from "../common/serialization/function-registry";
+import {FunctionRegistry} from "../common/function/function-registry";
 import {DefaultThreadPool} from "../common/thread-pool/default-thread-pool";
 import {BrowserWorkerThreadFactory} from "./worker/browser-worker-thread-factory";
+import {DefaultParallelScheduler} from "../common/parallel/default-parallel-scheduler";
+import {IParallel} from "../common/parallel";
 
 export {ITaskDefinition} from "../common/task/task-definition";
 export {ITask} from "../common/task/task";
-export {IFunctionDefinition} from "../common/worker/function-defintion";
-export {ISerializedFunctionCall, isSerializedFunctionCall} from "../common/serialization/serialized-function-call";
+export {IFunctionDefinition} from "../common/function/function-defintion";
+export {FunctionCall} from "../common/function/function-call";
+export {ISerializedFunctionCall, isSerializedFunctionCall} from "../common/function/serialized-function-call";
+export {FunctionCallSerializer} from "../common/function/function-call-serializer";
 export {IThreadPool} from "../common/thread-pool/thread-pool";
-export {IParallel} from "../common/parallel/parallel";
-export {IParallelOptions} from "../common/parallel/parallel-options";
-export {IParallelStream} from "../common/parallel/parallel-stream";
-export {IParallelChain} from "../common/parallel/parallel-chain";
-export {IParallelTaskEnvironment, IEmptyParallelEnvironment} from "../common/parallel/parallel-environment";
+export * from "../common/parallel";
 
 const functionLookupTable = new FunctionRegistry();
 const maxConcurrencyLevel = (window.navigator as any)["hardwareConcurrency"] || 4;
@@ -27,5 +27,5 @@ const threadPool = new DefaultThreadPool(new BrowserWorkerThreadFactory(function
 /**
  * The global parallel instance.
  */
-const parallel = parallelFactory({ threadPool, maxConcurrencyLevel });
+const parallel: IParallel = parallelFactory({ maxConcurrencyLevel, scheduler: new DefaultParallelScheduler(), threadPool });
 export default parallel;

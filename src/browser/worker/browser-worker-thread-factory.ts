@@ -1,7 +1,7 @@
 import {IWorkerThreadFactory} from "../../common/worker/worker-thread-factory";
 import {IWorkerThread} from "../../common/worker/worker-thread";
 import {BrowserWorkerThread} from "./browser-worker-thread";
-import {FunctionRegistry} from "../../common/serialization/function-registry";
+import {FunctionRegistry} from "../../common/function/function-registry";
 
 declare function require(module: string): any;
 /* tslint:disable:no-var-requires */

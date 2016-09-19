@@ -1,5 +1,5 @@
-import {FunctionRegistry} from "../../../src/common/serialization/function-registry";
-import {staticFunctionRegistry} from "../../../src/common/serialization/static-function-registry";
+import {FunctionRegistry} from "../../../src/common/function/function-registry";
+import {staticFunctionRegistry} from "../../../src/common/function/static-function-registry";
 
 /* tslint:disable:no-console */
 

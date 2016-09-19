@@ -1,6 +1,6 @@
-import {IFunctionLookupTable} from "../../common/serialization/function-lookup-table";
-import {staticFunctionRegistry} from "../../common/serialization/static-function-registry";
-import {IFunctionDefinition} from "../../common/worker/function-defintion";
+import {IFunctionLookupTable} from "../../common/function/function-lookup-table";
+import {staticFunctionRegistry} from "../../common/function/static-function-registry";
+import {IFunctionDefinition} from "../../common/function/function-defintion";
 
 /**
  * Cache used by each {@link BrowserWorkerSlave} to cache the received functions.

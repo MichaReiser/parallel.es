@@ -1,10 +1,10 @@
 import {ParallelWorkerFunctions} from "../../../src/common/parallel/parallel-worker-functions";
 import {toArray, toIterator} from "../../../src/common/util/iterator";
-import {FunctionCallDeserializer} from "../../../src/common/serialization/function-call-deserializer";
+import {FunctionCallDeserializer} from "../../../src/common/function/function-call-deserializer";
 import {IParallelTaskEnvironment} from "../../../src/common/parallel/parallel-environment";
+
 describe("ParallelWorkerFunctions", function () {
     let environment: IParallelTaskEnvironment;
-
     beforeEach(function () {
         environment = { taskIndex: 2, valuesPerTask: 2 };
     });
@@ -28,9 +28,10 @@ describe("ParallelWorkerFunctions", function () {
 
             // act
             ParallelWorkerFunctions.process({
-                environment,
                 generator: serializedGenerator,
-                operations: []
+                operations: [],
+                taskIndex: 0,
+                valuesPerTask: 2
             }, { functionCallDeserializer: deserializer });
 
             // assert
@@ -44,17 +45,18 @@ describe("ParallelWorkerFunctions", function () {
 
             // act
             ParallelWorkerFunctions.process({
-                environment,
                 generator: {
                     ______serializedFunctionCall: true,
                         functionId: 1000,
                     parameters: []
                 },
-                operations: []
+                operations: [],
+                taskIndex: 0,
+                valuesPerTask: 2
             }, { functionCallDeserializer: deserializer });
 
             // assert
-            expect(generator).toHaveBeenCalledWith(environment);
+            expect(generator).toHaveBeenCalledWith({ taskIndex: 0, valuesPerTask: 2 });
         });
 
         it("calls the coordinator with the generator iterator, the deserialized iteratee and the environment", function () {
@@ -63,11 +65,12 @@ describe("ParallelWorkerFunctions", function () {
             const generator = jasmine.createSpy("generator").and.returnValue(iterator);
             const coordinator = jasmine.createSpy("coordinator").and.returnValue(toIterator([2, 4]));
             const iteratee = jasmine.createSpy("iteratee");
+            let userEnvironment = { test: 10 };
             spyOn(deserializer, "deserializeFunctionCall").and.returnValues(generator, coordinator, iteratee);
 
             // act
             ParallelWorkerFunctions.process({
-                environment,
+                environment: userEnvironment,
                 generator: {
                     ______serializedFunctionCall: true,
                     functionId: 1000,
@@ -84,11 +87,54 @@ describe("ParallelWorkerFunctions", function () {
                         functionId: 1001,
                         parameters: []
                     }
-                }]
+                }],
+                taskIndex: 0,
+                valuesPerTask: 2
             }, { functionCallDeserializer: deserializer });
 
             // assert
-            expect(coordinator).toHaveBeenCalledWith(iterator, iteratee, environment);
+            expect(coordinator).toHaveBeenCalledWith(iterator, iteratee, { taskIndex: 0, test: 10, valuesPerTask: 2 });
+        });
+
+        it("deserializes the environment and invokes the function to create the environment if the environment is a serialized function call", function () {
+            // arrange
+            const iterator = toIterator([1, 2, 3]);
+            const environmentProvider = jasmine.createSpy("environmentProvider").and.returnValue({ test: 10 });
+            const generator = jasmine.createSpy("generator").and.returnValue(iterator);
+            const coordinator = jasmine.createSpy("coordinator").and.returnValue(toIterator([2, 4]));
+            const iteratee = jasmine.createSpy("iteratee");
+            spyOn(deserializer, "deserializeFunctionCall").and.returnValues(environmentProvider, generator, coordinator, iteratee);
+
+            // act
+            ParallelWorkerFunctions.process({
+                environment: {
+                    ______serializedFunctionCall: true,
+                    functionId: 1003,
+                    parameters: []
+                },
+                generator: {
+                    ______serializedFunctionCall: true,
+                    functionId: 1000,
+                    parameters: []
+                },
+                operations: [{
+                    iteratee: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1002,
+                        parameters: []
+                    },
+                    iterator: {
+                        ______serializedFunctionCall: true,
+                        functionId: 1001,
+                        parameters: []
+                    }
+                }],
+                taskIndex: 0,
+                valuesPerTask: 2
+            }, { functionCallDeserializer: deserializer });
+
+            // assert
+            expect(coordinator).toHaveBeenCalledWith(iterator, iteratee, { taskIndex: 0, test: 10, valuesPerTask: 2 });
         });
 
         it("returns the iterator as array of the last action", function () {
@@ -101,7 +147,6 @@ describe("ParallelWorkerFunctions", function () {
 
             // act
             const result = ParallelWorkerFunctions.process({
-                environment,
                 generator: {
                     ______serializedFunctionCall: true,
                     functionId: 1000,
@@ -118,53 +163,13 @@ describe("ParallelWorkerFunctions", function () {
                         functionId: 1001,
                         parameters: []
                     }
-                }]
+                }],
+                taskIndex: 0,
+                valuesPerTask: 2
             }, { functionCallDeserializer: deserializer });
 
             // assert
             expect(result).toEqual([2, 4]);
-        });
-
-        it("joins the passed in environment with the result of the initializer", function () {
-            // arrange
-            const iterator = toIterator([1, 2, 3]);
-            const generator = jasmine.createSpy("generator").and.returnValue(iterator);
-            const coordinator = jasmine.createSpy("coordinator").and.returnValue(toIterator([2, 4]));
-            const iteratee = jasmine.createSpy("iteratee");
-            const initializer = jasmine.createSpy("initializer");
-            spyOn(deserializer, "deserializeFunctionCall").and.returnValues(initializer, generator, coordinator, iteratee);
-
-            initializer.and.returnValues({ fromInitializer: true });
-
-            // act
-            ParallelWorkerFunctions.process({
-                environment,
-                generator: {
-                    ______serializedFunctionCall: true,
-                    functionId: 1000,
-                    parameters: []
-                },
-                initializer: {
-                    ______serializedFunctionCall: true,
-                    functionId: 1003,
-                    parameters: []
-                },
-                operations: [{
-                    iteratee: {
-                        ______serializedFunctionCall: true,
-                        functionId: 1002,
-                        parameters: []
-                    },
-                    iterator: {
-                        ______serializedFunctionCall: true,
-                        functionId: 1001,
-                        parameters: []
-                    }
-                }]
-            }, { functionCallDeserializer: deserializer });
-
-            // assert
-            expect(coordinator).toHaveBeenCalledWith(iterator, iteratee, { fromInitializer: true, taskIndex: 2, valuesPerTask: 2 });
         });
     });
 

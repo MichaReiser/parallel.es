@@ -4,7 +4,7 @@
 /** needed, typedoc issue */
 
 /**
- * Parallel processing stream.
+ * Parallel processing stream that allows access to the sub results or end result of a {@link IParallelJob}
  *
  * The end result can be retrieved by using the then function. The then function is called
  * with the merged result of all tasks. At the other hand, subscribe can be used to register an

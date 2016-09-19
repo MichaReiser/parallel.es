@@ -14,7 +14,8 @@ describe("Parallel", function () {
     beforeEach(function () {
         parallel = parallelFactory({
             maxConcurrencyLevel,
-            threadPool
+            threadPool,
+            scheduler: undefined as any
         });
     });
 

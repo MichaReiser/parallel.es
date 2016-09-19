@@ -6,14 +6,12 @@ export interface ICoordinate {
     readonly y: number;
 }
 
-type IPath = ICoordinate[];
-
 export interface IKnightTourEnvironment {
     boardSize: number;
     board: number[];
 }
 
-function createEnvironment({ boardSize }: { boardSize: number }): IKnightTourEnvironment {
+function createEnvironment(boardSize: number): IKnightTourEnvironment {
     const board: number[] = new Array(boardSize * boardSize);
     board.fill(0);
     return {
@@ -72,7 +70,7 @@ export function knightTours(startPath: ICoordinate[], { board, boardSize }: IKni
 }
 
 export function syncKnightTours(start: ICoordinate, boardSize: number): number {
-    const environment = createEnvironment({ boardSize });
+    const environment = createEnvironment(boardSize);
     return knightTours([start], environment);
 }
 
@@ -80,14 +78,14 @@ export function parallelKnightTours(start: ICoordinate, boardSize: number, optio
 
     function successors(coordinate: ICoordinate) {
         const moves = [
-            { x: -2, y: -1 }, { x: -2, y: 1}, { x: -1, y: -2 }, { x: -1, y: 2 },
-            { x: 1, y: -2 }, { x: 1, y: 2}, { x: 2, y: -1 }, { x: 2, y: 1 }
+            {x: -2, y: -1}, {x: -2, y: 1}, {x: -1, y: -2}, {x: -1, y: 2},
+            {x: 1, y: -2}, {x: 1, y: 2}, {x: 2, y: -1}, {x: 2, y: 1}
         ];
         const result: ICoordinate[] = [];
 
         for (const move of moves) {
-            const successor = { x: coordinate.x + move.x, y: coordinate.y + move.y };
-            const accessible = successor.x >= 0 && successor.y >= 0 && successor.x < boardSize &&  successor.y < boardSize &&
+            const successor = {x: coordinate.x + move.x, y: coordinate.y + move.y};
+            const accessible = successor.x >= 0 && successor.y >= 0 && successor.x < boardSize && successor.y < boardSize &&
                 (successor.x !== start.x || successor.y !== start.y) && (successor.x !== coordinate.x && successor.y !== coordinate.y);
             if (accessible) {
                 result.push(successor);
@@ -111,8 +109,7 @@ export function parallelKnightTours(start: ICoordinate, boardSize: number, optio
     let startTime = performance.now();
     return parallel
         .from(computeStartFields(), options)
-        .environment({ boardSize })
-        .initializer(createEnvironment)
+        .inEnvironment(createEnvironment, boardSize)
         .map(knightTours)
         .reduce(0, (memo, count) => memo + count)
         .subscribe(subResults => {
@@ -122,30 +119,4 @@ export function parallelKnightTours(start: ICoordinate, boardSize: number, optio
             /* tslint:disable:no-console */
             console.log(`${total / (performance.now() - startTime) * 1000} results per second`);
         });
-}
-
-export function formatPath(path: IPath) {
-    return path.map(coordiante => `(${coordiante.x}, ${coordiante.y})`).join("->");
-}
-
-export function validatePath(path: IPath) {
-    const boardSize = Math.sqrt(path.length);
-    const foundCoordinates: boolean[] = new Array<boolean>(path.length);
-    foundCoordinates.fill(false);
-
-    for (let i = 0; i < path.length; ++i) {
-        const coordinate = path[i];
-        const position = coordinate.x * boardSize + coordinate.y;
-
-        if (foundCoordinates[position] === true) {
-            throw new Error(`The coordinate ${coordinate.x}, ${coordinate.y} ocuurres twice in the same path`);
-        }
-        foundCoordinates[position] = true;
-    }
-
-    for (let i = 0; i < foundCoordinates.length; ++i) {
-        if (!foundCoordinates[i]) {
-            throw new Error(`The coordinate ${Math.floor(i / boardSize)}, ${i % boardSize} is not part of the path`);
-        }
-    }
 }

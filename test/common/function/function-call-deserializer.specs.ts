@@ -1,5 +1,5 @@
-import {FunctionCallDeserializer} from "../../../src/common/serialization/function-call-deserializer";
-import {ISerializedFunctionCall} from "../../../src/common/serialization/serialized-function-call";
+import {FunctionCallDeserializer} from "../../../src/common/function/function-call-deserializer";
+import {ISerializedFunctionCall} from "../../../src/common/function/serialized-function-call";
 describe("FunctionCallDeserializer", function () {
 
     let getFunctionSpy: jasmine.Spy;

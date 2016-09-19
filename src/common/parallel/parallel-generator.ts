@@ -1,6 +1,6 @@
 import {ParallelWorkerFunctions} from "./parallel-worker-functions";
-import {ISerializedFunctionCall} from "../serialization/serialized-function-call";
-import {FunctionCallSerializer} from "../serialization/function-call-serializer";
+import {ISerializedFunctionCall} from "../function/serialized-function-call";
+import {FunctionCallSerializer} from "../function/function-call-serializer";
 
 /**
  * Generator that creates a sequence of values and is capable

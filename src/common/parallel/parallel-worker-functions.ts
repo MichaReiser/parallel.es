@@ -1,9 +1,9 @@
-import {FunctionCallDeserializer} from "../serialization/function-call-deserializer";
-import {ISerializedFunctionCall} from "../serialization/serialized-function-call";
-import {staticFunctionRegistry} from "../serialization/static-function-registry";
+import {FunctionCallDeserializer} from "../function/function-call-deserializer";
+import {ISerializedFunctionCall, isSerializedFunctionCall} from "../function/serialized-function-call";
+import {staticFunctionRegistry} from "../function/static-function-registry";
 import {toArray, toIterator} from "../util/iterator";
 import {ISerializedParallelOperation} from "./parallel-operation";
-import {IParallelTaskEnvironment} from "./parallel-environment";
+import {IParallelTaskEnvironment, IEmptyParallelEnvironment} from "./parallel-environment";
 
 /**
  * Defines the parallel operation to perform
@@ -22,12 +22,32 @@ export interface IParallelProcessParams {
     /**
      * The environment. Object hash that is passed to all iteratee functions and allows to access external data
      */
-    environment: IParallelTaskEnvironment;
+    environment?: ISerializedFunctionCall | IEmptyParallelEnvironment;
 
     /**
-     * Initializer that is called before any operation is performed to initialize the environment of this worker.
+     * The job-relative index of the task
      */
-    initializer?: ISerializedFunctionCall;
+    taskIndex: number;
+
+    /**
+     * The number of values processed by each task (at most)
+     */
+    valuesPerTask: number;
+}
+
+function createTaskEnvironment(definition: IParallelProcessParams, functionCallDeserializer: FunctionCallDeserializer): IParallelTaskEnvironment {
+    let userDefinedEnvironment: IEmptyParallelEnvironment = {};
+
+    if (definition.environment) {
+        if (isSerializedFunctionCall(definition.environment)) {
+            const environmentProvider = functionCallDeserializer.deserializeFunctionCall(definition.environment);
+            userDefinedEnvironment = environmentProvider();
+        } else {
+            userDefinedEnvironment = definition.environment;
+        }
+    }
+
+    return Object.assign({}, { taskIndex: definition.taskIndex, valuesPerTask: definition.valuesPerTask }, userDefinedEnvironment);
 }
 
 /**
@@ -42,20 +62,14 @@ export const ParallelWorkerFunctions = {
      * @param TResult type of the resulting elements
      * @returns the result of the operation from this worker
      */
-    process<T, TResult>(definition: IParallelProcessParams, options: { functionCallDeserializer: FunctionCallDeserializer }): TResult[] {
-        let environment = definition.environment;
-
-        if (definition.initializer) {
-            const initializer = options.functionCallDeserializer.deserializeFunctionCall(definition.initializer);
-            environment = Object.assign(environment, initializer(environment));
-        }
-
-        const generatorFunction = options.functionCallDeserializer.deserializeFunctionCall(definition.generator, true);
-        let iterator = generatorFunction(definition.environment) as Iterator<T>;
+    process<T, TResult>(definition: IParallelProcessParams, { functionCallDeserializer }: { functionCallDeserializer: FunctionCallDeserializer }): TResult[] {
+        const environment = createTaskEnvironment(definition, functionCallDeserializer);
+        const generatorFunction = functionCallDeserializer.deserializeFunctionCall(definition.generator, true);
+        let iterator = generatorFunction(environment) as Iterator<T>;
 
         for (const operation of definition.operations) {
-            const iteratorFunction = options.functionCallDeserializer.deserializeFunctionCall<Iterator<T>>(operation.iterator);
-            const iteratee = options.functionCallDeserializer.deserializeFunctionCall(operation.iteratee);
+            const iteratorFunction = functionCallDeserializer.deserializeFunctionCall<Iterator<T>>(operation.iterator);
+            const iteratee = functionCallDeserializer.deserializeFunctionCall(operation.iteratee);
             iterator = iteratorFunction(iterator, iteratee, environment);
         }
 
@@ -66,6 +80,7 @@ export const ParallelWorkerFunctions = {
      * Performs the map operation
      * @param iterator the iterator of the previous step
      * @param iteratee the iteratee to apply to each element in the iterator
+     * @param env the environment of the job
      * @param T the type of the input elements
      * @param TResult the type of the returned element of the iteratee
      * @returns a new iterator where each element has been mapped using the iteratee
@@ -89,6 +104,7 @@ export const ParallelWorkerFunctions = {
      * Returns a new iterator that only contains all elements for which the given predicate returns true
      * @param iterator the iterator to filter
      * @param predicate the predicate to use for filtering the elements
+     * @param env the environment of the job
      * @param T type of the elements to filter
      * @returns an iterator only containing the elements where the predicate is true
      */
@@ -111,8 +127,10 @@ export const ParallelWorkerFunctions = {
     /**
      * Reduces the elements of the given iterator to a single value by applying the given iteratee to each element
      * @param defaultValue a default value that is as accumulator or for the case that the iterator is empty
+     * @param iterator the iterator with the values to reduce
      * @param iteratee iteratee that is applied for each element. The iteratee is passed the accumulated value (sum of all previous values)
      * and the current element and has to return a new accumulated value.
+     * @param env the environment of the job
      * @param T type of the elements to process
      * @param TResult type of the reduced value
      * @returns an array with a single value, the reduced value
@@ -131,7 +149,7 @@ export const ParallelWorkerFunctions = {
 
     /**
      * Generator function that creates an iterator containing all elements in the range [start, end) with a step size of step.
-     * @param from start value of the range (inclusive)
+     * @param start start value of the range (inclusive)
      * @param end end value of the range (exclusive)
      * @param step step size between two values
      * @returns iterator with the values [start, end)
@@ -155,6 +173,7 @@ export const ParallelWorkerFunctions = {
      * @param start the start value (inclusive)
      * @param end end value (exclusive)
      * @param iteratee that is to be called to create the elements
+     * @param env the environment of the job
      * @param TResult type of the created elements by the iteratee
      * @returns iterator for the created elements
      */
@@ -174,6 +193,7 @@ export const ParallelWorkerFunctions = {
 
     /**
      * identity function. Returns the passed in value
+     * @param element the value to return
      * @param T type of the element
      */
     identity<T>(element: T): T {

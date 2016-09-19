@@ -1,5 +1,5 @@
 import {SlaveFunctionCache} from "../../../src/browser/worker-slave/slave-function-cache";
-import {staticFunctionRegistry} from "../../../src/common/serialization/static-function-registry";
+import {staticFunctionRegistry} from "../../../src/common/function/static-function-registry";
 
 describe("SlaveFunctionCache", function () {
     let cache: SlaveFunctionCache;

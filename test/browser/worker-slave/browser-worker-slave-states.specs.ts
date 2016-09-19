@@ -8,7 +8,7 @@ import {
     WaitingForFunctionDefinitionBrowserWorkerSlaveState, ExecuteFunctionBrowserWorkerSlaveState
 } from "../../../src/browser/worker-slave/browser-worker-slave-states";
 import {ITaskDefinition} from "../../../src/common/task/task-definition";
-import {FunctionCallDeserializer} from "../../../src/common/serialization/function-call-deserializer";
+import {FunctionCallDeserializer} from "../../../src/common/function/function-call-deserializer";
 
 describe("BrowserWorkerSlaveStates", function () {
     let slave: BrowserWorkerSlave;

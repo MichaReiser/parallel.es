@@ -5,7 +5,7 @@
 
 import {ITask} from "../task/task";
 import {ITaskDefinition} from "../task/task-definition";
-import {FunctionCallSerializer} from "../serialization/function-call-serializer";
+import {FunctionCallSerializer} from "../function/function-call-serializer";
 
 /**
  * The thread pool is responsible for distributing the scheduled tasks onto different workers. The thread pool defines how the

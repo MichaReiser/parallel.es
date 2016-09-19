@@ -1,5 +1,5 @@
 import {ParallelWorkerFunctions} from "../../common/parallel/parallel-worker-functions";
-import {staticFunctionRegistry} from "../../common/serialization/static-function-registry";
+import {staticFunctionRegistry} from "../../common/function/static-function-registry";
 import {BrowserWorkerSlave} from "./browser-worker-slave";
 
 staticFunctionRegistry.registerStaticFunctions(ParallelWorkerFunctions);

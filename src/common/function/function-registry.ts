@@ -1,4 +1,4 @@
-import {IFunctionDefinition} from "../worker/function-defintion";
+import {IFunctionDefinition} from "./function-defintion";
 import {SimpleMap} from "../util/simple-map";
 import {staticFunctionRegistry} from "./static-function-registry";
 

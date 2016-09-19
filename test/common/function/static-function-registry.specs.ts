@@ -1,4 +1,4 @@
-import {staticFunctionRegistry} from "../../../src/common/serialization/static-function-registry";
+import {staticFunctionRegistry} from "../../../src/common/function/static-function-registry";
 
 describe("staticFunctionRegistry", function () {
 

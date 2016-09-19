@@ -1,6 +1,6 @@
-import {FunctionCallDeserializer} from "../../common/serialization/function-call-deserializer";
+import {FunctionCallDeserializer} from "../../common/function/function-call-deserializer";
 import {ITaskDefinition} from "../../common/task/task-definition";
-import {IFunctionDefinition} from "../../common/worker/function-defintion";
+import {IFunctionDefinition} from "../../common/function/function-defintion";
 import {
     functionExecutionError, isFunctionResponse, isInitializeMessage, isScheduleTask, requestFunctionMessage,
     workerResultMessage } from "../../common/worker/worker-messages";
