@@ -79,6 +79,13 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/parallel.functioncall.html" class="tsd-kind-icon">Function<wbr>Call</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/parallel.functioncallserializer.html" class="tsd-kind-icon">Function<wbr>Call<wbr>Serializer</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.idefaultinitializedparalleloptions.html" class="tsd-kind-icon">IDefault<wbr>Initialized<wbr>Parallel<wbr>Options</a></li>
@@ -86,7 +93,8 @@
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.ifunctiondefinition.html" class="tsd-kind-icon">IFunction<wbr>Definition</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.iparallel.html" class="tsd-kind-icon">IParallel</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter"><a href="../interfaces/parallel.iparallelchain.html" class="tsd-kind-icon">IParallel<wbr>Chain</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter"><a href="../interfaces/parallel.iparallelchaininitializer.html" class="tsd-kind-icon">IParallel<wbr>Chain<wbr>Initializer</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.iparalleljob.html" class="tsd-kind-icon">IParallel<wbr>Job</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.iparalleljobscheduler.html" class="tsd-kind-icon">IParallel<wbr>Job<wbr>Scheduler</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.iparalleloptions.html" class="tsd-kind-icon">IParallel<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter"><a href="../interfaces/parallel.iparallelstream.html" class="tsd-kind-icon">IParallel<wbr>Stream</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.iparalleltaskenvironment.html" class="tsd-kind-icon">IParallel<wbr>Task<wbr>Environment</a></li>
@@ -120,10 +128,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="functionlookuptable" class="tsd-anchor"></a>
 					<h3>function<wbr>Lookup<wbr>Table</h3>
-					<div class="tsd-signature tsd-kind-icon">function<wbr>Lookup<wbr>Table<span class="tsd-signature-symbol">:</span> <a href="../classes/_common_serialization_function_registry_.functionregistry.html" class="tsd-signature-type">FunctionRegistry</a><span class="tsd-signature-symbol"> =&nbsp;new FunctionRegistry()</span></div>
+					<div class="tsd-signature tsd-kind-icon">function<wbr>Lookup<wbr>Table<span class="tsd-signature-symbol">:</span> <a href="../classes/_common_function_function_registry_.functionregistry.html" class="tsd-signature-type">FunctionRegistry</a><span class="tsd-signature-symbol"> =&nbsp;new FunctionRegistry()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/browser/index.ts#L23">browser/index.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/browser/index.ts#L23">browser/index.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -133,17 +141,17 @@
 					<div class="tsd-signature tsd-kind-icon">max<wbr>Concurrency<wbr>Level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;(window.navigator as any)[&quot;hardwareConcurrency&quot;] || 4</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/browser/index.ts#L24">browser/index.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/browser/index.ts#L24">browser/index.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module">
 					<a name="parallel-1" class="tsd-anchor"></a>
 					<h3>parallel</h3>
-					<div class="tsd-signature tsd-kind-icon">parallel<span class="tsd-signature-symbol">:</span> <a href="../interfaces/parallel.iparallel.html" class="tsd-signature-type">IParallel</a><span class="tsd-signature-symbol"> =&nbsp;parallelFactory({ threadPool, maxConcurrencyLevel })</span></div>
+					<div class="tsd-signature tsd-kind-icon">parallel<span class="tsd-signature-symbol">:</span> <a href="../interfaces/parallel.iparallel.html" class="tsd-signature-type">IParallel</a><span class="tsd-signature-symbol"> =&nbsp;parallelFactory({ maxConcurrencyLevel, scheduler: new DefaultParallelScheduler(), threadPool })</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/browser/index.ts#L30">browser/index.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/browser/index.ts#L30">browser/index.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -158,7 +166,7 @@
 					<div class="tsd-signature tsd-kind-icon">thread<wbr>Pool<span class="tsd-signature-symbol">:</span> <a href="../classes/_common_thread_pool_default_thread_pool_.defaultthreadpool.html" class="tsd-signature-type">DefaultThreadPool</a><span class="tsd-signature-symbol"> =&nbsp;new DefaultThreadPool(new BrowserWorkerThreadFactory(functionLookupTable), functionLookupTable, {maxConcurrencyLevel})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/browser/index.ts#L25">browser/index.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/browser/index.ts#L25">browser/index.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -175,7 +183,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/serialization/serialized-function-call.ts#L31">common/serialization/serialized-function-call.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/function/serialized-function-call.ts#L31">common/function/serialized-function-call.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -212,6 +220,12 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/parallel.functioncall.html" class="tsd-kind-icon">Function<wbr>Call</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/parallel.functioncallserializer.html" class="tsd-kind-icon">Function<wbr>Call<wbr>Serializer</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/parallel.idefaultinitializedparalleloptions.html" class="tsd-kind-icon">IDefault<wbr>Initialized<wbr>Parallel<wbr>Options</a>
 					</li>
@@ -227,8 +241,11 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="../interfaces/parallel.iparallelchain.html" class="tsd-kind-icon">IParallel<wbr>Chain</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../interfaces/parallel.iparallelchaininitializer.html" class="tsd-kind-icon">IParallel<wbr>Chain<wbr>Initializer</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/parallel.iparalleljob.html" class="tsd-kind-icon">IParallel<wbr>Job</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/parallel.iparalleljobscheduler.html" class="tsd-kind-icon">IParallel<wbr>Job<wbr>Scheduler</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/parallel.iparalleloptions.html" class="tsd-kind-icon">IParallel<wbr>Options</a>

@@ -112,7 +112,6 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#generator" class="tsd-kind-icon">generator</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#initializerfunc" class="tsd-kind-icon">initializer<wbr>Func</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#operations" class="tsd-kind-icon">operations</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#options" class="tsd-kind-icon">options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#sharedenvironment" class="tsd-kind-icon">shared<wbr>Environment</a></li>
@@ -123,14 +122,11 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#_chain" class="tsd-kind-icon">_chain</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#_stream" class="tsd-kind-icon">_stream</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#environment" class="tsd-kind-icon">environment</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#filter" class="tsd-kind-icon">filter</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#getparalleltaskscheduling" class="tsd-kind-icon">get<wbr>Parallel<wbr>Task<wbr>Scheduling</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#gettaskdefinitions" class="tsd-kind-icon">get<wbr>Task<wbr>Definitions</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#initializer" class="tsd-kind-icon">initializer</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#inenvironment" class="tsd-kind-icon">in<wbr>Environment</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#map" class="tsd-kind-icon">map</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#reduce" class="tsd-kind-icon">reduce</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#result" class="tsd-kind-icon">result</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#run" class="tsd-kind-icon">run</a></li>
 							</ul>
 						</section>
 					</div>
@@ -142,13 +138,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Parallel<wbr>Chain<wbr>Impl<span class="tsd-signature-symbol">(</span>generator<span class="tsd-signature-symbol">: </span><a href="../interfaces/_common_parallel_parallel_generator_.iparallelgenerator.html" class="tsd-signature-type">IParallelGenerator</a>, options<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.idefaultinitializedparalleloptions.html" class="tsd-signature-type">IDefaultInitializedParallelOptions</a>, sharedEnv<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iemptyparallelenvironment.html" class="tsd-signature-type">IEmptyParallelEnvironment</a>, initializerFunc<span class="tsd-signature-symbol">?: </span><a href="../interfaces/parallel.iparallelchaininitializer.html" class="tsd-signature-type">IParallelChainInitializer</a>, operations<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_common_parallel_parallel_operation_.iparalleloperation.html" class="tsd-signature-type">IParallelOperation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html" class="tsd-signature-type">ParallelChainImpl</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Parallel<wbr>Chain<wbr>Impl<span class="tsd-signature-symbol">(</span>generator<span class="tsd-signature-symbol">: </span><a href="../interfaces/_common_parallel_parallel_generator_.iparallelgenerator.html" class="tsd-signature-type">IParallelGenerator</a>, options<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.idefaultinitializedparalleloptions.html" class="tsd-signature-type">IDefaultInitializedParallelOptions</a>, sharedEnv<span class="tsd-signature-symbol">?: </span><a href="../modules/_common_parallel_parallel_chain_impl_.html#iparallelchainenvironment" class="tsd-signature-type">IParallelChainEnvironment</a>, operations<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_common_parallel_parallel_operation_.iparalleloperation.html" class="tsd-signature-type">IParallelOperation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html" class="tsd-signature-type">ParallelChainImpl</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L37">common/parallel/parallel-chain-impl.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/parallel/parallel-chain-impl.ts#L34">common/parallel/parallel-chain-impl.ts:34</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -160,10 +156,7 @@
 									<h5>options: <a href="../interfaces/parallel.idefaultinitializedparalleloptions.html" class="tsd-signature-type">IDefaultInitializedParallelOptions</a></h5>
 								</li>
 								<li>
-									<h5>sharedEnv: <a href="../interfaces/parallel.iemptyparallelenvironment.html" class="tsd-signature-type">IEmptyParallelEnvironment</a></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> initializerFunc: <a href="../interfaces/parallel.iparallelchaininitializer.html" class="tsd-signature-type">IParallelChainInitializer</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sharedEnv: <a href="../modules/_common_parallel_parallel_chain_impl_.html#iparallelchainenvironment" class="tsd-signature-type">IParallelChainEnvironment</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> operations: <a href="../interfaces/_common_parallel_parallel_operation_.iparalleloperation.html" class="tsd-signature-type">IParallelOperation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></h5>
@@ -182,17 +175,7 @@
 					<div class="tsd-signature tsd-kind-icon">generator<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_common_parallel_parallel_generator_.iparallelgenerator.html" class="tsd-signature-type">IParallelGenerator</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L33">common/parallel/parallel-chain-impl.ts:33</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="initializerfunc" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> <span class="tsd-flag ts-flagOptional">Optional</span> initializer<wbr>Func</h3>
-					<div class="tsd-signature tsd-kind-icon">initializer<wbr>Func<span class="tsd-signature-symbol">:</span> <a href="../interfaces/parallel.iparallelchaininitializer.html" class="tsd-signature-type">IParallelChainInitializer</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L34">common/parallel/parallel-chain-impl.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/parallel/parallel-chain-impl.ts#L31">common/parallel/parallel-chain-impl.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -202,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">operations<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_common_parallel_parallel_operation_.iparalleloperation.html" class="tsd-signature-type">IParallelOperation</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L37">common/parallel/parallel-chain-impl.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/parallel/parallel-chain-impl.ts#L34">common/parallel/parallel-chain-impl.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -212,17 +195,17 @@
 					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/parallel.idefaultinitializedparalleloptions.html" class="tsd-signature-type">IDefaultInitializedParallelOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L35">common/parallel/parallel-chain-impl.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/parallel/parallel-chain-impl.ts#L32">common/parallel/parallel-chain-impl.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="sharedenvironment" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> shared<wbr>Environment</h3>
-					<div class="tsd-signature tsd-kind-icon">shared<wbr>Environment<span class="tsd-signature-symbol">:</span> <a href="../interfaces/parallel.iemptyparallelenvironment.html" class="tsd-signature-type">IEmptyParallelEnvironment</a></div>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> <span class="tsd-flag ts-flagOptional">Optional</span> shared<wbr>Environment</h3>
+					<div class="tsd-signature tsd-kind-icon">shared<wbr>Environment<span class="tsd-signature-symbol">:</span> <a href="../modules/_common_parallel_parallel_chain_impl_.html#iparallelchainenvironment" class="tsd-signature-type">IParallelChainEnvironment</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L36">common/parallel/parallel-chain-impl.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/parallel/parallel-chain-impl.ts#L33">common/parallel/parallel-chain-impl.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -239,7 +222,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L151">common/parallel/parallel-chain-impl.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/parallel/parallel-chain-impl.ts#L94">common/parallel/parallel-chain-impl.ts:94</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -274,7 +257,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L109">common/parallel/parallel-chain-impl.ts:109</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/parallel/parallel-chain-impl.ts#L83">common/parallel/parallel-chain-impl.ts:83</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -317,36 +300,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-					<a name="environment" class="tsd-anchor"></a>
-					<h3>environment</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">environment&lt;TEnvNew&gt;<span class="tsd-signature-symbol">(</span>newEnv<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEnvNew</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iparallelchain.html" class="tsd-signature-type">IParallelChain</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TIn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEnvNew</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TOut</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/parallel.iparallelchain.html">IParallelChain</a>.<a href="../interfaces/parallel.iparallelchain.html#environment">environment</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L47">common/parallel/parallel-chain-impl.ts:47</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>TEnvNew<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEnv</span></h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>newEnv: <span class="tsd-signature-type">TEnvNew</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/parallel.iparallelchain.html" class="tsd-signature-type">IParallelChain</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TIn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEnvNew</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TOut</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="filter" class="tsd-anchor"></a>
 					<h3>filter</h3>
@@ -357,7 +310,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L78">common/parallel/parallel-chain-impl.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/parallel/parallel-chain-impl.ts#L72">common/parallel/parallel-chain-impl.ts:72</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -394,73 +347,35 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getparalleltaskscheduling" class="tsd-anchor"></a>
-					<h3>get<wbr>Parallel<wbr>Task<wbr>Scheduling</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Parallel<wbr>Task<wbr>Scheduling<span class="tsd-signature-symbol">(</span>totalItems<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_common_parallel_parallel_task_scheduling_.iparalleltaskscheduling.html" class="tsd-signature-type">IParallelTaskScheduling</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L92">common/parallel/parallel-chain-impl.ts:92</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>totalItems: <span class="tsd-signature-type">number</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_common_parallel_parallel_task_scheduling_.iparalleltaskscheduling.html" class="tsd-signature-type">IParallelTaskScheduling</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="gettaskdefinitions" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Task<wbr>Definitions</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Task<wbr>Definitions<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.itaskdefinition.html" class="tsd-signature-type">ITaskDefinition</a><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L115">common/parallel/parallel-chain-impl.ts:115</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/parallel.itaskdefinition.html" class="tsd-signature-type">ITaskDefinition</a><span class="tsd-signature-symbol">[]</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-					<a name="initializer" class="tsd-anchor"></a>
-					<h3>initializer</h3>
+					<a name="inenvironment" class="tsd-anchor"></a>
+					<h3>in<wbr>Environment</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">initializer&lt;TEnvAdditional&gt;<span class="tsd-signature-symbol">(</span>initializer<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iparallelchaininitializer.html" class="tsd-signature-type">IParallelChainInitializer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEnv</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEnvAdditional</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iparallelchain.html" class="tsd-signature-type">IParallelChain</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TIn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEnv &amp; TEnvAdditional</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TOut</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">in<wbr>Environment&lt;TEnvNew&gt;<span class="tsd-signature-symbol">(</span>newEnv<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/parallel.iemptyparallelenvironment.html" class="tsd-signature-type">IEmptyParallelEnvironment</a>, <span class="tsd-signature-symbol">...</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iparallelchain.html" class="tsd-signature-type">IParallelChain</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TIn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEnvNew</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TOut</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/parallel.iparallelchain.html">IParallelChain</a>.<a href="../interfaces/parallel.iparallelchain.html#initializer">initializer</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L51">common/parallel/parallel-chain-impl.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/parallel/parallel-chain-impl.ts#L43">common/parallel/parallel-chain-impl.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>TEnvAdditional</h4>
+									<h4>TEnvNew<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEnv</span></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>initializer: <a href="../interfaces/parallel.iparallelchaininitializer.html" class="tsd-signature-type">IParallelChainInitializer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEnv</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEnvAdditional</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>newEnv: <span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/parallel.iemptyparallelenvironment.html" class="tsd-signature-type">IEmptyParallelEnvironment</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>params: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/parallel.iparallelchain.html" class="tsd-signature-type">IParallelChain</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TIn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEnv &amp; TEnvAdditional</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TOut</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/parallel.iparallelchain.html" class="tsd-signature-type">IParallelChain</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TIn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEnvNew</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TOut</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -474,7 +389,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L55">common/parallel/parallel-chain-impl.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/parallel/parallel-chain-impl.ts#L54">common/parallel/parallel-chain-impl.ts:54</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -527,7 +442,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L59">common/parallel/parallel-chain-impl.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/parallel/parallel-chain-impl.ts#L58">common/parallel/parallel-chain-impl.ts:58</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -580,17 +495,17 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="result" class="tsd-anchor"></a>
-					<h3>result</h3>
+					<a name="run" class="tsd-anchor"></a>
+					<h3>run</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">result<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iparallelstream.html" class="tsd-signature-type">IParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TOut</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TOut</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">run<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iparallelstream.html" class="tsd-signature-type">IParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TOut</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TOut</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/parallel.iparallelchain.html">IParallelChain</a>.<a href="../interfaces/parallel.iparallelchain.html#result">result</a></p>
+								<p>Implementation of <a href="../interfaces/parallel.iparallelchain.html">IParallelChain</a>.<a href="../interfaces/parallel.iparallelchain.html#run">run</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/17e17eb/src/common/parallel/parallel-chain-impl.ts#L82">common/parallel/parallel-chain-impl.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b5d0089/src/common/parallel/parallel-chain-impl.ts#L76">common/parallel/parallel-chain-impl.ts:76</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/parallel.iparallelstream.html" class="tsd-signature-type">IParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TOut</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TOut</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -624,9 +539,6 @@
 								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#generator" class="tsd-kind-icon">generator</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#initializerfunc" class="tsd-kind-icon">initializer<wbr>Func</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#operations" class="tsd-kind-icon">operations</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
@@ -641,20 +553,11 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
 								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#_stream" class="tsd-kind-icon">_stream</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#environment" class="tsd-kind-icon">environment</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#filter" class="tsd-kind-icon">filter</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#getparalleltaskscheduling" class="tsd-kind-icon">get<wbr>Parallel<wbr>Task<wbr>Scheduling</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#gettaskdefinitions" class="tsd-kind-icon">get<wbr>Task<wbr>Definitions</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#initializer" class="tsd-kind-icon">initializer</a>
+								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#inenvironment" class="tsd-kind-icon">in<wbr>Environment</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#map" class="tsd-kind-icon">map</a>
@@ -663,12 +566,15 @@
 								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#reduce" class="tsd-kind-icon">reduce</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#result" class="tsd-kind-icon">result</a>
+								<a href="_common_parallel_parallel_chain_impl_.parallelchainimpl.html#run" class="tsd-kind-icon">run</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_common_parallel_parallel_chain_impl_.html#iparallelchainenvironment" class="tsd-kind-icon">IParallel<wbr>Chain<wbr>Environment</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="../modules/_common_parallel_parallel_chain_impl_.html#createparallelchain" class="tsd-kind-icon">create<wbr>Parallel<wbr>Chain</a>
 					</li>
