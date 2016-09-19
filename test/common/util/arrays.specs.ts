@@ -1,5 +1,5 @@
-import {toIterator, toArray} from "../../../src/common/util/iterator";
-describe("Iterator", function () {
+import {toIterator, toArray, flattenArray} from "../../../src/common/util/arrays";
+describe("arrays", function () {
     describe("toIterator", function () {
         it("returns an iterator with a next method", function () {
             // arrange
@@ -73,6 +73,20 @@ describe("Iterator", function () {
 
             // assert
             expect(toArray(iterator)).toEqual([1, 2, 3]);
+        });
+    });
+
+    describe("flattenArray", function () {
+        it("returns an empty array for an empty array", function () {
+            expect(flattenArray([])).toEqual([]);
+        });
+
+        it("returns the the content of the first sub array if the array has length 1", function () {
+            expect(flattenArray([[1, 2]])).toEqual([1, 2]);
+        });
+
+        it("returns the sub arrays concatenated", function () {
+            expect(flattenArray([[1, 2], [3, 4]])).toEqual([1, 2, 3, 4]);
         });
     });
 });

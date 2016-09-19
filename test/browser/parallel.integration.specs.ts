@@ -16,7 +16,6 @@ describe("ParallelIntegration", function () {
 
         parallel.from(data)
             .map(value => value ** 2)
-            .run()
             .then(result => {
                 expect(result).toEqual([0, 1, 4, 9, 16, 25, 36, 49, 64, 81]);
                 done();

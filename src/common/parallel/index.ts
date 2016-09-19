@@ -1,8 +1,8 @@
 export {IParallel} from "./parallel";
-export {IParallelChain} from "./parallel-chain";
+export {IParallelChain} from "./chain/parallel-chain";
 export {IParallelTaskEnvironment, IEmptyParallelEnvironment} from "./parallel-environment";
 export {IParallelJob} from "./parallel-job";
 export {IParallelOptions, IDefaultInitializedParallelOptions} from "./parallel-options";
-export {IParallelJobScheduler} from "./parallel-job-scheduler";
+export {IParallelJobScheduler} from "./scheduling/parallel-job-scheduler";
 export {IParallelOperation, ISerializedParallelOperation} from "./parallel-operation";
-export {IParallelStream} from "./parallel-stream";
+export {IParallelStream} from "./stream/parallel-stream";

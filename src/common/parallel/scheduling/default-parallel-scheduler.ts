@@ -1,4 +1,4 @@
-import {IDefaultInitializedParallelOptions} from "./parallel-options";
+import {IDefaultInitializedParallelOptions} from "../parallel-options";
 import {AbstractParallelScheduler, IParallelTaskScheduling} from "./abstract-parallel-scheduler";
 
 /**

@@ -1,47 +1,51 @@
 import {IParallel} from "../../../src/common/parallel/parallel";
 import {parallelFactory} from "../../../src/common/parallel/parallel-impl";
-import {ParallelChainImpl} from "../../../src/common/parallel/parallel-chain-impl";
-import {
-    ConstCollectionGenerator, RangeGenerator,
-    TimesGenerator
-} from "../../../src/common/parallel/parallel-generator";
+import {ParallelTimesGenerator} from "../../../src/common/parallel/generator/parallel-times-generator";
+import {ParallelRangeGenerator} from "../../../src/common/parallel/generator/parallel-range-generator";
+import {ParallelCollectionGenerator} from "../../../src/common/parallel/generator/parallel-collection-generator";
+import * as ParallelChainFactoryModule from "../../../src/common/parallel/chain/parallel-chain-factory";
+import {IDefaultInitializedParallelOptions} from "../../../src/common/parallel";
 
 describe("Parallel", function () {
     let parallel: IParallel;
     let threadPool: any = {};
     const maxConcurrencyLevel = 2;
+    let createParallelChainSpy: jasmine.Spy;
+    let options: IDefaultInitializedParallelOptions;
 
     beforeEach(function () {
-        parallel = parallelFactory({
+        createParallelChainSpy = spyOn(ParallelChainFactoryModule, "createParallelChain");
+        options = {
             maxConcurrencyLevel,
             threadPool,
             scheduler: undefined as any
-        });
+        };
+        parallel = parallelFactory(options);
     });
 
     describe("defaultOptions", function () {
         it("returns the default configuration", function () {
             // act
-            const options = parallel.defaultOptions();
+            const defaultOptions = parallel.defaultOptions();
 
             // assert
-            expect(options).toBeDefined();
+            expect(defaultOptions).toBeDefined();
         });
 
         it("initializes the maxConcurrencyLevel from the configuration by default", function () {
             // act
-            const options = parallel.defaultOptions();
+            const defaultOptions = parallel.defaultOptions();
 
             // assert
-            expect(options.maxConcurrencyLevel).toBe(maxConcurrencyLevel);
+            expect(defaultOptions.maxConcurrencyLevel).toBe(maxConcurrencyLevel);
         });
 
         it("initializes the thread pool to the thread pool from the configuration by default", function () {
             // act
-            const options = parallel.defaultOptions();
+            const defaultOptions = parallel.defaultOptions();
 
             // assert
-            expect(options.threadPool).toBe(threadPool);
+            expect(defaultOptions.threadPool).toBe(threadPool);
         });
 
         it("applies the user options as new default options", function () {
@@ -52,10 +56,10 @@ describe("Parallel", function () {
             });
 
             // assert
-            const options = parallel.defaultOptions();
+            const defaultOptions = parallel.defaultOptions();
 
-            expect(options.maxConcurrencyLevel).toBe(8);
-            expect(options.minValuesPerTask).toBe(1000);
+            expect(defaultOptions.maxConcurrencyLevel).toBe(8);
+            expect(defaultOptions.minValuesPerTask).toBe(1000);
         });
 
         it("merges the given options with the existing options", function () {
@@ -66,8 +70,8 @@ describe("Parallel", function () {
             });
 
             // assert
-            const options = parallel.defaultOptions();
-            expect(options.threadPool).toBe(threadPool);
+            const defaultOptions = parallel.defaultOptions();
+            expect(defaultOptions.threadPool).toBe(threadPool);
         });
 
         it("unsets values if undefined is passed as option value", function () {
@@ -82,8 +86,8 @@ describe("Parallel", function () {
             });
 
             // assert
-            const options = parallel.defaultOptions();
-            expect(options.minValuesPerTask).toBeUndefined();
+            const defaultOptions = parallel.defaultOptions();
+            expect(defaultOptions.minValuesPerTask).toBeUndefined();
         });
 
         it("throws if maxConcurrencyLevel is not a number", function () {
@@ -103,91 +107,79 @@ describe("Parallel", function () {
     });
 
     describe("from", function () {
-        it("returns a parallel chain over the passed array", function () {
+        it("creates a chain with a parallel collection generator over the passed in array", function () {
             // arrange
             const data = [1, 2, 3, 4, 5];
 
             // act
-            const chain = parallel.from(data);
+            parallel.from(data);
 
             // assert
-            expect(chain).toEqual(jasmine.any(ParallelChainImpl));
+            expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelCollectionGenerator), options);
+            expect((createParallelChainSpy.calls.argsFor(0)[0] as ParallelCollectionGenerator<number>).collection).toEqual(data);
+        });
 
-            const generator = (chain as ParallelChainImpl<number, {}, number>).generator;
-            expect(generator).toEqual(jasmine.any(ConstCollectionGenerator));
+        it("merges the options with the default options", function () {
+            parallel.from([1, 2, 3, 4], { maxValuesPerTask: 2 });
+
+            expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelCollectionGenerator), {
+                maxConcurrencyLevel,
+                maxValuesPerTask: 2,
+                threadPool,
+                scheduler: undefined
+            });
         });
     });
 
     describe("range", function () {
         it("creates a new parallel chain with a range generator", function () {
             // act
-            const chain = parallel.range(0, 10, 1);
+            parallel.range(0, 10, 1);
 
             // assert
-            expect(chain).toEqual(jasmine.any(ParallelChainImpl));
-            const generator = (chain as ParallelChainImpl<number, {}, number>).generator as RangeGenerator;
+            expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelRangeGenerator), options);
+            const generator = createParallelChainSpy.calls.argsFor(0)[0] as ParallelRangeGenerator;
             expect(generator.start).toBe(0);
             expect(generator.end).toBe(10);
             expect(generator.step).toBe(1);
         });
 
-        it("initializes the start with 0 and step with 1, if the function is only called with a single, positive value", function () {
-            // act
-            const chain = parallel.range(10);
+        it("merges the options with the default options", function () {
+            parallel.range(0, 10, 1, { maxValuesPerTask: 2 });
 
-            // assert
-            const generator = (chain as ParallelChainImpl<number, {}, number>).generator as RangeGenerator;
-            expect(generator.start).toBe(0);
-            expect(generator.end).toBe(10);
-            expect(generator.step).toBe(1);
-        });
-
-        it("initializes the start with 0 and step with -1, if the function is only called with a single, negative value", function () {
-            // act
-            const chain = parallel.range(-10);
-
-            // assert
-            const generator = (chain as ParallelChainImpl<number, {}, number>).generator as RangeGenerator;
-            expect(generator.start).toBe(0);
-            expect(generator.end).toBe(-10);
-            expect(generator.step).toBe(-1);
-        });
-
-        it("initializes step with 1, if the function is called with two values and start is less then end", function () {
-            // act
-            const chain = parallel.range(1, 10);
-
-            // assert
-            const generator = (chain as ParallelChainImpl<number, {}, number>).generator as RangeGenerator;
-            expect(generator.start).toBe(1);
-            expect(generator.end).toBe(10);
-            expect(generator.step).toBe(1);
-        });
-
-        it("initializes step with -1, if the function is called with two arguments and start is larger then end", function () {
-            // act
-            const chain = parallel.range(10, 1);
-
-            // assert
-            const generator = (chain as ParallelChainImpl<number, {}, number>).generator as RangeGenerator;
-            expect(generator.start).toBe(10);
-            expect(generator.end).toBe(1);
-            expect(generator.step).toBe(-1);
+            expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelRangeGenerator), {
+                maxConcurrencyLevel,
+                maxValuesPerTask: 2,
+                threadPool,
+                scheduler: undefined
+            });
         });
     });
 
     describe("times", function () {
-        it("returns a chain with a times generator", function () {
+        it("creates a chain with a times generator", function () {
             // arrange
             const generatorFunc = (n: number) => n;
 
             // act
-            const chain = parallel.times(10, generatorFunc);
+            parallel.times(10, generatorFunc);
 
             // assert
-            const generator = (chain as ParallelChainImpl<number, {}, number>).generator as TimesGenerator<number>;
+            expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelTimesGenerator), options);
+            const generator = createParallelChainSpy.calls.argsFor(0)[0] as ParallelTimesGenerator<number>;
             expect(generator.times).toBe(10);
             expect(generator.iteratee).toBe(generatorFunc);
+        });
+
+        it("merges the options with the default options", function () {
+            parallel.times(2, () => 3, {}, { maxValuesPerTask: 2 });
+
+            expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelTimesGenerator), {
+                maxConcurrencyLevel,
+                maxValuesPerTask: 2,
+                threadPool,
+                scheduler: undefined
+            }, {});
         });
     });
 });

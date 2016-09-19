@@ -3,8 +3,8 @@
  */
 /** needed, typedoc issue */
 
-import {ITask} from "../task/task";
-import {IParallelJob} from "./parallel-job";
+import {ITask} from "../../task/task";
+import {IParallelJob} from "../parallel-job";
 
 /**
  * Scheduler that defines onto how many task a parallel job should be scheduled on and how many values to assign

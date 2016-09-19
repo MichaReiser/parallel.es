@@ -3,14 +3,16 @@
  */
 /** needed, typedoc issue */
 
-import {IParallelChain} from "./parallel-chain";
+import {IParallelChain} from "./chain/parallel-chain";
 import {IParallelOptions, IDefaultInitializedParallelOptions} from "./parallel-options";
 import {IParallelTaskEnvironment, IEmptyParallelEnvironment} from "./parallel-environment";
 
 /**
  * Main facade used to start parallel tasks.
  * Uses a chaining api. A new parallel task is created using a generator function like `from`, `range` or `times`.
- * This returns an {@link IParallelChain} that is used to define the operations to perform on the elements.
+ * This returns an {@link IParallelChain} that is used to define the operations to perform on the elements. The parallel job
+ * is scheduled onto the thread pool as soon as a terminating function ({@link IParallelChain.then}, {@link IParallelChain.catch},
+ * {@link IParallelChain.subscribe} or {@link IParallelChain.reduce}) is called.
  */
 export interface IParallel {
 

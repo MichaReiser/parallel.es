@@ -336,6 +336,5 @@ export function parallelMonteCarlo(userOptions?: IMonteCarloSimulationOptions) {
     return parallel
         .from(options.projects)
         .inEnvironment(createMonteCarloEnvironment, options)
-        .map(calculateProject)
-        .run();
+        .map(calculateProject);
 }

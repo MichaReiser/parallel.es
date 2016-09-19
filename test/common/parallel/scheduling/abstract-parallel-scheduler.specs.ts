@@ -1,14 +1,15 @@
-import {IDefaultInitializedParallelOptions} from "../../../src/common/parallel/parallel-options";
-import {IThreadPool} from "../../../src/common/thread-pool/thread-pool";
-import {IParallelGenerator, ConstCollectionGenerator} from "../../../src/common/parallel/parallel-generator";
-import {FunctionCallSerializer} from "../../../src/common/function/function-call-serializer";
-import {ParallelWorkerFunctions} from "../../../src/common/parallel/parallel-worker-functions";
-import {ISerializedFunctionCall} from "../../../src/common/function/serialized-function-call";
+import {IDefaultInitializedParallelOptions} from "../../../../src/common/parallel/parallel-options";
+import {IThreadPool} from "../../../../src/common/thread-pool/thread-pool";
+import {FunctionCallSerializer} from "../../../../src/common/function/function-call-serializer";
+import {ParallelWorkerFunctions} from "../../../../src/common/parallel/parallel-worker-functions";
+import {ISerializedFunctionCall} from "../../../../src/common/function/serialized-function-call";
 import {
     AbstractParallelScheduler,
     IParallelTaskScheduling
-} from "../../../src/common/parallel/abstract-parallel-scheduler";
-import {FunctionCall} from "../../../src/common/function/function-call";
+} from "../../../../src/common/parallel/scheduling/abstract-parallel-scheduler";
+import {FunctionCall} from "../../../../src/common/function/function-call";
+import {IParallelGenerator} from "../../../../src/common/parallel/generator/parallel-generator";
+import {ParallelCollectionGenerator} from "../../../../src/common/parallel/generator/parallel-collection-generator";
 
 describe("AbstractParallelScheduler", function () {
     let options: IDefaultInitializedParallelOptions;
@@ -37,7 +38,7 @@ describe("AbstractParallelScheduler", function () {
             threadPool
         };
 
-        generator = new ConstCollectionGenerator([1, 2, 3, 4, 5]);
+        generator = new ParallelCollectionGenerator([1, 2, 3, 4, 5]);
     });
 
     describe("schedule", function () {

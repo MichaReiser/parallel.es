@@ -23,3 +23,17 @@ export function toArray<T>(iterator: Iterator<T>): T[] {
     }
     return result;
 }
+
+/**
+ * Flattens the given array.
+ * @param deepArray the array to flatten
+ * @returns returns an array containing all the values contained in the sub arrays of deep array.
+ */
+export function flattenArray<T>(deepArray: T[][]): T[] {
+    if (deepArray.length === 0) {
+        return [];
+    }
+
+    const [head, ...tail] = deepArray;
+    return Array.prototype.concat.apply(head, tail);
+}

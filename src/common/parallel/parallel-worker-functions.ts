@@ -1,7 +1,7 @@
 import {FunctionCallDeserializer} from "../function/function-call-deserializer";
 import {ISerializedFunctionCall, isSerializedFunctionCall} from "../function/serialized-function-call";
 import {staticFunctionRegistry} from "../function/static-function-registry";
-import {toArray, toIterator} from "../util/iterator";
+import {toArray, toIterator} from "../util/arrays";
 import {ISerializedParallelOperation} from "./parallel-operation";
 import {IParallelTaskEnvironment, IEmptyParallelEnvironment} from "./parallel-environment";
 
