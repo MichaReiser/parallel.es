@@ -142,13 +142,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Parallel<wbr>Times<wbr>Generator<span class="tsd-signature-symbol">(</span>times<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, iteratee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_parallel_generator_parallel_times_generator_.paralleltimesgenerator.html" class="tsd-signature-type">ParallelTimesGenerator</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Parallel<wbr>Times<wbr>Generator<span class="tsd-signature-symbol">(</span>times<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, iteratee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_parallel_generator_parallel_times_generator_.paralleltimesgenerator.html" class="tsd-signature-type">ParallelTimesGenerator</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/6a8b38b/src/common/parallel/generator/parallel-times-generator.ts#L11">common/parallel/generator/parallel-times-generator.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/afa2229/src/common/parallel/generator/parallel-times-generator.ts#L11">common/parallel/generator/parallel-times-generator.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -157,31 +157,7 @@
 									<h5>times: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
-									<h5>iteratee: <span class="tsd-signature-type">function</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>this: <span class="tsd-signature-type">void</span></h5>
-														</li>
-														<li>
-															<h5>time: <span class="tsd-signature-type">number</span></h5>
-														</li>
-														<li>
-															<h5>env: <span class="tsd-signature-type">any</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
+									<h5>iteratee: <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_common_parallel_generator_parallel_times_generator_.paralleltimesgenerator.html" class="tsd-signature-type">ParallelTimesGenerator</a></h4>
@@ -194,39 +170,12 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="iteratee" class="tsd-anchor"></a>
 					<h3>iteratee</h3>
-					<div class="tsd-signature tsd-kind-icon">iteratee<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<div class="tsd-signature tsd-kind-icon">iteratee<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/6a8b38b/src/common/parallel/generator/parallel-times-generator.ts#L11">common/parallel/generator/parallel-times-generator.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/afa2229/src/common/parallel/generator/parallel-times-generator.ts#L11">common/parallel/generator/parallel-times-generator.ts:11</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, env<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>this: <span class="tsd-signature-type">void</span></h5>
-											</li>
-											<li>
-												<h5>time: <span class="tsd-signature-type">number</span></h5>
-											</li>
-											<li>
-												<h5>env: <span class="tsd-signature-type">any</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="times" class="tsd-anchor"></a>
@@ -234,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">times<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/6a8b38b/src/common/parallel/generator/parallel-times-generator.ts#L10">common/parallel/generator/parallel-times-generator.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/afa2229/src/common/parallel/generator/parallel-times-generator.ts#L10">common/parallel/generator/parallel-times-generator.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -251,7 +200,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/6a8b38b/src/common/parallel/generator/parallel-times-generator.ts#L18">common/parallel/generator/parallel-times-generator.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/afa2229/src/common/parallel/generator/parallel-times-generator.ts#L18">common/parallel/generator/parallel-times-generator.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -272,7 +221,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_common_parallel_generator_parallel_generator_.iparallelgenerator.html">IParallelGenerator</a>.<a href="../interfaces/_common_parallel_generator_parallel_generator_.iparallelgenerator.html#serializeslice">serializeSlice</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/6a8b38b/src/common/parallel/generator/parallel-times-generator.ts#L20">common/parallel/generator/parallel-times-generator.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/afa2229/src/common/parallel/generator/parallel-times-generator.ts#L20">common/parallel/generator/parallel-times-generator.ts:20</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
