@@ -42,7 +42,7 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
             return createParallelChain(generator, mergeOptions(options));
         },
 
-        times<TEnv, TResult>(n: number, generator: (this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult = ParallelWorkerFunctions.identity, env?: TEnv, options?: IParallelOptions) {
+        times<TEnv, TResult>(n: number, generator: ((this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult) | TResult = ParallelWorkerFunctions.identity, env?: TEnv, options?: IParallelOptions) {
             if (env) {
                 return createParallelChain(new ParallelTimesGenerator<TResult>(n, generator), mergeOptions(options), env);
             }
