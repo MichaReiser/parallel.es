@@ -5,16 +5,20 @@ import {ParallelRangeGenerator} from "../../../src/common/parallel/generator/par
 import {ParallelCollectionGenerator} from "../../../src/common/parallel/generator/parallel-collection-generator";
 import * as ParallelChainFactoryModule from "../../../src/common/parallel/chain/parallel-chain-factory";
 import {IDefaultInitializedParallelOptions} from "../../../src/common/parallel";
+import {IThreadPool} from "../../../src/common/thread-pool/thread-pool";
 
 describe("Parallel", function () {
     let parallel: IParallel;
-    let threadPool: any = {};
+    let threadPool: IThreadPool;
+    let scheduleSpy: jasmine.Spy;
     const maxConcurrencyLevel = 2;
     let createParallelChainSpy: jasmine.Spy;
     let options: IDefaultInitializedParallelOptions;
 
     beforeEach(function () {
         createParallelChainSpy = spyOn(ParallelChainFactoryModule, "createParallelChain");
+        scheduleSpy = jasmine.createSpy("schedule");
+        threadPool = { schedule: scheduleSpy } as any;
         options = {
             maxConcurrencyLevel,
             threadPool,
@@ -180,6 +184,19 @@ describe("Parallel", function () {
                 threadPool,
                 scheduler: undefined
             }, {});
+        });
+    });
+
+    describe("schedules", function () {
+        it("schedules the function on the thread pool", function () {
+            // arrange
+            const func = jasmine.createSpy("func");
+
+            // act
+            parallel.schedule(func, { test: 123 });
+
+            // assert
+            expect(scheduleSpy).toHaveBeenCalledWith(func, { test: 123 });
         });
     });
 });
