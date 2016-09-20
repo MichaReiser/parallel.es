@@ -1,5 +1,6 @@
-import {DefaultParallelScheduler} from "../../../src/common/parallel/default-parallel-scheduler";
-import {IDefaultInitializedParallelOptions} from "../../../src/common/parallel/parallel-options";
+import {IDefaultInitializedParallelOptions} from "../../../../src/common/parallel/parallel-options";
+import {DefaultParallelScheduler} from "../../../../src/common/parallel/scheduling/default-parallel-scheduler";
+
 describe("DefaultParallelScheduler", function () {
     let scheduler: DefaultParallelScheduler;
     let options: IDefaultInitializedParallelOptions;

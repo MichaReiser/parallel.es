@@ -74,13 +74,11 @@ document.querySelector("#montecarlo-run-sync").addEventListener("click", functio
 
 document.querySelector("#montecarlo-run-parallel").addEventListener("click", function () {
     console.time("montecarlo-parallel");
-    const chain = parallelMonteCarlo(monteCarloOptions);
-    chain.then((result) => {
+    const chain = parallelMonteCarlo(monteCarloOptions).then((result) => {
         console.timeEnd("montecarlo-parallel");
         paintMonteCarloResult(result);
         console.log(result);
     });
-    chain.catch(error => console.error(error));
 });
 
 function paintMonteCarloResult(results: IProjectResult[]) {

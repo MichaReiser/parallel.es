@@ -1,10 +1,12 @@
 import {IParallel} from "./parallel";
 import {IDefaultInitializedParallelOptions, IParallelOptions} from "./parallel-options";
-import {IParallelChain} from "./parallel-chain";
-import {ConstCollectionGenerator, RangeGenerator, TimesGenerator} from "./parallel-generator";
+import {IParallelChain} from "./chain/parallel-chain";
 import {IParallelTaskEnvironment} from "./parallel-environment";
 import {ParallelWorkerFunctions} from "./parallel-worker-functions";
-import {createParallelChain} from "./parallel-chain-impl";
+import {ParallelCollectionGenerator} from "./generator/parallel-collection-generator";
+import {ParallelRangeGenerator} from "./generator/parallel-range-generator";
+import {ParallelTimesGenerator} from "./generator/parallel-times-generator";
+import {createParallelChain} from "./chain/parallel-chain-factory";
 
 export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptions): IParallel {
     function mergeOptions(userOptions?: IParallelOptions): IDefaultInitializedParallelOptions {
@@ -31,27 +33,19 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
         },
 
         from<T>(collection: T[], options?: IParallelOptions): IParallelChain<T, {}, T> {
-            return createParallelChain(new ConstCollectionGenerator<T>(collection), mergeOptions(options));
+            return createParallelChain(new ParallelCollectionGenerator<T>(collection), mergeOptions(options));
         },
 
         range(start: number, end?: number, step?: number, options?: IParallelOptions) {
-            if (typeof(end) === "undefined") {
-                end = start;
-                start = 0;
-            }
-
-            if (typeof step === "undefined") {
-                step = end < start ? -1 : 1;
-            }
-
-            return createParallelChain(new RangeGenerator(start, end, step), mergeOptions(options));
+            const generator = ParallelRangeGenerator.create(start, end, step);
+            return createParallelChain(generator, mergeOptions(options));
         },
 
         times<TEnv, TResult>(n: number, generator: (this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult = ParallelWorkerFunctions.identity, env?: TEnv, options?: IParallelOptions) {
             if (env) {
-                return createParallelChain(new TimesGenerator<TResult>(n, generator), mergeOptions(options), env);
+                return createParallelChain(new ParallelTimesGenerator<TResult>(n, generator), mergeOptions(options), env);
             }
-            return createParallelChain(new TimesGenerator<TResult>(n, generator), mergeOptions(options));
+            return createParallelChain(new ParallelTimesGenerator<TResult>(n, generator), mergeOptions(options));
         }
     };
 }

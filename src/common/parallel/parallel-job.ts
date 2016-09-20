@@ -3,9 +3,9 @@
  */
 /** needed, typedoc issue */
 
-import {IParallelGenerator} from "./parallel-generator";
 import {IParallelOperation, IEmptyParallelEnvironment, IDefaultInitializedParallelOptions} from "./";
 import {FunctionCall} from "../function/function-call";
+import {IParallelGenerator} from "./generator/parallel-generator";
 
 /**
  * A parallel job that is to be scheduled

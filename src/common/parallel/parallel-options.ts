@@ -4,7 +4,7 @@
 /** needed, typedoc issue */
 
 import {IThreadPool} from "../thread-pool/thread-pool";
-import {IParallelJobScheduler} from "./parallel-job-scheduler";
+import {IParallelJobScheduler} from "./scheduling/parallel-job-scheduler";
 
 /**
  * Options that affect how a parallel operation is executed.

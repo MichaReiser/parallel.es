@@ -158,4 +158,31 @@ describe("WorkerTask", function () {
             expect(() => workerTask.releaseWorker()).toThrowError("Cannot release a worker task that has no assigned worker thread.");
         });
     });
+
+    describe("catch", function () {
+        let doneFn: DoneFn;
+        let unhandledRejctionHandler: () => void;
+
+        beforeEach(function () {
+            unhandledRejctionHandler = function () {
+                doneFn.fail("Promise has rejection handler and therefore global unrejected handler should not be called");
+            };
+
+            window.addEventListener("unhandledrejection", unhandledRejctionHandler);
+        });
+
+        afterEach(function () {
+            window.removeEventListener("unhandledrejection", unhandledRejctionHandler);
+        });
+
+        it("does not trigger 'unhandled exception in promise' if catch handler is registered", function (done) {
+            // arrange
+            doneFn = done;
+            workerTask.runOn(worker);
+            workerTask.catch(() => done());
+
+            // act
+            runSpy.calls.argsFor(0)[1].call(undefined, "Error occurred", undefined); // call error callback
+        });
+    });
 });

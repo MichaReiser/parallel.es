@@ -1,0 +1,97 @@
+import {IParallelChain} from "./parallel-chain";
+import {IParallelStream, ParallelStream} from "../stream/parallel-stream";
+import {ParallelWorkerFunctions} from "../parallel-worker-functions";
+import {IEmptyParallelEnvironment, IParallelTaskEnvironment} from "../parallel-environment";
+import {FunctionCall} from "../../function/function-call";
+import {IParallelChainState, IParallelChainEnvironment} from "./parallel-chain-state";
+
+/**
+ * Implementation of a {@link IParallelChain}
+ *
+ * The implementation uses an internal state ({@link IParallelChainState}) to distinguishes between a not yet scheduled job ({@link PendingParallelChainState}),
+ * a job that has been scheduled but potentially not yet completed ({@link ScheduledParallelChainState}) and a job that
+ * is waiting for another one to complete, but has not yet been scheduled ({@link DependentParallelChainState}).
+ */
+export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut> implements IParallelChain<TIn, TEnv, TOut> {
+    public state: IParallelChainState<TOut>;
+
+    /**
+     * Creates a new parallel chain with the given state
+     * @param state the state of the chain
+     */
+    constructor(state: IParallelChainState<TOut>) {
+        this.state = state;
+    }
+
+    // region Chaining
+    public inEnvironment<TEnvNew extends TEnv>(newEnv: Function | IEmptyParallelEnvironment, ...params: any[]): IParallelChain<TIn, TEnvNew, TOut> {
+        let env: IParallelChainEnvironment | undefined;
+        if (typeof newEnv === "function") {
+            env = FunctionCall.createUnchecked(newEnv, ...params);
+        } else {
+            env = newEnv;
+        }
+
+        return new ParallelChainImpl<TIn, TEnvNew, TOut>(this.state.changeEnvironment(env));
+    }
+
+    public map<TResult>(mapper: (this: void, element: TOut, env: TEnv & IParallelTaskEnvironment) => TResult): IParallelChain<TIn, TEnv, TResult> {
+        return this._chain<TResult>(ParallelWorkerFunctions.map, mapper);
+    }
+
+    public reduce<TResult>(defaultValue: TResult, accumulator: (this: void, memo: TResult, value: TOut, env: TEnv & IParallelTaskEnvironment) => TResult, combiner?: (this: void, sub1: TResult, sub2: TResult) => TResult): IParallelStream<TResult[], TResult> {
+        const combineOperation: (accumulatedValue: TResult, value: TResult) => TResult = combiner || accumulator as any;
+        const reduced = this._chain(ParallelWorkerFunctions.reduce, accumulator, defaultValue).resolveChain();
+        return ParallelStream.transform(reduced, (subResults: TResult[]) => {
+            if (subResults.length === 0) {
+                return defaultValue;
+            }
+
+            const [head, ...tail] = subResults;
+            let sum = head;
+
+            for (const temp of tail) {
+                sum = combineOperation(sum, temp);
+            }
+
+            return sum;
+        });
+    }
+
+    public filter(predicate: (this: void, value: TOut, env: TEnv & IParallelTaskEnvironment) => boolean): IParallelChain<TIn, TEnv, TOut> {
+        return this._chain<TOut>(ParallelWorkerFunctions.filter, predicate);
+    }
+
+    // endregion
+
+    // region Resolving
+    public subscribe(onNext: (subResult: TOut[], taskIndex: number, valuesPerWorker: number) => void, onError?: (reason: any) => void, onComplete?: (result: TOut[]) => void): IParallelStream<TOut[], TOut[]> {
+        return this.resolveChain().subscribe(onNext, onError, onComplete);
+    }
+
+    public then<TResult1, TResult2>(onfulfilled: (value: TOut[]) => (PromiseLike<TResult1>|TResult1), onrejected: (reason: any) => (PromiseLike<TResult2>|TResult2)): Promise<TResult2|TResult1>;
+    public then<TResult>(onfulfilled: (value: TOut[]) => (PromiseLike<TResult>|TResult), onrejected: (reason: any) => (PromiseLike<TResult>|TResult)): Promise<TResult>;
+    public then<TResult>(onfulfilled: (value: TOut[]) => (PromiseLike<TResult>|TResult)): Promise<TResult>;
+    public then<TResult>(onfulfilled?: (value: TOut[]) => (PromiseLike<TResult>|TResult), onrejected?: (reason: any) => (PromiseLike<TResult>|TResult)): Promise<TResult>;
+    public then<TResult>(onfulfilled?: (value: TOut[]) => (PromiseLike<TResult>|TResult), onrejected?: (reason: any) => void): Promise<TResult>;
+    public then(onfulfilled?: any, onrejected?: any): any {
+        return this.resolveChain().then(onfulfilled, onrejected);
+    }
+
+    public catch<TResult>(onrejected: (reason: any) => (PromiseLike<TResult>|TResult)): Promise<TResult|TOut[]>;
+    public catch(onrejected: (reason: any) => (PromiseLike<TOut[]>|TOut[])): Promise<TOut[]>;
+    public catch(onrejected: any): any {
+        return this.resolveChain().catch(onrejected);
+    }
+
+    private resolveChain(): IParallelStream<TOut[], TOut[]> {
+        const resolvedState = this.state = this.state.resolve();
+        return resolvedState.stream;
+    }
+    // endregion
+
+    private _chain<TResult> (func: Function, iteratee: Function, ...params: any[]): ParallelChainImpl<TIn, TEnv, TResult> {
+        const operation = { iterator: func, iteratee, iteratorParams: params };
+        return new ParallelChainImpl(this.state.chainOperation(operation));
+    }
+}

@@ -1,11 +1,11 @@
-import {IParallelJobScheduler, IParallelOperation, IDefaultInitializedParallelOptions, IEmptyParallelEnvironment} from "./";
-import {ITask} from "../task/task";
-import {FunctionCall} from "../function/function-call";
-import {IParallelJob} from "./parallel-job";
-import {ITaskDefinition} from "../task/task-definition";
-import {IParallelProcessParams, ParallelWorkerFunctions} from "./parallel-worker-functions";
-import {IParallelTaskDefinition} from "./parallel-task-definition";
-import {FunctionCallSerializer} from "../function/function-call-serializer";
+import {IParallelProcessParams, ParallelWorkerFunctions} from "../parallel-worker-functions";
+import {IParallelJob, IDefaultInitializedParallelOptions, IEmptyParallelEnvironment, IParallelOperation} from "../";
+import {ITask} from "../../task/task";
+import {ITaskDefinition} from "../../task/task-definition";
+import {IParallelTaskDefinition} from "../parallel-task-definition";
+import {FunctionCallSerializer} from "../../function/function-call-serializer";
+import {FunctionCall} from "../../function/function-call";
+import {IParallelJobScheduler} from "./parallel-job-scheduler";
 
 export abstract class AbstractParallelScheduler implements IParallelJobScheduler {
     public schedule<TResult>(job: IParallelJob): ITask<TResult>[] {

@@ -3,16 +3,18 @@
  */
 /** needed, typedoc issue */
 
-import {IParallelStream} from "./parallel-stream";
-import {IEmptyParallelEnvironment, IParallelTaskEnvironment} from "./parallel-environment";
+import {IParallelStream} from "../stream/parallel-stream";
+import {IEmptyParallelEnvironment, IParallelTaskEnvironment} from "../parallel-environment";
 
 /**
  * The parallel chain allows to chain multiple operations before they are executed on a worker.
+ * The parallel job is scheduled onto the thread pool as soon any terminating function like {@link IParallelChain.then}, {@link IParallelChain.catch},
+ * {@link IParallelChain.subscribe} or {@link IParallelChain.reduce} is called.
  * @param TIn the input values created by a generator function
  * @param TOut the type of the resulting elements
  * @param TEnv the type of the environment
  */
-export interface IParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOut> {
+export interface IParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOut> extends IParallelStream<TOut[], TOut[]> {
     /**
      * Defines the environment that should be provided to all the iteratee or generator functions.
      * The environment cannot contain function values.
@@ -96,10 +98,4 @@ export interface IParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOu
 
     // sortBy?
     // split? Allows to reuse the same intermediate result for multiple succeeding calls.
-
-    /**
-     * Starts the job and returns a stream that can be used to access the sub results or the end result.
-     * @returns a stream that can be used to access the result
-     */
-    run(): IParallelStream<TOut[], TOut[]>;
 }
