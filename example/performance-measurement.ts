@@ -3,8 +3,7 @@ import { IMonteCarloSimulationOptions, syncMonteCarlo, parallelMonteCarlo, IProj
 import {syncKnightTours, parallelKnightTours} from "./knights-tour";
 const runButton = document.querySelector("#run") as HTMLInputElement;
 const outputTable = document.querySelector("#output-table") as HTMLTableElement;
-
-const iterations = 10;
+const numberOfRunsField = document.querySelector("#number-of-runs") as HTMLInputElement;
 
 interface IPerformanceMeasurement {
     title: string;
@@ -138,24 +137,51 @@ function createExamples(): IPerformanceMeasurement[] {
 }
 
 function measure() {
+    const numberOfRuns = parseInt(numberOfRunsField.value, 10) || 10;
+
+    function clearOutputTable() {
+        while (outputTable.rows.length > 0) {
+            outputTable.deleteRow(0);
+        }
+    }
+
+    function createTableHeader () {
+        const thead = outputTable.createTHead();
+        const headerRow = thead.insertRow();
+
+        const title = document.createElement("th");
+        title.innerText = "Example / Round";
+        headerRow.appendChild(title);
+
+        for (let run = 0; run < numberOfRuns; ++run) {
+            const runTitle = document.createElement("th");
+            runTitle.innerText = run + 1 + "";
+            headerRow.appendChild(runTitle);
+        }
+
+        const averageTitle = document.createElement("th");
+        averageTitle.innerText = "average";
+        headerRow.appendChild(averageTitle);
+    }
+
     let resolve: { (): void } | undefined = undefined;
     let chain: PromiseLike<number> = new Promise((res) => {
         resolve = res;
     } );
 
-    while (outputTable.rows.length > 1) {
-        outputTable.deleteRow(1);
-    }
+    clearOutputTable();
+    createTableHeader();
 
+    const body = outputTable.createTBody();
     const examples = createExamples();
     for (let i = 0; i < examples.length; ++i) {
         const example = examples[i];
-        const row = outputTable.insertRow();
+        const row = body.insertRow();
         row.insertCell().textContent = example.title;
 
         let total = 0;
 
-        for (let run = 0; run < iterations; ++run) {
+        for (let run = 0; run < numberOfRuns; ++run) {
             chain = chain.then(() => {
                 return example.func();
             }).then(time => {
@@ -166,7 +192,7 @@ function measure() {
         }
 
         chain = chain.then(() => {
-            const average = total / iterations;
+            const average = total / numberOfRuns;
             row.insertCell().textContent = average.toFixed(4);
             return average;
         });
@@ -176,4 +202,7 @@ function measure() {
     resolve!();
 }
 
-runButton.addEventListener("click", measure);
+runButton.addEventListener("click", function (event: MouseEvent) {
+    event.preventDefault();
+    measure();
+});
