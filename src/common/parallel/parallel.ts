@@ -50,8 +50,14 @@ export interface IParallel {
     range(start: number, end?: number, step?: number, options?: IParallelOptions): IParallelChain<number, {}, number>;
 
     /**
+     * Creates a new array containing the given value n times.
+     * @param n how many time should the value be repeated
+     * @param value the value to repeat
+     */
+    times<TResult>(n: number, value: TResult): IParallelChain<TResult, IEmptyParallelEnvironment, TResult>;
+
+    /**
      * Creates a new array through calling the generator n times
-     * TODO: Add parallel.times overload that accepts a value instead of a generator #15
      * @param n how many elements should be created using the provided generator
      * @param generator the generator used to create the array elements
      * @param TResult type of the elements returned by the generator

@@ -8,9 +8,9 @@ import {ParallelWorkerFunctions} from "../parallel-worker-functions";
  */
 export class ParallelTimesGenerator<T> implements IParallelGenerator {
     public readonly times: number;
-    public readonly iteratee: (this: void, time: number, env: any) => T;
+    public readonly iteratee: ((this: void, time: number, env: any) => T) | T;
 
-    constructor(times: number, iteratee: (this: void, time: number, env: any) => T) {
+    constructor(times: number, iteratee: ((this: void, time: number, env: any) => T) | T) {
         this.times = times;
         this.iteratee = iteratee;
     }
@@ -20,8 +20,13 @@ export class ParallelTimesGenerator<T> implements IParallelGenerator {
     public serializeSlice(index: number, numberOfItems: number, functionCallSerializer: FunctionCallSerializer): ISerializedFunctionCall {
         const sliceStart = index * numberOfItems;
         const sliceEnd = Math.min(sliceStart + numberOfItems, this.times);
+        let iterateeFunction: ISerializedFunctionCall;
 
-        const iterateeFunction = functionCallSerializer.serializeFunctionCall(this.iteratee);
+        if (typeof this.iteratee === "function") {
+            iterateeFunction = functionCallSerializer.serializeFunctionCall(this.iteratee);
+        } else {
+            iterateeFunction = functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctions.identity, this.iteratee);
+        }
 
         return functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctions.times, sliceStart, sliceEnd, iterateeFunction);
     }

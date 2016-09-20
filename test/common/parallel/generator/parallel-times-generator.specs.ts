@@ -67,5 +67,19 @@ describe("ParallelTimesGenerator", function () {
             // assert
             expect(func.parameters).toEqual([8, 10, jasmine.objectContaining({ functionId: 1000 })]);
         });
+
+        it("serializes the identity function if the generator is a value and not a function", function () {
+            // arrange
+            const generator = new ParallelTimesGenerator(20, 100);
+            getOrSetIdSpy.and.returnValues(1000, 4);
+
+            // act
+            const func = generator.serializeSlice(1, 5, functionCallSerializer);
+
+            // assert
+            expect(func.parameters).toEqual([5, 10, jasmine.objectContaining({ functionId: 1000, parameters: [100] })]);
+            expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctions.times);
+            expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctions.identity);
+        });
     });
 });
