@@ -7,6 +7,7 @@ import {ParallelCollectionGenerator} from "./generator/parallel-collection-gener
 import {ParallelRangeGenerator} from "./generator/parallel-range-generator";
 import {ParallelTimesGenerator} from "./generator/parallel-times-generator";
 import {createParallelChain} from "./chain/parallel-chain-factory";
+import {ITask} from "../task/task";
 
 export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptions): IParallel {
     function mergeOptions(userOptions?: IParallelOptions): IDefaultInitializedParallelOptions {
@@ -46,6 +47,11 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
                 return createParallelChain(new ParallelTimesGenerator<TResult>(n, generator), mergeOptions(options), env);
             }
             return createParallelChain(new ParallelTimesGenerator<TResult>(n, generator), mergeOptions(options));
+        },
+
+        schedule<TEnv, TResult>(this: IParallel, func: (this: void, env: TEnv & IParallelTaskEnvironment) => TResult, env?: TEnv, options?: IParallelOptions): ITask<TResult> {
+            const mergedOptions = mergeOptions(options);
+            return mergedOptions.threadPool.schedule(func, env);
         }
     };
 }

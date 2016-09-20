@@ -6,6 +6,7 @@
 import {IParallelChain} from "./chain/parallel-chain";
 import {IParallelOptions, IDefaultInitializedParallelOptions} from "./parallel-options";
 import {IParallelTaskEnvironment, IEmptyParallelEnvironment} from "./parallel-environment";
+import {ITask} from "../task/task";
 
 /**
  * Main facade used to start parallel tasks.
@@ -63,4 +64,14 @@ export interface IParallel {
      * @param TEnv type of the environment
      */
     times<TEnv extends IEmptyParallelEnvironment, TResult>(n: number, generator: (this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult, env: TEnv, options?: IParallelOptions): IParallelChain<TResult, TEnv, TResult>;
+
+    /**
+     * Schedules a single task to be executed on a background thread. The function is executed synchronously, only taking adventage of not blocking the ui thread.
+     * Whenever, try to use other generator function as those offer better scheduling.
+     * @param func the function to execute
+     * @param env the environment passed to the function
+     * @param options options defining how the function is scheduled
+     * @returns a promise that is resolved when the computation is done or rejected if the computation has failed.
+     */
+    schedule<TEnv extends IEmptyParallelEnvironment, TResult>(func: (this: void, env: TEnv & IParallelTaskEnvironment) => TResult, env?: TEnv, options?: IParallelOptions): ITask<TResult>;
 }

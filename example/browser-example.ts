@@ -74,7 +74,7 @@ document.querySelector("#montecarlo-run-sync").addEventListener("click", functio
 
 document.querySelector("#montecarlo-run-parallel").addEventListener("click", function () {
     console.time("montecarlo-parallel");
-    const chain = parallelMonteCarlo(monteCarloOptions).then((result) => {
+    parallelMonteCarlo(monteCarloOptions).then((result) => {
         console.timeEnd("montecarlo-parallel");
         paintMonteCarloResult(result);
         console.log(result);
