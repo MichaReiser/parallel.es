@@ -1,4 +1,4 @@
-import {ParallelStream} from "../../../../src/common/parallel/stream/parallel-stream";
+import {ParallelStream} from "../../../../src/common/parallel/stream/parallel-stream-impl";
 import {ResolvedParallelStream} from "../../../../src/common/parallel/stream/resolved-parallel-stream";
 import {ITask} from "../../../../src/common/task/task";
 import {ScheduledParallelStream} from "../../../../src/common/parallel/stream/scheduled-parallel-stream";

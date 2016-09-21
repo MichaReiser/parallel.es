@@ -1,6 +1,7 @@
 import {ITask} from "../../task/task";
 import {IParallelTaskDefinition} from "../parallel-task-definition";
-import {IParallelStream, ParallelStream} from "./parallel-stream";
+import {IParallelStream} from "./parallel-stream";
+import {ParallelStream} from "./parallel-stream-impl";
 
 /**
  * Stream that has been scheduled on the thread pool and waits for completion of its tasks.

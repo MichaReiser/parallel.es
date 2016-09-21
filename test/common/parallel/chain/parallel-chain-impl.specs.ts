@@ -6,7 +6,7 @@ import {ParallelCollectionGenerator} from "../../../../src/common/parallel/gener
 import {IParallelChainState} from "../../../../src/common/parallel/chain/parallel-chain-state";
 import {ParallelChainImpl} from "../../../../src/common/parallel/chain/parallel-chain-impl";
 import {IParallelChain} from "../../../../src/common/parallel/chain/parallel-chain";
-import {ParallelStream} from "../../../../src/common/parallel/stream/parallel-stream";
+import {ParallelStream} from "../../../../src/common/parallel/stream/parallel-stream-impl";
 
 describe("ParallelChainImpl", function () {
     let generator: IParallelGenerator;

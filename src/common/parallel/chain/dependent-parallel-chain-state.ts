@@ -1,9 +1,10 @@
 import {IParallelChainState, IScheduledParallelChainState, IParallelChainEnvironment} from "./parallel-chain-state";
 import {IParallelOperation, IDefaultInitializedParallelOptions} from "../";
-import {IParallelStream, ParallelStream} from "../stream/parallel-stream";
+import {IParallelStream} from "../stream/parallel-stream";
 import {ScheduledParallelChainState} from "./scheduled-parallel-chain-state";
 import {ParallelCollectionGenerator} from "../generator/parallel-collection-generator";
 import {flattenArray} from "../../util/arrays";
+import {ParallelStream} from "../stream/parallel-stream-impl";
 
 /**
  * The state of a parallel chain if additional operations should be performed on an already scheduled parallel chain.

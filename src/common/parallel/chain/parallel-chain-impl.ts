@@ -1,9 +1,10 @@
 import {IParallelChain} from "./parallel-chain";
-import {IParallelStream, ParallelStream} from "../stream/parallel-stream";
+import {IParallelStream} from "../stream/parallel-stream";
 import {ParallelWorkerFunctions} from "../parallel-worker-functions";
 import {IEmptyParallelEnvironment, IParallelTaskEnvironment} from "../parallel-environment";
 import {FunctionCall} from "../../function/function-call";
 import {IParallelChainState, IParallelChainEnvironment} from "./parallel-chain-state";
+import {ParallelStream} from "../stream/parallel-stream-impl";
 
 /**
  * Implementation of a {@link IParallelChain}

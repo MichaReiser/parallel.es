@@ -2,7 +2,7 @@ import {IParallelChainState, IParallelChainEnvironment, IScheduledParallelChainS
 import {ScheduledParallelChainState} from "./scheduled-parallel-chain-state";
 import {IParallelGenerator} from "../generator/parallel-generator";
 import {IParallelOperation, IDefaultInitializedParallelOptions} from "../";
-import {ParallelStream} from "../stream/parallel-stream";
+import {ParallelStream} from "../stream/parallel-stream-impl";
 import {flattenArray} from "../../util/arrays";
 
 /**
