@@ -141,13 +141,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Parallel<wbr>Stream<span class="tsd-signature-symbol">(</span>executor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.parallelstream.html" class="tsd-signature-type">ParallelStream</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Parallel<wbr>Stream<span class="tsd-signature-symbol">(</span>executor<span class="tsd-signature-symbol">: </span><a href="../modules/parallel.html#iexecutorcallback" class="tsd-signature-type">IExecutorCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.parallelstream.html" class="tsd-signature-type">ParallelStream</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L92">common/parallel/stream/parallel-stream.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L119">common/parallel/stream/parallel-stream.ts:119</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -158,96 +158,12 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>executor: <span class="tsd-signature-type">function</span></h5>
+									<h5>executor: <a href="../modules/parallel.html#iexecutorcallback" class="tsd-signature-type">IExecutorCallback</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>the executor function that gets passed the next, resolve and reject functions</p>
 										</div>
 									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, resolve<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, reject<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>next: <span class="tsd-signature-type">function</span></h5>
-															<ul class="tsd-parameters">
-																<li class="tsd-parameter-siganture">
-																	<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-																		<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>subResult<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSubResult</span>, taskIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, valuesPerTask<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-																	</ul>
-																	<ul class="tsd-descriptions">
-																		<li class="tsd-description">
-																			<h4 class="tsd-parameters-title">Parameters</h4>
-																			<ul class="tsd-parameters">
-																				<li>
-																					<h5>subResult: <span class="tsd-signature-type">TSubResult</span></h5>
-																				</li>
-																				<li>
-																					<h5>taskIndex: <span class="tsd-signature-type">number</span></h5>
-																				</li>
-																				<li>
-																					<h5>valuesPerTask: <span class="tsd-signature-type">number</span></h5>
-																				</li>
-																			</ul>
-																			<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-																		</li>
-																	</ul>
-																</li>
-															</ul>
-														</li>
-														<li>
-															<h5>resolve: <span class="tsd-signature-type">function</span></h5>
-															<ul class="tsd-parameters">
-																<li class="tsd-parameter-siganture">
-																	<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-																		<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-																	</ul>
-																	<ul class="tsd-descriptions">
-																		<li class="tsd-description">
-																			<h4 class="tsd-parameters-title">Parameters</h4>
-																			<ul class="tsd-parameters">
-																				<li>
-																					<h5>result: <span class="tsd-signature-type">TEndResult</span></h5>
-																				</li>
-																			</ul>
-																			<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-																		</li>
-																	</ul>
-																</li>
-															</ul>
-														</li>
-														<li>
-															<h5>reject: <span class="tsd-signature-type">function</span></h5>
-															<ul class="tsd-parameters">
-																<li class="tsd-parameter-siganture">
-																	<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-																		<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-																	</ul>
-																	<ul class="tsd-descriptions">
-																		<li class="tsd-description">
-																			<h4 class="tsd-parameters-title">Parameters</h4>
-																			<ul class="tsd-parameters">
-																				<li>
-																					<h5>reason: <span class="tsd-signature-type">any</span></h5>
-																				</li>
-																			</ul>
-																			<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-																		</li>
-																	</ul>
-																</li>
-															</ul>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.parallelstream.html" class="tsd-signature-type">ParallelStream</a></h4>
@@ -263,7 +179,7 @@
 					<div class="tsd-signature tsd-kind-icon">next<wbr>Handlers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L90">common/parallel/stream/parallel-stream.ts:90</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L117">common/parallel/stream/parallel-stream.ts:117</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -310,7 +226,7 @@
 					<div class="tsd-signature tsd-kind-icon">promise<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L83">common/parallel/stream/parallel-stream.ts:83</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L110">common/parallel/stream/parallel-stream.ts:110</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -320,7 +236,7 @@
 					<div class="tsd-signature tsd-kind-icon">reject<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L92">common/parallel/stream/parallel-stream.ts:92</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L119">common/parallel/stream/parallel-stream.ts:119</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -351,7 +267,7 @@
 					<div class="tsd-signature tsd-kind-icon">resolve<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L91">common/parallel/stream/parallel-stream.ts:91</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L118">common/parallel/stream/parallel-stream.ts:118</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -389,7 +305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L136">common/parallel/stream/parallel-stream.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L163">common/parallel/stream/parallel-stream.ts:163</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -419,7 +335,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L130">common/parallel/stream/parallel-stream.ts:130</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L157">common/parallel/stream/parallel-stream.ts:157</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -460,7 +376,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L131">common/parallel/stream/parallel-stream.ts:131</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L158">common/parallel/stream/parallel-stream.ts:158</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -504,7 +420,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L111">common/parallel/stream/parallel-stream.ts:111</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L138">common/parallel/stream/parallel-stream.ts:138</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -561,7 +477,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L121">common/parallel/stream/parallel-stream.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L148">common/parallel/stream/parallel-stream.ts:148</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -629,7 +545,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L122">common/parallel/stream/parallel-stream.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L149">common/parallel/stream/parallel-stream.ts:149</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -694,7 +610,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L123">common/parallel/stream/parallel-stream.ts:123</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L150">common/parallel/stream/parallel-stream.ts:150</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -735,7 +651,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L124">common/parallel/stream/parallel-stream.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L151">common/parallel/stream/parallel-stream.ts:151</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -758,7 +674,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L125">common/parallel/stream/parallel-stream.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L152">common/parallel/stream/parallel-stream.ts:152</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -790,7 +706,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L75">common/parallel/stream/parallel-stream.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L102">common/parallel/stream/parallel-stream.ts:102</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -802,9 +718,15 @@
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>TTaskResult</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the task results</p>
+									</div>
 								</li>
 								<li>
 									<h4>TEndResult</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>result of the created stream. Created by applying the end results of the stream to the joiner</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -855,7 +777,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/d69b073/src/common/parallel/stream/parallel-stream.ts#L53">common/parallel/stream/parallel-stream.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b6b3fce/src/common/parallel/stream/parallel-stream.ts#L78">common/parallel/stream/parallel-stream.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -867,12 +789,21 @@
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>TIn</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the input elements for this stream</p>
+									</div>
 								</li>
 								<li>
 									<h4>TIntermediate</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the end results from the input stream</p>
+									</div>
 								</li>
 								<li>
 									<h4>TResult</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>end result after applying the transformer.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1020,6 +951,18 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/parallel.iworkerthread.html" class="tsd-kind-icon">IWorker<wbr>Thread</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/parallel.html#iexecutorcallback" class="tsd-kind-icon">IExecutor<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/parallel.html#inextcallback" class="tsd-kind-icon">INext<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/parallel.html#irejectcallback" class="tsd-kind-icon">IReject<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/parallel.html#iresolvecallback" class="tsd-kind-icon">IResolve<wbr>Callback</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/parallel.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
