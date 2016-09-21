@@ -9,6 +9,7 @@ import {flattenArray} from "../../util/arrays";
  * Parallel chain has been defined but not yet scheduled.
  *
  * The chain has been created by the user, but non terminating function (reduce, then, catch...) has been called yet.
+ * @param TElement type of the elements
  */
 export class PendingParallelChainState<TElement> implements IParallelChainState<TElement> {
 

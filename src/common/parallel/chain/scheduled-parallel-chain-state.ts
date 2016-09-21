@@ -5,6 +5,7 @@ import {DependentParallelChainState} from "./dependent-parallel-chain-state";
 
 /**
  * State of a parallel chain whose job has been scheduled on the thread pool (or even where the computation already has completed).
+ * @param TElement type of the elements produced by the stream
  */
 export class ScheduledParallelChainState<TElement> implements IScheduledParallelChainState<TElement> {
     public stream: IParallelStream<TElement[], TElement[]>;

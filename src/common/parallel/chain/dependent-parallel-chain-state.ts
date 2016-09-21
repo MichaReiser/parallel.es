@@ -10,6 +10,9 @@ import {flattenArray} from "../../util/arrays";
  *
  * The state needs to wait for the previous parallel job to complete and then take that result to continue the additional
  * computations.
+ *
+ * @param TPrevious Type of the array elements of the dependent stream
+ * @param TElement Type of the array elements of the resulting array
  */
 export class DependentParallelChainState<TPrevious, TElement> implements IParallelChainState<TElement> {
 

@@ -53,8 +53,9 @@ export interface IParallel {
      * Creates a new array containing the given value n times.
      * @param n how many time should the value be repeated
      * @param value the value to repeat
+     * @param TValue type of the value
      */
-    times<TResult>(n: number, value: TResult): IParallelChain<TResult, IEmptyParallelEnvironment, TResult>;
+    times<TValue>(n: number, value: TValue): IParallelChain<TValue, IEmptyParallelEnvironment, TValue>;
 
     /**
      * Creates a new array through calling the generator n times

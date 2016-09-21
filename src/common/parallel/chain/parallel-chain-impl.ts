@@ -11,6 +11,10 @@ import {IParallelChainState, IParallelChainEnvironment} from "./parallel-chain-s
  * The implementation uses an internal state ({@link IParallelChainState}) to distinguishes between a not yet scheduled job ({@link PendingParallelChainState}),
  * a job that has been scheduled but potentially not yet completed ({@link ScheduledParallelChainState}) and a job that
  * is waiting for another one to complete, but has not yet been scheduled ({@link DependentParallelChainState}).
+ *
+ * @param TIn type of the elements created by the generator
+ * @param TEnv type of the job environment
+ * @param TOut type of the elements in the resulting array
  */
 export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut> implements IParallelChain<TIn, TEnv, TOut> {
     public state: IParallelChainState<TOut>;

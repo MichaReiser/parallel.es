@@ -27,6 +27,7 @@ export function toArray<T>(iterator: Iterator<T>): T[] {
 /**
  * Flattens the given array.
  * @param deepArray the array to flatten
+ * @param type of the array elements
  * @returns returns an array containing all the values contained in the sub arrays of deep array.
  */
 export function flattenArray<T>(deepArray: T[][]): T[] {

@@ -4,6 +4,8 @@ import {IParallelStream, ParallelStream} from "./parallel-stream";
 
 /**
  * Stream that has been scheduled on the thread pool and waits for completion of its tasks.
+ * @param TSubResult type of the sub results
+ * @param TEndResult type of the end result
  */
 export class ScheduledParallelStream<TSubResult, TEndResult> implements IParallelStream<TSubResult, TEndResult> {
     /**

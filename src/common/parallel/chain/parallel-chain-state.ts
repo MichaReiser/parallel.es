@@ -7,6 +7,7 @@ export type IParallelChainEnvironment = FunctionCall | IEmptyParallelEnvironment
 /**
  * State of a parallel chain. Dependent of the state of the chain, the chaining of operation, changing of the
  * environment or resolving the chain behaves differently.
+ * @param TElement type of the elements
  */
 export interface IParallelChainState<TElement> {
     /**
@@ -18,6 +19,7 @@ export interface IParallelChainState<TElement> {
     /**
      * Adds a new operation to the chain
      * @param operation the operation to add to the end of the operation lists
+     * @param TElementNew type of the elements after applying the given operation
      * @returns the new state that includes the chained operation
      */
     chainOperation<TElementNew>(operation: IParallelOperation): IParallelChainState<TElementNew>;
@@ -27,7 +29,7 @@ export interface IParallelChainState<TElement> {
      * @param environment the new environment to use
      * @returns the new state that uses the given environment instead of the existing one
      */
-    changeEnvironment<TElement>(environment: IParallelChainEnvironment): IParallelChainState<TElement>;
+    changeEnvironment(environment: IParallelChainEnvironment): IParallelChainState<TElement>;
 }
 
 /**

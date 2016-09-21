@@ -32,13 +32,35 @@ export interface IParallelStream<TSubResult, TEndResult> extends IPromise<TEndRe
 }
 
 /**
+ * Function that resolves the next sub result for a parallel stream
+ * @param subResult the sub result
+ * @param TSubResult type of the sub result
+ * @param taskIndex the job relative index of the task that has computed the sub result
+ * @param valuesPerTask the number of values each task has to process at most
+ */
+type INextCallback<TSubResult> = (subResult: TSubResult, taskIndex: number, valuesPerTask: number) => any
+
+/**
+ * Function that resolves the end result of a parallel stream
+ * @param result the end result of the stream
+ * @param TEndResult type of the end result
+ */
+type IResolveCallback<TEndResult> = (result: TEndResult) => any;
+
+/**
+ * Function to reject a parallel stream
+ * @param reason the rejection reason
+ */
+type IRejectCallback = (reason: any) => any;
+
+/**
  * Callback that is invoked for a new {@link ParallelStream}
  *
- * @callback executorCallback
- * @param {(value: TSubResult, taskIndex: number, valuesPerTask: number) => void} next function to invoke to trigger the next sub result for the returned parallel stream
+ * @param {(value: TSubResult, taskIndex: number, valuesPerTask: number) => void} next
  * @param {(result: TEndResult) => void} resolve callback that can be invoked to complete the parallel stream
  * @param {(reason: any) => void} reject callback that can be invoked to reject the parallel stream
  */
+type IExecutorCallback<TSubResult, TEndResult> = (next: INextCallback<TSubResult>, resolve: IResolveCallback<TEndResult>, reject: IRejectCallback) => any
 
 /**
  * Generic parallel stream. Allows to implement own parallel streams like it is the case for {@link PromiseConstructor}
@@ -48,6 +70,9 @@ export class ParallelStream<TSubResult, TEndResult> implements IParallelStream<T
      * Creates a new parallel that is based on the given input stream but transforms the end result using the given transformer
      * @param inputStream the input stream on which the returned stream is based on
      * @param transformer the transformer used to transform the end result
+     * @param TIn type of the input elements for this stream
+     * @param TIntermediate type of the end results from the input stream
+     * @param TResult end result after applying the transformer.
      * @returns parallel stream that is based on the given input stream but with the transformed end result
      */
     public static transform<TIn, TIntermediate, TResult>(inputStream: IParallelStream<TIn, TIntermediate>, transformer: (result: TIntermediate) => TResult) {
@@ -70,6 +95,8 @@ export class ParallelStream<TSubResult, TEndResult> implements IParallelStream<T
      * Creates a new parallel stream for the given set of tasks.
      * @param tasks the set of tasks that compute the results of the stream
      * @param joiner the joiner to use to join the computed results of the stream
+     * @param TTaskResult type of the task results
+     * @param TEndResult result of the created stream. Created by applying the end results of the stream to the joiner
      * @returns stream for the given set of tasks
      */
     public static fromTasks<TTaskResult, TEndResult>(tasks: ITask<TTaskResult>[], joiner: (subResults: TTaskResult[]) => TEndResult): IParallelStream<TTaskResult, TEndResult> {
@@ -93,9 +120,9 @@ export class ParallelStream<TSubResult, TEndResult> implements IParallelStream<T
 
     /**
      * Creates a new, generic parallel stream
-     * @param {executorCallback} executor the executor function that gets passed the next, resolve and reject functions
+     * @param executor the executor function that gets passed the next, resolve and reject functions
      */
-    constructor(executor: (next: (subResult: TSubResult, taskIndex: number, valuesPerTask: number) => any, resolve: (result: TEndResult) => any, reject: (reason: any) => any) => any) {
+    constructor(executor: IExecutorCallback<TSubResult, TEndResult>) {
         const next = (subResult: TSubResult, worker: number, valuesPerWorker: number) => this._next(subResult, worker, valuesPerWorker);
         const reject = (reason: any) => this.reject(reason);
         const resolve = (result: TEndResult) => this.resolve(result);
