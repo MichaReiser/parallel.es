@@ -83,7 +83,6 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/parallel.functioncall.html" class="tsd-kind-icon">Function<wbr>Call</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/parallel.functioncallserializer.html" class="tsd-kind-icon">Function<wbr>Call<wbr>Serializer</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter"><a href="../classes/parallel.parallelstream.html" class="tsd-kind-icon">Parallel<wbr>Stream</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -106,15 +105,6 @@
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.iworkerthread.html" class="tsd-kind-icon">IWorker<wbr>Thread</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-not-exported">
-							<h3>Type aliases</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported"><a href="parallel.html#iexecutorcallback" class="tsd-kind-icon">IExecutor<wbr>Callback</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported"><a href="parallel.html#inextcallback" class="tsd-kind-icon">INext<wbr>Callback</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported"><a href="parallel.html#irejectcallback" class="tsd-kind-icon">IReject<wbr>Callback</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported"><a href="parallel.html#iresolvecallback" class="tsd-kind-icon">IResolve<wbr>Callback</a></li>
-							</ul>
-						</section>
 						<section class="tsd-index-section ">
 							<h3>Variables</h3>
 							<ul class="tsd-index-list">
@@ -133,202 +123,6 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
-				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="iexecutorcallback" class="tsd-anchor"></a>
-					<h3>IExecutor<wbr>Callback</h3>
-					<div class="tsd-signature tsd-kind-icon">IExecutor<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b8e3871/src/common/parallel/stream/parallel-stream.ts#L63">common/parallel/stream/parallel-stream.ts:63</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Callback that is invoked for a new <a href="../classes/parallel.parallelstream.html">ParallelStream</a></p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd></dd>
-							<dt>param</dt>
-							<dd><p>callback that can be invoked to complete the parallel stream</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>callback that can be invoked to reject the parallel stream</p>
-							</dd>
-						</dl>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>next<span class="tsd-signature-symbol">: </span><a href="parallel.html#inextcallback" class="tsd-signature-type">INextCallback</a>, resolve<span class="tsd-signature-symbol">: </span><a href="parallel.html#iresolvecallback" class="tsd-signature-type">IResolveCallback</a>, reject<span class="tsd-signature-symbol">: </span><a href="parallel.html#irejectcallback" class="tsd-signature-type">IRejectCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>next: <a href="parallel.html#inextcallback" class="tsd-signature-type">INextCallback</a></h5>
-											</li>
-											<li>
-												<h5>resolve: <a href="parallel.html#iresolvecallback" class="tsd-signature-type">IResolveCallback</a></h5>
-											</li>
-											<li>
-												<h5>reject: <a href="parallel.html#irejectcallback" class="tsd-signature-type">IRejectCallback</a></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="inextcallback" class="tsd-anchor"></a>
-					<h3>INext<wbr>Callback</h3>
-					<div class="tsd-signature tsd-kind-icon">INext<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b8e3871/src/common/parallel/stream/parallel-stream.ts#L41">common/parallel/stream/parallel-stream.ts:41</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Function that resolves the next sub result for a parallel stream</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd><p>the sub result</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>type of the sub result</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>the job relative index of the task that has computed the sub result</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>the number of values each task has to process at most</p>
-							</dd>
-						</dl>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>subResult<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSubResult</span>, taskIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, valuesPerTask<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>subResult: <span class="tsd-signature-type">TSubResult</span></h5>
-											</li>
-											<li>
-												<h5>taskIndex: <span class="tsd-signature-type">number</span></h5>
-											</li>
-											<li>
-												<h5>valuesPerTask: <span class="tsd-signature-type">number</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="irejectcallback" class="tsd-anchor"></a>
-					<h3>IReject<wbr>Callback</h3>
-					<div class="tsd-signature tsd-kind-icon">IReject<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b8e3871/src/common/parallel/stream/parallel-stream.ts#L54">common/parallel/stream/parallel-stream.ts:54</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Function to reject a parallel stream</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd><p>the rejection reason</p>
-							</dd>
-						</dl>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>reason: <span class="tsd-signature-type">any</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="iresolvecallback" class="tsd-anchor"></a>
-					<h3>IResolve<wbr>Callback</h3>
-					<div class="tsd-signature tsd-kind-icon">IResolve<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b8e3871/src/common/parallel/stream/parallel-stream.ts#L48">common/parallel/stream/parallel-stream.ts:48</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Function that resolves the end result of a parallel stream</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd><p>the end result of the stream</p>
-							</dd>
-							<dt>param</dt>
-							<dd><p>type of the end result</p>
-							</dd>
-						</dl>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>result: <span class="tsd-signature-type">TEndResult</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Variables</h2>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
@@ -337,7 +131,7 @@
 					<div class="tsd-signature tsd-kind-icon">function<wbr>Lookup<wbr>Table<span class="tsd-signature-symbol">:</span> <a href="../classes/_common_function_function_registry_.functionregistry.html" class="tsd-signature-type">FunctionRegistry</a><span class="tsd-signature-symbol"> =&nbsp;new FunctionRegistry()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b8e3871/src/browser/index.ts#L23">browser/index.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/browser/index.ts#L23">browser/index.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -347,7 +141,7 @@
 					<div class="tsd-signature tsd-kind-icon">max<wbr>Concurrency<wbr>Level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;(window.navigator as any)[&quot;hardwareConcurrency&quot;] || 4</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b8e3871/src/browser/index.ts#L24">browser/index.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/browser/index.ts#L24">browser/index.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -357,7 +151,7 @@
 					<div class="tsd-signature tsd-kind-icon">parallel<span class="tsd-signature-symbol">:</span> <a href="../interfaces/parallel.iparallel.html" class="tsd-signature-type">IParallel</a><span class="tsd-signature-symbol"> =&nbsp;parallelFactory({ maxConcurrencyLevel, scheduler: new DefaultParallelScheduler(), threadPool })</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b8e3871/src/browser/index.ts#L30">browser/index.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/browser/index.ts#L30">browser/index.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -372,7 +166,7 @@
 					<div class="tsd-signature tsd-kind-icon">thread<wbr>Pool<span class="tsd-signature-symbol">:</span> <a href="../classes/_common_thread_pool_default_thread_pool_.defaultthreadpool.html" class="tsd-signature-type">DefaultThreadPool</a><span class="tsd-signature-symbol"> =&nbsp;new DefaultThreadPool(new BrowserWorkerThreadFactory(functionLookupTable), functionLookupTable, {maxConcurrencyLevel})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b8e3871/src/browser/index.ts#L25">browser/index.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/browser/index.ts#L25">browser/index.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -389,7 +183,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/b8e3871/src/common/function/serialized-function-call.ts#L31">common/function/serialized-function-call.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/function/serialized-function-call.ts#L31">common/function/serialized-function-call.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -431,9 +225,6 @@
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/parallel.functioncallserializer.html" class="tsd-kind-icon">Function<wbr>Call<wbr>Serializer</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/parallel.parallelstream.html" class="tsd-kind-icon">Parallel<wbr>Stream</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/parallel.idefaultinitializedparalleloptions.html" class="tsd-kind-icon">IDefault<wbr>Initialized<wbr>Parallel<wbr>Options</a>
@@ -479,18 +270,6 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/parallel.iworkerthread.html" class="tsd-kind-icon">IWorker<wbr>Thread</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="parallel.html#iexecutorcallback" class="tsd-kind-icon">IExecutor<wbr>Callback</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="parallel.html#inextcallback" class="tsd-kind-icon">INext<wbr>Callback</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="parallel.html#irejectcallback" class="tsd-kind-icon">IReject<wbr>Callback</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="parallel.html#iresolvecallback" class="tsd-kind-icon">IResolve<wbr>Callback</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="parallel.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>

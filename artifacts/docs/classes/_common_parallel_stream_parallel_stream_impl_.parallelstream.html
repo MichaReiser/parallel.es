@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ScheduledParallelStream | Parallel ES</title>
+	<title>ParallelStream | Parallel ES</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,13 +57,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_common_parallel_stream_scheduled_parallel_stream_.html">&quot;common/parallel/stream/scheduled-parallel-stream&quot;</a>
+					<a href="../modules/_common_parallel_stream_parallel_stream_impl_.html">&quot;common/parallel/stream/parallel-stream-impl&quot;</a>
 				</li>
 				<li>
-					<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html">ScheduledParallelStream</a>
+					<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html">ParallelStream</a>
 				</li>
 			</ul>
-			<h1>Class ScheduledParallelStream&lt;TSubResult, TEndResult&gt;</h1>
+			<h1>Class ParallelStream&lt;TSubResult, TEndResult&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Stream that has been scheduled on the thread pool and waits for completion of its tasks.</p>
+						<p>Generic parallel stream. Allows to implement own parallel streams like it is the case for {@link PromiseConstructor}</p>
 					</div>
 				</div>
 			</section>
@@ -82,19 +82,9 @@
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>TSubResult</h4>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>type of the sub results</p>
-							</div>
-						</div>
 					</li>
 					<li>
 						<h4>TEndResult</h4>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>type of the end result</p>
-							</div>
-						</div>
 					</li>
 				</ul>
 			</section>
@@ -102,7 +92,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ScheduledParallelStream</span>
+						<span class="target">ParallelStream</span>
 					</li>
 				</ul>
 			</section>
@@ -119,31 +109,27 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#failed" class="tsd-kind-icon">failed</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#innerstream" class="tsd-kind-icon">inner<wbr>Stream</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#joiner" class="tsd-kind-icon">joiner</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#next" class="tsd-kind-icon">next</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#pending" class="tsd-kind-icon">pending</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#reject" class="tsd-kind-icon">reject</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#resolve" class="tsd-kind-icon">resolve</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#subresults" class="tsd-kind-icon">sub<wbr>Results</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#tasks" class="tsd-kind-icon">tasks</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#nexthandlers" class="tsd-kind-icon">next<wbr>Handlers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#promise" class="tsd-kind-icon">promise</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#reject" class="tsd-kind-icon">reject</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#resolve" class="tsd-kind-icon">resolve</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#_taskcompleted" class="tsd-kind-icon">_task<wbr>Completed</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#_taskfailed" class="tsd-kind-icon">_task<wbr>Failed</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#catch" class="tsd-kind-icon">catch</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#subscribe" class="tsd-kind-icon">subscribe</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#then" class="tsd-kind-icon">then</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#_next" class="tsd-kind-icon">_next</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#catch" class="tsd-kind-icon">catch</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#subscribe" class="tsd-kind-icon">subscribe</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#then" class="tsd-kind-icon">then</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#fromtasks" class="tsd-kind-icon">from<wbr>Tasks</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#transform" class="tsd-kind-icon">transform</a></li>
 							</ul>
 						</section>
 					</div>
@@ -155,43 +141,32 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Scheduled<wbr>Parallel<wbr>Stream<span class="tsd-signature-symbol">(</span>tasks<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, join<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html" class="tsd-signature-type">ScheduledParallelStream</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Parallel<wbr>Stream<span class="tsd-signature-symbol">(</span>executor<span class="tsd-signature-symbol">: </span><a href="../modules/_common_parallel_stream_parallel_stream_impl_.html#iexecutorcallback" class="tsd-signature-type">IExecutorCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html" class="tsd-signature-type">ParallelStream</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L52">common/parallel/stream/scheduled-parallel-stream.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L92">common/parallel/stream/parallel-stream-impl.ts:92</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new, generic parallel stream</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>tasks: <a href="../interfaces/parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li>
-									<h5>join: <span class="tsd-signature-type">function</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>subResults<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEndResult</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>subResults: <span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">[]</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TEndResult</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
+									<h5>executor: <a href="../modules/_common_parallel_stream_parallel_stream_impl_.html#iexecutorcallback" class="tsd-signature-type">IExecutorCallback</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>the executor function that gets passed the next, resolve and reject functions</p>
+										</div>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html" class="tsd-signature-type">ScheduledParallelStream</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html" class="tsd-signature-type">ParallelStream</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -199,87 +174,30 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="failed" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> failed</h3>
-					<div class="tsd-signature tsd-kind-icon">failed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
+					<a name="nexthandlers" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> next<wbr>Handlers</h3>
+					<div class="tsd-signature tsd-kind-icon">next<wbr>Handlers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L42">common/parallel/stream/scheduled-parallel-stream.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L90">common/parallel/stream/parallel-stream-impl.ts:90</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Indicator if any task has failed. If this is the case, then registered next handlers are no longer called
-							for outstanding results.</p>
+							<p>Registered handlers that should be called for each sub result</p>
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>type</dt>
-							<dd><p>{boolean}</p>
+							<dd><p>{Array}</p>
 							</dd>
 						</dl>
 					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="innerstream" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> inner<wbr>Stream</h3>
-					<div class="tsd-signature tsd-kind-icon">inner<wbr>Stream<span class="tsd-signature-symbol">:</span> <a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html" class="tsd-signature-type">ParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L17">common/parallel/stream/scheduled-parallel-stream.ts:17</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="joiner" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> joiner</h3>
-					<div class="tsd-signature tsd-kind-icon">joiner<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L52">common/parallel/stream/scheduled-parallel-stream.ts:52</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Function used to join the sub results to the end result</p>
-						</div>
-					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>subResults<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEndResult</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>subResults: <span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">[]</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TEndResult</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="next" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> next</h3>
-					<div class="tsd-signature tsd-kind-icon">next<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L29">common/parallel/stream/scheduled-parallel-stream.ts:29</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>subResult<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSubResult</span>, task<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, valuesPerTask<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>subResult<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSubResult</span>, worker<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, valuesPerWorker<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -289,10 +207,10 @@
 												<h5>subResult: <span class="tsd-signature-type">TSubResult</span></h5>
 											</li>
 											<li>
-												<h5>task: <span class="tsd-signature-type">number</span></h5>
+												<h5>worker: <span class="tsd-signature-type">number</span></h5>
 											</li>
 											<li>
-												<h5>valuesPerTask: <span class="tsd-signature-type">number</span></h5>
+												<h5>valuesPerWorker: <span class="tsd-signature-type">number</span></h5>
 											</li>
 										</ul>
 										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -303,19 +221,14 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="pending" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> pending</h3>
-					<div class="tsd-signature tsd-kind-icon">pending<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="promise" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> promise</h3>
+					<div class="tsd-signature tsd-kind-icon">promise<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L34">common/parallel/stream/scheduled-parallel-stream.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L83">common/parallel/stream/parallel-stream-impl.ts:83</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Number of still pending tasks</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="reject" class="tsd-anchor"></a>
@@ -323,14 +236,9 @@
 					<div class="tsd-signature tsd-kind-icon">reject<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L27">common/parallel/stream/scheduled-parallel-stream.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L92">common/parallel/stream/parallel-stream-impl.ts:92</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Rejects the _promise with the given reason</p>
-						</div>
-					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -359,14 +267,9 @@
 					<div class="tsd-signature tsd-kind-icon">resolve<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L22">common/parallel/stream/scheduled-parallel-stream.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L91">common/parallel/stream/parallel-stream-impl.ts:91</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Resolves the _promise with the given end result</p>
-						</div>
-					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -389,50 +292,20 @@
 						</ul>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="subresults" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> sub<wbr>Results</h3>
-					<div class="tsd-signature tsd-kind-icon">sub<wbr>Results<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L47">common/parallel/stream/scheduled-parallel-stream.ts:47</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Array containing the retrieved sub results. Not yet retrieved sub results are default initialized</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="tasks" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> tasks</h3>
-					<div class="tsd-signature tsd-kind-icon">tasks<span class="tsd-signature-symbol">:</span> <a href="../interfaces/parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L15">common/parallel/stream/scheduled-parallel-stream.ts:15</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The tasks executed by this stream</p>
-						</div>
-					</div>
-				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="_taskcompleted" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _task<wbr>Completed</h3>
+					<a name="_next" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _next</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">_task<wbr>Completed<span class="tsd-signature-symbol">(</span>subResult<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSubResult</span>, taskDefinition<span class="tsd-signature-symbol">: </span><a href="../interfaces/_common_parallel_parallel_task_definition_.iparalleltaskdefinition.html" class="tsd-signature-type">IParallelTaskDefinition</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">_next<span class="tsd-signature-symbol">(</span>subResult<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSubResult</span>, taskIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, valuesPerTask<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L91">common/parallel/stream/scheduled-parallel-stream.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L136">common/parallel/stream/parallel-stream-impl.ts:136</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -441,30 +314,10 @@
 									<h5>subResult: <span class="tsd-signature-type">TSubResult</span></h5>
 								</li>
 								<li>
-									<h5>taskDefinition: <a href="../interfaces/_common_parallel_parallel_task_definition_.iparalleltaskdefinition.html" class="tsd-signature-type">IParallelTaskDefinition</a></h5>
+									<h5>taskIndex: <span class="tsd-signature-type">number</span></h5>
 								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="_taskfailed" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _task<wbr>Failed</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">_task<wbr>Failed<span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L111">common/parallel/stream/scheduled-parallel-stream.ts:111</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
 								<li>
-									<h5>reason: <span class="tsd-signature-type">any</span></h5>
+									<h5>valuesPerTask: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -482,7 +335,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L85">common/parallel/stream/scheduled-parallel-stream.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L130">common/parallel/stream/parallel-stream-impl.ts:130</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -523,7 +376,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L86">common/parallel/stream/scheduled-parallel-stream.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L131">common/parallel/stream/parallel-stream-impl.ts:131</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -567,7 +420,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L71">common/parallel/stream/scheduled-parallel-stream.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L111">common/parallel/stream/parallel-stream-impl.ts:111</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -577,7 +430,7 @@
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>subResult<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSubResult</span>, worker<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, valuesPerWorker<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>subResult<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSubResult</span>, taskIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, valuesPerWorker<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -587,7 +440,7 @@
 															<h5>subResult: <span class="tsd-signature-type">TSubResult</span></h5>
 														</li>
 														<li>
-															<h5>worker: <span class="tsd-signature-type">number</span></h5>
+															<h5>taskIndex: <span class="tsd-signature-type">number</span></h5>
 														</li>
 														<li>
 															<h5>valuesPerWorker: <span class="tsd-signature-type">number</span></h5>
@@ -616,7 +469,7 @@
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 						<li class="tsd-signature tsd-kind-icon">then&lt;TResult1, TResult2&gt;<span class="tsd-signature-symbol">(</span>onfulfilled<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, onrejected<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">&gt;</span></li>
 						<li class="tsd-signature tsd-kind-icon">then&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>onfulfilled<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, onrejected<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">then&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>onfulfilled<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">then&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>onfulfilled<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_common_util_promise_.ipromise.html" class="tsd-signature-type">IPromise</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 						<li class="tsd-signature tsd-kind-icon">then&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>onfulfilled<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span>, onrejected<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 						<li class="tsd-signature tsd-kind-icon">then&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>onfulfilled<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span>, onrejected<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
@@ -624,7 +477,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L76">common/parallel/stream/scheduled-parallel-stream.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L121">common/parallel/stream/parallel-stream-impl.ts:121</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -692,7 +545,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L77">common/parallel/stream/scheduled-parallel-stream.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L122">common/parallel/stream/parallel-stream-impl.ts:122</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -757,7 +610,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L78">common/parallel/stream/scheduled-parallel-stream.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L123">common/parallel/stream/parallel-stream-impl.ts:123</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -793,12 +646,12 @@
 									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_common_util_promise_.ipromise.html" class="tsd-signature-type">IPromise</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L79">common/parallel/stream/scheduled-parallel-stream.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L124">common/parallel/stream/parallel-stream-impl.ts:124</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -821,7 +674,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/scheduled-parallel-stream.ts#L80">common/parallel/stream/scheduled-parallel-stream.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L125">common/parallel/stream/parallel-stream-impl.ts:125</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -843,6 +696,154 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="fromtasks" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> from<wbr>Tasks</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">from<wbr>Tasks&lt;TTaskResult, TEndResult&gt;<span class="tsd-signature-symbol">(</span>tasks<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TTaskResult</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, joiner<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iparallelstream.html" class="tsd-signature-type">IParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TTaskResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L75">common/parallel/stream/parallel-stream-impl.ts:75</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new parallel stream for the given set of tasks.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TTaskResult</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the task results</p>
+									</div>
+								</li>
+								<li>
+									<h4>TEndResult</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>result of the created stream. Created by applying the end results of the stream to the joiner</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tasks: <a href="../interfaces/parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TTaskResult</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the set of tasks that compute the results of the stream</p>
+									</div>
+								</li>
+								<li>
+									<h5>joiner: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the joiner to use to join the computed results of the stream</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>subResults<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TTaskResult</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEndResult</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>subResults: <span class="tsd-signature-type">TTaskResult</span><span class="tsd-signature-symbol">[]</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TEndResult</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/parallel.iparallelstream.html" class="tsd-signature-type">IParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TTaskResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>stream for the given set of tasks</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="transform" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> transform</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">transform&lt;TIn, TIntermediate, TResult&gt;<span class="tsd-signature-symbol">(</span>inputStream<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iparallelstream.html" class="tsd-signature-type">IParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TIn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TIntermediate</span><span class="tsd-signature-symbol">&gt;</span>, transformer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html" class="tsd-signature-type">ParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TIn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8dcba96/src/common/parallel/stream/parallel-stream-impl.ts#L51">common/parallel/stream/parallel-stream-impl.ts:51</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new parallel that is based on the given input stream but transforms the end result using the given transformer</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TIn</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the input elements for this stream</p>
+									</div>
+								</li>
+								<li>
+									<h4>TIntermediate</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>type of the end results from the input stream</p>
+									</div>
+								</li>
+								<li>
+									<h4>TResult</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>end result after applying the transformer.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>inputStream: <a href="../interfaces/parallel.iparallelstream.html" class="tsd-signature-type">IParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TIn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TIntermediate</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the input stream on which the returned stream is based on</p>
+									</div>
+								</li>
+								<li>
+									<h5>transformer: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the transformer used to transform the end result</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TIntermediate</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>result: <span class="tsd-signature-type">TIntermediate</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html" class="tsd-signature-type">ParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TIn</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>parallel stream that is based on the given input stream but with the transformed end result</p>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -852,7 +853,7 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_common_parallel_stream_scheduled_parallel_stream_.html">"common/parallel/stream/scheduled-<wbr>parallel-<wbr>stream"</a>
+						<a href="../modules/_common_parallel_stream_parallel_stream_impl_.html">"common/parallel/stream/parallel-<wbr>stream-<wbr>impl"</a>
 					</li>
 				</ul>
 			</nav>
@@ -861,57 +862,57 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html" class="tsd-kind-icon">Scheduled<wbr>Parallel<wbr>Stream</a>
+						<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html" class="tsd-kind-icon">Parallel<wbr>Stream</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#failed" class="tsd-kind-icon">failed</a>
+								<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#nexthandlers" class="tsd-kind-icon">next<wbr>Handlers</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#innerstream" class="tsd-kind-icon">inner<wbr>Stream</a>
+								<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#promise" class="tsd-kind-icon">promise</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#joiner" class="tsd-kind-icon">joiner</a>
+								<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#reject" class="tsd-kind-icon">reject</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#next" class="tsd-kind-icon">next</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#pending" class="tsd-kind-icon">pending</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#reject" class="tsd-kind-icon">reject</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#resolve" class="tsd-kind-icon">resolve</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#subresults" class="tsd-kind-icon">sub<wbr>Results</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#tasks" class="tsd-kind-icon">tasks</a>
+								<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#resolve" class="tsd-kind-icon">resolve</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#_taskcompleted" class="tsd-kind-icon">_task<wbr>Completed</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#_taskfailed" class="tsd-kind-icon">_task<wbr>Failed</a>
+								<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#_next" class="tsd-kind-icon">_next</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#catch" class="tsd-kind-icon">catch</a>
+								<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#catch" class="tsd-kind-icon">catch</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#subscribe" class="tsd-kind-icon">subscribe</a>
+								<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#subscribe" class="tsd-kind-icon">subscribe</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="_common_parallel_stream_scheduled_parallel_stream_.scheduledparallelstream.html#then" class="tsd-kind-icon">then</a>
+								<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#then" class="tsd-kind-icon">then</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#fromtasks" class="tsd-kind-icon">from<wbr>Tasks</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="_common_parallel_stream_parallel_stream_impl_.parallelstream.html#transform" class="tsd-kind-icon">transform</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_common_parallel_stream_parallel_stream_impl_.html#iexecutorcallback" class="tsd-kind-icon">IExecutor<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_common_parallel_stream_parallel_stream_impl_.html#inextcallback" class="tsd-kind-icon">INext<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_common_parallel_stream_parallel_stream_impl_.html#irejectcallback" class="tsd-kind-icon">IReject<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_common_parallel_stream_parallel_stream_impl_.html#iresolvecallback" class="tsd-kind-icon">IResolve<wbr>Callback</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
