@@ -1,4 +1,10 @@
 
+import {IPromise} from "../../util/promise";
+import {IParallelStream} from "./parallel-stream";
+import {ScheduledParallelStream} from "./scheduled-parallel-stream";
+import {ResolvedParallelStream} from "./resolved-parallel-stream";
+import {ITask} from "../../task/task";
+
 /**
  * Function that resolves the next sub result for a parallel stream
  * @param subResult the sub result
@@ -6,11 +12,6 @@
  * @param valuesPerTask the number of values each task has to process at most
  * @param TSubResult type of the sub result
  */
-import {IPromise} from "../../util/promise";
-import {IParallelStream} from "./parallel-stream";
-import {ScheduledParallelStream} from "./scheduled-parallel-stream";
-import {ResolvedParallelStream} from "./resolved-parallel-stream";
-import {ITask} from "../../task/task";
 type INextCallback<TSubResult> = (subResult: TSubResult, taskIndex: number, valuesPerTask: number) => any
 
 /**
@@ -36,9 +37,12 @@ type IRejectCallback = (reason: any) => any;
 type IExecutorCallback<TSubResult, TEndResult> = (next: INextCallback<TSubResult>, resolve: IResolveCallback<TEndResult>, reject: IRejectCallback) => any
 
 /**
- * Generic parallel stream. Allows to implement own parallel streams like it is the case for {@link PromiseConstructor}
+ * Generic parallel stream that can be coordinated using the provided next, resolve and reject callbacks.
+ * @param TSubResult type of the sub results
+ * @param TEndResult type of the end result
  */
 export class ParallelStream<TSubResult, TEndResult> implements IParallelStream<TSubResult, TEndResult> {
+
     /**
      * Creates a new parallel that is based on the given input stream but transforms the end result using the given transformer
      * @param inputStream the input stream on which the returned stream is based on
