@@ -1,4 +1,5 @@
 import {ISerializedFunctionCall} from "../function/serialized-function-call";
+import {IFunctionId} from "../function/function-id";
 
 /**
  * Single parallel operation to perform
@@ -12,7 +13,7 @@ export interface IParallelOperation {
     /**
      * Iterator function that applies the iteratee to each element and creates a new iterator
      */
-    readonly iterator: Function;
+    readonly iterator: IFunctionId;
 
     /**
      * Parameters that should be passed to the iterator function

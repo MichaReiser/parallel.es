@@ -1,4 +1,3 @@
-import {IParallelProcessParams, ParallelWorkerFunctions} from "../parallel-worker-functions";
 import {IParallelJob, IDefaultInitializedParallelOptions, IEmptyParallelEnvironment, IParallelOperation} from "../";
 import {ITask} from "../../task/task";
 import {ITaskDefinition} from "../../task/task-definition";
@@ -6,6 +5,8 @@ import {IParallelTaskDefinition} from "../parallel-task-definition";
 import {FunctionCallSerializer} from "../../function/function-call-serializer";
 import {FunctionCall} from "../../function/function-call";
 import {IParallelJobScheduler} from "./parallel-job-scheduler";
+import {ParallelWorkerFunctionIds} from "../slave/parallel-worker-functions";
+import {IParallelJobDefinition} from "../slave/parallel-job-executor";
 
 export abstract class AbstractParallelScheduler implements IParallelJobScheduler {
     public schedule<TResult>(job: IParallelJob): ITask<TResult>[] {
@@ -31,7 +32,7 @@ export abstract class AbstractParallelScheduler implements IParallelJobScheduler
         for (let i = 0; i < scheduling.numberOfTasks; ++i) {
             const generator = job.generator.serializeSlice(i, scheduling.valuesPerTask, functionCallSerializer);
 
-            const processParams: IParallelProcessParams = {
+            const processParams: IParallelJobDefinition = {
                 environment,
                 generator,
                 operations,
@@ -40,7 +41,7 @@ export abstract class AbstractParallelScheduler implements IParallelJobScheduler
             };
 
             const taskDefinition: IParallelTaskDefinition = {
-                main: functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctions.process, processParams),
+                main: functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR, processParams),
                 taskIndex: i,
                 usedFunctionIds: functionCallSerializer.serializedFunctionIds,
                 valuesPerTask: scheduling.valuesPerTask

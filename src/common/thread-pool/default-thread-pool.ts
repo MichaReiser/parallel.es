@@ -1,11 +1,11 @@
 import {IThreadPool} from "./thread-pool";
 import {IWorkerThread} from "../worker/worker-thread";
 import {ITaskDefinition} from "../task/task-definition";
-import {FunctionRegistry} from "../function/function-registry";
 import {IWorkerThreadFactory} from "../worker/worker-thread-factory";
 import {WorkerTask} from "../task/worker-task";
 import {ITask} from "../task/task";
 import {FunctionCallSerializer} from "../function/function-call-serializer";
+import {DynamicFunctionRegistry} from "../function/dynamic-function-registry";
 
 /**
  * Default thread pool implementation that processes the scheduled functions in FIFO order.
@@ -17,7 +17,7 @@ export class DefaultThreadPool implements IThreadPool {
     private lastTaskId = -1;
     private concurrencyLimit: number;
 
-    constructor(private workerThreadFactory: IWorkerThreadFactory, private functionLookupTable: FunctionRegistry, options: { maxConcurrencyLevel: number }) {
+    constructor(private workerThreadFactory: IWorkerThreadFactory, private functionLookupTable: DynamicFunctionRegistry, options: { maxConcurrencyLevel: number }) {
         this.concurrencyLimit = options.maxConcurrencyLevel;
     }
 

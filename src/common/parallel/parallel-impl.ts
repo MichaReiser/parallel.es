@@ -2,7 +2,6 @@ import {IParallel} from "./parallel";
 import {IDefaultInitializedParallelOptions, IParallelOptions} from "./parallel-options";
 import {IParallelChain} from "./chain/parallel-chain";
 import {IParallelTaskEnvironment} from "./parallel-environment";
-import {ParallelWorkerFunctions} from "./parallel-worker-functions";
 import {ParallelCollectionGenerator} from "./generator/parallel-collection-generator";
 import {ParallelRangeGenerator} from "./generator/parallel-range-generator";
 import {ParallelTimesGenerator} from "./generator/parallel-times-generator";
@@ -42,7 +41,7 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
             return createParallelChain(generator, mergeOptions(options));
         },
 
-        times<TEnv, TResult>(n: number, generator: ((this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult) | TResult = ParallelWorkerFunctions.identity, env?: TEnv, options?: IParallelOptions) {
+        times<TEnv, TResult>(n: number, generator: ((this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult) | TResult, env?: TEnv, options?: IParallelOptions) {
             if (env) {
                 return createParallelChain(new ParallelTimesGenerator<TResult>(n, generator), mergeOptions(options), env);
             }

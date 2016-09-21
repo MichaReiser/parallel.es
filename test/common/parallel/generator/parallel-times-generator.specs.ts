@@ -1,7 +1,7 @@
-import {ParallelWorkerFunctions} from "../../../../src/common/parallel/parallel-worker-functions";
 import {FunctionCallSerializer} from "../../../../src/common/function/function-call-serializer";
-import {FunctionRegistry} from "../../../../src/common/function/function-registry";
+import {DynamicFunctionRegistry} from "../../../../src/common/function/dynamic-function-registry";
 import {ParallelTimesGenerator} from "../../../../src/common/parallel/generator/parallel-times-generator";
+import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
 
 describe("ParallelTimesGenerator", function () {
     let functionCallSerializer: FunctionCallSerializer;
@@ -9,7 +9,7 @@ describe("ParallelTimesGenerator", function () {
 
     beforeEach(function () {
         getOrSetIdSpy = jasmine.createSpy("functionRegistry.getOrSetId");
-        const functionRegistry: FunctionRegistry = {
+        const functionRegistry: DynamicFunctionRegistry = {
             getOrSetId: getOrSetIdSpy
         } as any;
 
@@ -37,7 +37,7 @@ describe("ParallelTimesGenerator", function () {
 
             // assert
             expect(func.functionId).toBe(4);
-            expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctions.times);
+            expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctionIds.TIMES);
         });
 
         it("passes n and the serialized 'generator' function", function () {
@@ -51,7 +51,7 @@ describe("ParallelTimesGenerator", function () {
 
             // assert
             expect(func.parameters).toEqual([5, 10, jasmine.objectContaining({ functionId: 1000 })]);
-            expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctions.times);
+            expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctionIds.TIMES);
             expect(getOrSetIdSpy).toHaveBeenCalledWith(generatorFunction);
         });
 
@@ -78,8 +78,8 @@ describe("ParallelTimesGenerator", function () {
 
             // assert
             expect(func.parameters).toEqual([5, 10, jasmine.objectContaining({ functionId: 1000, parameters: [100] })]);
-            expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctions.times);
-            expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctions.identity);
+            expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctionIds.TIMES);
+            expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctionIds.IDENTITY);
         });
     });
 });

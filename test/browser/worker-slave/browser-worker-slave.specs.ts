@@ -1,12 +1,15 @@
 import {initializeWorkerMessage} from "../../../src/common/worker/worker-messages";
 import {BrowserWorkerSlave} from "../../../src/browser/worker-slave/browser-worker-slave";
 import {IdleBrowserWorkerSlaveState} from "../../../src/browser/worker-slave/browser-worker-slave-states";
+import {SlaveFunctionLookupTable} from "../../../src/common/function/slave-function-lookup-table";
 
 describe("BrowserWorkerSlave", function () {
     let slave: BrowserWorkerSlave;
+    let functionLookupTable: SlaveFunctionLookupTable;
 
     beforeEach(function () {
-        slave = new BrowserWorkerSlave();
+        functionLookupTable = new SlaveFunctionLookupTable();
+        slave = new BrowserWorkerSlave(functionLookupTable);
     });
 
     describe("changeState", function () {

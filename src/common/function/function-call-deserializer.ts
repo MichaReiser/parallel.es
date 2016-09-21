@@ -20,7 +20,7 @@ export class FunctionCallDeserializer {
     public deserializeFunctionCall<TResult>(functionCall: ISerializedFunctionCall, deserializeParams = false): (...additionalParams: any[]) => TResult {
         const func = this.functionLookupTable.getFunction(functionCall.functionId);
         if (!func) {
-            throw new Error(`The function with the id ${functionCall.functionId} could not be retrieved while deserializing the function call. Is the function correctly registered?`);
+            throw new Error(`The function with the id ${functionCall.functionId.identifier} could not be retrieved while deserializing the function call. Is the function correctly registered?`);
         }
 
         let params = functionCall.parameters || [];

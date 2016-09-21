@@ -1,7 +1,7 @@
 import {ParallelCollectionGenerator} from "../../../../src/common/parallel/generator/parallel-collection-generator";
-import {ParallelWorkerFunctions} from "../../../../src/common/parallel/parallel-worker-functions";
 import {FunctionCallSerializer} from "../../../../src/common/function/function-call-serializer";
-import {FunctionRegistry} from "../../../../src/common/function/function-registry";
+import {DynamicFunctionRegistry} from "../../../../src/common/function/dynamic-function-registry";
+import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
 
 describe("ParallelCollectionGenerator", function () {
     let functionCallSerializer: FunctionCallSerializer;
@@ -9,7 +9,7 @@ describe("ParallelCollectionGenerator", function () {
 
     beforeEach(function () {
         getOrSetIdSpy = jasmine.createSpy("functionRegistry.getOrSetId");
-        const functionRegistry: FunctionRegistry = {
+        const functionRegistry: DynamicFunctionRegistry = {
             getOrSetId: getOrSetIdSpy
         } as any;
 
@@ -46,7 +46,7 @@ describe("ParallelCollectionGenerator", function () {
 
             // assert
             expect(slice.functionId).toBe(1000);
-            expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctions.toIterator);
+            expect(getOrSetIdSpy).toHaveBeenCalledWith(ParallelWorkerFunctionIds.TO_ITERATOR);
         });
 
         it("passes a slice of the array as parameter", function () {

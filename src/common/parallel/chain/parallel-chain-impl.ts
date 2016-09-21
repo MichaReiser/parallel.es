@@ -1,10 +1,11 @@
 import {IParallelChain} from "./parallel-chain";
 import {IParallelStream} from "../stream/parallel-stream";
-import {ParallelWorkerFunctions} from "../parallel-worker-functions";
+import {ParallelWorkerFunctionIds} from "../slave/parallel-worker-functions";
 import {IEmptyParallelEnvironment, IParallelTaskEnvironment} from "../parallel-environment";
 import {FunctionCall} from "../../function/function-call";
 import {IParallelChainState, IParallelChainEnvironment} from "./parallel-chain-state";
 import {ParallelStream} from "../stream/parallel-stream-impl";
+import {IFunctionId} from "../../function/function-id";
 
 /**
  * Implementation of a {@link IParallelChain}
@@ -41,12 +42,12 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
     }
 
     public map<TResult>(mapper: (this: void, element: TOut, env: TEnv & IParallelTaskEnvironment) => TResult): IParallelChain<TIn, TEnv, TResult> {
-        return this._chain<TResult>(ParallelWorkerFunctions.map, mapper);
+        return this._chain<TResult>(ParallelWorkerFunctionIds.MAP, mapper);
     }
 
     public reduce<TResult>(defaultValue: TResult, accumulator: (this: void, memo: TResult, value: TOut, env: TEnv & IParallelTaskEnvironment) => TResult, combiner?: (this: void, sub1: TResult, sub2: TResult) => TResult): IParallelStream<TResult[], TResult> {
         const combineOperation: (accumulatedValue: TResult, value: TResult) => TResult = combiner || accumulator as any;
-        const reduced = this._chain(ParallelWorkerFunctions.reduce, accumulator, defaultValue).resolveChain();
+        const reduced = this._chain(ParallelWorkerFunctionIds.REDUCE, accumulator, defaultValue).resolveChain();
         return ParallelStream.transform(reduced, (subResults: TResult[]) => {
             if (subResults.length === 0) {
                 return defaultValue;
@@ -64,7 +65,7 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
     }
 
     public filter(predicate: (this: void, value: TOut, env: TEnv & IParallelTaskEnvironment) => boolean): IParallelChain<TIn, TEnv, TOut> {
-        return this._chain<TOut>(ParallelWorkerFunctions.filter, predicate);
+        return this._chain<TOut>(ParallelWorkerFunctionIds.FILTER, predicate);
     }
 
     // endregion
@@ -95,7 +96,7 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
     }
     // endregion
 
-    private _chain<TResult> (func: Function, iteratee: Function, ...params: any[]): ParallelChainImpl<TIn, TEnv, TResult> {
+    private _chain<TResult> (func: IFunctionId, iteratee: Function, ...params: any[]): ParallelChainImpl<TIn, TEnv, TResult> {
         const operation = { iterator: func, iteratee, iteratorParams: params };
         return new ParallelChainImpl(this.state.chainOperation(operation));
     }

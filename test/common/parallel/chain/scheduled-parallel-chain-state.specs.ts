@@ -1,8 +1,9 @@
 import {ScheduledParallelChainState} from "../../../../src/common/parallel/chain/scheduled-parallel-chain-state";
 import {IEmptyParallelEnvironment, IDefaultInitializedParallelOptions} from "../../../../src/common/parallel";
 import {IParallelStream} from "../../../../src/common/parallel/stream/parallel-stream";
-import {ParallelWorkerFunctions} from "../../../../src/common/parallel/parallel-worker-functions";
 import {DependentParallelChainState} from "../../../../src/common/parallel/chain/dependent-parallel-chain-state";
+import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
+
 describe("ScheduledParallelChainState", function () {
     let options: IDefaultInitializedParallelOptions;
     let environment: IEmptyParallelEnvironment;
@@ -33,7 +34,7 @@ describe("ScheduledParallelChainState", function () {
             // arrange
             const operation = {
                 iteratee: () => undefined,
-                iterator: ParallelWorkerFunctions.map,
+                iterator: ParallelWorkerFunctionIds.MAP,
                 iteratorParams: []
             };
 

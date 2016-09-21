@@ -1,10 +1,11 @@
-import {ParallelWorkerFunctions} from "../../common/parallel/parallel-worker-functions";
-import {staticFunctionRegistry} from "../../common/function/static-function-registry";
 import {BrowserWorkerSlave} from "./browser-worker-slave";
+import {SlaveFunctionLookupTable} from "../../common/function/slave-function-lookup-table";
+import {registerStaticParallelFunctions} from "../../common/parallel/slave/register-parallel-worker-functions";
 
-staticFunctionRegistry.registerStaticFunctions(ParallelWorkerFunctions);
+const cache = new SlaveFunctionLookupTable();
+registerStaticParallelFunctions(cache);
 
-const slave = new BrowserWorkerSlave();
+const slave = new BrowserWorkerSlave(cache);
 onmessage = function () {
     slave.onMessage.apply(slave, arguments);
 };

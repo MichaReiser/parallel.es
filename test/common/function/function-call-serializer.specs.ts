@@ -1,15 +1,16 @@
-import {FunctionRegistry} from "../../../src/common/function/function-registry";
+import {DynamicFunctionRegistry} from "../../../src/common/function/dynamic-function-registry";
 import {FunctionCallSerializer} from "../../../src/common/function/function-call-serializer";
+import {functionId} from "../../../src/common/function/function-id";
 describe("FunctionCallSerializer", function () {
 
-    let functionRegistry: FunctionRegistry;
+    let functionRegistry: DynamicFunctionRegistry;
     let serializer: FunctionCallSerializer;
     function testFunction () {
         return 190;
     }
 
     beforeEach(function () {
-        functionRegistry = new FunctionRegistry();
+        functionRegistry = new DynamicFunctionRegistry();
         serializer = new FunctionCallSerializer(functionRegistry);
     });
 
@@ -47,24 +48,25 @@ describe("FunctionCallSerializer", function () {
 
         it("returns the id of all serialized functions", function () {
             // arrange
-            spyOn(functionRegistry, "getOrSetId").and.returnValues(1, 2);
+            const functionIds = [functionId("test", 1), functionId("test", 2)];
+            spyOn(functionRegistry, "getOrSetId").and.returnValues(...functionIds);
             function secondFunction() { return 10; }
 
             serializer.serializeFunctionCall(testFunction);
             serializer.serializeFunctionCall(secondFunction);
 
             // act, assert
-            expect(serializer.serializedFunctionIds).toEqual([1, 2]);
+            expect(serializer.serializedFunctionIds).toEqual(functionIds);
         });
 
         it("only returns unique function ids", function () {
             // arrange
-            spyOn(functionRegistry, "getOrSetId").and.returnValue(1);
+            spyOn(functionRegistry, "getOrSetId").and.returnValue(functionId("test", 1));
             serializer.serializeFunctionCall(testFunction, 10);
             serializer.serializeFunctionCall(testFunction, 20);
 
             // act, assert
-            expect(serializer.serializedFunctionIds).toEqual([1]);
+            expect(serializer.serializedFunctionIds).toEqual([functionId("test", 1)]);
         });
     });
 });

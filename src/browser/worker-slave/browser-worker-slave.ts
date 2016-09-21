@@ -1,6 +1,6 @@
 import {isStopMesssage} from "../../common/worker/worker-messages";
 import {DefaultBrowserWorkerSlaveState, BrowserWorkerSlaveState} from "./browser-worker-slave-states";
-import {SlaveFunctionCache} from "./slave-function-cache";
+import {SlaveFunctionLookupTable} from "../../common/function/slave-function-lookup-table";
 
 declare function postMessage(data: any): void;
 
@@ -15,9 +15,11 @@ export class BrowserWorkerSlave {
      */
     public id: number = Number.NaN;
 
-    public functionCache = new SlaveFunctionCache();
-
     private state: BrowserWorkerSlaveState = new DefaultBrowserWorkerSlaveState(this);
+
+    constructor(public functionCache: SlaveFunctionLookupTable) {
+
+    }
 
     /**
      * Changes the state of the slave to the new state

@@ -4,7 +4,7 @@ import {PendingParallelChainState} from "../../../../src/common/parallel/chain/p
 import {IParallelGenerator} from "../../../../src/common/parallel/generator/parallel-generator";
 import {ParallelCollectionGenerator} from "../../../../src/common/parallel/generator/parallel-collection-generator";
 import {ScheduledParallelChainState} from "../../../../src/common/parallel/chain/scheduled-parallel-chain-state";
-import {ParallelWorkerFunctions} from "../../../../src/common/parallel/parallel-worker-functions";
+import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
 
 describe("PendingParallelChainState", function () {
     let options: IDefaultInitializedParallelOptions;
@@ -62,7 +62,7 @@ describe("PendingParallelChainState", function () {
             // arrange
             const operation = {
                 iteratee: () => undefined,
-                iterator: ParallelWorkerFunctions.map,
+                iterator: ParallelWorkerFunctionIds.MAP,
                 iteratorParams: []
             };
 
@@ -74,7 +74,7 @@ describe("PendingParallelChainState", function () {
             // arrange
             const operation = {
                 iteratee: () => undefined,
-                iterator: ParallelWorkerFunctions.map,
+                iterator: ParallelWorkerFunctionIds.MAP,
                 iteratorParams: []
             };
 

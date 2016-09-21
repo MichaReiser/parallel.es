@@ -1,8 +1,8 @@
-import {FunctionRegistry} from "../../common/function/function-registry";
 import {ITaskDefinition} from "../../common/task/task-definition";
 import {initializeWorkerMessage, IWorkerMessage, stopMessage, scheduleTaskMessage} from "../../common/worker/worker-messages";
 import {IWorkerThread} from "../../common/worker/worker-thread";
 import { BrowserWorkerThreadState, BrowserWorkerThreadExecutingState } from "./browser-worker-thread-state";
+import {DynamicFunctionRegistry} from "../../common/function/dynamic-function-registry";
 
 let workerThreadId = 0;
 
@@ -29,7 +29,7 @@ export class BrowserWorkerThread implements IWorkerThread {
      * @param worker the {@link BrowserWorkerSlave}
      * @param functionLookupTable
      */
-    constructor(private worker: Worker, private functionLookupTable: FunctionRegistry) {
+    constructor(private worker: Worker, private functionLookupTable: DynamicFunctionRegistry) {
         const that = this;
         this.worker.addEventListener("message", function () {
             that.onWorkerMessage.apply(that, arguments);

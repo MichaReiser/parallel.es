@@ -1,22 +1,30 @@
-import {FunctionRegistry} from "../../../src/common/function/function-registry";
-import {staticFunctionRegistry} from "../../../src/common/function/static-function-registry";
+import {DynamicFunctionRegistry} from "../../../src/common/function/dynamic-function-registry";
+import {functionId} from "../../../src/common/function/function-id";
 
 /* tslint:disable:no-console */
 
-describe("FunctionRegistry", function () {
+describe("DynamicFunctionRegistry", function () {
     function testFunction (x: number, y: number): void {
         console.log(x + y);
     }
 
-    let functionRegistry: FunctionRegistry;
+    let functionRegistry: DynamicFunctionRegistry;
 
     beforeEach(function () {
-        functionRegistry = new FunctionRegistry();
+        functionRegistry = new DynamicFunctionRegistry();
     });
 
     describe("getOrSetId", function () {
         it("returns a new id for a not yet registered function", function () {
-            expect(functionRegistry.getOrSetId(testFunction)).toBe(1000);
+            expect(functionRegistry.getOrSetId(testFunction)).toEqual(functionId("dynamic", 1));
+        });
+
+        it("returns the passed in function id if the argument is a function id", function () {
+            // arrange
+            const id = functionId("dynamic", 1000);
+
+            // act, assert
+            expect(functionRegistry.getOrSetId(id)).toBe(id);
         });
 
         it("returns the same id if the function is already registered", function () {
@@ -38,22 +46,11 @@ describe("FunctionRegistry", function () {
             // act, assert
             expect(functionRegistry.getOrSetId(testFunction2)).not.toEqual(testFunctionId);
         });
-
-        it("returns the id of the static registered function if the passed function is contained in the static function registry", function () {
-            // arrange
-            const hasSpy = spyOn(staticFunctionRegistry, "has").and.returnValue(true);
-            const getIdSpy = spyOn(staticFunctionRegistry, "getId").and.returnValue(1);
-
-            // assert
-            expect(functionRegistry.getOrSetId(testFunction)).toEqual(1);
-            expect(hasSpy).toHaveBeenCalledWith(testFunction);
-            expect(getIdSpy).toHaveBeenCalledWith(testFunction);
-        });
     });
 
     describe("getDefinition", function () {
         it("returns undefined if the function with the given id is not registered", function () {
-            expect(functionRegistry.getDefinition(1000)).toBeUndefined();
+            expect(functionRegistry.getDefinition(functionId("test", 1000))).toBeUndefined();
         });
 
         it("returns the function definition if a function with the given id is registered", function () {
@@ -71,14 +68,6 @@ describe("FunctionRegistry", function () {
             } else {
                 fail("Definition not returned");
             }
-        });
-
-        it("throws an error if the definition of a static function is queried", function () {
-            // arrange
-            spyOn(staticFunctionRegistry, "has").and.returnValue(true);
-
-            // assert
-            expect(() => functionRegistry.getDefinition(1)).toThrowError("The definition of a static function is not available");
         });
     });
 });

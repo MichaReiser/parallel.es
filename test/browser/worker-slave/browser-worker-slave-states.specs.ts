@@ -9,13 +9,17 @@ import {
 } from "../../../src/browser/worker-slave/browser-worker-slave-states";
 import {ITaskDefinition} from "../../../src/common/task/task-definition";
 import {FunctionCallDeserializer} from "../../../src/common/function/function-call-deserializer";
+import {SlaveFunctionLookupTable} from "../../../src/common/function/slave-function-lookup-table";
+import {functionId} from "../../../src/common/function/function-id";
 
 describe("BrowserWorkerSlaveStates", function () {
     let slave: BrowserWorkerSlave;
     let state: BrowserWorkerSlaveState;
+    let functionLookupTable: SlaveFunctionLookupTable;
 
     beforeEach(function () {
-        slave = new BrowserWorkerSlave();
+        functionLookupTable = new SlaveFunctionLookupTable();
+        slave = new BrowserWorkerSlave(functionLookupTable);
     });
 
     describe("DefaultBrowserWorkerSlaveState", function () {
@@ -59,13 +63,13 @@ describe("BrowserWorkerSlaveStates", function () {
                 id: 1,
                 main: {
                     ______serializedFunctionCall: true,
-                    functionId: 1000,
+                    functionId: functionId("test", 0),
                     parameters: []
                 },
-                usedFunctionIds: [1000, 1001, 1002]
+                usedFunctionIds: [functionId("test", 0), functionId("test", 1), functionId("test", 2)]
             };
 
-            spyOn(slave.functionCache, "has").and.returnValues(false, true, false);
+            spyOn(functionLookupTable, "has").and.returnValues(false, true, false);
             const changeStateSpy = spyOn(slave, "changeState");
             const slavePostMessageSpy = spyOn(slave, "postMessage");
 
@@ -74,7 +78,7 @@ describe("BrowserWorkerSlaveStates", function () {
 
             // assert
             expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(WaitingForFunctionDefinitionBrowserWorkerSlaveState));
-            expect(slavePostMessageSpy).toHaveBeenCalledWith(jasmine.objectContaining({ functionIds: [1000, 1002] }));
+            expect(slavePostMessageSpy).toHaveBeenCalledWith(jasmine.objectContaining({ functionIds: [functionId("test", 0), functionId("test", 2)] }));
         });
 
         it("changes to the execution state if the slave already has all functions cached", function () {
@@ -83,10 +87,10 @@ describe("BrowserWorkerSlaveStates", function () {
                 id: 1,
                 main: {
                     ______serializedFunctionCall: true,
-                    functionId: 1000,
+                    functionId: functionId("test", 0),
                     parameters: []
                 },
-                usedFunctionIds: [1000, 1001, 1002]
+                usedFunctionIds: [functionId("test", 0), functionId("test", 1), functionId("test", 2)]
             };
 
             spyOn(slave.functionCache, "has").and.returnValue(true);
@@ -106,10 +110,10 @@ describe("BrowserWorkerSlaveStates", function () {
                 id: 1,
                 main: {
                     ______serializedFunctionCall: true,
-                    functionId: 1000,
+                    functionId: functionId("test", 0),
                     parameters: []
                 },
-                usedFunctionIds: [1000, 1001, 1002]
+                usedFunctionIds: [functionId("test", 0), functionId("test", 1), functionId("test", 2)]
             };
 
             state = new WaitingForFunctionDefinitionBrowserWorkerSlaveState(slave, task);
@@ -123,7 +127,7 @@ describe("BrowserWorkerSlaveStates", function () {
             state.onMessage(createMessage(functionResponseMessage([{
                 argumentNames: ["x"],
                 body: "return x;",
-                id: 1000
+                id: functionId("test", 0)
             }])));
 
             // assert
@@ -138,13 +142,13 @@ describe("BrowserWorkerSlaveStates", function () {
             const def1 = {
                 argumentNames: ["x"],
                 body: "return x;",
-                id: 1000
+                id: functionId("test", 0)
             };
 
             const def2 = {
                 argumentNames: ["x"],
                 body: "return x;",
-                id: 1001
+                id: functionId("test", 1)
             };
 
             // act
@@ -162,10 +166,10 @@ describe("BrowserWorkerSlaveStates", function () {
                 id: 1,
                 main: {
                     ______serializedFunctionCall: true,
-                    functionId: 1000,
+                    functionId: functionId("test", 0),
                     parameters: []
                 },
-                usedFunctionIds: [1000]
+                usedFunctionIds: [functionId("test", 0)]
             };
 
             state = new ExecuteFunctionBrowserWorkerSlaveState(slave, task);

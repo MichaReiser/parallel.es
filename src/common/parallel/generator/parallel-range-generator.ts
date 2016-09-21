@@ -1,7 +1,7 @@
-import {ParallelWorkerFunctions} from "../parallel-worker-functions";
 import {ISerializedFunctionCall} from "../../function/serialized-function-call";
 import {FunctionCallSerializer} from "../../function/function-call-serializer";
 import {IParallelGenerator} from "./parallel-generator";
+import {ParallelWorkerFunctionIds} from "../slave/parallel-worker-functions";
 /**
  * Generator for creating values inside of a range
  */
@@ -46,6 +46,6 @@ export class ParallelRangeGenerator implements IParallelGenerator {
         const sliceStart = this.start + index * sliceSize;
         const sliceEnd = Math.min(sliceStart + sliceSize, this.end);
 
-        return functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctions.range, sliceStart, sliceEnd, this.step);
+        return functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctionIds.RANGE, sliceStart, sliceEnd, this.step);
     }
 }

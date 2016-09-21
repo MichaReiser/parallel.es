@@ -1,17 +1,18 @@
 import {DefaultThreadPool} from "../../../src/common/thread-pool/default-thread-pool";
-import {FunctionRegistry} from "../../../src/common/function/function-registry";
+import {DynamicFunctionRegistry} from "../../../src/common/function/dynamic-function-registry";
 import {WorkerTask} from "../../../src/common/task/worker-task";
+import {functionId} from "../../../src/common/function/function-id";
 
 describe("DefaultThreadPool", function () {
     let spawn: jasmine.Spy;
-    let functionLookupTable: FunctionRegistry;
+    let functionLookupTable: DynamicFunctionRegistry;
     let threadPool: DefaultThreadPool;
 
     beforeEach(function () {
         spawn = jasmine.createSpy("spawn");
 
         const workerThreadFactory = { spawn };
-        functionLookupTable = new FunctionRegistry();
+        functionLookupTable = new DynamicFunctionRegistry();
         threadPool = new DefaultThreadPool(workerThreadFactory, functionLookupTable, { maxConcurrencyLevel: 2 });
     });
 
@@ -19,7 +20,7 @@ describe("DefaultThreadPool", function () {
         it("registers the function in the function lookup table", function () {
             // arrange
             const func = function () { /* ignore */ };
-            const getOrSetIdSpy = spyOn(functionLookupTable, "getOrSetId");
+            const getOrSetIdSpy = spyOn(functionLookupTable, "getOrSetId").and.returnValue(functionId("test", 0));
 
             // act
             threadPool.schedule(func);
