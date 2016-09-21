@@ -4,6 +4,7 @@ import {syncKnightTours, parallelKnightTours} from "./knights-tour";
 const runButton = document.querySelector("#run") as HTMLInputElement;
 const outputTable = document.querySelector("#output-table") as HTMLTableElement;
 const numberOfRunsField = document.querySelector("#number-of-runs") as HTMLInputElement;
+const jsonOutputField = document.querySelector("#json-output") as HTMLElement;
 
 interface IPerformanceMeasurement {
     title: string;
@@ -169,6 +170,8 @@ function measure() {
         resolve = res;
     } );
 
+    const results: any = {};
+
     clearOutputTable();
     createTableHeader();
 
@@ -176,6 +179,7 @@ function measure() {
     const examples = createExamples();
     for (let i = 0; i < examples.length; ++i) {
         const example = examples[i];
+        results[example.title] = [];
         const row = body.insertRow();
         row.insertCell().textContent = example.title;
 
@@ -187,6 +191,7 @@ function measure() {
             }).then(time => {
                 row.insertCell().textContent = time.toFixed(4);
                 total += time;
+                results[example.title].push(time);
                 return time;
             });
         }
@@ -197,6 +202,10 @@ function measure() {
             return average;
         });
     }
+
+    chain.then(() => {
+        jsonOutputField.innerText = JSON.stringify(results, undefined, "  ");
+    });
 
     // race!
     resolve!();
