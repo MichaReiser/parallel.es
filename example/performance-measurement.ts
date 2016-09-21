@@ -5,6 +5,7 @@ const runButton = document.querySelector("#run") as HTMLInputElement;
 const outputTable = document.querySelector("#output-table") as HTMLTableElement;
 const numberOfRunsField = document.querySelector("#number-of-runs") as HTMLInputElement;
 const jsonOutputField = document.querySelector("#json-output") as HTMLElement;
+const knightRunner6x6 = document.querySelector("#knight-runner-6-6") as HTMLInputElement;
 
 interface IPerformanceMeasurement {
     title: string;
@@ -129,11 +130,13 @@ function createExamples(): IPerformanceMeasurement[] {
         }
     ];
 
+    const nightRunner = knightRunner6x6.checked ? [5, 6] : [5];
+
     return [
         ...result,
         ...createParallelMandelbrotMeasurements(mandelbrotOptions, 1, 75, 150, 300, 600, 1200),
         ...createMonteCarloMeasurements(monteCarloOptions, 1, 2, 4, 6, 8, 10, 15),
-        ...createKnightBoardMeasurements(5, 6)
+        ...createKnightBoardMeasurements(...nightRunner)
     ];
 }
 
