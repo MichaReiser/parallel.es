@@ -1,11 +1,12 @@
 import {IThreadPool} from "./thread-pool";
 import {IWorkerThread} from "../worker/worker-thread";
 import {ITaskDefinition} from "../task/task-definition";
-import {FunctionRegistry} from "../function/function-registry";
 import {IWorkerThreadFactory} from "../worker/worker-thread-factory";
 import {WorkerTask} from "../task/worker-task";
 import {ITask} from "../task/task";
 import {FunctionCallSerializer} from "../function/function-call-serializer";
+import {FunctionCall} from "../function/function-call";
+import {IFunctionId} from "../function/function-id";
 
 /**
  * Default thread pool implementation that processes the scheduled functions in FIFO order.
@@ -17,14 +18,13 @@ export class DefaultThreadPool implements IThreadPool {
     private lastTaskId = -1;
     private concurrencyLimit: number;
 
-    constructor(private workerThreadFactory: IWorkerThreadFactory, private functionLookupTable: FunctionRegistry, options: { maxConcurrencyLevel: number }) {
+    constructor(private workerThreadFactory: IWorkerThreadFactory, private functionCallSerializer: FunctionCallSerializer, options: { maxConcurrencyLevel: number }) {
         this.concurrencyLimit = options.maxConcurrencyLevel;
     }
 
-    public schedule<TResult>(func: (this: void, ...params: any[]) => TResult, ...params: any[]): ITask<TResult> {
-        const serializer = this.createFunctionSerializer();
-        const serializedFunc = serializer.serializeFunctionCall(func, ...params);
-        const taskDefinition: ITaskDefinition = { main: serializedFunc, usedFunctionIds: serializer.serializedFunctionIds };
+    public schedule<TResult>(func: ((this: void, ...params: any[]) => TResult) | IFunctionId, ...params: any[]): ITask<TResult> {
+        const serializedFunc = this.functionCallSerializer.serializeFunctionCall(FunctionCall.createUnchecked(func, ...params));
+        const taskDefinition: ITaskDefinition = { main: serializedFunc, usedFunctionIds: [ serializedFunc.functionId ] };
         return this.scheduleTask(taskDefinition);
     }
 
@@ -40,8 +40,8 @@ export class DefaultThreadPool implements IThreadPool {
         return task;
     }
 
-    public createFunctionSerializer(): FunctionCallSerializer {
-        return new FunctionCallSerializer(this.functionLookupTable);
+    public getFunctionSerializer(): FunctionCallSerializer {
+        return this.functionCallSerializer;
     }
 
     private _releaseWorker(task: WorkerTask<any>): void {

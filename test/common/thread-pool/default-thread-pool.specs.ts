@@ -1,36 +1,37 @@
 import {DefaultThreadPool} from "../../../src/common/thread-pool/default-thread-pool";
-import {FunctionRegistry} from "../../../src/common/function/function-registry";
 import {WorkerTask} from "../../../src/common/task/worker-task";
+import {FunctionCall} from "../../../src/common/function/function-call";
 
 describe("DefaultThreadPool", function () {
     let spawn: jasmine.Spy;
-    let functionLookupTable: FunctionRegistry;
+    let serializeCallSpy: jasmine.Spy;
     let threadPool: DefaultThreadPool;
 
     beforeEach(function () {
         spawn = jasmine.createSpy("spawn");
 
         const workerThreadFactory = { spawn };
-        functionLookupTable = new FunctionRegistry();
-        threadPool = new DefaultThreadPool(workerThreadFactory, functionLookupTable, { maxConcurrencyLevel: 2 });
+        serializeCallSpy = jasmine.createSpy("serializeCall");
+        threadPool = new DefaultThreadPool(workerThreadFactory, { serializeFunctionCall: serializeCallSpy } as any, { maxConcurrencyLevel: 2 });
     });
 
     describe("schedule", function () {
         it("registers the function in the function lookup table", function () {
             // arrange
             const func = function () { /* ignore */ };
-            const getOrSetIdSpy = spyOn(functionLookupTable, "getOrSetId");
+            serializeCallSpy.and.returnValue({ functionId: "test-1" });
 
             // act
             threadPool.schedule(func);
 
             // assert
-            expect(getOrSetIdSpy).toHaveBeenCalledWith(func);
+            expect(serializeCallSpy).toHaveBeenCalledWith(FunctionCall.create(func));
         });
 
         it("spawns a new worker until the concurrency limit is reached", function () {
             // arrange
             const func = function () { /* ignore */ };
+            serializeCallSpy.and.returnValue({ functionId: "test-1" });
 
             // act
             threadPool.schedule(func);
@@ -43,15 +44,15 @@ describe("DefaultThreadPool", function () {
 
         it("executes the task in a worker thread", function () {
             // arrange
-            const func = function () { /* ignore */ };
-            spyOn(functionLookupTable, "getOrSetId").and.returnValue(1);
+            const func = function (value: number) { return value; };
             const runOnSpy = spyOn(WorkerTask.prototype, "runOn");
+            serializeCallSpy.and.returnValue({ functionId: "test-1" });
 
             const worker = { run: jasmine.createSpy("run") };
             spawn.and.returnValue(worker);
 
             // act
-            threadPool.schedule(func);
+            threadPool.schedule(func, 10);
 
             // assert
             expect(runOnSpy).toHaveBeenCalledWith(worker);
@@ -60,6 +61,7 @@ describe("DefaultThreadPool", function () {
         it("enqueues the task if no worker thread is available", function () {
             // arrange
             const func = function () { /* ignore */ };
+            serializeCallSpy.and.returnValue({ functionId: "test-1" });
 
             const worker1 = { run: jasmine.createSpy("run1"), stop: jasmine.createSpy("stop") };
             const worker2 = { run: jasmine.createSpy("run2"), stop: jasmine.createSpy("stop") };
@@ -81,6 +83,7 @@ describe("DefaultThreadPool", function () {
             // arrange
             const func = function () { /* ignore */ };
             const func2 = function add(x: number, y: number): number { return x + y; };
+            serializeCallSpy.and.returnValues({ functionId: "test-1" }, { functionId: "test-1" }, { functionId: "test-2" });
 
             const worker1 = { run: jasmine.createSpy("run1"), stop: jasmine.createSpy("stop") };
             const worker2 = { run: jasmine.createSpy("run2"), stop: jasmine.createSpy("stop") };
@@ -110,6 +113,7 @@ describe("DefaultThreadPool", function () {
             // arrange
             const worker1 = { run: jasmine.createSpy("run1"), stop: jasmine.createSpy("stop") };
             const worker2 = { run: jasmine.createSpy("run2"), stop: jasmine.createSpy("stop") };
+            serializeCallSpy.and.returnValue({ functionId: "test-1" });
             spawn.and.returnValues(worker1, worker2);
 
             const runOnSpy = spyOn(WorkerTask.prototype, "runOn");
@@ -135,13 +139,12 @@ describe("DefaultThreadPool", function () {
     });
 
     describe("createFunctionSerializer", function () {
-        it("returns a new serializer instance", function () {
+        it("returns the instance", function () {
             // arrange
-            const serializer = threadPool.createFunctionSerializer();
+            const serializer = threadPool.getFunctionSerializer();
 
             // assert
             expect(serializer).not.toBeUndefined();
-            expect(threadPool.createFunctionSerializer()).not.toBe(serializer);
         });
     });
 });

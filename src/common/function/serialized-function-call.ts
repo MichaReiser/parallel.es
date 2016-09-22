@@ -3,6 +3,8 @@
  */
 /** */
 
+import {IFunctionId} from "./function-id";
+
 /**
  * Serialized representation of a function call
  */
@@ -10,7 +12,7 @@ export interface ISerializedFunctionCall {
     /**
      * The id of the function to invoke ({@link IFunctionDefinition.id})
      */
-    functionId: number;
+    functionId: IFunctionId;
 
     /**
      * The parameters to pass to the function when called

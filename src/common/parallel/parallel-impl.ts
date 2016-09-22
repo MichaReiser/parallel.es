@@ -2,12 +2,12 @@ import {IParallel} from "./parallel";
 import {IDefaultInitializedParallelOptions, IParallelOptions} from "./parallel-options";
 import {IParallelChain} from "./chain/parallel-chain";
 import {IParallelTaskEnvironment} from "./parallel-environment";
-import {ParallelWorkerFunctions} from "./parallel-worker-functions";
 import {ParallelCollectionGenerator} from "./generator/parallel-collection-generator";
 import {ParallelRangeGenerator} from "./generator/parallel-range-generator";
 import {ParallelTimesGenerator} from "./generator/parallel-times-generator";
 import {createParallelChain} from "./chain/parallel-chain-factory";
 import {ITask} from "../task/task";
+import {IFunctionId, isFunctionId} from "../function/function-id";
 
 export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptions): IParallel {
     function mergeOptions(userOptions?: IParallelOptions): IDefaultInitializedParallelOptions {
@@ -42,15 +42,18 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
             return createParallelChain(generator, mergeOptions(options));
         },
 
-        times<TEnv, TResult>(n: number, generator: ((this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult) | TResult = ParallelWorkerFunctions.identity, env?: TEnv, options?: IParallelOptions) {
+        times<TEnv, TResult>(n: number, generator: ((this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult) | TResult | IFunctionId, env?: TEnv, options?: IParallelOptions) {
             if (env) {
-                return createParallelChain(new ParallelTimesGenerator<TResult>(n, generator), mergeOptions(options), env);
+                return createParallelChain(ParallelTimesGenerator.create(n, generator), mergeOptions(options), env);
             }
-            return createParallelChain(new ParallelTimesGenerator<TResult>(n, generator), mergeOptions(options));
+            return createParallelChain(ParallelTimesGenerator.create(n, generator), mergeOptions(options));
         },
 
-        schedule<TEnv, TResult>(this: IParallel, func: (this: void, env: TEnv & IParallelTaskEnvironment) => TResult, env?: TEnv, options?: IParallelOptions): ITask<TResult> {
+        schedule<TEnv, TResult>(this: IParallel, func: ((this: void, env: TEnv & IParallelTaskEnvironment) => TResult) | IFunctionId, env?: TEnv, options?: IParallelOptions): ITask<TResult> {
             const mergedOptions = mergeOptions(options);
+            if (isFunctionId(func)) {
+                return mergedOptions.threadPool.schedule<TResult>(func, env);
+            }
             return mergedOptions.threadPool.schedule(func, env);
         }
     };

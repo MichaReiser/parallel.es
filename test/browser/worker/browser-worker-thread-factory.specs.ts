@@ -1,5 +1,5 @@
 import {BrowserWorkerThreadFactory} from "../../../src/browser/worker/browser-worker-thread-factory";
-import {FunctionRegistry} from "../../../src/common/function/function-registry";
+import {DynamicFunctionRegistry} from "../../../src/common/function/dynamic-function-registry";
 import {IWorkerThread} from "../../../src/common/worker/worker-thread";
 import {BrowserWorkerThread} from "../../../src/browser/worker/browser-worker-thread";
 
@@ -8,7 +8,7 @@ describe("BrowserWorkerThreadFactory", function () {
     let workers: IWorkerThread[];
 
     beforeEach(function () {
-        factory = new BrowserWorkerThreadFactory(new FunctionRegistry());
+        factory = new BrowserWorkerThreadFactory(new DynamicFunctionRegistry());
         workers = [];
     });
 

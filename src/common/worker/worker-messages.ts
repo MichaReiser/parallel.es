@@ -1,5 +1,6 @@
 import {ITaskDefinition} from "../task/task-definition";
 import {IFunctionDefinition} from "../function/function-defintion";
+import {IFunctionId} from "../function/function-id";
 
 /**
  * Message types
@@ -79,7 +80,7 @@ export interface IFunctionRequest extends IWorkerMessage {
     /**
      * The ids of the requested functions
      */
-    functionIds: number[];
+    functionIds: IFunctionId[];
 }
 
 /**
@@ -137,7 +138,7 @@ export function scheduleTaskMessage(task: ITaskDefinition): IScheduleTaskMessage
  * @param otherFunctionIds additional ids to request from the worker slave
  * @returns the function request message
  */
-export function requestFunctionMessage(functionId: number, ...otherFunctionIds: number[]): IFunctionRequest {
+export function requestFunctionMessage(functionId: IFunctionId, ...otherFunctionIds: IFunctionId[]): IFunctionRequest {
     return { functionIds: [functionId, ...otherFunctionIds], type: WorkerMessageType.FunctionRequest };
 }
 

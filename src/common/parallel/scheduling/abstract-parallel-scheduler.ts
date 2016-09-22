@@ -1,4 +1,3 @@
-import {IParallelProcessParams, ParallelWorkerFunctions} from "../parallel-worker-functions";
 import {IParallelJob, IDefaultInitializedParallelOptions, IEmptyParallelEnvironment, IParallelOperation} from "../";
 import {ITask} from "../../task/task";
 import {ITaskDefinition} from "../../task/task-definition";
@@ -6,6 +5,9 @@ import {IParallelTaskDefinition} from "../parallel-task-definition";
 import {FunctionCallSerializer} from "../../function/function-call-serializer";
 import {FunctionCall} from "../../function/function-call";
 import {IParallelJobScheduler} from "./parallel-job-scheduler";
+import {ParallelWorkerFunctionIds} from "../slave/parallel-worker-functions";
+import {IParallelJobDefinition} from "../slave/parallel-job-executor";
+import {flattenArray} from "../../util/arrays";
 
 export abstract class AbstractParallelScheduler implements IParallelJobScheduler {
     public schedule<TResult>(job: IParallelJob): ITask<TResult>[] {
@@ -22,16 +24,17 @@ export abstract class AbstractParallelScheduler implements IParallelJobScheduler
 
     private getTaskDefinitions(job: IParallelJob): ITaskDefinition[] {
         const scheduling = this.getScheduling(job.generator.length, job.options);
-        const functionCallSerializer = job.options.threadPool.createFunctionSerializer();
+        const functionCallSerializer = job.options.threadPool.getFunctionSerializer();
 
         const environment = this.serializeEnvironment(job.environment, functionCallSerializer);
         const operations = this.serializeOperations(job.operations, functionCallSerializer);
+        const commonFunctionIds = [ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR].concat(flattenArray(operations.map(operation => [operation.iteratee.functionId, operation.iterator.functionId])));
 
         const taskDefinitions: ITaskDefinition[] = [];
         for (let i = 0; i < scheduling.numberOfTasks; ++i) {
             const generator = job.generator.serializeSlice(i, scheduling.valuesPerTask, functionCallSerializer);
 
-            const processParams: IParallelProcessParams = {
+            const processParams: IParallelJobDefinition = {
                 environment,
                 generator,
                 operations,
@@ -40,9 +43,9 @@ export abstract class AbstractParallelScheduler implements IParallelJobScheduler
             };
 
             const taskDefinition: IParallelTaskDefinition = {
-                main: functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctions.process, processParams),
+                main: functionCallSerializer.serializeFunctionCall(FunctionCall.createUnchecked(ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR, processParams)),
                 taskIndex: i,
-                usedFunctionIds: functionCallSerializer.serializedFunctionIds,
+                usedFunctionIds: [generator.functionId].concat(commonFunctionIds),
                 valuesPerTask: scheduling.valuesPerTask
             };
 
@@ -54,14 +57,14 @@ export abstract class AbstractParallelScheduler implements IParallelJobScheduler
     private serializeOperations(operations: IParallelOperation[], functionCallSerializer: FunctionCallSerializer) {
         return operations.map(operation => ({
             iteratee: functionCallSerializer.serializeFunctionCall(operation.iteratee),
-            iterator: functionCallSerializer.serializeFunctionCall(operation.iterator, ...operation.iteratorParams)
+            iterator: functionCallSerializer.serializeFunctionCall(operation.iterator)
         }));
     }
 
     private serializeEnvironment(environment: FunctionCall | IEmptyParallelEnvironment | undefined, functionCallSerializer: FunctionCallSerializer) {
         if (environment) {
             if (environment instanceof FunctionCall) {
-                return functionCallSerializer.serializeFunctionCall(environment.func, ...environment.params);
+                return functionCallSerializer.serializeFunctionCall(environment);
             }
             return environment;
         }

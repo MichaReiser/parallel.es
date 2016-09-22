@@ -3,6 +3,8 @@
  */
 /** */
 
+import {IFunctionId} from "./function-id";
+
 /**
  * Represents a function call
  */
@@ -40,7 +42,9 @@ export class FunctionCall {
      */
     public static create<TParam1, TParam2, TParam3>(func: (arg1: TParam1, arg2: TParam2, arg3: TParam3) => any, param1: TParam1, param2: TParam2, param3: TParam3): FunctionCall;
 
-    public static create(func: (...args: any[]) => any, ...args: any[]): FunctionCall {
+    public static create(func: IFunctionId, ...params: any[]): FunctionCall;
+
+    public static create(func: IFunctionId | ((...args: any[]) => any), ...args: any[]): FunctionCall {
         return new FunctionCall(func, args);
     }
 
@@ -50,21 +54,21 @@ export class FunctionCall {
      * @param params the parameters to pass
      * @returns the function call
      */
-    public static createUnchecked(func: Function, ...params: any[]) {
+    public static createUnchecked(func: Function | IFunctionId, ...params: any[]) {
         return new FunctionCall(func, params);
     }
 
     /**
      * The function to call
      */
-    public func: Function;
+    public func: Function | IFunctionId;
 
     /**
      * The parameters to pass to the function when calling it
      */
     public params: any[];
 
-    private constructor(func: Function, params: any[]) {
+    private constructor(func: Function | IFunctionId, params: any[]) {
         this.func = func;
         this.params = params;
     }

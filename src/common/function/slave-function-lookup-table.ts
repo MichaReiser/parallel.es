@@ -1,25 +1,23 @@
-import {IFunctionLookupTable} from "../../common/function/function-lookup-table";
-import {staticFunctionRegistry} from "../../common/function/static-function-registry";
-import {IFunctionDefinition} from "../../common/function/function-defintion";
+import {IFunctionLookupTable} from "./function-lookup-table";
+import {IFunctionDefinition} from "./function-defintion";
+import {IFunctionId} from "./function-id";
+import {SimpleMap} from "../util/simple-map";
 
 /**
- * Cache used by each {@link BrowserWorkerSlave} to cache the received functions.
+ * Cache used by each worker slave to cache the received functions.
  * Caching the functions has the advantage that function only is serialized, transmitted and deserialized once. This also
  * has the advantage, that the function instance stays the same and therefore can be optimized by the runtime system.
  */
-export class SlaveFunctionCache implements IFunctionLookupTable {
-    private cache: { [id: number]: Function} = {};
+export class SlaveFunctionLookupTable implements IFunctionLookupTable {
+    private cache = new SimpleMap<string, Function>();
 
     /**
      * Resolves the funciton with the givne id
      * @param id the id of the function to resolve
      * @returns the resolved function or undefined if not known
      */
-    public getFunction(id: number): Function | undefined {
-        if (staticFunctionRegistry.has(id)) {
-            return staticFunctionRegistry.getFunction(id);
-        }
-        return this.cache[id];
+    public getFunction(id: IFunctionId): Function | undefined {
+        return this.cache.get(id.identifier);
     }
 
     /**
@@ -29,8 +27,15 @@ export class SlaveFunctionCache implements IFunctionLookupTable {
      */
     public registerFunction(definition: IFunctionDefinition): Function {
         const f = Function.apply(null, [...definition.argumentNames, definition.body]);
-        this.cache[definition.id] = f;
+        this.cache.set(definition.id.identifier, f);
         return f;
+    }
+
+    public registerStaticFunction(id: IFunctionId, func: Function): void {
+        if (this.has(id)) {
+            throw new Error(`The given function id '${id.identifier}' is already used by another function registration, the id needs to be unique.`);
+        }
+        this.cache.set(id.identifier, func);
     }
 
     /**
@@ -38,7 +43,7 @@ export class SlaveFunctionCache implements IFunctionLookupTable {
      * @param id the id of the function to test for existence
      * @returns true if the cache contains a function with the given id
      */
-    public has(id: number) {
-        return !!(staticFunctionRegistry.has(id) || this.cache[id]);
+    public has(id: IFunctionId) {
+        return this.cache.has(id.identifier);
     }
 }

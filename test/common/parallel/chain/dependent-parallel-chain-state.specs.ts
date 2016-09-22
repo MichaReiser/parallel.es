@@ -4,7 +4,8 @@ import {IParallelStream} from "../../../../src/common/parallel/stream/parallel-s
 import {ScheduledParallelChainState} from "../../../../src/common/parallel/chain/scheduled-parallel-chain-state";
 import {IParallelJobScheduler} from "../../../../src/common/parallel/scheduling/parallel-job-scheduler";
 import {ParallelCollectionGenerator} from "../../../../src/common/parallel/generator/parallel-collection-generator";
-import {ParallelWorkerFunctions} from "../../../../src/common/parallel/parallel-worker-functions";
+import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
+import {FunctionCall} from "../../../../src/common/function/function-call";
 
 describe("DependentParallelChainState", function () {
     let previousStream: IParallelStream<string[], string[]>;
@@ -63,9 +64,8 @@ describe("DependentParallelChainState", function () {
         it("returns a new state", function () {
             const state = new DependentParallelChainState(previousStream, options, environment);
             const operation = {
-                iteratee: () => undefined,
-                iterator: ParallelWorkerFunctions.map,
-                iteratorParams: []
+                iteratee: FunctionCall.create(() => undefined),
+                iterator: FunctionCall.create(ParallelWorkerFunctionIds.MAP)
             };
 
             // act
@@ -79,9 +79,8 @@ describe("DependentParallelChainState", function () {
             // arrange
             const state = new DependentParallelChainState(previousStream, options, environment);
             const operation = {
-                iteratee: () => undefined,
-                iterator: ParallelWorkerFunctions.map,
-                iteratorParams: []
+                iteratee: FunctionCall.create(() => undefined),
+                iterator: FunctionCall.create(ParallelWorkerFunctionIds.MAP)
             };
 
             // act

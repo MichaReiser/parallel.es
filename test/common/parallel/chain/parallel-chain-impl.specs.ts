@@ -1,12 +1,12 @@
 import {IParallelGenerator} from "../../../../src/common/parallel/generator/parallel-generator";
 import {FunctionCall} from "../../../../src/common/function/function-call";
-import {ParallelWorkerFunctions} from "../../../../src/common/parallel/parallel-worker-functions";
 import {IDefaultInitializedParallelOptions} from "../../../../src/common/parallel";
 import {ParallelCollectionGenerator} from "../../../../src/common/parallel/generator/parallel-collection-generator";
 import {IParallelChainState} from "../../../../src/common/parallel/chain/parallel-chain-state";
 import {ParallelChainImpl} from "../../../../src/common/parallel/chain/parallel-chain-impl";
 import {IParallelChain} from "../../../../src/common/parallel/chain/parallel-chain";
 import {ParallelStream} from "../../../../src/common/parallel/stream/parallel-stream-impl";
+import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
 
 describe("ParallelChainImpl", function () {
     let generator: IParallelGenerator;
@@ -71,9 +71,8 @@ describe("ParallelChainImpl", function () {
 
             // assert
             expect(chainOperationSpy).toHaveBeenCalledWith({
-                iteratee: mapper,
-                iterator: ParallelWorkerFunctions.map,
-                iteratorParams: []
+                iteratee: FunctionCall.createUnchecked(mapper),
+                iterator: FunctionCall.create(ParallelWorkerFunctionIds.MAP)
             });
         });
 
@@ -102,9 +101,8 @@ describe("ParallelChainImpl", function () {
 
             // assert
             expect(chainOperationSpy).toHaveBeenCalledWith({
-                iteratee: filter,
-                iterator: ParallelWorkerFunctions.filter,
-                iteratorParams: []
+                iteratee: FunctionCall.createUnchecked(filter),
+                iterator: FunctionCall.create(ParallelWorkerFunctionIds.FILTER)
             });
         });
 
@@ -139,9 +137,8 @@ describe("ParallelChainImpl", function () {
 
             // assert
             expect(chainOperationSpy).toHaveBeenCalledWith({
-                iteratee: add,
-                iterator: ParallelWorkerFunctions.reduce,
-                iteratorParams: [ 0 ]
+                iteratee: FunctionCall.createUnchecked(add),
+                iterator: FunctionCall.create(ParallelWorkerFunctionIds.REDUCE, 0)
             });
         });
 

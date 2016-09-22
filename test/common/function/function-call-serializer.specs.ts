@@ -1,15 +1,21 @@
-import {FunctionRegistry} from "../../../src/common/function/function-registry";
+import {DynamicFunctionRegistry} from "../../../src/common/function/dynamic-function-registry";
 import {FunctionCallSerializer} from "../../../src/common/function/function-call-serializer";
+import {FunctionCall} from "../../../src/common/function/function-call";
+
 describe("FunctionCallSerializer", function () {
 
-    let functionRegistry: FunctionRegistry;
+    let functionRegistry: DynamicFunctionRegistry;
     let serializer: FunctionCallSerializer;
     function testFunction () {
         return 190;
     }
 
+    function parametrizedFunction(arg: number) {
+        return arg;
+    }
+
     beforeEach(function () {
-        functionRegistry = new FunctionRegistry();
+        functionRegistry = new DynamicFunctionRegistry();
         serializer = new FunctionCallSerializer(functionRegistry);
     });
 
@@ -19,7 +25,7 @@ describe("FunctionCallSerializer", function () {
             spyOn(functionRegistry, "getOrSetId").and.returnValue(1);
 
             // act
-            const serialized = serializer.serializeFunctionCall(testFunction);
+            const serialized = serializer.serializeFunctionCall(FunctionCall.create(testFunction));
 
             // assert
             expect(serialized).not.toBeUndefined();
@@ -32,39 +38,11 @@ describe("FunctionCallSerializer", function () {
             spyOn(functionRegistry, "getOrSetId").and.returnValue(1);
 
             // act
-            const serialized = serializer.serializeFunctionCall(testFunction, 10);
+            const serialized = serializer.serializeFunctionCall(FunctionCall.create(parametrizedFunction, 10));
 
             // assert
             expect(serialized).not.toBeUndefined();
             expect(serialized.parameters).toEqual([10]);
-        });
-    });
-
-    describe("serializedFunctionIds", function () {
-        it("returns an empty array by default", function () {
-            expect(serializer.serializedFunctionIds).toEqual([]);
-        });
-
-        it("returns the id of all serialized functions", function () {
-            // arrange
-            spyOn(functionRegistry, "getOrSetId").and.returnValues(1, 2);
-            function secondFunction() { return 10; }
-
-            serializer.serializeFunctionCall(testFunction);
-            serializer.serializeFunctionCall(secondFunction);
-
-            // act, assert
-            expect(serializer.serializedFunctionIds).toEqual([1, 2]);
-        });
-
-        it("only returns unique function ids", function () {
-            // arrange
-            spyOn(functionRegistry, "getOrSetId").and.returnValue(1);
-            serializer.serializeFunctionCall(testFunction, 10);
-            serializer.serializeFunctionCall(testFunction, 20);
-
-            // act, assert
-            expect(serializer.serializedFunctionIds).toEqual([1]);
         });
     });
 });

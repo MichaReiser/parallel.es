@@ -1,5 +1,5 @@
 import {isFunctionRequest, IFunctionRequest, functionResponseMessage, isWorkerResult, isFunctionExecutionError} from "../../common/worker/worker-messages";
-import {FunctionRegistry} from "../../common/function/function-registry";
+import {DynamicFunctionRegistry} from "../../common/function/dynamic-function-registry";
 
 /**
  * State of the browser worker thread
@@ -29,7 +29,7 @@ export class BrowserWorkerThreadState {
  * Browser worker thread is executing a function on the {@link BrowserWorkerSlave}
  */
 export class BrowserWorkerThreadExecutingState extends BrowserWorkerThreadState {
-    constructor(private callback: (error: any, result: any) => void, private functionRegistry: FunctionRegistry, private worker: Worker) {
+    constructor(private callback: (error: any, result: any) => void, private functionRegistry: DynamicFunctionRegistry, private worker: Worker) {
         super("executing");
     }
 

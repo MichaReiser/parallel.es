@@ -1,7 +1,8 @@
 import {IParallelGenerator} from "./parallel-generator";
 import {FunctionCallSerializer} from "../../function/function-call-serializer";
 import {ISerializedFunctionCall} from "../../function/serialized-function-call";
-import {ParallelWorkerFunctions} from "../parallel-worker-functions";
+import {ParallelWorkerFunctionIds} from "../slave/parallel-worker-functions";
+import {FunctionCall} from "../../function/function-call";
 /**
  * Generator for arrays.
  * Splits the array elements onto separate tasks.
@@ -22,6 +23,6 @@ export class ParallelCollectionGenerator<T> implements IParallelGenerator {
         const start = numberOfItems * index;
         const end = start + numberOfItems;
 
-        return functionCallSerializer.serializeFunctionCall(ParallelWorkerFunctions.toIterator, this.collection.slice(start, end));
+        return functionCallSerializer.serializeFunctionCall(FunctionCall.createUnchecked(ParallelWorkerFunctionIds.TO_ITERATOR, this.collection.slice(start, end)));
     }
 }

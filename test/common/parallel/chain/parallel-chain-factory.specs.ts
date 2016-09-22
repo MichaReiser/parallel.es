@@ -1,4 +1,3 @@
-import {ParallelWorkerFunctions} from "../../../../src/common/parallel/parallel-worker-functions";
 import {IParallelGenerator} from "../../../../src/common/parallel/generator/parallel-generator";
 import {ParallelCollectionGenerator} from "../../../../src/common/parallel/generator/parallel-collection-generator";
 import {IDefaultInitializedParallelOptions} from "../../../../src/common/parallel";
@@ -7,6 +6,8 @@ import {IParallelChainState} from "../../../../src/common/parallel/chain/paralle
 import {IParallelChain} from "../../../../src/common/parallel/chain/parallel-chain";
 import {ParallelChainImpl} from "../../../../src/common/parallel/chain/parallel-chain-impl";
 import {PendingParallelChainState} from "../../../../src/common/parallel/chain/pending-parallel-chain-state";
+import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
+import {FunctionCall} from "../../../../src/common/function/function-call";
 
 describe("createParallelChain", function () {
     let generator: IParallelGenerator;
@@ -25,7 +26,7 @@ describe("createParallelChain", function () {
         // arrange
         const operations = [{
             iteratee: (value: number) => value * 2,
-            iterator: ParallelWorkerFunctions.map,
+            iterator: ParallelWorkerFunctionIds.MAP,
             iteratorParams: []
         }];
 
@@ -48,9 +49,8 @@ describe("createParallelChain", function () {
         const env = { test: 10 };
 
         const operations = [{
-            iteratee: (value: number) => value * 2,
-            iterator: ParallelWorkerFunctions.map,
-            iteratorParams: []
+            iteratee: FunctionCall.createUnchecked((value: number) => value * 2),
+            iterator: FunctionCall.create(ParallelWorkerFunctionIds.MAP)
         }];
 
         // act

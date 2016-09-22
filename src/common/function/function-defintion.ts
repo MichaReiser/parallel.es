@@ -3,6 +3,8 @@
  */
 /** */
 
+import {IFunctionId} from "./function-id";
+
 /**
  * Serialized representation of a function.
  */
@@ -10,7 +12,7 @@ export interface IFunctionDefinition {
     /**
      * Unique identification of the function
      */
-    id: number;
+    id: IFunctionId;
 
     /**
      * The names of the function arguments
