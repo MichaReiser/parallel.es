@@ -13,7 +13,7 @@ describe("SlaveFunctionLookupTable", function () {
             expect(cache.getFunction(functionId("test", 1000))).toBeUndefined();
         });
 
-        it("returns the reference to the dynamic function registered in the cache, if the function is not a static one", function () {
+        it("returns the reference to the registered function in the cache", function () {
             // arrange
             cache.registerFunction({
                 argumentNames: ["x"],
@@ -41,6 +41,31 @@ describe("SlaveFunctionLookupTable", function () {
 
             // assert
             expect(cache.has(functionId("test", 1000))).toBe(true);
+        });
+    });
+
+    describe("registerStaticFunction", function () {
+        it("registers the function using the given id", function () {
+            // arrange
+            const id = functionId("test", 0);
+            const func = () => undefined;
+
+            // act
+            cache.registerStaticFunction(id, func);
+
+            // assert
+            expect(cache.getFunction(id)).toBe(func);
+        });
+
+        it("throws if a function with the given id is already registered", function() {
+            // arrange
+            const id = functionId("test", 0);
+            const func = () => undefined;
+            const func2 = () => undefined;
+            cache.registerStaticFunction(id, func);
+
+            // act, assert
+            expect(() => cache.registerStaticFunction(id, func2)).toThrowError("The given function id 'test-0' is already used by another function registration, the id needs to be unique.");
         });
     });
 });

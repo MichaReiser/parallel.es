@@ -32,6 +32,9 @@ export class SlaveFunctionLookupTable implements IFunctionLookupTable {
     }
 
     public registerStaticFunction(id: IFunctionId, func: Function): void {
+        if (this.has(id)) {
+            throw new Error(`The given function id '${id.identifier}' is already used by another function registration, the id needs to be unique.`);
+        }
         this.cache.set(id.identifier, func);
     }
 

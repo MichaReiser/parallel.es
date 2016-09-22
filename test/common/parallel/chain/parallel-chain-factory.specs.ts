@@ -7,6 +7,7 @@ import {IParallelChain} from "../../../../src/common/parallel/chain/parallel-cha
 import {ParallelChainImpl} from "../../../../src/common/parallel/chain/parallel-chain-impl";
 import {PendingParallelChainState} from "../../../../src/common/parallel/chain/pending-parallel-chain-state";
 import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
+import {FunctionCall} from "../../../../src/common/function/function-call";
 
 describe("createParallelChain", function () {
     let generator: IParallelGenerator;
@@ -48,9 +49,8 @@ describe("createParallelChain", function () {
         const env = { test: 10 };
 
         const operations = [{
-            iteratee: (value: number) => value * 2,
-            iterator: ParallelWorkerFunctionIds.MAP,
-            iteratorParams: []
+            iteratee: FunctionCall.createUnchecked((value: number) => value * 2),
+            iterator: FunctionCall.create(ParallelWorkerFunctionIds.MAP)
         }];
 
         // act

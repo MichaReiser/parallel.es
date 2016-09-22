@@ -3,6 +3,7 @@ import {IEmptyParallelEnvironment, IDefaultInitializedParallelOptions} from "../
 import {IParallelStream} from "../../../../src/common/parallel/stream/parallel-stream";
 import {DependentParallelChainState} from "../../../../src/common/parallel/chain/dependent-parallel-chain-state";
 import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
+import {FunctionCall} from "../../../../src/common/function/function-call";
 
 describe("ScheduledParallelChainState", function () {
     let options: IDefaultInitializedParallelOptions;
@@ -33,9 +34,8 @@ describe("ScheduledParallelChainState", function () {
         it("returns a dependent parallel chain for the current stream and the new operation", function () {
             // arrange
             const operation = {
-                iteratee: () => undefined,
-                iterator: ParallelWorkerFunctionIds.MAP,
-                iteratorParams: []
+                iteratee: FunctionCall.create(() => undefined),
+                iterator: FunctionCall.create(ParallelWorkerFunctionIds.MAP)
             };
 
             expect(state.chainOperation(operation)).toEqual(new DependentParallelChainState(stream, options, environment, [operation]));

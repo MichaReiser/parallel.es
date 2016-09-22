@@ -71,9 +71,8 @@ describe("ParallelChainImpl", function () {
 
             // assert
             expect(chainOperationSpy).toHaveBeenCalledWith({
-                iteratee: mapper,
-                iterator: ParallelWorkerFunctionIds.MAP,
-                iteratorParams: []
+                iteratee: FunctionCall.createUnchecked(mapper),
+                iterator: FunctionCall.create(ParallelWorkerFunctionIds.MAP)
             });
         });
 
@@ -102,9 +101,8 @@ describe("ParallelChainImpl", function () {
 
             // assert
             expect(chainOperationSpy).toHaveBeenCalledWith({
-                iteratee: filter,
-                iterator: ParallelWorkerFunctionIds.FILTER,
-                iteratorParams: []
+                iteratee: FunctionCall.createUnchecked(filter),
+                iterator: FunctionCall.create(ParallelWorkerFunctionIds.FILTER)
             });
         });
 
@@ -139,9 +137,8 @@ describe("ParallelChainImpl", function () {
 
             // assert
             expect(chainOperationSpy).toHaveBeenCalledWith({
-                iteratee: add,
-                iterator: ParallelWorkerFunctionIds.REDUCE,
-                iteratorParams: [ 0 ]
+                iteratee: FunctionCall.createUnchecked(add),
+                iterator: FunctionCall.create(ParallelWorkerFunctionIds.REDUCE, 0)
             });
         });
 

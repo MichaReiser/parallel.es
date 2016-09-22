@@ -5,6 +5,7 @@ import {IParallelGenerator} from "../../../../src/common/parallel/generator/para
 import {ParallelCollectionGenerator} from "../../../../src/common/parallel/generator/parallel-collection-generator";
 import {ScheduledParallelChainState} from "../../../../src/common/parallel/chain/scheduled-parallel-chain-state";
 import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
+import {FunctionCall} from "../../../../src/common/function/function-call";
 
 describe("PendingParallelChainState", function () {
     let options: IDefaultInitializedParallelOptions;
@@ -61,9 +62,8 @@ describe("PendingParallelChainState", function () {
         it("returns a new state", function () {
             // arrange
             const operation = {
-                iteratee: () => undefined,
-                iterator: ParallelWorkerFunctionIds.MAP,
-                iteratorParams: []
+                iteratee: FunctionCall.create(() => undefined),
+                iterator: FunctionCall.create(ParallelWorkerFunctionIds.MAP)
             };
 
             // act
@@ -73,9 +73,8 @@ describe("PendingParallelChainState", function () {
         it("returns a state containing the chained operation", function () {
             // arrange
             const operation = {
-                iteratee: () => undefined,
-                iterator: ParallelWorkerFunctionIds.MAP,
-                iteratorParams: []
+                iteratee: FunctionCall.create(() => undefined),
+                iterator: FunctionCall.create(ParallelWorkerFunctionIds.MAP)
             };
 
             // act

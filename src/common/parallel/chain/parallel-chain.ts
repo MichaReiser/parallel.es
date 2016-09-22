@@ -5,6 +5,7 @@
 
 import {IParallelStream} from "../stream/parallel-stream";
 import {IEmptyParallelEnvironment, IParallelTaskEnvironment} from "../parallel-environment";
+import {IFunctionId} from "../../function/function-id";
 
 /**
  * The parallel chain allows to chain multiple operations before they are executed on a worker.
@@ -30,6 +31,7 @@ export interface IParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOu
      * @returns the chain
      */
     inEnvironment<TEnvNew extends TEnv>(provider: (this: void) => TEnvNew): IParallelChain<TIn, TEnvNew, TOut>;
+    inEnvironment<TEnvNew extends TEnv>(provider: IFunctionId): IParallelChain<TIn, TEnvNew, TOut>;
 
     /**
      * @param param1 single parameter that is passed to the provider
@@ -69,6 +71,7 @@ export interface IParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOu
      * @param TResult the type of the resulting elements
      */
     map<TResult>(mapper: { (this: void, element: TOut, env: TEnv & IParallelTaskEnvironment): TResult }): IParallelChain<TIn, TEnv, TResult>;
+    map<TResult>(mapper: IFunctionId ): IParallelChain<TIn, TEnv, TResult>;
 
     /**
      * Reduces the elements to a single value using the givne accumulator. The accumulator is invoked with the - up to now - accumulated value
@@ -78,6 +81,7 @@ export interface IParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOu
      * @returns parallel stream that allows to query the end result
      */
     reduce(defaultValue: TOut, accumulator: { (this: void, memo: TOut, value: TOut, env?: TEnv & IParallelTaskEnvironment): TOut }): IParallelStream<TOut[], TOut>;
+    reduce(defaultValue: TOut, accumulator: IFunctionId): IParallelStream<TOut[], TOut>;
 
     /**
      * Reduces the elements to a single value using the givne accumulator. The accumulator is invoked with the - up to now - accumulated value
@@ -89,12 +93,14 @@ export interface IParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOu
      * @returns parallel stream that allows to query the end result
      */
     reduce<TResult>(defaultValue: TResult, accumulator: { (this: void, memo: TResult, value: TOut, env: TEnv & IParallelTaskEnvironment): TResult }, combiner: { (this: void, subResult1: TResult, subResult2: TResult): TResult }): IParallelStream<TResult[], TResult>;
+    reduce<TResult>(defaultValue: TResult, accumulator: IFunctionId, combiner: { (this: void, subResult1: TResult, subResult2: TResult): TResult }): IParallelStream<TResult[], TResult>;
 
     /**
      * Filters the input elements using the given predicate
      * @param predicate the predicate to use to filter the elements
      */
     filter(predicate: { (this: void, value: TOut, env: TEnv & IParallelTaskEnvironment): boolean }): IParallelChain<TIn, TEnv, TOut>;
+    filter(predicate: IFunctionId): IParallelChain<TIn, TEnv, TOut>;
 
     // sortBy?
     // split? Allows to reuse the same intermediate result for multiple succeeding calls.

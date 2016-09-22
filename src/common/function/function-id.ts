@@ -1,5 +1,10 @@
 /**
- * Identifier for a serialized funciton
+ * @module parallel
+ */
+/** */
+
+/**
+ * Identifier for a serialized function
  */
 export interface IFunctionId {
     /**

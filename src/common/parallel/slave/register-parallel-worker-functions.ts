@@ -19,6 +19,5 @@ export function registerStaticParallelFunctions(lookupTable: IFunctionLookupTabl
     lookupTable.registerStaticFunction(ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR, parallelJobExecutor);
     lookupTable.registerStaticFunction(ParallelWorkerFunctionIds.RANGE, rangeIterator);
     lookupTable.registerStaticFunction(ParallelWorkerFunctionIds.REDUCE, reduceIterator);
-    lookupTable.registerStaticFunction(ParallelWorkerFunctionIds.IDENTITY, identity);
     lookupTable.registerStaticFunction(ParallelWorkerFunctionIds.TO_ITERATOR, toIterator);
 }

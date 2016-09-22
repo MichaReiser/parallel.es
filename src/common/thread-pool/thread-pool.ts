@@ -6,6 +6,7 @@
 import {ITask} from "../task/task";
 import {ITaskDefinition} from "../task/task-definition";
 import {FunctionCallSerializer} from "../function/function-call-serializer";
+import {IFunctionId} from "../function/function-id";
 
 /**
  * The thread pool is responsible for distributing the scheduled tasks onto different workers. The thread pool defines how the
@@ -107,14 +108,21 @@ export interface IThreadPool {
     schedule<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(func: (this: void, param1: TParam1, param2: TParam2, param3: TParam3, param4: TParam4, param5: TParam5, param6: TParam6, ...furtherParams: any[]) => TResult, param1: TParam1, param2: TParam2, param3: TParam3, param4: TParam4, param5: TParam5, param6: TParam6, ...furtherParams: any[]): ITask<TResult>;
 
     /**
+     * Schedules the function with the given id
+     * @param func the id of the function
+     * @param params the params to pass to the function
+     */
+    schedule<TResult>(func: IFunctionId, ...params: any[]): ITask<TResult>;
+
+    /**
      * Schedules the passed in task definition onto an available worker or enqueues the task to be scheduled as soon as a worker gets available.
      * @param task the task to schedule
      */
     scheduleTask<TResult>(task: ITaskDefinition): ITask<TResult>;
 
     /**
-     * Creates a function serializer that can be used to serialize function calls.
+     * returns the function serializer that can be used to serialize function calls.
      * @returns a new function serializer
      */
-    createFunctionSerializer(): FunctionCallSerializer;
+    getFunctionSerializer(): FunctionCallSerializer;
 }

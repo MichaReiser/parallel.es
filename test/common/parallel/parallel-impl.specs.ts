@@ -6,6 +6,8 @@ import {ParallelCollectionGenerator} from "../../../src/common/parallel/generato
 import * as ParallelChainFactoryModule from "../../../src/common/parallel/chain/parallel-chain-factory";
 import {IDefaultInitializedParallelOptions} from "../../../src/common/parallel";
 import {IThreadPool} from "../../../src/common/thread-pool/thread-pool";
+import {FunctionCall} from "../../../src/common/function/function-call";
+import {functionId} from "../../../src/common/function/function-id";
 
 describe("Parallel", function () {
     let parallel: IParallel;
@@ -170,9 +172,9 @@ describe("Parallel", function () {
 
             // assert
             expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelTimesGenerator), options);
-            const generator = createParallelChainSpy.calls.argsFor(0)[0] as ParallelTimesGenerator<number>;
+            const generator = createParallelChainSpy.calls.argsFor(0)[0] as ParallelTimesGenerator;
             expect(generator.times).toBe(10);
-            expect(generator.iteratee).toBe(generatorFunc);
+            expect(generator.iteratee).toEqual(FunctionCall.createUnchecked(generatorFunc));
         });
 
         it("merges the options with the default options", function () {
@@ -197,6 +199,17 @@ describe("Parallel", function () {
 
             // assert
             expect(scheduleSpy).toHaveBeenCalledWith(func, { test: 123 });
+        });
+
+        it("schedules the function with the given id on the thread pool", function () {
+            // arrange
+            const funcId = functionId("test", 0);
+
+            // act
+            parallel.schedule(funcId, { test: 123 });
+
+            // assert
+            expect(scheduleSpy).toHaveBeenCalledWith(funcId, { test: 123 });
         });
     });
 });
