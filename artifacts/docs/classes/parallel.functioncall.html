@@ -118,19 +118,19 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Function<wbr>Call<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span>, params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.functioncall.html" class="tsd-signature-type">FunctionCall</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Function<wbr>Call<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a>, params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.functioncall.html" class="tsd-signature-type">FunctionCall</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call.ts#L65">common/function/function-call.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-call.ts#L69">common/function/function-call.ts:69</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>func: <span class="tsd-signature-type">Function</span></h5>
+									<h5>func: <span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a></h5>
 								</li>
 								<li>
 									<h5>params: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
@@ -146,10 +146,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="func" class="tsd-anchor"></a>
 					<h3>func</h3>
-					<div class="tsd-signature tsd-kind-icon">func<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span></div>
+					<div class="tsd-signature tsd-kind-icon">func<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call.ts#L60">common/function/function-call.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-call.ts#L64">common/function/function-call.ts:64</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -164,7 +164,7 @@
 					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call.ts#L65">common/function/function-call.ts:65</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-call.ts#L69">common/function/function-call.ts:69</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,12 +184,13 @@
 						<li class="tsd-signature tsd-kind-icon">create&lt;TParam1&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.functioncall.html" class="tsd-signature-type">FunctionCall</a></li>
 						<li class="tsd-signature tsd-kind-icon">create&lt;TParam1, TParam2&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.functioncall.html" class="tsd-signature-type">FunctionCall</a></li>
 						<li class="tsd-signature tsd-kind-icon">create&lt;TParam1, TParam2, TParam3&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.functioncall.html" class="tsd-signature-type">FunctionCall</a></li>
+						<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a>, <span class="tsd-signature-symbol">...</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.functioncall.html" class="tsd-signature-type">FunctionCall</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call.ts#L15">common/function/function-call.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-call.ts#L17">common/function/function-call.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -224,7 +225,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call.ts#L24">common/function/function-call.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-call.ts#L26">common/function/function-call.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -280,7 +281,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call.ts#L35">common/function/function-call.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-call.ts#L37">common/function/function-call.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -351,7 +352,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call.ts#L41">common/function/function-call.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-call.ts#L43">common/function/function-call.ts:43</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -415,19 +416,36 @@
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.functioncall.html" class="tsd-signature-type">FunctionCall</a></h4>
 						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-call.ts#L45">common/function/function-call.ts:45</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>func: <a href="../interfaces/parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>params: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="parallel.functioncall.html" class="tsd-signature-type">FunctionCall</a></h4>
+						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
 					<a name="createunchecked" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> create<wbr>Unchecked</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Unchecked<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span>, <span class="tsd-signature-symbol">...</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.functioncall.html" class="tsd-signature-type">FunctionCall</a></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Unchecked<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a>, <span class="tsd-signature-symbol">...</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.functioncall.html" class="tsd-signature-type">FunctionCall</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call.ts#L53">common/function/function-call.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-call.ts#L57">common/function/function-call.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -438,7 +456,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>func: <span class="tsd-signature-type">Function</span></h5>
+									<h5>func: <span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>the function to call</p>
 									</div>
@@ -507,6 +525,9 @@
 						<a href="../interfaces/parallel.ifunctiondefinition.html" class="tsd-kind-icon">IFunction<wbr>Definition</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/parallel.ifunctionid.html" class="tsd-kind-icon">IFunction<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/parallel.iparallel.html" class="tsd-kind-icon">IParallel</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
@@ -543,6 +564,9 @@
 						<a href="../interfaces/parallel.iworkerthread.html" class="tsd-kind-icon">IWorker<wbr>Thread</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/parallel.html#functioncallserializer-1" class="tsd-kind-icon">function<wbr>Call<wbr>Serializer</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/parallel.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
@@ -553,6 +577,12 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/parallel.html#threadpool" class="tsd-kind-icon">thread<wbr>Pool</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/parallel.html#functionid" class="tsd-kind-icon">function<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/parallel.html#isfunctionid" class="tsd-kind-icon">is<wbr>Function<wbr>Id</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
 						<a href="../modules/parallel.html#isserializedfunctioncall" class="tsd-kind-icon">is<wbr>Serialized<wbr>Function<wbr>Call</a>

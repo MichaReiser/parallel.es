@@ -99,7 +99,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="parallel.ithreadpool.html#createfunctionserializer" class="tsd-kind-icon">create<wbr>Function<wbr>Serializer</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="parallel.ithreadpool.html#getfunctionserializer" class="tsd-kind-icon">get<wbr>Function<wbr>Serializer</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="parallel.ithreadpool.html#schedule" class="tsd-kind-icon">schedule</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="parallel.ithreadpool.html#scheduletask" class="tsd-kind-icon">schedule<wbr>Task</a></li>
 							</ul>
@@ -110,21 +110,21 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="createfunctionserializer" class="tsd-anchor"></a>
-					<h3>create<wbr>Function<wbr>Serializer</h3>
+					<a name="getfunctionserializer" class="tsd-anchor"></a>
+					<h3>get<wbr>Function<wbr>Serializer</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Function<wbr>Serializer<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Function<wbr>Serializer<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/thread-pool/thread-pool.ts#L119">common/thread-pool/thread-pool.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/thread-pool/thread-pool.ts#L127">common/thread-pool/thread-pool.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a function serializer that can be used to serialize function calls.</p>
+									<p>returns the function serializer that can be used to serialize function calls.</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a></h4>
@@ -144,12 +144,13 @@
 						<li class="tsd-signature tsd-kind-icon">schedule&lt;TParam1, TParam2, TParam3, TParam4, TParam5, TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 						<li class="tsd-signature tsd-kind-icon">schedule&lt;TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 						<li class="tsd-signature tsd-kind-icon">schedule&lt;TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, param1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam1</span>, param2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam2</span>, param3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam3</span>, param4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam4</span>, param5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam5</span>, param6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TParam6</span>, <span class="tsd-signature-symbol">...</span>furtherParams<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">schedule&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><a href="parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a>, <span class="tsd-signature-symbol">...</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/thread-pool/thread-pool.ts#L24">common/thread-pool/thread-pool.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/thread-pool/thread-pool.ts#L25">common/thread-pool/thread-pool.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -201,7 +202,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/thread-pool/thread-pool.ts#L30">common/thread-pool/thread-pool.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/thread-pool/thread-pool.ts#L31">common/thread-pool/thread-pool.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -256,7 +257,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/thread-pool/thread-pool.ts#L38">common/thread-pool/thread-pool.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/thread-pool/thread-pool.ts#L39">common/thread-pool/thread-pool.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -326,7 +327,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/thread-pool/thread-pool.ts#L48">common/thread-pool/thread-pool.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/thread-pool/thread-pool.ts#L49">common/thread-pool/thread-pool.ts:49</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -411,7 +412,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/thread-pool/thread-pool.ts#L60">common/thread-pool/thread-pool.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/thread-pool/thread-pool.ts#L61">common/thread-pool/thread-pool.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -511,7 +512,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/thread-pool/thread-pool.ts#L74">common/thread-pool/thread-pool.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/thread-pool/thread-pool.ts#L75">common/thread-pool/thread-pool.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -626,7 +627,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/thread-pool/thread-pool.ts#L90">common/thread-pool/thread-pool.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/thread-pool/thread-pool.ts#L91">common/thread-pool/thread-pool.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -756,7 +757,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/thread-pool/thread-pool.ts#L107">common/thread-pool/thread-pool.ts:107</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/thread-pool/thread-pool.ts#L108">common/thread-pool/thread-pool.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -892,6 +893,40 @@
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/thread-pool/thread-pool.ts#L115">common/thread-pool/thread-pool.ts:115</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Schedules the function with the given id</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TResult</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>func: <a href="parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the id of the function</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>params: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the params to pass to the function</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
@@ -904,7 +939,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/thread-pool/thread-pool.ts#L113">common/thread-pool/thread-pool.ts:113</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/thread-pool/thread-pool.ts#L121">common/thread-pool/thread-pool.ts:121</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -962,6 +997,9 @@
 						<a href="parallel.ifunctiondefinition.html" class="tsd-kind-icon">IFunction<wbr>Definition</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="parallel.ifunctionid.html" class="tsd-kind-icon">IFunction<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="parallel.iparallel.html" class="tsd-kind-icon">IParallel</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
@@ -997,7 +1035,7 @@
 						<a href="parallel.ithreadpool.html" class="tsd-kind-icon">IThread<wbr>Pool</a>
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="parallel.ithreadpool.html#createfunctionserializer" class="tsd-kind-icon">create<wbr>Function<wbr>Serializer</a>
+								<a href="parallel.ithreadpool.html#getfunctionserializer" class="tsd-kind-icon">get<wbr>Function<wbr>Serializer</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
 								<a href="parallel.ithreadpool.html#schedule" class="tsd-kind-icon">schedule</a>
@@ -1013,6 +1051,9 @@
 						<a href="parallel.iworkerthread.html" class="tsd-kind-icon">IWorker<wbr>Thread</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/parallel.html#functioncallserializer-1" class="tsd-kind-icon">function<wbr>Call<wbr>Serializer</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/parallel.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
@@ -1023,6 +1064,12 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/parallel.html#threadpool" class="tsd-kind-icon">thread<wbr>Pool</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/parallel.html#functionid" class="tsd-kind-icon">function<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/parallel.html#isfunctionid" class="tsd-kind-icon">is<wbr>Function<wbr>Id</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
 						<a href="../modules/parallel.html#isserializedfunctioncall" class="tsd-kind-icon">is<wbr>Serialized<wbr>Function<wbr>Call</a>

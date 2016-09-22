@@ -99,13 +99,6 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="parallel.functioncallserializer.html#functionregistry" class="tsd-kind-icon">function<wbr>Registry</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="parallel.functioncallserializer.html#serializedfunctionidsmap" class="tsd-kind-icon">serialized<wbr>Function<wbr>Ids<wbr>Map</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Accessors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="parallel.functioncallserializer.html#serializedfunctionids" class="tsd-kind-icon">serialized<wbr>Function<wbr>Ids</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -123,13 +116,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Function<wbr>Call<wbr>Serializer<span class="tsd-signature-symbol">(</span>functionRegistry<span class="tsd-signature-symbol">: </span><a href="_common_function_function_registry_.functionregistry.html" class="tsd-signature-type">FunctionRegistry</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Function<wbr>Call<wbr>Serializer<span class="tsd-signature-symbol">(</span>functionRegistry<span class="tsd-signature-symbol">: </span><a href="_common_function_dynamic_function_registry_.dynamicfunctionregistry.html" class="tsd-signature-type">DynamicFunctionRegistry</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call-serializer.ts#L13">common/function/function-call-serializer.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-call-serializer.ts#L13">common/function/function-call-serializer.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -140,7 +133,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>functionRegistry: <a href="_common_function_function_registry_.functionregistry.html" class="tsd-signature-type">FunctionRegistry</a></h5>
+									<h5>functionRegistry: <a href="_common_function_dynamic_function_registry_.dynamicfunctionregistry.html" class="tsd-signature-type">DynamicFunctionRegistry</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>the registry for function lookup</p>
@@ -158,10 +151,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="functionregistry" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> function<wbr>Registry</h3>
-					<div class="tsd-signature tsd-kind-icon">function<wbr>Registry<span class="tsd-signature-symbol">:</span> <a href="_common_function_function_registry_.functionregistry.html" class="tsd-signature-type">FunctionRegistry</a></div>
+					<div class="tsd-signature tsd-kind-icon">function<wbr>Registry<span class="tsd-signature-symbol">:</span> <a href="_common_function_dynamic_function_registry_.dynamicfunctionregistry.html" class="tsd-signature-type">DynamicFunctionRegistry</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call-serializer.ts#L19">common/function/function-call-serializer.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-call-serializer.ts#L19">common/function/function-call-serializer.ts:19</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -170,50 +163,6 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="serializedfunctionidsmap" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> serialized<wbr>Function<wbr>Ids<wbr>Map</h3>
-					<div class="tsd-signature tsd-kind-icon">serialized<wbr>Function<wbr>Ids<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call-serializer.ts#L13">common/function/function-call-serializer.ts:13</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>id: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">number</span></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="serializedfunctionids" class="tsd-anchor"></a>
-					<h3>serialized<wbr>Function<wbr>Ids</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> serializedFunctionIds<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call-serializer.ts#L41">common/function/function-call-serializer.ts:41</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns the ids of all functions serialized by this instance.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h4>
-							<p>array with the ids of the serialized functions</p>
-						</li>
-					</ul>
-				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
@@ -221,13 +170,13 @@
 					<a name="serializefunctioncall" class="tsd-anchor"></a>
 					<h3>serialize<wbr>Function<wbr>Call</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">serialize<wbr>Function<wbr>Call<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span>, <span class="tsd-signature-symbol">...</span>parameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iserializedfunctioncall.html" class="tsd-signature-type">ISerializedFunctionCall</a></li>
+						<li class="tsd-signature tsd-kind-icon">serialize<wbr>Function<wbr>Call<span class="tsd-signature-symbol">(</span>call<span class="tsd-signature-symbol">: </span><a href="parallel.functioncall.html" class="tsd-signature-type">FunctionCall</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iserializedfunctioncall.html" class="tsd-signature-type">ISerializedFunctionCall</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/function-call-serializer.ts#L27">common/function/function-call-serializer.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-call-serializer.ts#L26">common/function/function-call-serializer.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -238,15 +187,9 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>func: <span class="tsd-signature-type">Function</span></h5>
+									<h5>call: <a href="parallel.functioncall.html" class="tsd-signature-type">FunctionCall</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>parameters: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>the parameters to pass when the function is called</p>
+										<p>the function call to serialize</p>
 									</div>
 								</li>
 							</ul>
@@ -284,12 +227,6 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="parallel.functioncallserializer.html#functionregistry" class="tsd-kind-icon">function<wbr>Registry</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="parallel.functioncallserializer.html#serializedfunctionidsmap" class="tsd-kind-icon">serialized<wbr>Function<wbr>Ids<wbr>Map</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="parallel.functioncallserializer.html#serializedfunctionids" class="tsd-kind-icon">serialized<wbr>Function<wbr>Ids</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="parallel.functioncallserializer.html#serializefunctioncall" class="tsd-kind-icon">serialize<wbr>Function<wbr>Call</a>
 							</li>
@@ -305,6 +242,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/parallel.ifunctiondefinition.html" class="tsd-kind-icon">IFunction<wbr>Definition</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/parallel.ifunctionid.html" class="tsd-kind-icon">IFunction<wbr>Id</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/parallel.iparallel.html" class="tsd-kind-icon">IParallel</a>
@@ -343,6 +283,9 @@
 						<a href="../interfaces/parallel.iworkerthread.html" class="tsd-kind-icon">IWorker<wbr>Thread</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/parallel.html#functioncallserializer-1" class="tsd-kind-icon">function<wbr>Call<wbr>Serializer</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/parallel.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
@@ -353,6 +296,12 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/parallel.html#threadpool" class="tsd-kind-icon">thread<wbr>Pool</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/parallel.html#functionid" class="tsd-kind-icon">function<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/parallel.html#isfunctionid" class="tsd-kind-icon">is<wbr>Function<wbr>Id</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
 						<a href="../modules/parallel.html#isserializedfunctioncall" class="tsd-kind-icon">is<wbr>Serialized<wbr>Function<wbr>Call</a>

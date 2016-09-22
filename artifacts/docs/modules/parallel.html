@@ -91,6 +91,7 @@
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.idefaultinitializedparalleloptions.html" class="tsd-kind-icon">IDefault<wbr>Initialized<wbr>Parallel<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.iemptyparallelenvironment.html" class="tsd-kind-icon">IEmpty<wbr>Parallel<wbr>Environment</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.ifunctiondefinition.html" class="tsd-kind-icon">IFunction<wbr>Definition</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.ifunctionid.html" class="tsd-kind-icon">IFunction<wbr>Id</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.iparallel.html" class="tsd-kind-icon">IParallel</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter"><a href="../interfaces/parallel.iparallelchain.html" class="tsd-kind-icon">IParallel<wbr>Chain</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/parallel.iparalleljob.html" class="tsd-kind-icon">IParallel<wbr>Job</a></li>
@@ -108,6 +109,7 @@
 						<section class="tsd-index-section ">
 							<h3>Variables</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="parallel.html#functioncallserializer-1" class="tsd-kind-icon">function<wbr>Call<wbr>Serializer</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="parallel.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="parallel.html#maxconcurrencylevel" class="tsd-kind-icon">max<wbr>Concurrency<wbr>Level</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module"><a href="parallel.html#parallel-1" class="tsd-kind-icon">parallel</a></li>
@@ -117,6 +119,8 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="parallel.html#functionid" class="tsd-kind-icon">function<wbr>Id</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="parallel.html#isfunctionid" class="tsd-kind-icon">is<wbr>Function<wbr>Id</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="parallel.html#isserializedfunctioncall" class="tsd-kind-icon">is<wbr>Serialized<wbr>Function<wbr>Call</a></li>
 							</ul>
 						</section>
@@ -126,12 +130,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Variables</h2>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="functionlookuptable" class="tsd-anchor"></a>
-					<h3>function<wbr>Lookup<wbr>Table</h3>
-					<div class="tsd-signature tsd-kind-icon">function<wbr>Lookup<wbr>Table<span class="tsd-signature-symbol">:</span> <a href="../classes/_common_function_function_registry_.functionregistry.html" class="tsd-signature-type">FunctionRegistry</a><span class="tsd-signature-symbol"> =&nbsp;new FunctionRegistry()</span></div>
+					<a name="functioncallserializer-1" class="tsd-anchor"></a>
+					<h3>function<wbr>Call<wbr>Serializer</h3>
+					<div class="tsd-signature tsd-kind-icon">function<wbr>Call<wbr>Serializer<span class="tsd-signature-symbol">:</span> <a href="../classes/parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a><span class="tsd-signature-symbol"> =&nbsp;new FunctionCallSerializer(functionLookupTable)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/browser/index.ts#L23">browser/index.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/browser/index.ts#L26">browser/index.ts:26</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="functionlookuptable" class="tsd-anchor"></a>
+					<h3>function<wbr>Lookup<wbr>Table</h3>
+					<div class="tsd-signature tsd-kind-icon">function<wbr>Lookup<wbr>Table<span class="tsd-signature-symbol">:</span> <a href="../classes/_common_function_dynamic_function_registry_.dynamicfunctionregistry.html" class="tsd-signature-type">DynamicFunctionRegistry</a><span class="tsd-signature-symbol"> =&nbsp;new DynamicFunctionRegistry()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/browser/index.ts#L24">browser/index.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -141,7 +155,7 @@
 					<div class="tsd-signature tsd-kind-icon">max<wbr>Concurrency<wbr>Level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;(window.navigator as any)[&quot;hardwareConcurrency&quot;] || 4</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/browser/index.ts#L24">browser/index.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/browser/index.ts#L25">browser/index.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -151,7 +165,7 @@
 					<div class="tsd-signature tsd-kind-icon">parallel<span class="tsd-signature-symbol">:</span> <a href="../interfaces/parallel.iparallel.html" class="tsd-signature-type">IParallel</a><span class="tsd-signature-symbol"> =&nbsp;parallelFactory({ maxConcurrencyLevel, scheduler: new DefaultParallelScheduler(), threadPool })</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/browser/index.ts#L30">browser/index.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/browser/index.ts#L32">browser/index.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -163,16 +177,86 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="threadpool" class="tsd-anchor"></a>
 					<h3>thread<wbr>Pool</h3>
-					<div class="tsd-signature tsd-kind-icon">thread<wbr>Pool<span class="tsd-signature-symbol">:</span> <a href="../classes/_common_thread_pool_default_thread_pool_.defaultthreadpool.html" class="tsd-signature-type">DefaultThreadPool</a><span class="tsd-signature-symbol"> =&nbsp;new DefaultThreadPool(new BrowserWorkerThreadFactory(functionLookupTable), functionLookupTable, {maxConcurrencyLevel})</span></div>
+					<div class="tsd-signature tsd-kind-icon">thread<wbr>Pool<span class="tsd-signature-symbol">:</span> <a href="../classes/_common_thread_pool_default_thread_pool_.defaultthreadpool.html" class="tsd-signature-type">DefaultThreadPool</a><span class="tsd-signature-symbol"> =&nbsp;new DefaultThreadPool(new BrowserWorkerThreadFactory(functionLookupTable), functionCallSerializer, {maxConcurrencyLevel})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/browser/index.ts#L25">browser/index.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/browser/index.ts#L27">browser/index.ts:27</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="functionid" class="tsd-anchor"></a>
+					<h3>function<wbr>Id</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">function<wbr>Id<span class="tsd-signature-symbol">(</span>namespace<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-id.ts#L27">common/function/function-id.ts:27</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a function id</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>namespace: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the namespace of the id</p>
+									</div>
+								</li>
+								<li>
+									<h5>id: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the unique id for this namespace</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a></h4>
+							<p>the function id</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="isfunctionid" class="tsd-anchor"></a>
+					<h3>is<wbr>Function<wbr>Id</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Function<wbr>Id<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/function-id.ts#L39">common/function/function-id.ts:39</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Tests if the given object is a function id</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>obj: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the object to test for</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>true if the object is  a function id</p>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
 					<a name="isserializedfunctioncall" class="tsd-anchor"></a>
 					<h3>is<wbr>Serialized<wbr>Function<wbr>Call</h3>
@@ -183,7 +267,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/3ef85db/src/common/function/serialized-function-call.ts#L31">common/function/serialized-function-call.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/701810b/src/common/function/serialized-function-call.ts#L33">common/function/serialized-function-call.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -236,6 +320,9 @@
 						<a href="../interfaces/parallel.ifunctiondefinition.html" class="tsd-kind-icon">IFunction<wbr>Definition</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/parallel.ifunctionid.html" class="tsd-kind-icon">IFunction<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/parallel.iparallel.html" class="tsd-kind-icon">IParallel</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
@@ -272,6 +359,9 @@
 						<a href="../interfaces/parallel.iworkerthread.html" class="tsd-kind-icon">IWorker<wbr>Thread</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="parallel.html#functioncallserializer-1" class="tsd-kind-icon">function<wbr>Call<wbr>Serializer</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="parallel.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
@@ -282,6 +372,12 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="parallel.html#threadpool" class="tsd-kind-icon">thread<wbr>Pool</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="parallel.html#functionid" class="tsd-kind-icon">function<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="parallel.html#isfunctionid" class="tsd-kind-icon">is<wbr>Function<wbr>Id</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
 						<a href="parallel.html#isserializedfunctioncall" class="tsd-kind-icon">is<wbr>Serialized<wbr>Function<wbr>Call</a>
