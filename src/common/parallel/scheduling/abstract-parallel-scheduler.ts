@@ -8,6 +8,7 @@ import {IParallelJobScheduler} from "./parallel-job-scheduler";
 import {ParallelWorkerFunctionIds} from "../slave/parallel-worker-functions";
 import {IParallelJobDefinition} from "../slave/parallel-job-executor";
 import {flattenArray} from "../../util/arrays";
+import {isSerializedFunctionCall} from "../../function/serialized-function-call";
 
 export abstract class AbstractParallelScheduler implements IParallelJobScheduler {
     public schedule<TResult>(job: IParallelJob): ITask<TResult>[] {
@@ -29,6 +30,9 @@ export abstract class AbstractParallelScheduler implements IParallelJobScheduler
         const environment = this.serializeEnvironment(job.environment, functionCallSerializer);
         const operations = this.serializeOperations(job.operations, functionCallSerializer);
         const commonFunctionIds = [ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR].concat(flattenArray(operations.map(operation => [operation.iteratee.functionId, operation.iterator.functionId])));
+        if (isSerializedFunctionCall(environment)) {
+            commonFunctionIds.push(environment.functionId);
+        }
 
         const taskDefinitions: ITaskDefinition[] = [];
         for (let i = 0; i < scheduling.numberOfTasks; ++i) {
