@@ -31,5 +31,5 @@ export interface ISerializedFunctionCall {
  * @returns {boolean} true if it is a serialized function call, false otherwise
  */
 export function isSerializedFunctionCall(potentialFunc: any): potentialFunc is ISerializedFunctionCall {
-    return potentialFunc.______serializedFunctionCall === true;
+    return !!potentialFunc && potentialFunc.______serializedFunctionCall === true;
 }
