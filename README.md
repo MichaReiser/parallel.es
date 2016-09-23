@@ -2,7 +2,10 @@
 [![Build Status](https://travis-ci.org/DatenMetzgerX/parallel.es.svg?branch=master)](https://travis-ci.org/DatenMetzgerX/parallel.es)
 [![Coverage Status](https://coveralls.io/repos/github/DatenMetzgerX/parallel.es/badge.svg?branch=master)](https://coveralls.io/github/DatenMetzgerX/parallel.es?branch=master)
 
-Simple parallelization for ES
+Simple parallelization for EcmaScript
+
+## Architecture
+The Architecture is described in the [wiki](./wiki)
 
 ## Browsers support <sub><sup><sub><sub>made by @godban</sub></sub></sup></sub>
 
