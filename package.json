@@ -5,9 +5,9 @@
   "main": "index.js",
   "browser": "./dist/browser-es5-commonjs.parallel-es.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=prod webpack --progress",
+    "build": "cross-env NODE_ENV=prod webpack --progress && cross-env NODE_ENV=prod-es6 webpack --progress",
     "build:doc": "typedoc --out ./docs --module umd --target es6 --name \"Parallel ES\" ./src",
-	"build:gh-pages": "cross-env NODE_ENV=gh-pages webpack --progress",
+    "build:gh-pages": "cross-env NODE_ENV=gh-pages webpack --progress",
     "prepublish": "npm run-script build",
     "start": "cross-env NODE_ENV=dev webpack-dev-server --progress --content-base example --hot",
     "test": "cross-env NODE_ENV=test-ci karma start --single-run && npm run coverage:remap",
@@ -65,6 +65,6 @@
     "webpack": "2.1.0-beta.22",
     "webpack-config": "6.1.3",
     "webpack-dev-server": "2.1.0-beta.4",
-    "worker-loader": "0.7.1"
+    "worker-loader": "github:datenmetzgerx/worker-loader#use-query-name-as-entry-name"
   }
 }
