@@ -4,14 +4,16 @@ var CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = new Config().extend("conf/webpack.base.config.js").merge({
     entry: {
-        "browser-es5-commonjs": "./src/browser/index-commonjs"
+        "browser-commonjs": "./src/browser/index-commonjs"
     },
-    debug: false,
+    debug: true,
     devtool: "#source-map",
     plugins: [
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true
+        }),
         new CompressionPlugin({
             asset: "[path].gz[query]",
             algorithm: "gzip",

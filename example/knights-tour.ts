@@ -20,11 +20,13 @@ function createEnvironment(boardSize: number): IKnightTourEnvironment {
     };
 }
 
-export function knightTours(startPath: ICoordinate[], { board, boardSize }: IKnightTourEnvironment): number {
+export function knightTours(startPath: ICoordinate[], environment: IKnightTourEnvironment): number {
     const moves = [
         { x: -2, y: -1 }, { x: -2, y: 1}, { x: -1, y: -2 }, { x: -1, y: 2 },
         { x: 1, y: -2 }, { x: 1, y: 2}, { x: 2, y: -1 }, { x: 2, y: 1 }
     ];
+    const boardSize = environment.boardSize;
+    const board = environment.board;
     const numberOfFields = boardSize * boardSize;
     let results: number = 0;
     const stack: { coordinate: ICoordinate, n: number }[] = startPath.map((pos, index) => ({ coordinate: pos, n: index + 1 }));
