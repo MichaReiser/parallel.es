@@ -11,27 +11,27 @@ describe("DefaultParallelScheduler", function () {
     });
 
     describe("getScheduling", function () {
-        it("returns the options.maxConcurrencyLevel as numberOfTasks by default", function () {
+        it("returns the options.maxConcurrencyLevel * 4 as numberOfTasks by default", function () {
             // act
             const scheduling = scheduler.getScheduling(10, options);
 
             // assert
-            expect(scheduling.numberOfTasks).toBe(options.maxConcurrencyLevel);
+            expect(scheduling.numberOfTasks).toBe(options.maxConcurrencyLevel * 4);
         });
 
-        it("uses options.maxvaluesPerTask as upper items limit", function () {
+        it("uses options.maxValuesPerTask as upper items limit", function () {
             // arrange
-            options.maxValuesPerTask = 2;
+            options.maxValuesPerTask = 1;
 
             // act
             const scheduling = scheduler.getScheduling(10, options);
 
             // assert
-            expect(scheduling.valuesPerTask).toBe(2);
-            expect(scheduling.numberOfTasks).toBe(5);
+            expect(scheduling.valuesPerTask).toBe(1);
+            expect(scheduling.numberOfTasks).toBe(10);
         });
 
-        it("ignores maxValuesPerTask if the calculated count is less then maxvaluesPerTask", function () {
+        it("ignores maxValuesPerTask if the calculated count is less then maxValuesPerTask", function () {
             // arrange
             options.maxValuesPerTask = 6;
 
@@ -39,8 +39,8 @@ describe("DefaultParallelScheduler", function () {
             const scheduling = scheduler.getScheduling(10, options);
 
             // assert
-            expect(scheduling.valuesPerTask).toBe(5);
-            expect(scheduling.numberOfTasks).toBe(2);
+            expect(scheduling.valuesPerTask).toBe(2);
+            expect(scheduling.numberOfTasks).toBe(8);
         });
 
         it("assigns at least minValuesPerTask for each worker if the value is set", function () {
