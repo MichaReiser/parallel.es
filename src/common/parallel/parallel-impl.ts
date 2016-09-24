@@ -49,12 +49,11 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
             return createParallelChain(ParallelTimesGenerator.create(n, generator), mergeOptions(options));
         },
 
-        schedule<TEnv, TResult>(this: IParallel, func: ((this: void, env: TEnv & IParallelTaskEnvironment) => TResult) | IFunctionId, env?: TEnv, options?: IParallelOptions): ITask<TResult> {
-            const mergedOptions = mergeOptions(options);
+        schedule<TResult>(func: ((this: void, ...params: any[]) => TResult) | IFunctionId, ...params: any[]): ITask<TResult> {
             if (isFunctionId(func)) {
-                return mergedOptions.threadPool.schedule<TResult>(func, env);
+                return defaultOptions.threadPool.schedule<TResult>(func, ...params);
             }
-            return mergedOptions.threadPool.schedule(func, env);
+            return defaultOptions.threadPool.schedule(func as any, ...params);
         }
     };
 }
