@@ -3,7 +3,7 @@ import {AbstractParallelScheduler, IParallelTaskScheduling} from "./abstract-par
 
 /**
  * Default implementation of a parallel scheduler.
- * By default, creates as many tasks as the hardware concurrency allows ({@link IParallelOptions.maxConcurrencyLevel}).
+ * By default, creates 4 times as many tasks as the hardware concurrency allows ({@link IParallelOptions.maxConcurrencyLevel}).
  *
  * If the options define {@link IParallelOptions.maxValuesPerTask} or {@link IParallelOptions.minValuesPerTask}, then the
  * values are adjusted accordingly.
