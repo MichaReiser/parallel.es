@@ -15,11 +15,12 @@ import {FunctionCallSerializer} from "../common/function/function-call-serialize
 export {ITaskDefinition} from "../common/task/task-definition";
 export {ITask} from "../common/task/task";
 export {IFunctionDefinition} from "../common/function/function-defintion";
+export {IFunctionId} from "../common/function/function-id";
 export {FunctionCall} from "../common/function/function-call";
 export {ISerializedFunctionCall, isSerializedFunctionCall} from "../common/function/serialized-function-call";
 export {FunctionCallSerializer} from "../common/function/function-call-serializer";
 export {IThreadPool} from "../common/thread-pool/thread-pool";
-export * from "../common/parallel";
+export * from "../common/parallel/index";
 
 const functionLookupTable = new DynamicFunctionRegistry();
 const maxConcurrencyLevel = (window.navigator as any)["hardwareConcurrency"] || 4;

@@ -20,7 +20,6 @@ module.exports = new Config().extend("conf/webpack.base.config.js", function (co
             filename: FILE_NAME
         }
     },
-    debug: true,
     devtool: "#source-map",
     plugins: [
         new webpack.optimize.DedupePlugin(),

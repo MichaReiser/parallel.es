@@ -1,4 +1,3 @@
-
 import {IPromise} from "../../util/promise";
 import {IParallelStream} from "./parallel-stream";
 import {ScheduledParallelStream} from "./scheduled-parallel-stream";
@@ -12,20 +11,20 @@ import {ITask} from "../../task/task";
  * @param valuesPerTask the number of values each task has to process at most
  * @param TSubResult type of the sub result
  */
-type INextCallback<TSubResult> = (subResult: TSubResult, taskIndex: number, valuesPerTask: number) => any
+export type INextCallback<TSubResult> = (subResult: TSubResult, taskIndex: number, valuesPerTask: number) => any
 
 /**
  * Function that resolves the end result of a parallel stream
  * @param result the end result of the stream
  * @param TEndResult type of the end result
  */
-type IResolveCallback<TEndResult> = (result: TEndResult) => any;
+export type IResolveCallback<TEndResult> = (result: TEndResult) => any;
 
 /**
  * Function to reject a parallel stream
  * @param reason the rejection reason
  */
-type IRejectCallback = (reason: any) => any;
+export type IRejectCallback = (reason: any) => any;
 
 /**
  * Callback that is invoked for a new {@link ParallelStream}
@@ -34,7 +33,7 @@ type IRejectCallback = (reason: any) => any;
  * @param resolve callback to invoke to resolve the stream
  * @param reject callback to invoke to reject the stream
  */
-type IExecutorCallback<TSubResult, TEndResult> = (next: INextCallback<TSubResult>, resolve: IResolveCallback<TEndResult>, reject: IRejectCallback) => any
+export type IExecutorCallback<TSubResult, TEndResult> = (next: INextCallback<TSubResult>, resolve: IResolveCallback<TEndResult>, reject: IRejectCallback) => any
 
 /**
  * Generic parallel stream that can be coordinated using the provided next, resolve and reject callbacks.

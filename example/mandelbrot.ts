@@ -1,7 +1,7 @@
 import parallel from "../src/browser/index";
 import {IParallelOptions} from "../src/common/parallel/parallel-options";
 
-interface IComplexNumber {
+export interface IComplexNumber {
     i: number;
     real: number;
 }
