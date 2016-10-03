@@ -1,0 +1,17 @@
+node_modules
+.idea
+coverage
+typings
+conf
+.babelrc
+.bithoundrc
+.npmignore
+.travis.yml
+browser-stack.png
+deploy-gh-pages.sh
+karma.conf.js
+tsconfig.json
+tslint.json
+typings.json
+webpack.config.js
+tmp

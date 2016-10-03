@@ -9,6 +9,5 @@ module.exports = new Config()
         }
     })
     .merge({
-        debug: true,
         devtool: "#inline-source-map"
     });

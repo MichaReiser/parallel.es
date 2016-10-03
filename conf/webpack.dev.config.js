@@ -14,7 +14,6 @@ module.exports = new Config().extend({
         example: "./example/browser-example.ts",
         "performance-measurement": "./example/performance-measurement.ts"
     },
-    debug: true,
     devtool: "#inline-source-map",
     output: {
         pathinfo: true

@@ -13,7 +13,6 @@ module.exports = new Config().extend("conf/webpack.prod.config.js").merge({
     output: {
         path: path.resolve(__dirname, "../gh-pages-out/artifacts")
     },
-    debug: false,
     devtool: "#source-map",
     plugins: [
         new CommonsChunkPlugin("browser")
