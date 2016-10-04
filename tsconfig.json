@@ -10,5 +10,8 @@
     "pretty": true,
     "target": "es6",
     "sourceMap": true
-  }
+  },
+  "files": [
+    "src/browser/index"
+  ]
 }
