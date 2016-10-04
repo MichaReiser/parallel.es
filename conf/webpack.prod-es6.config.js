@@ -4,13 +4,15 @@ var CompressionPlugin = require("compression-webpack-plugin");
 
 const FILE_NAME = "[name].parallel-es6.js";
 
-module.exports = new Config().extend("conf/webpack.base.config.js", function (config) {
-    const awesomeLoader = config.loaders.find(function (loader) {
-        return loader.loader === "awesome-typescript-loader";
-    });
+module.exports = new Config().extend({
+    "conf/webpack.base.config.js": function (config) {
+        const awesomeLoader = config.module.loaders.find(function (loader) {
+            return loader.loader === "awesome-typescript-loader";
+        });
 
-    awesomeLoader.query.useBabel = false;
-    return config;
+        awesomeLoader.query.useBabel = false;
+        return config;
+    }
 }).merge({
     output: {
         filename: FILE_NAME
