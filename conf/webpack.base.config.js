@@ -5,7 +5,8 @@ const FILE_NAME = "[name].parallel.js";
 
 module.exports = new Config().merge({
     entry: {
-        browser: "./src/browser/index.ts"
+        browser: "./src/api/browser.ts",
+        node: "./src/api/node.ts"
     },
     output: {
         library: "parallel-es",

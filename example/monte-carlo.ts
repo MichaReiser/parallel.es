@@ -1,4 +1,4 @@
-import parallel from "../src/browser/index";
+import parallel from "../src/api/browser";
 import {Dictionary} from "lodash";
 
 /* tslint:disable:no-var-requires */

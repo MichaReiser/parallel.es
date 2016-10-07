@@ -4,7 +4,7 @@ var CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = new Config().extend("conf/webpack.base.config.js").merge({
     entry: {
-        "browser-commonjs": "./src/browser/index-commonjs"
+        "browser-commonjs": "./src/api/browser-commonjs"
     },
     devtool: "#source-map",
     plugins: [
