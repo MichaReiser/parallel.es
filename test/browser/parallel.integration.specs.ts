@@ -1,4 +1,4 @@
-import parallel from "../../src/browser/index";
+import parallel from "../../src/api/browser";
 
 describe("ParallelIntegration", function () {
     it("reduce waits for the result to be computed on the workers and returns the reduced value", function (done) {
