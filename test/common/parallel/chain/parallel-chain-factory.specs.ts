@@ -8,6 +8,7 @@ import {ParallelChainImpl} from "../../../../src/common/parallel/chain/parallel-
 import {PendingParallelChainState} from "../../../../src/common/parallel/chain/pending-parallel-chain-state";
 import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
 import {FunctionCall} from "../../../../src/common/function/function-call";
+import {ParallelEnvironmentDefinition} from "../../../../src/common/parallel/parallel-environment-definition";
 
 describe("createParallelChain", function () {
     let generator: IParallelGenerator;
@@ -40,13 +41,13 @@ describe("createParallelChain", function () {
 
         expect(pendingState.generator).toEqual(jasmine.any(ParallelCollectionGenerator));
         expect(pendingState.options).toEqual(options);
-        expect(pendingState.environment).toEqual({});
+        expect(pendingState.environment).toEqual(ParallelEnvironmentDefinition.of());
         expect(pendingState.operations).toEqual(operations);
     });
 
     it("it uses the third parameter as environment if it is not an array", function () {
         // arrange
-        const env = { test: 10 };
+        const env = ParallelEnvironmentDefinition.of({ test: 10 });
 
         const operations = [{
             iteratee: FunctionCall.createUnchecked((value: number) => value * 2),
@@ -54,7 +55,7 @@ describe("createParallelChain", function () {
         }];
 
         // act
-        const chain = createParallelChain(generator, options, env, operations);
+        const chain = createParallelChain(generator, options, { test: 10 }, operations);
         const state = getChainState(chain);
 
         // assert

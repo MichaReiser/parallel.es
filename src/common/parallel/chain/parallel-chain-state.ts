@@ -1,8 +1,8 @@
 import {FunctionCall} from "../../function/function-call";
-import {IEmptyParallelEnvironment, IParallelOperation} from "../";
+import {IParallelEnvironment, IParallelOperation} from "../";
 import {IParallelStream} from "../stream/parallel-stream";
 
-export type IParallelChainEnvironment = FunctionCall | IEmptyParallelEnvironment;
+export type IParallelChainEnvironment = FunctionCall | IParallelEnvironment;
 
 /**
  * State of a parallel chain. Dependent of the state of the chain, the chaining of operation, changing of the
@@ -25,11 +25,11 @@ export interface IParallelChainState<TElement> {
     chainOperation<TElementNew>(operation: IParallelOperation): IParallelChainState<TElementNew>;
 
     /**
-     * Changes the environment of the change to the given one
+     * Adds the given environment to the current environment
      * @param environment the new environment to use
      * @returns the new state that uses the given environment instead of the existing one
      */
-    changeEnvironment(environment: IParallelChainEnvironment): IParallelChainState<TElement>;
+    addEnvironment(environment: IParallelChainEnvironment): IParallelChainState<TElement>;
 }
 
 /**

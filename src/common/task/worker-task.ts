@@ -70,7 +70,7 @@ export class WorkerTask<T> implements ITask<T> {
         return this.promise.then(onfulfilled);
     }
 
-    public catch(onrejected: (reason: any) => (PromiseLike<T>|T)): Promise<T> {
+    public catch(onrejected: (reason: any) => (PromiseLike<any>|any)): Promise<any> {
         return this.promise.catch(onrejected);
     }
 

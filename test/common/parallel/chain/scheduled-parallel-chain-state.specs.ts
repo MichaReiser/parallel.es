@@ -1,13 +1,14 @@
 import {ScheduledParallelChainState} from "../../../../src/common/parallel/chain/scheduled-parallel-chain-state";
-import {IEmptyParallelEnvironment, IDefaultInitializedParallelOptions} from "../../../../src/common/parallel";
+import {IDefaultInitializedParallelOptions} from "../../../../src/common/parallel";
 import {IParallelStream} from "../../../../src/common/parallel/stream/parallel-stream";
 import {DependentParallelChainState} from "../../../../src/common/parallel/chain/dependent-parallel-chain-state";
 import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
 import {FunctionCall} from "../../../../src/common/function/function-call";
+import {ParallelEnvironmentDefinition} from "../../../../src/common/parallel/parallel-environment-definition";
 
 describe("ScheduledParallelChainState", function () {
     let options: IDefaultInitializedParallelOptions;
-    let environment: IEmptyParallelEnvironment;
+    let environment: ParallelEnvironmentDefinition;
     let stream: IParallelStream<string[], string[]>;
     let state: ScheduledParallelChainState<string>;
 
@@ -18,7 +19,7 @@ describe("ScheduledParallelChainState", function () {
             threadPool: undefined as any
         };
 
-        environment = { test: 10 };
+        environment = ParallelEnvironmentDefinition.of({ test: 10 });
         stream = jasmine.createSpyObj("stream", ["then"]);
 
         state = new ScheduledParallelChainState(stream, options, environment);
@@ -42,9 +43,9 @@ describe("ScheduledParallelChainState", function () {
         });
     });
 
-    describe("changeEnvironment", function () {
+    describe("addEnvironment", function () {
         it("returns a dependent parallel chain for the current stream and the new environment", function () {
-            expect(state.changeEnvironment({ test: 25 })).toEqual(new DependentParallelChainState(stream, options, { test: 25 }, []));
+            expect(state.addEnvironment({ test: 25 })).toEqual(new DependentParallelChainState(stream, options, ParallelEnvironmentDefinition.of({ test: 25 }), []));
         });
     });
 });

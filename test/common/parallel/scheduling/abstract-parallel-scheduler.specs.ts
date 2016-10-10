@@ -11,6 +11,7 @@ import {IParallelGenerator} from "../../../../src/common/parallel/generator/para
 import {ParallelCollectionGenerator} from "../../../../src/common/parallel/generator/parallel-collection-generator";
 import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
 import {functionId} from "../../../../src/common/function/function-id";
+import {ParallelEnvironmentDefinition} from "../../../../src/common/parallel/parallel-environment-definition";
 
 describe("AbstractParallelScheduler", function () {
     let options: IDefaultInitializedParallelOptions;
@@ -60,6 +61,7 @@ describe("AbstractParallelScheduler", function () {
 
             // act
             const tasks = scheduler.schedule({
+                environment: ParallelEnvironmentDefinition.of(),
                 generator,
                 options,
                 operations: []
@@ -87,6 +89,7 @@ describe("AbstractParallelScheduler", function () {
 
             // act
             scheduler.schedule({
+                environment: ParallelEnvironmentDefinition.of(),
                 generator,
                 options,
                 operations: []
@@ -111,7 +114,7 @@ describe("AbstractParallelScheduler", function () {
 
             // act
             scheduler.schedule({
-                environment: { test: 10 },
+                environment: ParallelEnvironmentDefinition.of({ test: 10 }),
                 generator,
                 options,
                 operations: []
@@ -119,46 +122,7 @@ describe("AbstractParallelScheduler", function () {
 
             // assert
             expect(serializeFunctionCallSpy).toHaveBeenCalledWith(FunctionCall.create(ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR, {
-                environment: { test: 10 },
-                generator: { functionId: 2 },
-                operations: [],
-                taskIndex: 0,
-                valuesPerTask: 3
-            }));
-        });
-
-        it("serializes the environment provider as serialized function call", function () {
-            // arrange
-            getSchedulingSpy.and.returnValue({ numberOfTasks: 1, valuesPerTask: 3 });
-            const serializeFunctionCallSpy = jasmine.createSpy("serializeFunction");
-            const functionSerializer = {
-                serializeFunctionCall: serializeFunctionCallSpy,
-                serializedFunctionIds: [1, 5, 9]
-            };
-
-            const initializer = (val: number) => ({ test: val });
-
-            spyOn(generator, "serializeSlice").and.returnValue({ functionId: 2 });
-
-            createFunctionSerializerSpy.and.returnValue(functionSerializer);
-            serializeFunctionCallSpy.and.callFake((call: FunctionCall) => {
-                if (call.func === initializer) {
-                    return { ______serializedFunctionCall: true, functionId: 5, parameters: call.params };
-                }
-                return undefined;
-            });
-
-            // act
-            scheduler.schedule({
-                environment: FunctionCall.create(initializer, 10),
-                generator,
-                options,
-                operations: []
-            });
-
-            // assert
-            expect(serializeFunctionCallSpy).toHaveBeenCalledWith(FunctionCall.create(ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR, {
-                environment: { ______serializedFunctionCall: true, functionId: 5, parameters: [ 10 ] },
+                environments: [{ test: 10 }],
                 generator: { functionId: 2 },
                 operations: [],
                 taskIndex: 0,
@@ -202,6 +166,7 @@ describe("AbstractParallelScheduler", function () {
 
             // act
             scheduler.schedule({
+                environment: ParallelEnvironmentDefinition.of(),
                 generator,
                 operations: [
                     {
@@ -220,7 +185,7 @@ describe("AbstractParallelScheduler", function () {
                     functionId: ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR, // process
                     parameters: [
                         {
-                            environment: undefined,
+                            environments: [],
                             generator: generatorSlice1,
                             operations: [
                                 {
@@ -245,7 +210,7 @@ describe("AbstractParallelScheduler", function () {
                     functionId: ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR, // process
                     parameters: [
                         {
-                            environment: undefined,
+                            environments: [],
                             generator: generatorSlice2,
                             operations: [
                                 {

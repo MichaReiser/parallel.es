@@ -1,4 +1,4 @@
-import {IDefaultInitializedParallelOptions, IEmptyParallelEnvironment} from "../../../../src/common/parallel";
+import {IDefaultInitializedParallelOptions} from "../../../../src/common/parallel";
 import {IParallelJobScheduler} from "../../../../src/common/parallel/scheduling/parallel-job-scheduler";
 import {PendingParallelChainState} from "../../../../src/common/parallel/chain/pending-parallel-chain-state";
 import {IParallelGenerator} from "../../../../src/common/parallel/generator/parallel-generator";
@@ -6,10 +6,11 @@ import {ParallelCollectionGenerator} from "../../../../src/common/parallel/gener
 import {ScheduledParallelChainState} from "../../../../src/common/parallel/chain/scheduled-parallel-chain-state";
 import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
 import {FunctionCall} from "../../../../src/common/function/function-call";
+import {ParallelEnvironmentDefinition} from "../../../../src/common/parallel/parallel-environment-definition";
 
 describe("PendingParallelChainState", function () {
     let options: IDefaultInitializedParallelOptions;
-    let environment: IEmptyParallelEnvironment;
+    let environment: ParallelEnvironmentDefinition;
     let scheduler: IParallelJobScheduler;
     let generator: IParallelGenerator;
     let scheduleSpy: jasmine.Spy;
@@ -24,7 +25,7 @@ describe("PendingParallelChainState", function () {
             threadPool: undefined as any
         };
 
-        environment = { test: 10 };
+        environment = ParallelEnvironmentDefinition.of({ test: 10 });
         generator = new ParallelCollectionGenerator([1, 2, 3, 4]);
         state = new PendingParallelChainState(generator, options, environment, []);
     });
@@ -82,13 +83,13 @@ describe("PendingParallelChainState", function () {
         });
     });
 
-    describe("changeEnvironment", function () {
+    describe("addEnvironment", function () {
         it("returns a new state", function () {
-            expect(state.changeEnvironment({ test: 25 })).not.toBe(state);
+            expect(state.addEnvironment({ test: 25 })).not.toBe(state);
         });
 
-        it("returns a state containing the chained operation", function () {
-            expect(state.changeEnvironment({ test: 25 })).toEqual(new PendingParallelChainState(generator, options, { test: 25 }, []));
+        it("returns a state containing the new environment", function () {
+            expect(state.addEnvironment({ test: 25 })).toEqual(new PendingParallelChainState(generator, options, ParallelEnvironmentDefinition.of({ test: 25 }), []));
         });
     });
 });

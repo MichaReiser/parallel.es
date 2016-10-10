@@ -1,4 +1,4 @@
-import {IParallelJob, IDefaultInitializedParallelOptions, IEmptyParallelEnvironment, IParallelOperation} from "../";
+import {IParallelJob, IDefaultInitializedParallelOptions, IParallelOperation} from "../";
 import {ITask} from "../../task/task";
 import {ITaskDefinition} from "../../task/task-definition";
 import {IParallelTaskDefinition} from "../parallel-task-definition";
@@ -27,19 +27,22 @@ export abstract class AbstractParallelScheduler implements IParallelJobScheduler
         const scheduling = this.getScheduling(job.generator.length, job.options);
         const functionCallSerializer = job.options.threadPool.getFunctionSerializer();
 
-        const environment = this.serializeEnvironment(job.environment, functionCallSerializer);
+        const environments = job.environment.toJSON(functionCallSerializer);
         const operations = this.serializeOperations(job.operations, functionCallSerializer);
         const commonFunctionIds = [ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR].concat(flattenArray(operations.map(operation => [operation.iteratee.functionId, operation.iterator.functionId])));
-        if (isSerializedFunctionCall(environment)) {
-            commonFunctionIds.push(environment.functionId);
-        }
+
+        environments.forEach(provider => {
+            if (isSerializedFunctionCall(provider)) {
+                commonFunctionIds.push(provider.functionId);
+            }
+        });
 
         const taskDefinitions: ITaskDefinition[] = [];
         for (let i = 0; i < scheduling.numberOfTasks; ++i) {
             const generator = job.generator.serializeSlice(i, scheduling.valuesPerTask, functionCallSerializer);
 
             const processParams: IParallelJobDefinition = {
-                environment,
+                environments,
                 generator,
                 operations,
                 taskIndex: i,
@@ -63,17 +66,6 @@ export abstract class AbstractParallelScheduler implements IParallelJobScheduler
             iteratee: functionCallSerializer.serializeFunctionCall(operation.iteratee),
             iterator: functionCallSerializer.serializeFunctionCall(operation.iterator)
         }));
-    }
-
-    private serializeEnvironment(environment: FunctionCall | IEmptyParallelEnvironment | undefined, functionCallSerializer: FunctionCallSerializer) {
-        if (environment) {
-            if (environment instanceof FunctionCall) {
-                return functionCallSerializer.serializeFunctionCall(environment);
-            }
-            return environment;
-        }
-
-        return undefined;
     }
 }
 

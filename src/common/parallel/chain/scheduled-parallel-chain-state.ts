@@ -2,6 +2,7 @@ import {IParallelChainState, IParallelChainEnvironment, IScheduledParallelChainS
 import {IParallelOperation, IDefaultInitializedParallelOptions} from "../";
 import {IParallelStream} from "../stream/parallel-stream";
 import {DependentParallelChainState} from "./dependent-parallel-chain-state";
+import {ParallelEnvironmentDefinition} from "../parallel-environment-definition";
 
 /**
  * State of a parallel chain whose job has been scheduled on the thread pool (or even where the computation already has completed).
@@ -16,7 +17,7 @@ export class ScheduledParallelChainState<TElement> implements IScheduledParallel
      * @param options the options used for the scheduled job
      * @param environment the environment used for the scheduled job
      */
-    constructor(stream: IParallelStream<TElement[], TElement[]>, private options: IDefaultInitializedParallelOptions, private environment: IParallelChainEnvironment) {
+    constructor(stream: IParallelStream<TElement[], TElement[]>, private options: IDefaultInitializedParallelOptions, private environment: ParallelEnvironmentDefinition) {
         this.stream = stream;
     }
 
@@ -28,7 +29,7 @@ export class ScheduledParallelChainState<TElement> implements IScheduledParallel
         return new DependentParallelChainState(this.stream, this.options, this.environment, [operation]);
     }
 
-    public changeEnvironment(environment: IParallelChainEnvironment): IParallelChainState<TElement> {
-        return new DependentParallelChainState(this.stream, this.options, environment);
+    public addEnvironment(environment: IParallelChainEnvironment): IParallelChainState<TElement> {
+        return new DependentParallelChainState(this.stream, this.options, this.environment.add(environment));
     }
 }
