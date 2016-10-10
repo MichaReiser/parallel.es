@@ -1,7 +1,7 @@
 import {toArray} from "../../util/arrays";
 import {FunctionCallDeserializer} from "../../function/function-call-deserializer";
-import {isSerializedFunctionCall, ISerializedFunctionCall} from "../../function/serialized-function-call";
-import {IEmptyParallelEnvironment, IParallelTaskEnvironment, ISerializedParallelOperation} from "../";
+import {ISerializedFunctionCall, isSerializedFunctionCall} from "../../function/serialized-function-call";
+import {ISerializedParallelOperation, IParallelEnvironment, IParallelTaskEnvironment} from "../";
 
 /**
  * Defines the parallel operation to perform
@@ -18,9 +18,9 @@ export interface IParallelJobDefinition {
     operations: ISerializedParallelOperation[];
 
     /**
-     * The environment. Object hash that is passed to all iteratee functions and allows to access external data
+     * The environments. Object hash that is passed to all iteratee functions and allows to access external data
      */
-    environment?: ISerializedFunctionCall | IEmptyParallelEnvironment;
+    environments: Array<ISerializedFunctionCall | IParallelEnvironment>;
 
     /**
      * The job-relative index of the task
@@ -34,18 +34,19 @@ export interface IParallelJobDefinition {
 }
 
 function createTaskEnvironment(definition: IParallelJobDefinition, functionCallDeserializer: FunctionCallDeserializer): IParallelTaskEnvironment {
-    let userDefinedEnvironment: IEmptyParallelEnvironment = {};
+    let taskEnvironment: IParallelEnvironment = {};
 
-    if (definition.environment) {
-        if (isSerializedFunctionCall(definition.environment)) {
-            const environmentProvider = functionCallDeserializer.deserializeFunctionCall(definition.environment);
-            userDefinedEnvironment = environmentProvider();
+    for (const environment of definition.environments) {
+        let currentEnvironment: IParallelEnvironment;
+        if (isSerializedFunctionCall(environment)) {
+            currentEnvironment = functionCallDeserializer.deserializeFunctionCall(environment)();
         } else {
-            userDefinedEnvironment = definition.environment;
+            currentEnvironment = environment;
         }
+        Object.assign(taskEnvironment, currentEnvironment);
     }
 
-    return Object.assign({}, { taskIndex: definition.taskIndex, valuesPerTask: definition.valuesPerTask }, userDefinedEnvironment);
+    return Object.assign({}, { taskIndex: definition.taskIndex, valuesPerTask: definition.valuesPerTask }, taskEnvironment);
 }
 
 /**

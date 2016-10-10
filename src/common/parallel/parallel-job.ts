@@ -3,9 +3,9 @@
  */
 /** needed, typedoc issue */
 
-import {IParallelOperation, IEmptyParallelEnvironment, IDefaultInitializedParallelOptions} from "./";
-import {FunctionCall} from "../function/function-call";
+import {IParallelOperation, IDefaultInitializedParallelOptions} from "./";
 import {IParallelGenerator} from "./generator/parallel-generator";
+import {ParallelEnvironmentDefinition} from "./parallel-environment-definition";
 
 /**
  * A parallel job that is to be scheduled
@@ -24,7 +24,7 @@ export interface IParallelJob {
     /**
      * The environment in which the operations are performed
      */
-    environment?: FunctionCall | IEmptyParallelEnvironment;
+    environment: ParallelEnvironmentDefinition;
 
     /**
      * The options defining how the job is to be scheduled.

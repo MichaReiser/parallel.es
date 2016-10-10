@@ -5,7 +5,7 @@
 
 import {IParallelChain} from "./chain/parallel-chain";
 import {IParallelOptions, IDefaultInitializedParallelOptions} from "./parallel-options";
-import {IParallelTaskEnvironment, IEmptyParallelEnvironment} from "./parallel-environment";
+import {IParallelTaskEnvironment, IParallelEnvironment} from "./parallel-environment";
 import {ITask} from "../task/task";
 import {IFunctionId} from "../function/function-id";
 
@@ -56,7 +56,7 @@ export interface IParallel {
      * @param value the value to repeat
      * @param TValue type of the value
      */
-    times<TValue>(n: number, value: TValue): IParallelChain<TValue, IEmptyParallelEnvironment, TValue>;
+    times<TValue>(n: number, value: TValue): IParallelChain<TValue, IParallelEnvironment, TValue>;
 
     /**
      * Creates a new array through calling the generator n times
@@ -64,16 +64,16 @@ export interface IParallel {
      * @param generator the generator used to create the array elements
      * @param TResult type of the elements returned by the generator
      */
-    times<TResult>(n: number, generator: (this: void, n: number, env: IParallelTaskEnvironment) => TResult): IParallelChain<TResult, IEmptyParallelEnvironment, TResult>;
-    times<TResult>(n: number, generator: IFunctionId): IParallelChain<TResult, IEmptyParallelEnvironment, TResult>;
+    times<TResult>(n: number, generator: (this: void, n: number, env: IParallelTaskEnvironment) => TResult): IParallelChain<TResult, IParallelEnvironment, TResult>;
+    times<TResult>(n: number, generator: IFunctionId): IParallelChain<TResult, IParallelEnvironment, TResult>;
 
     /**
      * @param env environment that is provided to the iteratee function
      * @param options options configuring the computation behaviour
      * @param TEnv type of the environment
      */
-    times<TEnv extends IEmptyParallelEnvironment, TResult>(n: number, generator: (this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult, env: TEnv, options?: IParallelOptions): IParallelChain<TResult, TEnv, TResult>;
-    times<TEnv extends IEmptyParallelEnvironment, TResult>(n: number, generator: IFunctionId, env: TEnv, options?: IParallelOptions): IParallelChain<TResult, TEnv, TResult>;
+    times<TEnv extends IParallelEnvironment, TResult>(n: number, generator: (this: void, n: number, env: TEnv & IParallelTaskEnvironment) => TResult, env: TEnv, options?: IParallelOptions): IParallelChain<TResult, TEnv, TResult>;
+    times<TEnv extends IParallelEnvironment, TResult>(n: number, generator: IFunctionId, env: TEnv, options?: IParallelOptions): IParallelChain<TResult, TEnv, TResult>;
 
     /**
      * Schedules the passed in function on an available worker. If no worker is available, then the

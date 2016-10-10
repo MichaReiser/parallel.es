@@ -15,7 +15,7 @@ export class ParallelTimesGenerator implements IParallelGenerator {
     public static create<T>(n: number, value: T): ParallelTimesGenerator;
     public static create(n: number, call: FunctionCall): ParallelTimesGenerator;
     public static create<T>(n: number, generator: ((this: void, index: number, env: IParallelTaskEnvironment) => T) | IFunctionId | T): ParallelTimesGenerator {
-        let generatorFunction: FunctionCall | T;
+        let generatorFunction: FunctionCall;
         if (isFunctionId(generator) || typeof generator === "function") {
             generatorFunction = FunctionCall.createUnchecked(generator);
         } else {

@@ -4,6 +4,7 @@ import {IParallelGenerator} from "../generator/parallel-generator";
 import {IParallelOperation, IDefaultInitializedParallelOptions} from "../";
 import {ParallelStream} from "../stream/parallel-stream-impl";
 import {flattenArray} from "../../util/arrays";
+import {ParallelEnvironmentDefinition} from "../parallel-environment-definition";
 
 /**
  * Parallel chain has been defined but not yet scheduled.
@@ -14,7 +15,7 @@ import {flattenArray} from "../../util/arrays";
 export class PendingParallelChainState<TElement> implements IParallelChainState<TElement> {
 
     public generator: IParallelGenerator;
-    public environment: IParallelChainEnvironment;
+    public environment: ParallelEnvironmentDefinition;
     public operations: IParallelOperation[];
     public options: IDefaultInitializedParallelOptions;
 
@@ -22,13 +23,13 @@ export class PendingParallelChainState<TElement> implements IParallelChainState<
      * Creates a new state
      * @param generator the generator to use to generate the input elements and split the job
      * @param options the options
-     * @param environment the environment for the job
+     * @param environment the environment builder that is used to create the environment for the job
      * @param operations the operations to perform on the input elements
      */
-    constructor(generator: IParallelGenerator, options: IDefaultInitializedParallelOptions, environment: IParallelChainEnvironment | undefined, operations: IParallelOperation[]) {
+    constructor(generator: IParallelGenerator, options: IDefaultInitializedParallelOptions, environment: ParallelEnvironmentDefinition, operations: IParallelOperation[]) {
         this.generator = generator;
         this.options = options;
-        this.environment = environment || {};
+        this.environment = environment;
         this.operations = operations;
     }
 
@@ -47,7 +48,7 @@ export class PendingParallelChainState<TElement> implements IParallelChainState<
         return new PendingParallelChainState(this.generator, this.options, this.environment, [...this.operations, operation]);
     }
 
-    public changeEnvironment(environment: IParallelChainEnvironment): IParallelChainState<TElement> {
-        return new PendingParallelChainState(this.generator, this.options, environment, this.operations);
+    public addEnvironment(environment: IParallelChainEnvironment): IParallelChainState<TElement> {
+        return new PendingParallelChainState(this.generator, this.options, this.environment.add(environment), this.operations);
     }
 }

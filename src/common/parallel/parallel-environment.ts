@@ -6,14 +6,14 @@
 /**
  * Environment that can be accessed inside of a iteratee function
  */
-export interface IEmptyParallelEnvironment {
+export  interface IParallelEnvironment {
     [name: string]: any;
 }
 
 /**
  * Environment that is available to all iteratee functions and is filled by parallel
  */
-export interface IParallelTaskEnvironment extends IEmptyParallelEnvironment {
+export interface IParallelTaskEnvironment extends IParallelEnvironment {
     /**
      * The index of the task. The index is relative to the other tasks created to process a single parallel job.
      */

@@ -14,17 +14,17 @@ describe("ParallelChainImpl", function () {
     let state: IParallelChainState<number>;
     let stateResolveSpy: jasmine.Spy;
     let chainOperationSpy: jasmine.Spy;
-    let changeEnvironmentSpy: jasmine.Spy;
+    let addEnvironmentSpy: jasmine.Spy;
 
     beforeEach(function () {
         generator = new ParallelCollectionGenerator([1, 2, 3, 4, 5]);
         stateResolveSpy = jasmine.createSpy("state.resolve");
         chainOperationSpy = jasmine.createSpy("state.chainOperation");
-        changeEnvironmentSpy = jasmine.createSpy("state.changeEnvironment");
+        addEnvironmentSpy = jasmine.createSpy("state.addEnvironment");
 
         state = {
+            addEnvironment: addEnvironmentSpy,
             chainOperation: chainOperationSpy,
-            changeEnvironment: changeEnvironmentSpy,
             resolve: stateResolveSpy
         } as any;
 
@@ -36,7 +36,7 @@ describe("ParallelChainImpl", function () {
     });
 
     describe("inEnvironment", function () {
-        it("change the environment to the passed object hash", function () {
+        it("adds the given object hash to the existing environment", function () {
              // arrange
             const chain = new ParallelChainImpl(state);
 
@@ -44,10 +44,10 @@ describe("ParallelChainImpl", function () {
             chain.inEnvironment({ test: 10 });
 
             // assert
-            expect(changeEnvironmentSpy).toHaveBeenCalledWith({ test: 10 });
+            expect(addEnvironmentSpy).toHaveBeenCalledWith({ test: 10 });
         });
 
-        it("sets the environment of the chain to the passed in environment provider", function () {
+        it("adds the given environment provider to the existing environment", function () {
             // arrange
             const chain = new ParallelChainImpl(state);
             const environmentProvider = (value: number) => ({ value });
@@ -56,7 +56,7 @@ describe("ParallelChainImpl", function () {
             chain.inEnvironment(environmentProvider, 10);
 
             // assert
-            expect(changeEnvironmentSpy).toHaveBeenCalledWith(FunctionCall.create(environmentProvider, 10));
+            expect(addEnvironmentSpy).toHaveBeenCalledWith(FunctionCall.create(environmentProvider, 10));
         });
     });
 

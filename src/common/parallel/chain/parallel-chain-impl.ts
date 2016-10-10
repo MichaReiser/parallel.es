@@ -1,7 +1,7 @@
 import {IParallelChain} from "./parallel-chain";
 import {IParallelStream} from "../stream/parallel-stream";
 import {ParallelWorkerFunctionIds} from "../slave/parallel-worker-functions";
-import {IEmptyParallelEnvironment, IParallelTaskEnvironment} from "../parallel-environment";
+import {IParallelEnvironment, IParallelTaskEnvironment} from "../parallel-environment";
 import {FunctionCall} from "../../function/function-call";
 import {IParallelChainState, IParallelChainEnvironment} from "./parallel-chain-state";
 import {ParallelStream} from "../stream/parallel-stream-impl";
@@ -18,7 +18,7 @@ import {IFunctionId} from "../../function/function-id";
  * @param TEnv type of the job environment
  * @param TOut type of the elements in the resulting array
  */
-export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut> implements IParallelChain<TIn, TEnv, TOut> {
+export class ParallelChainImpl<TIn, TEnv extends IParallelEnvironment, TOut> implements IParallelChain<TIn, TEnv, TOut> {
     public state: IParallelChainState<TOut>;
 
     /**
@@ -30,7 +30,7 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
     }
 
     // region Chaining
-    public inEnvironment<TEnvNew extends TEnv>(newEnv: Function | IEmptyParallelEnvironment | IFunctionId, ...params: any[]): IParallelChain<TIn, TEnvNew, TOut> {
+    public inEnvironment<TEnvNew extends IParallelEnvironment>(newEnv: Function | IParallelEnvironment | IFunctionId, ...params: any[]): IParallelChain<TIn, TEnv & TEnvNew, TOut> {
         let env: IParallelChainEnvironment | undefined;
         if (typeof newEnv === "function") {
             env = FunctionCall.createUnchecked(newEnv, ...params);
@@ -38,7 +38,7 @@ export class ParallelChainImpl<TIn, TEnv extends IEmptyParallelEnvironment, TOut
             env = newEnv;
         }
 
-        return new ParallelChainImpl<TIn, TEnvNew, TOut>(this.state.changeEnvironment(env));
+        return new ParallelChainImpl<TIn, TEnv & TEnvNew, TOut>(this.state.addEnvironment(env));
     }
 
     public map<TResult>(mapper: ((this: void, element: TOut, env: TEnv & IParallelTaskEnvironment) => TResult) | IFunctionId): IParallelChain<TIn, TEnv, TResult> {

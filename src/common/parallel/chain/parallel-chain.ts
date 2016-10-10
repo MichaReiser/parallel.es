@@ -4,7 +4,7 @@
 /** needed, typedoc issue */
 
 import {IParallelStream} from "../stream/parallel-stream";
-import {IEmptyParallelEnvironment, IParallelTaskEnvironment} from "../parallel-environment";
+import {IParallelEnvironment, IParallelTaskEnvironment} from "../parallel-environment";
 import {IFunctionId} from "../../function/function-id";
 
 /**
@@ -15,29 +15,31 @@ import {IFunctionId} from "../../function/function-id";
  * @param TOut the type of the resulting elements
  * @param TEnv the type of the environment
  */
-export interface IParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOut> extends IParallelStream<TOut[], TOut[]> {
+export interface IParallelChain<TIn, TEnv extends IParallelEnvironment, TOut> extends IParallelStream<TOut[], TOut[]> {
     /**
-     * Defines the environment that should be provided to all the iteratee or generator functions.
-     * The environment cannot contain function values.
-     * @param newEnv the environment that should be provided to the iteratee function
+     * Defines the environment that is provided to all iteratee or generator functions.
+     * The environment cannot contain function values. The values of the provided environment is merged with the values
+     * of any prior defined environments. If an environment provider is defined, then the values returned by the environment
+     * provider have a higher precedence.
+     * @param newEnv the environment that is provided to the iteratee function
      */
-    inEnvironment<TEnvNew extends TEnv>(newEnv: TEnvNew): IParallelChain<TIn, TEnvNew, TOut>;
+    inEnvironment<TEnvNew extends IParallelEnvironment>(newEnv: TEnvNew): IParallelChain<TIn, TEnv & TEnvNew, TOut>;
 
     /**
-     * Defines a function that should be used to build the environment for each task. The function is executed as first
+     * Defines a function that should be used to build the environment for each task. The function is executed first
      * on the scheduled task.
      * @param provider the function providing the environment
      * @param TEnvNew the type of the environment
      * @returns the chain
      */
-    inEnvironment<TEnvNew extends TEnv>(provider: (this: void) => TEnvNew): IParallelChain<TIn, TEnvNew, TOut>;
-    inEnvironment<TEnvNew extends TEnv>(provider: IFunctionId): IParallelChain<TIn, TEnvNew, TOut>;
+    inEnvironment<TEnvNew extends IParallelEnvironment>(provider: (this: void) => TEnvNew): IParallelChain<TIn, TEnv & TEnvNew, TOut>;
+    inEnvironment<TEnvNew extends IParallelEnvironment>(provider: IFunctionId): IParallelChain<TIn, TEnv & TEnvNew, TOut>;
 
     /**
      * @param param1 single parameter that is passed to the provider
      * @param TParam1 the type of the single parameter
      */
-    inEnvironment<TParam1, TEnvNew extends TEnv>(provider: (this: void, arg1: TParam1) => TEnvNew, param1: TParam1): IParallelChain<TIn, TEnvNew, TOut>;
+    inEnvironment<TParam1, TEnvNew extends IParallelEnvironment>(provider: (this: void, arg1: TParam1) => TEnvNew, param1: TParam1): IParallelChain<TIn, TEnv & TEnvNew, TOut>;
 
     /**
      *
@@ -46,24 +48,24 @@ export interface IParallelChain<TIn, TEnv extends IEmptyParallelEnvironment, TOu
      * @param TParam1 type of the first parameter
      * @param TParam2 type of the second parameter
      */
-    inEnvironment<TParam1, TParam2, TEnvNew extends TEnv>(provider: (this: void, arg1: TParam1, arg2: TParam2) => TEnvNew, param1: TParam1, param2: TParam2): IParallelChain<TIn, TEnvNew, TOut>;
+    inEnvironment<TParam1, TParam2, TEnvNew extends IParallelEnvironment>(provider: (this: void, arg1: TParam1, arg2: TParam2) => TEnvNew, param1: TParam1, param2: TParam2): IParallelChain<TIn, TEnv & TEnvNew, TOut>;
 
     /**
      * @param param3 third parameter that is passed to the provider funciton
      * @param TParam3 type of the third parameter
      */
-    inEnvironment<TParam1, TParam2, TParam3, TEnvNew extends TEnv>(provider: (this: void, arg1: TParam1, arg2: TParam2, arg3: TParam3) => TEnvNew, param1: TParam1, param2: TParam2, param3: TParam3): IParallelChain<TIn, TEnvNew, TOut>;
+    inEnvironment<TParam1, TParam2, TParam3, TEnvNew extends IParallelEnvironment>(provider: (this: void, arg1: TParam1, arg2: TParam2, arg3: TParam3) => TEnvNew, param1: TParam1, param2: TParam2, param3: TParam3): IParallelChain<TIn, TEnv & TEnvNew, TOut>;
 
     /**
      * @param param4 fourth parameter that is passed to the provider function
      * @param TParam4 type of the fourth parameter
      */
-    inEnvironment<TParam1, TParam2, TParam3, TParam4, TEnvNew extends TEnv>(provider: (this: void, arg1: TParam1, arg2: TParam2, arg3: TParam3, arg4: TParam4) => TEnvNew, param1: TParam1, param2: TParam2, param3: TParam3, param4: TParam4): IParallelChain<TIn, TEnvNew, TOut>;
+    inEnvironment<TParam1, TParam2, TParam3, TParam4, TEnvNew extends IParallelEnvironment>(provider: (this: void, arg1: TParam1, arg2: TParam2, arg3: TParam3, arg4: TParam4) => TEnvNew, param1: TParam1, param2: TParam2, param3: TParam3, param4: TParam4): IParallelChain<TIn, TEnv & TEnvNew, TOut>;
 
     /**
      * @param furtherParams further paramters that are passed to the provider function
      */
-    inEnvironment<TParam1, TParam2, TParam3, TParam4, TEnvNew extends TEnv>(provider: (this: void, arg1: TParam1, arg2: TParam2, arg3: TParam3, arg4: TParam4, ...furtherParams: any[]) => TEnvNew, param1: TParam1, param2: TParam2, param3: TParam3, param4: TParam4, ...furtherParams: any[]): IParallelChain<TIn, TEnvNew, TOut>;
+    inEnvironment<TParam1, TParam2, TParam3, TParam4, TEnvNew extends IParallelEnvironment>(provider: (this: void, arg1: TParam1, arg2: TParam2, arg3: TParam3, arg4: TParam4, ...furtherParams: any[]) => TEnvNew, param1: TParam1, param2: TParam2, param3: TParam3, param4: TParam4, ...furtherParams: any[]): IParallelChain<TIn, TEnv & TEnvNew, TOut>;
 
     /**
      * Maps all input values to an output value using the given mapper. The mapper is applied for each input element

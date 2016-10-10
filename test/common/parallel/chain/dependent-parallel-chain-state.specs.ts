@@ -1,16 +1,17 @@
 import {DependentParallelChainState} from "../../../../src/common/parallel/chain/dependent-parallel-chain-state";
-import {IDefaultInitializedParallelOptions, IEmptyParallelEnvironment} from "../../../../src/common/parallel";
+import {IDefaultInitializedParallelOptions} from "../../../../src/common/parallel";
 import {IParallelStream} from "../../../../src/common/parallel/stream/parallel-stream";
 import {ScheduledParallelChainState} from "../../../../src/common/parallel/chain/scheduled-parallel-chain-state";
 import {IParallelJobScheduler} from "../../../../src/common/parallel/scheduling/parallel-job-scheduler";
 import {ParallelCollectionGenerator} from "../../../../src/common/parallel/generator/parallel-collection-generator";
 import {ParallelWorkerFunctionIds} from "../../../../src/common/parallel/slave/parallel-worker-functions";
 import {FunctionCall} from "../../../../src/common/function/function-call";
+import {ParallelEnvironmentDefinition} from "../../../../src/common/parallel/parallel-environment-definition";
 
 describe("DependentParallelChainState", function () {
     let previousStream: IParallelStream<string[], string[]>;
     let options: IDefaultInitializedParallelOptions;
-    let environment: IEmptyParallelEnvironment;
+    let environment: ParallelEnvironmentDefinition;
     let scheduler: IParallelJobScheduler;
     let scheduleSpy: jasmine.Spy;
     let previousStreamThenSpy: jasmine.Spy;
@@ -24,7 +25,7 @@ describe("DependentParallelChainState", function () {
              threadPool: undefined as any
         };
 
-        environment = { test: 10 };
+        environment = ParallelEnvironmentDefinition.of();
         previousStream = jasmine.createSpyObj<IParallelStream<string[], string[]>>("previousStream", ["then"]);
         previousStreamThenSpy = previousStream.then as jasmine.Spy;
     });
@@ -91,12 +92,12 @@ describe("DependentParallelChainState", function () {
         });
     });
 
-    describe("changeEnvironment", function () {
+    describe("addEnvironment", function () {
         it("returns a new state", function () {
             const state = new DependentParallelChainState(previousStream, options, environment);
 
             // act
-            const chained = state.changeEnvironment({ test: 15});
+            const chained = state.addEnvironment({ test: 15});
 
             // assert
             expect(chained).not.toBe(state);
@@ -104,12 +105,13 @@ describe("DependentParallelChainState", function () {
 
         it("changes the environment", function () {
             const state = new DependentParallelChainState(previousStream, options, environment);
+            const newEnvironment = ParallelEnvironmentDefinition.of({ test: 15 });
 
             // act
-            const chained = state.changeEnvironment({ test: 15});
+            const chained = state.addEnvironment({ test: 15});
 
             // assert
-            expect(chained).toEqual(new DependentParallelChainState(previousStream, options, { test: 15 }));
+            expect(chained).toEqual(new DependentParallelChainState(previousStream, options, newEnvironment));
         });
     });
 });
