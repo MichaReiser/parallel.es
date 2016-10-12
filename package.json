@@ -64,7 +64,7 @@
     "simjs-random": "0.2.6",
     "tslint": "3.15.1",
     "tslint-loader": "2.1.5",
-    "typedoc": "github:datenmetzgerx/typedoc#typescript-2-build",
+    "typedoc": "^0.5.0",
     "typedoc-plugin-external-module-name": "1.0.2",
     "typescript": "2.0.3",
     "webpack": "2.1.0-beta.22",

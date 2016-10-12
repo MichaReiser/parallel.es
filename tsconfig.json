@@ -12,7 +12,7 @@
     "sourceMap": true
   },
   "files": [
-    "src/api/browser",
-    "src/api/node"
+    "src/api/browser.ts",
+    "src/api/node.ts"
   ]
 }
