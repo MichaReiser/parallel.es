@@ -82,7 +82,7 @@ export interface IParallelChain<TIn, TEnv extends IParallelEnvironment, TOut> ex
      * @param accumulator the accumulator function
      * @returns parallel stream that allows to query the end result
      */
-    reduce(defaultValue: TOut, accumulator: { (this: void, memo: TOut, value: TOut, env?: TEnv & IParallelTaskEnvironment): TOut }): IParallelStream<TOut[], TOut>;
+    reduce(defaultValue: TOut, accumulator: { (this: void, memo: TOut, value: TOut, env: TEnv & IParallelTaskEnvironment): TOut }): IParallelStream<TOut[], TOut>;
     reduce(defaultValue: TOut, accumulator: IFunctionId): IParallelStream<TOut[], TOut>;
 
     /**
