@@ -21,4 +21,17 @@ describe("ParallelIntegration", function () {
                 done();
             });
     });
+
+    it("rejects the promise if the function id is not know", function (done) {
+        parallel.from([1, 2, 3])
+            .map({
+                _______isFunctionId: true,
+                identifier: "unknown-1"
+            })
+            .then(() => done.fail())
+            .catch((error: any) => {
+                expect(error.message).toMatch(/The function ids \[unknown-1] could not be resolved by slave \d\./);
+                done();
+            });
+    });
 });

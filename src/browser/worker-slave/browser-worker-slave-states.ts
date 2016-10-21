@@ -84,11 +84,17 @@ export class WaitingForFunctionDefinitionBrowserWorkerSlaveState extends Browser
     public onMessage(event: MessageEvent): boolean {
         const message = event.data;
         if (isFunctionResponse(message)) {
-            for (const definition of message.functions as IFunctionDefinition[]) {
-                this.slave.functionCache.registerFunction(definition);
-            }
+            if (message.missingFunctions.length > 0) {
+                const identifiers = message.missingFunctions.map(functionId => functionId.identifier).join(", ");
+                this.slave.postMessage(functionExecutionError(new Error(`The function ids [${identifiers}] could not be resolved by slave ${this.slave.id}.`)));
+                this.slave.changeState(new IdleBrowserWorkerSlaveState(this.slave));
+            } else {
+                for (const definition of message.functions as IFunctionDefinition[]) {
+                    this.slave.functionCache.registerFunction(definition);
+                }
 
-            this.slave.changeState(new ExecuteFunctionBrowserWorkerSlaveState(this.slave, this.task));
+                this.slave.changeState(new ExecuteFunctionBrowserWorkerSlaveState(this.slave, this.task));
+            }
             return true;
         }
         return false;

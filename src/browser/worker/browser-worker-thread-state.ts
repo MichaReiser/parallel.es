@@ -1,5 +1,7 @@
 import {isFunctionRequest, IFunctionRequest, functionResponseMessage, isWorkerResult, isFunctionExecutionError} from "../../common/worker/worker-messages";
 import {DynamicFunctionRegistry} from "../../common/function/dynamic-function-registry";
+import {IFunctionId} from "../../common/function/function-id";
+import {IFunctionDefinition} from "../../common/function/function-defintion";
 
 /**
  * State of the browser worker thread
@@ -36,14 +38,7 @@ export class BrowserWorkerThreadExecutingState extends BrowserWorkerThreadState 
     public onMessage(event: MessageEvent) {
         const message = event.data;
         if (isFunctionRequest(message)) {
-            const definitions = (message as IFunctionRequest).functionIds.map(functionId => {
-                const definition = this.functionRegistry.getDefinition(functionId);
-                if (!definition) {
-                    throw Error(`${this} requested unknown function with id ${functionId}`);
-                }
-                return definition;
-            });
-            this.worker.postMessage(functionResponseMessage(definitions));
+            this.handleFunctionRequest(message);
         } else if (isWorkerResult(message)) {
             this.callback(undefined, message.result);
         } else if (isFunctionExecutionError(message)) {
@@ -55,5 +50,21 @@ export class BrowserWorkerThreadExecutingState extends BrowserWorkerThreadState 
 
     public onError(event: ErrorEvent) {
         this.callback(event.error, undefined);
+    }
+
+    private handleFunctionRequest(message: IFunctionRequest) {
+        const missingIds: IFunctionId[] = [];
+        const definitions: IFunctionDefinition[] = [];
+
+        for (const functionId of message.functionIds) {
+            const definition = this.functionRegistry.getDefinition(functionId);
+            if (definition) {
+                definitions.push(definition);
+            } else {
+                missingIds.push(functionId);
+            }
+        }
+
+        this.worker.postMessage(functionResponseMessage(definitions, ...missingIds));
     }
 }

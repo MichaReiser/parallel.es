@@ -94,10 +94,27 @@ describe("BrowserWorkerThread", function () {
             browserWorker.run(task, () => undefined);
 
             // act
-            slaveRespond({ data: requestFunctionMessage(task.main.functionId) } as any);
+            slaveRespond({data: requestFunctionMessage(task.main.functionId)} as any);
 
             // assert
-            expect(slave.postMessage).toHaveBeenCalledWith({ functions: [functionDefinition], type: WorkerMessageType.FunctionResponse });
+            expect(slave.postMessage).toHaveBeenCalledWith({ functions: [functionDefinition], missingFunctions: [], type: WorkerMessageType.FunctionResponse });
+        });
+
+        it("names missing function definitions in the function response", function () {
+            // arrange
+            const mainId = functionId("test", 1);
+            const missingId = functionId("missing", 1);
+            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId, missingId] };
+            const functionDefinition: IFunctionDefinition = { argumentNames: ["x", "y"], body: "x + y;", id: task.main.functionId };
+            spyOn(functionLookupTable, "getDefinition").and.returnValues(functionDefinition, undefined);
+            browserWorker.initialize();
+            browserWorker.run(task, () => undefined);
+
+            // act
+            slaveRespond({data: requestFunctionMessage(task.main.functionId, missingId)} as any);
+
+            // assert
+            expect(slave.postMessage).toHaveBeenCalledWith({ functions: [functionDefinition], missingFunctions: [ missingId ], type: WorkerMessageType.FunctionResponse });
         });
 
         it("invokes the callback with the result received from the worker slave", function () {
