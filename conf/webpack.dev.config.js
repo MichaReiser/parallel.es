@@ -18,6 +18,9 @@ module.exports = new Config().extend({
     output: {
         pathinfo: true
     },
+    module: {
+        noParse: [ /benchmark\/benchmark\.js/ ]
+    },
     watch: true,
     devServer: {
         stats: {
