@@ -91,6 +91,11 @@ export interface IFunctionResponse extends IWorkerMessage {
      * The definition of the requested functions
      */
     functions: IFunctionDefinition[];
+
+    /**
+     * Array containing the ids of the functions that could not be resolved
+     */
+    missingFunctions: IFunctionId[];
 }
 
 /**
@@ -147,8 +152,8 @@ export function requestFunctionMessage(functionId: IFunctionId, ...otherFunction
  * @param functions the function definitions to respond to the worker slave
  * @returns the function response message
  */
-export function functionResponseMessage(functions: IFunctionDefinition[]): IFunctionResponse {
-    return { functions, type: WorkerMessageType.FunctionResponse };
+export function functionResponseMessage(functions: IFunctionDefinition[], ...missingFunctionIds: IFunctionId[]): IFunctionResponse {
+    return { functions, missingFunctions: missingFunctionIds, type: WorkerMessageType.FunctionResponse };
 }
 
 /**

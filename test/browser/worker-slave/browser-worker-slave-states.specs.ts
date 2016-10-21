@@ -134,6 +134,36 @@ describe("BrowserWorkerSlaveStates", function () {
             expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(ExecuteFunctionBrowserWorkerSlaveState));
         });
 
+        it("changes to idle state if some function definitions are missing", function () {
+            // arrange
+            const changeStateSpy = spyOn(slave, "changeState");
+            spyOn(slave, "postMessage");
+
+            // act
+            state.onMessage(createMessage(functionResponseMessage([{
+                argumentNames: ["x"],
+                body: "return x;",
+                id: functionId("test", 0)
+            }], functionId("test", 0))));
+
+            // assert
+            expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(IdleBrowserWorkerSlaveState));
+        });
+
+        it("reports an error if some function definitions are missing", function () {
+            // arrange
+            const slavePostMessage = spyOn(slave, "postMessage");
+            // act
+            state.onMessage(createMessage(functionResponseMessage([{
+                argumentNames: ["x"],
+                body: "return x;",
+                id: functionId("test", 0)
+            }], functionId("missing", 1), functionId("missing", 2))));
+
+            // assert
+            expect(slavePostMessage).toHaveBeenCalledWith(jasmine.objectContaining({ error: jasmine.objectContaining({ message: `"The function ids [missing-1, missing-2] could not be resolved by slave NaN."` })}));
+        });
+
         it("registers the retrieved functions in the slave cache", function () {
             // arrange
             spyOn(slave, "changeState");
