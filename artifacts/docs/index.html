@@ -68,9 +68,32 @@
 				<h1 id="parallel-es">parallel.es</h1>
 				<p><a href="https://travis-ci.org/DatenMetzgerX/parallel.es"><img src="https://travis-ci.org/DatenMetzgerX/parallel.es.svg?branch=master" alt="Build Status"></a>
 				<a href="https://coveralls.io/github/DatenMetzgerX/parallel.es?branch=master"><img src="https://coveralls.io/repos/github/DatenMetzgerX/parallel.es/badge.svg?branch=master" alt="Coverage Status"></a></p>
-				<p>Simple parallelization for EcmaScript</p>
-				<h2 id="architecture">Architecture</h2>
-				<p>The Architecture is described in the <a href="./wiki">wiki</a></p>
+				<p>A JavaScript library that simplifies parallel computation in the browser (and other environments soon).  </p>
+				<h2 id="getting-started">Getting Started</h2>
+				<p>Install the library using npm:</p>
+				<pre><code class="lang-sh">npm install --save parallel-es
+</code></pre>
+				<p>Perform a single computation on a worker thread:</p>
+				<pre><code class="lang-js"><span class="hljs-keyword">import</span> parallel <span class="hljs-keyword">from</span> <span class="hljs-string">"parallel-es"</span>;
+
+parallel.schedule(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">//… compute</span>
+    <span class="hljs-keyword">return</span> [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>;
+}).then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(result));
+</code></pre>
+				<p>Or use the reactive api that automatically schedules the work onto multiple worker without any additional doing:</p>
+				<pre><code class="lang-js">parallel.range(<span class="hljs-number">0</span>, <span class="hljs-number">100000</span>)
+    .map(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value * value)
+    .then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(result));
+</code></pre>
+				<h2 id="debugging-support">Debugging Support</h2>
+				<p>The Library uses Function serialization and therefore debugging is not supported out of the box. However, there is a <a href="https://github.com/DatenMetzgerX/parallel-es-webpack-plugin">webpack plugin</a> that rewrites your code in a way that allows debugging (at least in Chrome and Firefox Nightly). </p>
+				<h2 id="referencing-functions-and-variables">Referencing Functions and Variables</h2>
+				<p>The library uses function serialization and therefore the outer scope is no longer available when the function is invoked in the  worker thread. However, there is a <a href="https://github.com/DatenMetzgerX/parallel-es-webpack-plugin">webpack plugin</a> that rewrites your code and allows you to use const variables from the outer scope or reference functions.</p>
+				<h2 id="documentation">Documentation</h2>
+				<p>The <a href="https://datenmetzgerx.github.io/parallel.es/artifacts/docs/interfaces/parallel.iparallel.html">API Documentation</a> is available online. The <a href="./wiki">wiki</a> describes the architecture and programing model in more detail.</p>
+				<h2 id="examples">Examples</h2>
+				<p>More sophisticated examples can be seen <a href="https://datenmetzgerx.github.io/parallel.es/artifacts/example.html">here</a>.</p>
 				<h2 id="browsers-support-sub-sup-sub-sub-made-by-godban-sub-sub-sup-sub-">Browsers support <sub><sup><sub><sub>made by @godban</sub></sub></sup></sub></h2>
 				<table>
 					<thead>
@@ -106,142 +129,124 @@
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_browser_worker_slave_browser_worker_slave_.html">"browser/worker-<wbr>slave/browser-<wbr>worker-<wbr>slave"</a>
+					<li class="label tsd-is-external">
+						<span>Internals</span>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_browser_worker_slave_browser_worker_slave_states_.html">"browser/worker-<wbr>slave/browser-<wbr>worker-<wbr>slave-<wbr>states"</a>
+						<a href="modules/_api_node_.html">"api/node"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_browser_worker_slave_index_.html">"browser/worker-<wbr>slave/index"</a>
+					<li class="label tsd-is-external">
+						<span>Externals</span>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_api_shared_.html">"api/shared"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_browser_worker_browser_worker_thread_.html">"browser/worker/browser-<wbr>worker-<wbr>thread"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_browser_worker_browser_worker_thread_factory_.html">"browser/worker/browser-<wbr>worker-<wbr>thread-<wbr>factory"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_browser_worker_browser_worker_thread_state_.html">"browser/worker/browser-<wbr>worker-<wbr>thread-<wbr>state"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_function_dynamic_function_registry_.html">"common/function/dynamic-<wbr>function-<wbr>registry"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_function_function_call_deserializer_.html">"common/function/function-<wbr>call-<wbr>deserializer"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_function_function_lookup_table_.html">"common/function/function-<wbr>lookup-<wbr>table"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_common_function_slave_function_lookup_table_.html">"common/function/slave-<wbr>function-<wbr>lookup-<wbr>table"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_chain_dependent_parallel_chain_state_.html">"common/parallel/chain/dependent-<wbr>parallel-<wbr>chain-<wbr>state"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_chain_parallel_chain_factory_.html">"common/parallel/chain/parallel-<wbr>chain-<wbr>factory"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_chain_parallel_chain_impl_.html">"common/parallel/chain/parallel-<wbr>chain-<wbr>impl"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_chain_parallel_chain_state_.html">"common/parallel/chain/parallel-<wbr>chain-<wbr>state"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_chain_pending_parallel_chain_state_.html">"common/parallel/chain/pending-<wbr>parallel-<wbr>chain-<wbr>state"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_chain_scheduled_parallel_chain_state_.html">"common/parallel/chain/scheduled-<wbr>parallel-<wbr>chain-<wbr>state"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_generator_parallel_collection_generator_.html">"common/parallel/generator/parallel-<wbr>collection-<wbr>generator"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_generator_parallel_generator_.html">"common/parallel/generator/parallel-<wbr>generator"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_generator_parallel_range_generator_.html">"common/parallel/generator/parallel-<wbr>range-<wbr>generator"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_generator_parallel_times_generator_.html">"common/parallel/generator/parallel-<wbr>times-<wbr>generator"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_index_.html">"common/parallel/index"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_common_parallel_parallel_environment_definition_.html">"common/parallel/parallel-<wbr>environment-<wbr>definition"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_parallel_impl_.html">"common/parallel/parallel-<wbr>impl"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_parallel_operation_.html">"common/parallel/parallel-<wbr>operation"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_parallel_task_definition_.html">"common/parallel/parallel-<wbr>task-<wbr>definition"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_scheduling_abstract_parallel_scheduler_.html">"common/parallel/scheduling/abstract-<wbr>parallel-<wbr>scheduler"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_scheduling_default_parallel_scheduler_.html">"common/parallel/scheduling/default-<wbr>parallel-<wbr>scheduler"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_common_parallel_slave_filter_iterator_.html">"common/parallel/slave/filter-<wbr>iterator"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_common_parallel_slave_map_iterator_.html">"common/parallel/slave/map-<wbr>iterator"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_slave_parallel_job_executor_.html">"common/parallel/slave/parallel-<wbr>job-<wbr>executor"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_slave_parallel_worker_functions_.html">"common/parallel/slave/parallel-<wbr>worker-<wbr>functions"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_common_parallel_slave_range_iterator_.html">"common/parallel/slave/range-<wbr>iterator"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_common_parallel_slave_reduce_iterator_.html">"common/parallel/slave/reduce-<wbr>iterator"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_common_parallel_slave_register_parallel_worker_functions_.html">"common/parallel/slave/register-<wbr>parallel-<wbr>worker-<wbr>functions"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_common_parallel_slave_times_iterator_.html">"common/parallel/slave/times-<wbr>iterator"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_stream_parallel_stream_impl_.html">"common/parallel/stream/parallel-<wbr>stream-<wbr>impl"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_stream_resolved_parallel_stream_.html">"common/parallel/stream/resolved-<wbr>parallel-<wbr>stream"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_parallel_stream_scheduled_parallel_stream_.html">"common/parallel/stream/scheduled-<wbr>parallel-<wbr>stream"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_task_worker_task_.html">"common/task/worker-<wbr>task"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_thread_pool_default_thread_pool_.html">"common/thread-<wbr>pool/default-<wbr>thread-<wbr>pool"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_util_arrays_.html">"common/util/arrays"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_common_util_identity_.html">"common/util/identity"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_util_promise_.html">"common/util/promise"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_util_simple_map_.html">"common/util/simple-<wbr>map"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_worker_worker_messages_.html">"common/worker/worker-<wbr>messages"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_common_worker_worker_thread_factory_.html">"common/worker/worker-<wbr>thread-<wbr>factory"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/parallel.html">parallel</a>
 					</li>
 				</ul>

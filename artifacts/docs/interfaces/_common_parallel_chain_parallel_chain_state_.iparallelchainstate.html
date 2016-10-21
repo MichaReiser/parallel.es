@@ -115,30 +115,62 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-external">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html#chainoperation" class="tsd-kind-icon">chain<wbr>Operation</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html#changeenvironment" class="tsd-kind-icon">change<wbr>Environment</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html#resolve" class="tsd-kind-icon">resolve</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-external"><a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html#addenvironment" class="tsd-kind-icon">add<wbr>Environment</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-external"><a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html#chainoperation" class="tsd-kind-icon">chain<wbr>Operation</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-external"><a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html#resolve" class="tsd-kind-icon">resolve</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-external">
+					<a name="addenvironment" class="tsd-anchor"></a>
+					<h3>add<wbr>Environment</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Environment<span class="tsd-signature-symbol">(</span>environment<span class="tsd-signature-symbol">: </span><a href="../modules/_common_parallel_chain_parallel_chain_state_.html#iparallelchainenvironment" class="tsd-signature-type">IParallelChainEnvironment</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html" class="tsd-signature-type">IParallelChainState</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TElement</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/9568230/src/common/parallel/chain/parallel-chain-state.ts#L32">common/parallel/chain/parallel-chain-state.ts:32</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds the given environment to the current environment</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>environment: <a href="../modules/_common_parallel_chain_parallel_chain_state_.html#iparallelchainenvironment" class="tsd-signature-type">IParallelChainEnvironment</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the new environment to use</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html" class="tsd-signature-type">IParallelChainState</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TElement</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>the new state that uses the given environment instead of the existing one</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-external">
 					<a name="chainoperation" class="tsd-anchor"></a>
 					<h3>chain<wbr>Operation</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-external">
 						<li class="tsd-signature tsd-kind-icon">chain<wbr>Operation&lt;TElementNew&gt;<span class="tsd-signature-symbol">(</span>operation<span class="tsd-signature-symbol">: </span><a href="_common_parallel_parallel_operation_.iparalleloperation.html" class="tsd-signature-type">IParallelOperation</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html" class="tsd-signature-type">IParallelChainState</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TElementNew</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/f01e885/src/common/parallel/chain/parallel-chain-state.ts#L25">common/parallel/chain/parallel-chain-state.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/9568230/src/common/parallel/chain/parallel-chain-state.ts#L25">common/parallel/chain/parallel-chain-state.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -169,49 +201,17 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="changeenvironment" class="tsd-anchor"></a>
-					<h3>change<wbr>Environment</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">change<wbr>Environment<span class="tsd-signature-symbol">(</span>environment<span class="tsd-signature-symbol">: </span><a href="../modules/_common_parallel_chain_parallel_chain_state_.html#iparallelchainenvironment" class="tsd-signature-type">IParallelChainEnvironment</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html" class="tsd-signature-type">IParallelChainState</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TElement</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/f01e885/src/common/parallel/chain/parallel-chain-state.ts#L32">common/parallel/chain/parallel-chain-state.ts:32</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Changes the environment of the change to the given one</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>environment: <a href="../modules/_common_parallel_chain_parallel_chain_state_.html#iparallelchainenvironment" class="tsd-signature-type">IParallelChainEnvironment</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>the new environment to use</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html" class="tsd-signature-type">IParallelChainState</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TElement</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>the new state that uses the given environment instead of the existing one</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-external">
 					<a name="resolve" class="tsd-anchor"></a>
 					<h3>resolve</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-external">
 						<li class="tsd-signature tsd-kind-icon">resolve<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_parallel_chain_parallel_chain_state_.ischeduledparallelchainstate.html" class="tsd-signature-type">IScheduledParallelChainState</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TElement</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/f01e885/src/common/parallel/chain/parallel-chain-state.ts#L17">common/parallel/chain/parallel-chain-state.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/9568230/src/common/parallel/chain/parallel-chain-state.ts#L17">common/parallel/chain/parallel-chain-state.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -232,7 +232,7 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class="current tsd-kind-external-module tsd-is-external">
 						<a href="../modules/_common_parallel_chain_parallel_chain_state_.html">"common/parallel/chain/parallel-<wbr>chain-<wbr>state"</a>
 					</li>
 				</ul>
@@ -241,26 +241,26 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-external">
 						<a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html" class="tsd-kind-icon">IParallel<wbr>Chain<wbr>State</a>
 						<ul>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-external">
+								<a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html#addenvironment" class="tsd-kind-icon">add<wbr>Environment</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-external">
 								<a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html#chainoperation" class="tsd-kind-icon">chain<wbr>Operation</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html#changeenvironment" class="tsd-kind-icon">change<wbr>Environment</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-external">
 								<a href="_common_parallel_chain_parallel_chain_state_.iparallelchainstate.html#resolve" class="tsd-kind-icon">resolve</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-external">
 						<a href="_common_parallel_chain_parallel_chain_state_.ischeduledparallelchainstate.html" class="tsd-kind-icon">IScheduled<wbr>Parallel<wbr>Chain<wbr>State</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-external">
 						<a href="../modules/_common_parallel_chain_parallel_chain_state_.html#iparallelchainenvironment" class="tsd-kind-icon">IParallel<wbr>Chain<wbr>Environment</a>
 					</li>
 				</ul>

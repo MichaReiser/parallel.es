@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;common/parallel/slave/parallel-job-executor&quot; | Parallel ES</title>
+	<title>&quot;common/parallel/parallel-environment-definition&quot; | Parallel ES</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_common_parallel_slave_parallel_job_executor_.html">&quot;common/parallel/slave/parallel-job-executor&quot;</a>
+					<a href="_common_parallel_parallel_environment_definition_.html">&quot;common/parallel/parallel-environment-definition&quot;</a>
 				</li>
 			</ul>
-			<h1>External module &quot;common/parallel/slave/parallel-job-executor&quot;</h1>
+			<h1>External module &quot;common/parallel/parallel-environment-definition&quot;</h1>
 		</div>
 	</div>
 </header>
@@ -72,103 +72,12 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section tsd-is-external">
-							<h3>Interfaces</h3>
+							<h3>Classes</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-external-module tsd-is-external"><a href="../interfaces/_common_parallel_slave_parallel_job_executor_.iparalleljobdefinition.html" class="tsd-kind-icon">IParallel<wbr>Job<wbr>Definition</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-external">
-							<h3>Functions</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-external tsd-is-not-exported"><a href="_common_parallel_slave_parallel_job_executor_.html#createtaskenvironment" class="tsd-kind-icon">create<wbr>Task<wbr>Environment</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-external"><a href="_common_parallel_slave_parallel_job_executor_.html#paralleljobexecutor" class="tsd-kind-icon">parallel<wbr>Job<wbr>Executor</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-external"><a href="../classes/_common_parallel_parallel_environment_definition_.parallelenvironmentdefinition.html" class="tsd-kind-icon">Parallel<wbr>Environment<wbr>Definition</a></li>
 							</ul>
 						</section>
 					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-external">
-				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-external tsd-is-not-exported">
-					<a name="createtaskenvironment" class="tsd-anchor"></a>
-					<h3>create<wbr>Task<wbr>Environment</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-external tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Task<wbr>Environment<span class="tsd-signature-symbol">(</span>definition<span class="tsd-signature-symbol">: </span><a href="../interfaces/_common_parallel_slave_parallel_job_executor_.iparalleljobdefinition.html" class="tsd-signature-type">IParallelJobDefinition</a>, functionCallDeserializer<span class="tsd-signature-symbol">: </span><a href="../classes/_common_function_function_call_deserializer_.functioncalldeserializer.html" class="tsd-signature-type">FunctionCallDeserializer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iparalleltaskenvironment.html" class="tsd-signature-type">IParallelTaskEnvironment</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/9568230/src/common/parallel/slave/parallel-job-executor.ts#L36">common/parallel/slave/parallel-job-executor.ts:36</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>definition: <a href="../interfaces/_common_parallel_slave_parallel_job_executor_.iparalleljobdefinition.html" class="tsd-signature-type">IParallelJobDefinition</a></h5>
-								</li>
-								<li>
-									<h5>functionCallDeserializer: <a href="../classes/_common_function_function_call_deserializer_.functioncalldeserializer.html" class="tsd-signature-type">FunctionCallDeserializer</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/parallel.iparalleltaskenvironment.html" class="tsd-signature-type">IParallelTaskEnvironment</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-external">
-					<a name="paralleljobexecutor" class="tsd-anchor"></a>
-					<h3>parallel<wbr>Job<wbr>Executor</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">parallel<wbr>Job<wbr>Executor&lt;T, TResult&gt;<span class="tsd-signature-symbol">(</span>definition<span class="tsd-signature-symbol">: </span><a href="../interfaces/_common_parallel_slave_parallel_job_executor_.iparalleljobdefinition.html" class="tsd-signature-type">IParallelJobDefinition</a>, __namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/9568230/src/common/parallel/slave/parallel-job-executor.ts#L60">common/parallel/slave/parallel-job-executor.ts:60</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Main coordination function for any operation performed using <a href="../interfaces/parallel.iparallel.html">IParallel</a>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-									<div class="tsd-comment tsd-typography">
-										<p>type of the elements created by the generator</p>
-									</div>
-								</li>
-								<li>
-									<h4>TResult</h4>
-									<div class="tsd-comment tsd-typography">
-										<p>type of the resulting elements</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>definition: <a href="../interfaces/_common_parallel_slave_parallel_job_executor_.iparalleljobdefinition.html" class="tsd-signature-type">IParallelJobDefinition</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>the definition of the operation to performed</p>
-									</div>
-								</li>
-								<li>
-									<h5>__namedParameters: <span class="tsd-signature-type">object</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter">
-											<h5>function<wbr>Call<wbr>Deserializer<span class="tsd-signature-symbol">: </span><a href="../classes/_common_function_function_call_deserializer_.functioncalldeserializer.html" class="tsd-signature-type">FunctionCallDeserializer</a></h5>
-										</li>
-									</ul>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">[]</span></h4>
-							<p>the result of the operation from this worker</p>
-						</li>
-					</ul>
 				</section>
 			</section>
 		</div>
@@ -179,20 +88,14 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module tsd-is-external">
-						<a href="_common_parallel_slave_parallel_job_executor_.html">"common/parallel/slave/parallel-<wbr>job-<wbr>executor"</a>
+						<a href="_common_parallel_parallel_environment_definition_.html">"common/parallel/parallel-<wbr>environment-<wbr>definition"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-external">
-						<a href="../interfaces/_common_parallel_slave_parallel_job_executor_.iparalleljobdefinition.html" class="tsd-kind-icon">IParallel<wbr>Job<wbr>Definition</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-external tsd-is-not-exported">
-						<a href="_common_parallel_slave_parallel_job_executor_.html#createtaskenvironment" class="tsd-kind-icon">create<wbr>Task<wbr>Environment</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-external">
-						<a href="_common_parallel_slave_parallel_job_executor_.html#paralleljobexecutor" class="tsd-kind-icon">parallel<wbr>Job<wbr>Executor</a>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-external">
+						<a href="../classes/_common_parallel_parallel_environment_definition_.parallelenvironmentdefinition.html" class="tsd-kind-icon">Parallel<wbr>Environment<wbr>Definition</a>
 					</li>
 				</ul>
 			</nav>
