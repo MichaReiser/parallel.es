@@ -8,10 +8,9 @@
   "scripts": {
     "build": "cross-env NODE_ENV=prod webpack --progress && cross-env NODE_ENV=prod-es6 webpack --progress && npm run build:declarations",
     "build:doc": "typedoc --out ./docs --module umd --target es6 --name \"Parallel ES\" ./src",
-    "build:gh-pages": "cross-env NODE_ENV=gh-pages webpack --progress",
     "build:declarations": "tsc --declaration --outDir ./tmp -p tsconfig.json && copyfiles -u 1 './tmp/**/*.d.ts' ./dist",
     "prepublish": "npm run-script build",
-    "start": "cross-env NODE_ENV=dev webpack-dev-server --progress --content-base example --hot",
+    "start": "cross-env NODE_ENV=dev webpack --progress",
     "test": "cross-env NODE_ENV=test-ci karma start --single-run && npm run coverage:remap",
     "test:watch": "cross-env NODE_ENV=test karma start",
     "coverage:remap": "remap-istanbul --input ./coverage/Firefox*/coverage-final.json --output ./coverage/html -t html && remap-istanbul --input ./coverage/Firefox*/coverage-final.json --output ./coverage/lcov.info -t lcovonly",
@@ -34,20 +33,13 @@
     "url": "https://github.com/DatenMetzgerX/parallel.es/issues"
   },
   "homepage": "https://github.com/DatenMetzgerX/parallel.es#readme",
-  "dependencies": {
-    "@types/lodash": "^4.14.37"
-  },
   "devDependencies": {
-    "@types/benchmark": "^1.0.30",
     "@types/jasmine": "^2.5.35",
-    "@types/platform": "^1.0.27",
-    "@types/requirejs": "^2.1.28",
     "awesome-typescript-loader": "2.2.4",
     "babel-core": "6.17.0",
     "babel-plugin-transform-runtime": "6.15.0",
     "babel-preset-es2015": "6.16.0",
     "babel-runtime": "6.11.6",
-    "benchmark": "2.1.1",
     "compression-webpack-plugin": "0.3.2",
     "copyfiles": "^1.0.0",
     "coveralls": "2.11.14",
@@ -64,10 +56,7 @@
     "karma-jasmine-html-reporter": "0.2.2",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "1.8.0",
-    "lodash": "4.16.4",
-    "platform": "^1.3.1",
     "remap-istanbul": "github:datenmetzgerx/remap-istanbul#consider-sourcemap-from-file-coverage",
-    "simjs-random": "0.2.6",
     "tslint": "3.15.1",
     "tslint-loader": "2.1.5",
     "typedoc": "^0.5.0",
