@@ -30,11 +30,8 @@ rm -rf $OUT_DIR/artifacts || exit 0
 mkdir $OUT_DIR/artifacts
 
 # Run our compile script
-npm run build:gh-pages
 npm run build:doc
 
-cp ./example/index.html $OUT_DIR/artifacts/example.html
-cp ./example/performance-measurement.html $OUT_DIR/artifacts
 cp -r ./docs $OUT_DIR/artifacts/docs
 
 # Now let's go have some fun with the cloned repo
