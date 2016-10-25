@@ -16,9 +16,9 @@ Perform a single computation on a worker thread:
 ```js
 import parallel from "parallel-es";
 
-parallel.schedule(function () {
+parallel.run(function () {
 	//… compute
-	return [1, 2, 3;
+	return [1, 2, 3];
 }).then(result => console.log(result));
 ```
 
@@ -37,7 +37,7 @@ The Library uses Function serialization and therefore debugging is not supported
 The library uses function serialization and therefore the outer scope is no longer available when the function is invoked in the  worker thread. However, there is a [webpack plugin](https://github.com/DatenMetzgerX/parallel-es-webpack-plugin) that rewrites your code and allows you to use const variables from the outer scope or reference functions.
 
 ## Documentation
-The [API Documentation](https://datenmetzgerx.github.io/parallel.es/artifacts/docs/interfaces/parallel.iparallel.html) is available online. The [wiki](./wiki) describes the architecture and programing model in more detail.
+The [API Documentation](https://datenmetzgerx.github.io/parallel.es/artifacts/docs/interfaces/parallel.iparallel.html) is available online. The [wiki](../../wiki) describes the architecture and programing model in more detail.
 
 ## Examples
 More sophisticated examples can be seen [here](https://datenmetzgerx.github.io/parallel.es/artifacts/example.html).

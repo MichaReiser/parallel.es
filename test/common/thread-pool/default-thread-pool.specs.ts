@@ -1,6 +1,7 @@
 import {DefaultThreadPool} from "../../../src/common/thread-pool/default-thread-pool";
-import {WorkerTask} from "../../../src/common/task/worker-task";
 import {FunctionCall} from "../../../src/common/function/function-call";
+import {ITaskDefinition} from "../../../src/common/task/task-definition";
+import {IWorkerThread} from "../../../src/common/worker/worker-thread";
 
 describe("DefaultThreadPool", function () {
     let spawn: jasmine.Spy;
@@ -15,14 +16,15 @@ describe("DefaultThreadPool", function () {
         threadPool = new DefaultThreadPool(workerThreadFactory, { serializeFunctionCall: serializeCallSpy } as any, { maxConcurrencyLevel: 2 });
     });
 
-    describe("schedule", function () {
+    describe("run", function () {
         it("registers the function in the function lookup table", function () {
             // arrange
-            const func = function () { /* ignore */ };
-            serializeCallSpy.and.returnValue({ functionId: "test-1" });
+            const func = function () { /* ignore */
+            };
+            serializeCallSpy.and.returnValue({functionId: "test-1"});
 
             // act
-            threadPool.schedule(func);
+            threadPool.run(func);
 
             // assert
             expect(serializeCallSpy).toHaveBeenCalledWith(FunctionCall.create(func));
@@ -30,115 +32,201 @@ describe("DefaultThreadPool", function () {
 
         it("spawns a new worker until the concurrency limit is reached", function () {
             // arrange
-            const func = function () { /* ignore */ };
-            serializeCallSpy.and.returnValue({ functionId: "test-1" });
+            const func = function () { /* ignore */
+            };
+            serializeCallSpy.and.returnValue({functionId: "test-1"});
 
             // act
-            threadPool.schedule(func);
-            threadPool.schedule(func);
-            threadPool.schedule(func);
+            threadPool.run(func);
+            threadPool.run(func);
+            threadPool.run(func);
 
             // assert
             expect(spawn).toHaveBeenCalledTimes(2);
         });
 
-        it("executes the task in a worker thread", function () {
+        it("creates a task definition from the given task and runs it onto the worker thread", function () {
             // arrange
-            const func = function (value: number) { return value; };
-            const runOnSpy = spyOn(WorkerTask.prototype, "runOn");
-            serializeCallSpy.and.returnValue({ functionId: "test-1" });
+            const runSpy = jasmine.createSpy("run");
+            const workerThread = {run: runSpy};
+            spawn.and.returnValue(workerThread);
 
-            const worker = { run: jasmine.createSpy("run") };
-            spawn.and.returnValue(worker);
+            const func = function (value: number) {
+                return value;
+            };
+            const serializedFunc = {functionId: "test-1"};
+            serializeCallSpy.and.returnValue(serializedFunc);
 
             // act
-            threadPool.schedule(func, 10);
+            threadPool.run(func, 10);
 
             // assert
-            expect(runOnSpy).toHaveBeenCalledWith(worker);
+            expect(runSpy).toHaveBeenCalledWith({
+                main: serializedFunc,
+                usedFunctionIds: ["test-1"]
+            }, jasmine.any(Function));
+        });
+    });
+
+    describe("runTask", function () {
+        let task: ITaskDefinition;
+        let worker1RunSpy: jasmine.Spy;
+        let worker1: IWorkerThread;
+
+        beforeEach(function () {
+            task = {
+                main: { functionId: "test-1" },
+                usedFunctionIds: [ "test-1" ]
+            } as any;
+
+            worker1RunSpy = jasmine.createSpy("run");
+            worker1 = {run: worker1RunSpy} as any;
+            spawn.and.returnValue(worker1);
+        });
+
+        it("runs the task on an available worker thread", function () {
+            threadPool.runTask(task);
+
+            // assert
+            expect(worker1RunSpy).toHaveBeenCalledWith(task, jasmine.any(Function));
         });
 
         it("enqueues the task if no worker thread is available", function () {
             // arrange
-            const func = function () { /* ignore */ };
-            serializeCallSpy.and.returnValue({ functionId: "test-1" });
-
-            const worker1 = { run: jasmine.createSpy("run1"), stop: jasmine.createSpy("stop") };
             const worker2 = { run: jasmine.createSpy("run2"), stop: jasmine.createSpy("stop") };
             spawn.and.returnValues(worker1, worker2);
 
             // schedule worker until no worker is available...
-            threadPool.schedule(func);
-            threadPool.schedule(func);
+            threadPool.runTask(task);
+            threadPool.runTask(task);
 
             // act, should be queued.
-            threadPool.schedule(func);
+            threadPool.runTask(task);
 
             // assert
-            expect(worker1.run).toHaveBeenCalled();
-            expect(worker2.run).toHaveBeenCalled();
+            expect(worker1RunSpy).toHaveBeenCalledWith(task, jasmine.any(Function));
+            expect(worker2.run).toHaveBeenCalledWith(task, jasmine.any(Function));
         });
 
-        it("schedules queued tasks when a worker gets available", function () {
+        it("runs queued tasks when a worker gets available", function () {
             // arrange
-            const func = function () { /* ignore */ };
-            const func2 = function add(x: number, y: number): number { return x + y; };
-            serializeCallSpy.and.returnValues({ functionId: "test-1" }, { functionId: "test-1" }, { functionId: "test-2" });
+            const task2 = Object.create(task);
+            const task3 = Object.create(task);
 
-            const worker1 = { run: jasmine.createSpy("run1"), stop: jasmine.createSpy("stop") };
             const worker2 = { run: jasmine.createSpy("run2"), stop: jasmine.createSpy("stop") };
-            const runOnSpy = spyOn(WorkerTask.prototype, "runOn");
-            const alwaysSpy = spyOn(WorkerTask.prototype, "always");
-            spyOn(WorkerTask.prototype, "releaseWorker").and.returnValue(worker1);
-
             spawn.and.returnValues(worker1, worker2);
 
             // schedule worker until no worker is available...
-            threadPool.schedule(func);
-            threadPool.schedule(func);
-            threadPool.schedule(func2); // queue third function
+            threadPool.runTask(task);
+            threadPool.runTask(task2);
+            threadPool.runTask(task3); // queue third task
 
             // act
             // complete task of first worker so that the third task is scheduled on worker 1
-            alwaysSpy.calls.argsFor(0)[0].call(undefined, 10);
+            worker1RunSpy.calls.argsFor(0)[1].call(undefined, undefined, 10);
 
             // assert
-            expect(runOnSpy.calls.count()).toEqual(3);
-            expect(runOnSpy.calls.argsFor(0)).toEqual([worker1]);
-            expect(runOnSpy.calls.argsFor(1)).toEqual([worker2]);
-            expect(runOnSpy.calls.argsFor(2)).toEqual([worker1]);
+            // task 1 and 3 is executed on worker 1
+            expect(worker1RunSpy.calls.count()).toEqual(2);
+            expect(worker1RunSpy).toHaveBeenCalledWith(task, jasmine.any(Function));
+            expect(worker1RunSpy).toHaveBeenCalledWith(task3, jasmine.any(Function));
+
+            // worker 2 only executes task 2
+            expect(worker2.run.calls.count()).toEqual(1);
+            expect(worker2.run).toHaveBeenCalledWith(task2, jasmine.any(Function));
         });
 
         it("reuses an idle worker if available", function () {
             // arrange
-            const worker1 = { run: jasmine.createSpy("run1"), stop: jasmine.createSpy("stop") };
+            const task2 = Object.create(task);
+            const task3 = Object.create(task);
+
             const worker2 = { run: jasmine.createSpy("run2"), stop: jasmine.createSpy("stop") };
-            serializeCallSpy.and.returnValue({ functionId: "test-1" });
             spawn.and.returnValues(worker1, worker2);
 
-            const runOnSpy = spyOn(WorkerTask.prototype, "runOn");
-            const alwaysSpy = spyOn(WorkerTask.prototype, "always");
-            spyOn(WorkerTask.prototype, "releaseWorker").and.returnValues(worker1, worker2);
-
             // spawn all workers by scheduling tasks up to concurrency limit
-            const func = function () { /* ignore */ };
-            threadPool.schedule(func);
-            threadPool.schedule(func);
+            threadPool.runTask(task);
+            threadPool.runTask(task2);
 
             // complete first task, third task can now be scheduled on worker1 as this worker is idle
-            alwaysSpy.calls.argsFor(0)[0].call(undefined, 10);
+            worker1RunSpy.calls.argsFor(0)[1].call(undefined, undefined, 10);
 
             // act
-            threadPool.schedule(func);
+            threadPool.runTask(task3);
 
-            expect(runOnSpy).toHaveBeenCalledTimes(3);
-            expect(runOnSpy.calls.argsFor(0)).toEqual([ worker1 ]);
-            expect(runOnSpy.calls.argsFor(1)).toEqual([ worker2]);
-            expect(runOnSpy.calls.argsFor(0)).toEqual([ worker1 ]);
+            expect(worker1RunSpy).toHaveBeenCalledTimes(2);
+            expect(worker1RunSpy).toHaveBeenCalledWith(task, jasmine.any(Function));
+            expect(worker1RunSpy).toHaveBeenCalledWith(task3, jasmine.any(Function));
+        });
+
+        it("resolves the task as canceled if cancellation is requested before the task has been scheduled", function () {
+            // arrange
+            const canceledTaskDefinition = Object.create(task);
+
+            // schedule tasks to fill queue
+            threadPool.runTask(task);
+            threadPool.runTask(task);
+            const canceledTask = threadPool.runTask(canceledTaskDefinition);
+            const resolvedCancelledSpy = spyOn(canceledTask, "resolveCancelled");
+
+            canceledTask.cancel();
+
+            // act
+            // complete first task to schedule canceled task
+            worker1RunSpy.calls.argsFor(0)[1].call(undefined, undefined, 10);
+
+            // assert
+            expect(resolvedCancelledSpy).toHaveBeenCalled();
+            expect(worker1RunSpy).not.toHaveBeenCalledWith(canceledTaskDefinition, jasmine.any(Function));
+        });
+
+        it("runs the next queued task if a task has been cancelled", function () {
+            // arrange
+            const canceledTaskDefinition = Object.create(task);
+            const nextTask = Object.create(task);
+
+            // schedule tasks to fill queue
+            threadPool.runTask(task);
+            threadPool.runTask(task);
+            const canceledTask = threadPool.runTask(canceledTaskDefinition);
+
+            // act
+            canceledTask.cancel();
+            // complete first task, canceled task is now scheduled on worker 1
+            worker1RunSpy.calls.argsFor(0)[1].call(undefined, undefined, 10);
+
+            // assert
+            expect(worker1RunSpy).not.toHaveBeenCalledWith(nextTask, jasmine.any(Function));
+        });
+
+        it("resolves the task if the computation has completed", function () {
+            // arrange
+            const scheduledTask = threadPool.runTask(task);
+            const resolveSpy = spyOn(scheduledTask, "resolve");
+
+            // act
+            // complete task
+            worker1RunSpy.calls.argsFor(0)[1].call(undefined, undefined, 10);
+
+            // assert
+            expect(resolveSpy).toHaveBeenCalledWith(10);
+        });
+
+        it("rejects the task if the computation has failed", function () {
+            // arrange
+            const scheduledTask = threadPool.runTask(task);
+            const rejectSpy = spyOn(scheduledTask, "reject");
+
+            // act
+            // complete task
+            worker1RunSpy.calls.argsFor(0)[1].call(undefined, "error");
+
+            // assert
+            expect(rejectSpy).toHaveBeenCalledWith("error");
         });
     });
 
-    describe("createFunctionSerializer", function () {
+    describe("getFunctionSerializer", function () {
         it("returns the instance", function () {
             // arrange
             const serializer = threadPool.getFunctionSerializer();

@@ -26,7 +26,7 @@ describe("BrowserSlave IntegrationTests", function () {
     describe("task execution", function () {
         it("requests missing function definitions", function (done) {
             // arrange
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: functionId("test", 0), parameters: [] }, usedFunctionIds: [functionId("test", 0)]};
+            const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: functionId("test", 0), parameters: [] }, usedFunctionIds: [functionId("test", 0)]};
             slave.postMessage(initializeWorkerMessage(1));
 
             // act
@@ -42,7 +42,7 @@ describe("BrowserSlave IntegrationTests", function () {
 
         it("it executes the function as soon as the function definition has been retrieved", function (done) {
             // arrange
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: functionId("test", 0), parameters: [10] }, usedFunctionIds: [functionId("test", 0)] };
+            const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: functionId("test", 0), parameters: [10] }, usedFunctionIds: [functionId("test", 0)] };
 
             let promise = new Promise((resolve, reject) => {
                 (onresponse as jasmine.Spy).and.callFake(function (event: MessageEvent) {
@@ -85,7 +85,7 @@ describe("BrowserSlave IntegrationTests", function () {
                 });
             });
 
-            const firstTask: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: functionId("test", 0), parameters: [10] }, usedFunctionIds: [functionId("test", 0)] };
+            const firstTask: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: functionId("test", 0), parameters: [10] }, usedFunctionIds: [functionId("test", 0)] };
             slave.postMessage(initializeWorkerMessage(1));
             slave.postMessage(scheduleTaskMessage(firstTask));
 
@@ -103,7 +103,7 @@ describe("BrowserSlave IntegrationTests", function () {
                 });
 
                 // act
-                const secondTask: ITaskDefinition = { id: 2, main: { ______serializedFunctionCall: true, functionId: functionId("test", 0), parameters: [20] }, usedFunctionIds: [functionId("test", 0)]};
+                const secondTask: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: functionId("test", 0), parameters: [20] }, usedFunctionIds: [functionId("test", 0)]};
                 slave.postMessage(scheduleTaskMessage(secondTask));
                 return promise;
             });
@@ -119,7 +119,7 @@ describe("BrowserSlave IntegrationTests", function () {
 
         it("reports any errors occurring during the function execution", function (done) {
             // arrange
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: functionId("test", 0), parameters: [10] }, usedFunctionIds: [functionId("test", 0)] };
+            const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: functionId("test", 0), parameters: [10] }, usedFunctionIds: [functionId("test", 0)] };
 
             let promise = new Promise((resolve, reject) => {
                 (onresponse as jasmine.Spy).and.callFake(function (event: MessageEvent) {

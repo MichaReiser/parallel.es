@@ -49,11 +49,11 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
             return createParallelChain(ParallelTimesGenerator.create(n, generator), mergeOptions(options));
         },
 
-        schedule<TResult>(func: ((this: void, ...params: any[]) => TResult) | IFunctionId, ...params: any[]): ITask<TResult> {
+        run<TResult>(func: ((this: void, ...params: any[]) => TResult) | IFunctionId, ...params: any[]): ITask<TResult> {
             if (isFunctionId(func)) {
-                return defaultOptions.threadPool.schedule<TResult>(func, ...params);
+                return defaultOptions.threadPool.run<TResult>(func, ...params);
             }
-            return defaultOptions.threadPool.schedule(func as any, ...params);
+            return defaultOptions.threadPool.run(func as any, ...params);
         }
     };
 }

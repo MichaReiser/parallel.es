@@ -15,27 +15,23 @@ export class DefaultThreadPool implements IThreadPool {
     private workers: IWorkerThread[] = [];
     private idleWorkers: IWorkerThread[] = [];
     private queue: WorkerTask<any>[] = [];
-    private lastTaskId = -1;
     private concurrencyLimit: number;
 
     constructor(private workerThreadFactory: IWorkerThreadFactory, private functionCallSerializer: FunctionCallSerializer, options: { maxConcurrencyLevel: number }) {
         this.concurrencyLimit = options.maxConcurrencyLevel;
     }
 
-    public schedule<TResult>(func: ((this: void, ...params: any[]) => TResult) | IFunctionId, ...params: any[]): ITask<TResult> {
+    public run<TResult>(func: ((this: void, ...params: any[]) => TResult) | IFunctionId, ...params: any[]): ITask<TResult> {
         const serializedFunc = this.functionCallSerializer.serializeFunctionCall(FunctionCall.createUnchecked(func, ...params));
         const taskDefinition: ITaskDefinition = { main: serializedFunc, usedFunctionIds: [ serializedFunc.functionId ] };
-        return this.scheduleTask(taskDefinition);
+        return this.runTask(taskDefinition);
     }
 
-    public scheduleTask<TResult>(taskDefinition: ITaskDefinition): ITask<TResult> {
-        taskDefinition.id = ++this.lastTaskId;
+    public runTask<TResult>(taskDefinition: ITaskDefinition): ITask<TResult> {
         const task = new WorkerTask<TResult>(taskDefinition);
 
-        task.always(() => this._releaseWorker(task));
-
         this.queue.unshift(task);
-        this._schedulePendingTasks();
+        this.schedulePendingTasks();
 
         return task;
     }
@@ -44,14 +40,12 @@ export class DefaultThreadPool implements IThreadPool {
         return this.functionCallSerializer;
     }
 
-    private _releaseWorker(task: WorkerTask<any>): void {
-        const worker = task.releaseWorker();
-        this.idleWorkers.push(worker);
-
-        this._schedulePendingTasks();
-    }
-
-    private _schedulePendingTasks(): void {
+    /**
+     * Schedules the tasks in the queue onto the available workers.
+     * A new worker is spawned when no more idle workers are available and the number of workers has not yet reached the concurrency limit.
+     * If no more idle workers are available and the concurrency limit has been reached then the tasks are left in queue.
+     */
+    private schedulePendingTasks(): void {
         while (this.queue.length) {
             let worker: IWorkerThread | undefined;
             if (this.idleWorkers.length === 0 && this.workers.length < this.concurrencyLimit) {
@@ -66,7 +60,35 @@ export class DefaultThreadPool implements IThreadPool {
             }
 
             const task = <WorkerTask<any>> this.queue.pop();
-            task.runOn(worker);
+            this.runTaskOnWorker(task, worker);
         }
+    }
+
+    /**
+     * Starts the given task on the given worker. Resolves the task when the computation succeeds, rejects it otherwise.
+     * The task is resolved when the computation has succeeded or is rejected if the computation failed
+     * @param task the task to run on the given worker
+     * @param worker the worker to use to execute the task
+     */
+    private runTaskOnWorker(task: WorkerTask<any>, worker: IWorkerThread): void {
+        if (task.isCancellationRequested) {
+            task.resolveCancelled();
+            this.releaseWorker(worker);
+        } else {
+            worker.run(task.definition, (error, result) => {
+                if (error) {
+                    task.reject(error);
+                } else {
+                    task.resolve(result);
+                }
+                this.releaseWorker(worker);
+            });
+        }
+    }
+
+    private releaseWorker(worker: IWorkerThread): void {
+        this.idleWorkers.push(worker);
+
+        this.schedulePendingTasks();
     }
 }

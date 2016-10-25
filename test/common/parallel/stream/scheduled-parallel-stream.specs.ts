@@ -265,7 +265,6 @@ class FakeTask<T> implements ITask<T> {
         });
 
         this.definition = {
-            id: index,
             main: undefined as any,
             taskIndex: index,
             usedFunctionIds: [],

@@ -12,15 +12,15 @@ import {functionId} from "../../../src/common/function/function-id";
 describe("Parallel", function () {
     let parallel: IParallel;
     let threadPool: IThreadPool;
-    let scheduleSpy: jasmine.Spy;
+    let threadPoolRunSpy: jasmine.Spy;
     const maxConcurrencyLevel = 2;
     let createParallelChainSpy: jasmine.Spy;
     let options: IDefaultInitializedParallelOptions;
 
     beforeEach(function () {
         createParallelChainSpy = spyOn(ParallelChainFactoryModule, "createParallelChain");
-        scheduleSpy = jasmine.createSpy("schedule");
-        threadPool = { schedule: scheduleSpy } as any;
+        threadPoolRunSpy = jasmine.createSpy("run");
+        threadPool = { run: threadPoolRunSpy } as any;
         options = {
             maxConcurrencyLevel,
             threadPool,
@@ -189,27 +189,27 @@ describe("Parallel", function () {
         });
     });
 
-    describe("schedules", function () {
-        it("schedules the function on the thread pool", function () {
+    describe("run", function () {
+        it("runs the function on the thread pool", function () {
             // arrange
             const func = jasmine.createSpy("func");
 
             // act
-            parallel.schedule(func, { test: 123 });
+            parallel.run(func, { test: 123 });
 
             // assert
-            expect(scheduleSpy).toHaveBeenCalledWith(func, { test: 123 });
+            expect(threadPoolRunSpy).toHaveBeenCalledWith(func, { test: 123 });
         });
 
-        it("schedules the function with the given id on the thread pool", function () {
+        it("runs the function with the given id on the thread pool", function () {
             // arrange
             const funcId = functionId("test", 0);
 
             // act
-            parallel.schedule(funcId, { test: 123 });
+            parallel.run(funcId, { test: 123 });
 
             // assert
-            expect(scheduleSpy).toHaveBeenCalledWith(funcId, { test: 123 });
+            expect(threadPoolRunSpy).toHaveBeenCalledWith(funcId, { test: 123 });
         });
     });
 });

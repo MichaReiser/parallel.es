@@ -60,7 +60,6 @@ describe("BrowserWorkerSlaveStates", function () {
         it("requests the definitions of the functions used in the task definition but yet missing in the slave cache", function () {
             // arrange
             const task: ITaskDefinition = {
-                id: 1,
                 main: {
                     ______serializedFunctionCall: true,
                     functionId: functionId("test", 0),
@@ -84,7 +83,6 @@ describe("BrowserWorkerSlaveStates", function () {
         it("changes to the execution state if the slave already has all functions cached", function () {
             // arrange
             const task: ITaskDefinition = {
-                id: 1,
                 main: {
                     ______serializedFunctionCall: true,
                     functionId: functionId("test", 0),
@@ -107,7 +105,6 @@ describe("BrowserWorkerSlaveStates", function () {
     describe("WaitingForFunctionDefinitionBrowserWorkerState", function () {
         beforeEach(function () {
             const task: ITaskDefinition = {
-                id: 1,
                 main: {
                     ______serializedFunctionCall: true,
                     functionId: functionId("test", 0),
@@ -193,7 +190,6 @@ describe("BrowserWorkerSlaveStates", function () {
     describe("ExecuteFunctionBrowserWorkerState", function () {
         beforeEach(function () {
             const task: ITaskDefinition = {
-                id: 1,
                 main: {
                     ______serializedFunctionCall: true,
                     functionId: functionId("test", 0),
