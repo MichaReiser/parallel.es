@@ -5,11 +5,18 @@
 
 import {IThreadPool} from "../thread-pool/thread-pool";
 import {IParallelJobScheduler} from "./scheduling/parallel-job-scheduler";
+import {FunctionCallSerializer} from "../function/function-call-serializer";
 
 /**
  * Options that affect how a parallel operation is executed.
  */
 export interface IParallelOptions {
+
+    /**
+     * Serializer used to serialize {@link FunctionCall}s
+     */
+    functionCallSerializer?: FunctionCallSerializer;
+
     /**
      * Maximum number of workers that can run in parallel (without blocking each other)
      */
@@ -41,6 +48,7 @@ export interface IParallelOptions {
  * Initialized parallel options
  */
 export interface IDefaultInitializedParallelOptions extends IParallelOptions {
+    functionCallSerializer: FunctionCallSerializer;
     maxConcurrencyLevel: number;
     threadPool: IThreadPool;
     scheduler: IParallelJobScheduler;

@@ -4,9 +4,6 @@ import {ITaskDefinition} from "../task/task-definition";
 import {IWorkerThreadFactory} from "../worker/worker-thread-factory";
 import {WorkerTask} from "../task/worker-task";
 import {ITask} from "../task/task";
-import {FunctionCallSerializer} from "../function/function-call-serializer";
-import {FunctionCall} from "../function/function-call";
-import {IFunctionId} from "../function/function-id";
 
 /**
  * Default thread pool implementation that processes the scheduled functions in FIFO order.
@@ -17,27 +14,17 @@ export class DefaultThreadPool implements IThreadPool {
     private queue: WorkerTask<any>[] = [];
     private concurrencyLimit: number;
 
-    constructor(private workerThreadFactory: IWorkerThreadFactory, private functionCallSerializer: FunctionCallSerializer, options: { maxConcurrencyLevel: number }) {
+    constructor(private workerThreadFactory: IWorkerThreadFactory, options: { maxConcurrencyLevel: number }) {
         this.concurrencyLimit = options.maxConcurrencyLevel;
     }
 
-    public run<TResult>(func: ((this: void, ...params: any[]) => TResult) | IFunctionId, ...params: any[]): ITask<TResult> {
-        const serializedFunc = this.functionCallSerializer.serializeFunctionCall(FunctionCall.createUnchecked(func, ...params));
-        const taskDefinition: ITaskDefinition = { main: serializedFunc, usedFunctionIds: [ serializedFunc.functionId ] };
-        return this.runTask(taskDefinition);
-    }
-
-    public runTask<TResult>(taskDefinition: ITaskDefinition): ITask<TResult> {
+    public run<TResult>(taskDefinition: ITaskDefinition): ITask<TResult> {
         const task = new WorkerTask<TResult>(taskDefinition);
 
         this.queue.unshift(task);
         this.schedulePendingTasks();
 
         return task;
-    }
-
-    public getFunctionSerializer(): FunctionCallSerializer {
-        return this.functionCallSerializer;
     }
 
     /**

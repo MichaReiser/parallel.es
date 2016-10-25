@@ -16,8 +16,11 @@ import {ParallelEnvironmentDefinition} from "../../../../src/common/parallel/par
 describe("AbstractParallelScheduler", function () {
     let options: IDefaultInitializedParallelOptions;
     let generator: IParallelGenerator;
-    let createFunctionSerializerSpy: jasmine.Spy;
-    let runTaskSpy: jasmine.Spy;
+
+    let functionSerializer: FunctionCallSerializer;
+    let serializeFunctionCallSpy: jasmine.Spy;
+
+    let threadPoolRunSpy: jasmine.Spy;
     let threadPool: IThreadPool;
     let scheduler: AbstractParallelScheduler;
     let getSchedulingSpy: jasmine.Spy;
@@ -26,15 +29,16 @@ describe("AbstractParallelScheduler", function () {
         scheduler = new SimpleScheduler();
         getSchedulingSpy = spyOn(scheduler, "getScheduling");
 
-        createFunctionSerializerSpy = jasmine.createSpy("createFunctionSerializer");
-        runTaskSpy = jasmine.createSpy("scheduleTask");
+        functionSerializer = new FunctionCallSerializer(undefined as any);
+        serializeFunctionCallSpy = spyOn(functionSerializer, "serializeFunctionCall");
+
+        threadPoolRunSpy = jasmine.createSpy("scheduleTask");
         threadPool = {
-            getFunctionSerializer: createFunctionSerializerSpy,
-            run: jasmine.createSpy("run"),
-            runTask: runTaskSpy
+            run: threadPoolRunSpy
         };
 
         options = {
+            functionCallSerializer: functionSerializer,
             maxConcurrencyLevel: 2,
             scheduler,
             threadPool
@@ -47,15 +51,11 @@ describe("AbstractParallelScheduler", function () {
         it("schedules the tasks on the thread pool", function () {
             // arrange
             getSchedulingSpy.and.returnValue({ numberOfTasks: 2, valuesPerTask: 3 });
-            const functionSerializer = new FunctionCallSerializer(undefined as any);
-            createFunctionSerializerSpy.and.returnValue(functionSerializer);
-
-            spyOn(functionSerializer, "serializeFunctionCall");
 
             const task1 = new Promise(() => undefined);
             const task2 = new Promise(() => undefined);
 
-            runTaskSpy.and.returnValues(task1, task2);
+            threadPoolRunSpy.and.returnValues(task1, task2);
 
             spyOn(generator, "serializeSlice").and.returnValue({ functionId: 2 });
 
@@ -68,22 +68,18 @@ describe("AbstractParallelScheduler", function () {
             });
 
             // assert
-            expect(runTaskSpy).toHaveBeenCalledTimes(2);
+            expect(threadPoolRunSpy).toHaveBeenCalledTimes(2);
             expect(tasks).toEqual([task1, task2]);
         });
 
         it("calls the generator.serializeSlice for each task to spawn", function () {
             // arrange
             getSchedulingSpy.and.returnValue({ numberOfTasks: 2, valuesPerTask: 3 });
-            const functionSerializer = new FunctionCallSerializer(undefined as any);
-            createFunctionSerializerSpy.and.returnValue(functionSerializer);
-
-            spyOn(functionSerializer, "serializeFunctionCall");
 
             const task1 = new Promise(() => undefined);
             const task2 = new Promise(() => undefined);
 
-            runTaskSpy.and.returnValues(task1, task2);
+            threadPoolRunSpy.and.returnValues(task1, task2);
 
             const serializeSliceSpy = spyOn(generator, "serializeSlice").and.returnValue({ functionId: 2 });
 
@@ -103,13 +99,6 @@ describe("AbstractParallelScheduler", function () {
         it("passes the serialized environment to the main function", function () {
             // arrange
             getSchedulingSpy.and.returnValue({ numberOfTasks: 1, valuesPerTask: 3 });
-            const serializeFunctionCallSpy = jasmine.createSpy("serializeFunction");
-            const functionSerializer = {
-                serializeFunctionCall: serializeFunctionCallSpy,
-                serializedFunctionIds: [1, 9]
-            };
-
-            createFunctionSerializerSpy.and.returnValue(functionSerializer);
             spyOn(generator, "serializeSlice").and.returnValue({ functionId: 2 });
 
             // act
@@ -133,14 +122,8 @@ describe("AbstractParallelScheduler", function () {
         it("schedules a task for each slice according to the job", function () {
             // arrange
             getSchedulingSpy.and.returnValue({ numberOfTasks: 2, valuesPerTask: 3 });
-            const serializeFunctionCallSpy = jasmine.createSpy("serializeFunction");
-            const functionSerializer = {
-                serializeFunctionCall: serializeFunctionCallSpy,
-                serializedFunctionIds: [ParallelWorkerFunctionIds.TO_ITERATOR, ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR, ParallelWorkerFunctionIds.MAP, ParallelWorkerFunctionIds.FILTER, functionId("test", 0)]
-            };
 
             const powerOf = (value: number) => value ** 2;
-            createFunctionSerializerSpy.and.returnValue(functionSerializer);
 
             serializeFunctionCallSpy.and.callFake((call: FunctionCall): ISerializedFunctionCall => {
                 if (call.func === ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR) {
@@ -158,7 +141,7 @@ describe("AbstractParallelScheduler", function () {
             const task1 = new Promise(() => undefined);
             const task2 = new Promise(() => undefined);
 
-            runTaskSpy.and.returnValues(task1, task2);
+            threadPoolRunSpy.and.returnValues(task1, task2);
 
             const generatorSlice1 = { ______serializedFunctionCall: true, functionId: ParallelWorkerFunctionIds.TO_ITERATOR, parameters: [[1, 2, 3]] };
             const generatorSlice2 = { ______serializedFunctionCall: true, functionId: ParallelWorkerFunctionIds.TO_ITERATOR, parameters: [[4, 5]] };
@@ -179,7 +162,7 @@ describe("AbstractParallelScheduler", function () {
 
             // assert
             // slice 1
-            expect(runTaskSpy).toHaveBeenCalledWith({
+            expect(threadPoolRunSpy).toHaveBeenCalledWith({
                 main: {
                     ______serializedFunctionCall: true,
                     functionId: ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR, // process
@@ -204,7 +187,7 @@ describe("AbstractParallelScheduler", function () {
             });
 
             // slice 2
-            expect(runTaskSpy).toHaveBeenCalledWith({
+            expect(threadPoolRunSpy).toHaveBeenCalledWith({
                 main: {
                     ______serializedFunctionCall: true,
                     functionId: ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR, // process

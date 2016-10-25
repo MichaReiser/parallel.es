@@ -17,10 +17,15 @@ export * from "./shared";
 const functionLookupTable = new DynamicFunctionRegistry();
 const maxConcurrencyLevel = (window.navigator as any)["hardwareConcurrency"] || 4;
 const functionCallSerializer = new FunctionCallSerializer(functionLookupTable);
-const threadPool = new DefaultThreadPool(new BrowserWorkerThreadFactory(functionLookupTable), functionCallSerializer, {maxConcurrencyLevel});
+const threadPool = new DefaultThreadPool(new BrowserWorkerThreadFactory(functionLookupTable), { maxConcurrencyLevel });
 
 /**
  * The global parallel instance.
  */
-const parallel: IParallel = parallelFactory({ maxConcurrencyLevel, scheduler: new DefaultParallelScheduler(), threadPool });
+const parallel: IParallel = parallelFactory({
+    functionCallSerializer,
+    maxConcurrencyLevel,
+    scheduler: new DefaultParallelScheduler(),
+    threadPool
+});
 export default parallel;

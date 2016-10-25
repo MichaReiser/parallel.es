@@ -13,7 +13,7 @@ import {isSerializedFunctionCall} from "../../function/serialized-function-call"
 export abstract class AbstractParallelScheduler implements IParallelJobScheduler {
     public schedule<TResult>(job: IParallelJob): ITask<TResult>[] {
         const taskDefinitions = this.getTaskDefinitions(job);
-        return taskDefinitions.map(taskDefinition => job.options.threadPool.runTask(taskDefinition));
+        return taskDefinitions.map(taskDefinition => job.options.threadPool.run(taskDefinition));
     }
 
     /**
@@ -25,7 +25,7 @@ export abstract class AbstractParallelScheduler implements IParallelJobScheduler
 
     private getTaskDefinitions(job: IParallelJob): ITaskDefinition[] {
         const scheduling = this.getScheduling(job.generator.length, job.options);
-        const functionCallSerializer = job.options.threadPool.getFunctionSerializer();
+        const functionCallSerializer = job.options.functionCallSerializer;
 
         const environments = job.environment.toJSON(functionCallSerializer);
         const operations = this.serializeOperations(job.operations, functionCallSerializer);

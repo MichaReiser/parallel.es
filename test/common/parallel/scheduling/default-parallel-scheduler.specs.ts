@@ -7,7 +7,7 @@ describe("DefaultParallelScheduler", function () {
 
     beforeEach(function () {
         scheduler = new DefaultParallelScheduler();
-        options = { maxConcurrencyLevel: 2, scheduler, threadPool: undefined as any };
+        options = { functionCallSerializer: undefined as any, maxConcurrencyLevel: 2, scheduler, threadPool: undefined as any };
     });
 
     describe("getScheduling", function () {

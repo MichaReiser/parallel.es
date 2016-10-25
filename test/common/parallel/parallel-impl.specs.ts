@@ -8,11 +8,17 @@ import {IDefaultInitializedParallelOptions} from "../../../src/common/parallel";
 import {IThreadPool} from "../../../src/common/thread-pool/thread-pool";
 import {FunctionCall} from "../../../src/common/function/function-call";
 import {functionId} from "../../../src/common/function/function-id";
+import {FunctionCallSerializer} from "../../../src/common/function/function-call-serializer";
+import {ISerializedFunctionCall} from "../../../src/common/function/serialized-function-call";
 
 describe("Parallel", function () {
     let parallel: IParallel;
     let threadPool: IThreadPool;
     let threadPoolRunSpy: jasmine.Spy;
+
+    let functionCallSerializer: FunctionCallSerializer;
+    let serializeFunctionCallSpy: jasmine.Spy;
+
     const maxConcurrencyLevel = 2;
     let createParallelChainSpy: jasmine.Spy;
     let options: IDefaultInitializedParallelOptions;
@@ -21,7 +27,12 @@ describe("Parallel", function () {
         createParallelChainSpy = spyOn(ParallelChainFactoryModule, "createParallelChain");
         threadPoolRunSpy = jasmine.createSpy("run");
         threadPool = { run: threadPoolRunSpy } as any;
+
+        functionCallSerializer = new FunctionCallSerializer(undefined as any);
+        serializeFunctionCallSpy = spyOn(functionCallSerializer, "serializeFunctionCall");
+
         options = {
+            functionCallSerializer,
             maxConcurrencyLevel,
             threadPool,
             scheduler: undefined as any
@@ -110,6 +121,11 @@ describe("Parallel", function () {
             // act, assert
             expect(() => parallel.defaultOptions({ threadPool: undefined } as any)).toThrowError("The thread pool is mandatory and cannot be unset");
         });
+
+        it("throws if the functionCallSerializer is set to undefined", function () {
+            // act, assert
+            expect(() => parallel.defaultOptions({ functionCallSerializer: undefined } as any)).toThrowError("The function call serializer is mandatory and cannot be unset");
+        });
     });
 
     describe("from", function () {
@@ -129,6 +145,7 @@ describe("Parallel", function () {
             parallel.from([1, 2, 3, 4], { maxValuesPerTask: 2 });
 
             expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelCollectionGenerator), {
+                functionCallSerializer,
                 maxConcurrencyLevel,
                 maxValuesPerTask: 2,
                 threadPool,
@@ -154,6 +171,7 @@ describe("Parallel", function () {
             parallel.range(0, 10, 1, { maxValuesPerTask: 2 });
 
             expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelRangeGenerator), {
+                functionCallSerializer,
                 maxConcurrencyLevel,
                 maxValuesPerTask: 2,
                 threadPool,
@@ -181,6 +199,7 @@ describe("Parallel", function () {
             parallel.times(2, () => 3, {}, { maxValuesPerTask: 2 });
 
             expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelTimesGenerator), {
+                functionCallSerializer,
                 maxConcurrencyLevel,
                 maxValuesPerTask: 2,
                 threadPool,
@@ -190,26 +209,48 @@ describe("Parallel", function () {
     });
 
     describe("run", function () {
-        it("runs the function on the thread pool", function () {
+        it("creates a task with main set to the serialized form of the given function", function () {
             // arrange
+            const serializedFunctionCall: ISerializedFunctionCall = {
+                ______serializedFunctionCall: true,
+                functionId: {
+                    _______isFunctionId: true,
+                    identifier: "test-1"
+                },
+                parameters: [{ test: 123 }]
+            };
+            serializeFunctionCallSpy.and.returnValue(serializedFunctionCall);
+
             const func = jasmine.createSpy("func");
 
             // act
             parallel.run(func, { test: 123 });
 
             // assert
-            expect(threadPoolRunSpy).toHaveBeenCalledWith(func, { test: 123 });
+            expect(threadPoolRunSpy).toHaveBeenCalledWith({
+                main: serializedFunctionCall,
+                usedFunctionIds: [ serializedFunctionCall.functionId ]
+            });
         });
 
         it("runs the function with the given id on the thread pool", function () {
             // arrange
             const funcId = functionId("test", 0);
+            const serializedFunctionCall: ISerializedFunctionCall = {
+                ______serializedFunctionCall: true,
+                functionId: funcId,
+                parameters: [{ test: 123 }]
+            };
+            serializeFunctionCallSpy.and.returnValue(serializedFunctionCall);
 
             // act
             parallel.run(funcId, { test: 123 });
 
             // assert
-            expect(threadPoolRunSpy).toHaveBeenCalledWith(funcId, { test: 123 });
+            expect(threadPoolRunSpy).toHaveBeenCalledWith({
+                main: serializedFunctionCall,
+                usedFunctionIds: [ serializedFunctionCall.functionId ]
+            });
         });
     });
 });
