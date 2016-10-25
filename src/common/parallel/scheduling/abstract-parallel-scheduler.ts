@@ -13,7 +13,7 @@ import {isSerializedFunctionCall} from "../../function/serialized-function-call"
 export abstract class AbstractParallelScheduler implements IParallelJobScheduler {
     public schedule<TResult>(job: IParallelJob): ITask<TResult>[] {
         const taskDefinitions = this.getTaskDefinitions(job);
-        return taskDefinitions.map(taskDefinition => job.options.threadPool.scheduleTask(taskDefinition));
+        return taskDefinitions.map(taskDefinition => job.options.threadPool.runTask(taskDefinition));
     }
 
     /**

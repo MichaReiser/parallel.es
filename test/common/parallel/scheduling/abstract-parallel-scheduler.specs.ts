@@ -17,7 +17,7 @@ describe("AbstractParallelScheduler", function () {
     let options: IDefaultInitializedParallelOptions;
     let generator: IParallelGenerator;
     let createFunctionSerializerSpy: jasmine.Spy;
-    let scheduleTaskSpy: jasmine.Spy;
+    let runTaskSpy: jasmine.Spy;
     let threadPool: IThreadPool;
     let scheduler: AbstractParallelScheduler;
     let getSchedulingSpy: jasmine.Spy;
@@ -27,11 +27,11 @@ describe("AbstractParallelScheduler", function () {
         getSchedulingSpy = spyOn(scheduler, "getScheduling");
 
         createFunctionSerializerSpy = jasmine.createSpy("createFunctionSerializer");
-        scheduleTaskSpy = jasmine.createSpy("scheduleTask");
+        runTaskSpy = jasmine.createSpy("scheduleTask");
         threadPool = {
             getFunctionSerializer: createFunctionSerializerSpy,
-            schedule: jasmine.createSpy("schedule"),
-            scheduleTask: scheduleTaskSpy
+            run: jasmine.createSpy("run"),
+            runTask: runTaskSpy
         };
 
         options = {
@@ -55,7 +55,7 @@ describe("AbstractParallelScheduler", function () {
             const task1 = new Promise(() => undefined);
             const task2 = new Promise(() => undefined);
 
-            scheduleTaskSpy.and.returnValues(task1, task2);
+            runTaskSpy.and.returnValues(task1, task2);
 
             spyOn(generator, "serializeSlice").and.returnValue({ functionId: 2 });
 
@@ -68,7 +68,7 @@ describe("AbstractParallelScheduler", function () {
             });
 
             // assert
-            expect(scheduleTaskSpy).toHaveBeenCalledTimes(2);
+            expect(runTaskSpy).toHaveBeenCalledTimes(2);
             expect(tasks).toEqual([task1, task2]);
         });
 
@@ -83,7 +83,7 @@ describe("AbstractParallelScheduler", function () {
             const task1 = new Promise(() => undefined);
             const task2 = new Promise(() => undefined);
 
-            scheduleTaskSpy.and.returnValues(task1, task2);
+            runTaskSpy.and.returnValues(task1, task2);
 
             const serializeSliceSpy = spyOn(generator, "serializeSlice").and.returnValue({ functionId: 2 });
 
@@ -158,7 +158,7 @@ describe("AbstractParallelScheduler", function () {
             const task1 = new Promise(() => undefined);
             const task2 = new Promise(() => undefined);
 
-            scheduleTaskSpy.and.returnValues(task1, task2);
+            runTaskSpy.and.returnValues(task1, task2);
 
             const generatorSlice1 = { ______serializedFunctionCall: true, functionId: ParallelWorkerFunctionIds.TO_ITERATOR, parameters: [[1, 2, 3]] };
             const generatorSlice2 = { ______serializedFunctionCall: true, functionId: ParallelWorkerFunctionIds.TO_ITERATOR, parameters: [[4, 5]] };
@@ -179,7 +179,7 @@ describe("AbstractParallelScheduler", function () {
 
             // assert
             // slice 1
-            expect(scheduleTaskSpy).toHaveBeenCalledWith({
+            expect(runTaskSpy).toHaveBeenCalledWith({
                 main: {
                     ______serializedFunctionCall: true,
                     functionId: ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR, // process
@@ -204,7 +204,7 @@ describe("AbstractParallelScheduler", function () {
             });
 
             // slice 2
-            expect(scheduleTaskSpy).toHaveBeenCalledWith({
+            expect(runTaskSpy).toHaveBeenCalledWith({
                 main: {
                     ______serializedFunctionCall: true,
                     functionId: ParallelWorkerFunctionIds.PARALLEL_JOB_EXECUTOR, // process

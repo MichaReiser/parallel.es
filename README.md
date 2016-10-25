@@ -16,9 +16,9 @@ Perform a single computation on a worker thread:
 ```js
 import parallel from "parallel-es";
 
-parallel.schedule(function () {
+parallel.run(function () {
 	//… compute
-	return [1, 2, 3;
+	return [1, 2, 3];
 }).then(result => console.log(result));
 ```
 

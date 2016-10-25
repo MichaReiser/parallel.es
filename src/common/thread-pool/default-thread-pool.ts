@@ -21,13 +21,13 @@ export class DefaultThreadPool implements IThreadPool {
         this.concurrencyLimit = options.maxConcurrencyLevel;
     }
 
-    public schedule<TResult>(func: ((this: void, ...params: any[]) => TResult) | IFunctionId, ...params: any[]): ITask<TResult> {
+    public run<TResult>(func: ((this: void, ...params: any[]) => TResult) | IFunctionId, ...params: any[]): ITask<TResult> {
         const serializedFunc = this.functionCallSerializer.serializeFunctionCall(FunctionCall.createUnchecked(func, ...params));
         const taskDefinition: ITaskDefinition = { main: serializedFunc, usedFunctionIds: [ serializedFunc.functionId ] };
-        return this.scheduleTask(taskDefinition);
+        return this.runTask(taskDefinition);
     }
 
-    public scheduleTask<TResult>(taskDefinition: ITaskDefinition): ITask<TResult> {
+    public runTask<TResult>(taskDefinition: ITaskDefinition): ITask<TResult> {
         const task = new WorkerTask<TResult>(taskDefinition);
 
         this.queue.unshift(task);
