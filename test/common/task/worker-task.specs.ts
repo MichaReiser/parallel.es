@@ -1,15 +1,11 @@
-import {IWorkerThread} from "../../../src/common/worker/worker-thread";
 import {WorkerTask} from "../../../src/common/task/worker-task";
 import {ITaskDefinition} from "../../../src/common/task/task-definition";
 import {functionId} from "../../../src/common/function/function-id";
 
 describe("WorkerTask", function () {
-    let worker: IWorkerThread;
-    let runSpy: jasmine.Spy;
     let workerTask: WorkerTask<number>;
 
     let taskDefinition: ITaskDefinition = {
-        id: 1,
         main: {
             ______serializedFunctionCall: true,
             functionId: functionId("test", 2),
@@ -19,12 +15,6 @@ describe("WorkerTask", function () {
     };
 
     beforeEach(function () {
-        runSpy = jasmine.createSpy("run");
-        worker = {
-            run: runSpy,
-            stop: jasmine.createSpy("stop")
-        };
-
         workerTask = new WorkerTask<number>(taskDefinition);
     });
 
@@ -33,12 +23,23 @@ describe("WorkerTask", function () {
             expect(workerTask.isCanceled).toBe(false);
         });
 
-        it("is true if the task has not been scheduled because cancellation was requested", function () {
+        it("is true if if the task has been resolved", function () {
             // arrange
             workerTask.cancel();
 
             // act
-            workerTask.runOn(worker);
+            workerTask.resolve(10);
+
+            // assert
+            expect(workerTask.isCanceled).toBe(true);
+        });
+
+        it("is true if if the task has been resolved as canceled", function () {
+            // arrange
+            workerTask.cancel();
+
+            // act
+            workerTask.resolveCancelled();
 
             // assert
             expect(workerTask.isCanceled).toBe(true);
@@ -59,105 +60,83 @@ describe("WorkerTask", function () {
         });
     });
 
-    describe("runOn", function () {
-        it("invokes the run method of the worker and passes the task definition", function () {
-            // act
-            workerTask.runOn(worker);
-
-            // assert
-            expect(runSpy).toHaveBeenCalledWith(taskDefinition, jasmine.any(Function));
-        });
-
-        it("resolves the promise when the task has completed (oncomplete handler is invoked)", function (done) {
+    describe("resolve", function () {
+        it("triggers the then handlers", function (done) {
             // arrange
-            runSpy.and.callFake(function (task: any, callback: (error: any, result: any) => void) {
-                callback(undefined, 10);
-            });
+            const handler = jasmine.createSpy("thenHandler");
+            workerTask.then(handler);
 
             // act
-            workerTask.runOn(worker);
-
-            // assert
-            workerTask.then(result => {
+            workerTask.resolve(10);
+            workerTask.then(function () {
                 // assert
-                expect(result).toEqual(10);
+                expect(handler).toHaveBeenCalledWith(10);
                 done();
-            });
+            }, done.fail);
         });
 
-        it("rejects the promise when the task fails (onerror handler is invoked)", function (done) {
+        it("triggers the catch handlers if the task has been canceled in the meantime", function (done) {
             // arrange
-            runSpy.and.callFake(function (task: any, callback: (error: any, result: any) => void) {
-                callback("error reason", undefined);
-            });
-
-            // act
-            workerTask.runOn(worker);
-
-            // assert
-            workerTask.then(() => done.fail("Worker should have failed"), error => {
-                expect(error).toEqual("error reason");
-                done();
-            });
-        });
-
-        it("rejects the promise when the task has been canceled by the user", function (done) {
-             // arrange
+            const catchHandler = jasmine.createSpy("catchHandler");
+            workerTask.catch(catchHandler);
             workerTask.cancel();
 
             // act
-            workerTask.runOn(worker);
-
-            // assert
-            workerTask.then(function () {
-                done.fail("task has been canceled, therefore promise should have been rejected");
-            }, function (reason) {
-                expect(reason).toEqual("Task has been canceled");
-                done();
-            });
-        });
-
-        it("does not execute the task on the worker if the task has been canceled", function () {
-            // arrange
-            workerTask.cancel();
-
-            // act
-            workerTask.runOn(worker);
-
-            // assert
-            expect(runSpy).not.toHaveBeenCalled();
-        });
-
-        it("rejects the promise when the worker has completed the computation but the task has been canceled in the meantime", function (done) {
-            // arrange
-            workerTask.runOn(worker);
-
-            // act
-            workerTask.cancel();
-            runSpy.calls.argsFor(0)[1].call(undefined, undefined, 10);
-
-            // asset
-            workerTask.then(function () {
-                done.fail("Task has been canceled in the meantime, therefore promise should have been rejected");
-            }, function (reason) {
-                expect(reason).toEqual("Task has been canceled");
+            workerTask.resolve(10);
+            workerTask.then(() => done.fail("Then handler called, but catch handler should have been called"), function () {
+                // assert
+                expect(catchHandler).toHaveBeenCalledWith("Task has been canceled");
+                expect(workerTask.isCanceled).toBe(true);
                 done();
             });
         });
     });
 
-    describe("releaseWorker", function () {
-        it("returns the worker used to execute the task", function () {
+    describe("resolveCanceled", function () {
+        it("triggers the catch handlers when the task is resolved canceled", function (done) {
             // arrange
-            workerTask.runOn(worker);
+            const catchHandler = jasmine.createSpy("catchHandler");
+            workerTask.catch(catchHandler);
+            workerTask.cancel();
 
-            // act, assert
-            expect(workerTask.releaseWorker()).toEqual(worker);
+            // act
+            workerTask.resolveCancelled();
+            workerTask.then(() => done.fail("Then handler called, but catch handler should have been called"), function () {
+                // assert
+                expect(catchHandler).toHaveBeenCalledWith("Task has been canceled");
+                done();
+            });
         });
 
-        it("throws when the task has not been scheduled on a worker", function () {
-            // act, assert
-            expect(() => workerTask.releaseWorker()).toThrowError("Cannot release a worker task that has no assigned worker thread.");
+        it("marks the task as cancelled", function (done) {
+            const catchHandler = jasmine.createSpy("catchHandler");
+            workerTask.catch(catchHandler);
+            workerTask.cancel();
+
+            // act
+            workerTask.resolveCancelled();
+            workerTask.then(() => done.fail("Then handler called, but catch handler should have been called"), function () {
+                // assert
+                expect(workerTask.isCanceled).toBe(true);
+                done();
+            });
+        });
+    });
+
+    describe("reject", function () {
+        it("triggers the catch handlers", function (done) {
+            // arrange
+            const catchHandler = jasmine.createSpy("catchHandler");
+            workerTask.catch(catchHandler);
+            workerTask.cancel();
+
+            // act
+            workerTask.reject("Error");
+            workerTask.then(() => done.fail("Then handler called, but catch handler should have been called"), function () {
+                // assert
+                expect(catchHandler).toHaveBeenCalledWith("Error");
+                done();
+            });
         });
     });
 
@@ -180,11 +159,10 @@ describe("WorkerTask", function () {
         it("does not trigger 'unhandled exception in promise' if catch handler is registered", function (done) {
             // arrange
             doneFn = done;
-            workerTask.runOn(worker);
             workerTask.catch(() => done());
 
             // act
-            runSpy.calls.argsFor(0)[1].call(undefined, "Error occurred", undefined); // call error callback
+            workerTask.reject("Error occurred");
         });
     });
 });

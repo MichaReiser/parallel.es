@@ -10,10 +10,6 @@ import {IFunctionId} from "../function/function-id";
  * Definition of a task to execute. A task is uniquely identified by its id.
  */
 export interface ITaskDefinition {
-    /**
-     * The unique identification of the task to execute. Is assigned by the thread pool.
-     */
-    id?: number;
 
     /**
      * The main function to execute

@@ -61,7 +61,7 @@ describe("BrowserWorkerThread", function () {
         it("sends the schedule task message to the slave containing the task definition", function () {
             // arrange
             const mainId = functionId("test", 1);
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId]};
+            const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId]};
             browserWorker.initialize();
 
             // act
@@ -74,7 +74,7 @@ describe("BrowserWorkerThread", function () {
         it("is in executing state while executing", function () {
             // arrange
             const mainId = functionId("test", 1);
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId]};
+            const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId]};
             browserWorker.initialize();
 
             // act
@@ -87,7 +87,7 @@ describe("BrowserWorkerThread", function () {
         it("sends the function definition to the slave if the definition is requested", function () {
             // arrange
             const mainId = functionId("test", 1);
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
+            const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
             const functionDefinition: IFunctionDefinition = { argumentNames: ["x", "y"], body: "x + y;", id: task.main.functionId };
             spyOn(functionLookupTable, "getDefinition").and.returnValue(functionDefinition);
             browserWorker.initialize();
@@ -104,7 +104,7 @@ describe("BrowserWorkerThread", function () {
             // arrange
             const mainId = functionId("test", 1);
             const missingId = functionId("missing", 1);
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId, missingId] };
+            const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId, missingId] };
             const functionDefinition: IFunctionDefinition = { argumentNames: ["x", "y"], body: "x + y;", id: task.main.functionId };
             spyOn(functionLookupTable, "getDefinition").and.returnValues(functionDefinition, undefined);
             browserWorker.initialize();
@@ -120,7 +120,7 @@ describe("BrowserWorkerThread", function () {
         it("invokes the callback with the result received from the worker slave", function () {
             // arrange
             const mainId = functionId("test", 1);
-            const task: ITaskDefinition = { id: 1, main: {  ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
+            const task: ITaskDefinition = { main: {  ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
             const callback = jasmine.createSpy("callback");
             browserWorker.initialize();
 
@@ -136,7 +136,7 @@ describe("BrowserWorkerThread", function () {
         it("triggers the callback if an error message has been retrieved from the worker", function () {
             // arrange
             const mainId = functionId("test", 1);
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
+            const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
             const callback = jasmine.createSpy("callback");
             browserWorker.initialize();
             browserWorker.run(task, callback);
@@ -158,7 +158,7 @@ describe("BrowserWorkerThread", function () {
         it("fails if the browser worker thread is not in idle state", function () {
             // arrange
             const mainId = functionId("test", 1);
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
+            const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
             const callback = jasmine.createSpy("callback");
 
             // act, assert
@@ -168,7 +168,7 @@ describe("BrowserWorkerThread", function () {
         it("switches back to idle state if execution has completed", function () {
             // arrange
             const mainId = functionId("test", 1);
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
+            const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
             const callback = jasmine.createSpy("callback");
 
             browserWorker.initialize();
@@ -184,7 +184,7 @@ describe("BrowserWorkerThread", function () {
         it("is in stopped state after function completed but when stop was requested", function () {
             // arrange
             const mainId = functionId("test", 1);
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
+            const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
             const callback = jasmine.createSpy("callback");
 
             browserWorker.initialize();
@@ -228,7 +228,7 @@ describe("BrowserWorkerThread", function () {
         it("is still in executing state if stopped while executing", function () {
             // arrange
             const mainId = functionId("test", 1);
-            const task: ITaskDefinition = { id: 1, main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
+            const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: mainId, parameters: [] }, usedFunctionIds: [mainId] };
             const callback = jasmine.createSpy("callback");
 
             browserWorker.initialize();
