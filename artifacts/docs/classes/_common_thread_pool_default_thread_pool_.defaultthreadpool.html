@@ -107,7 +107,6 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#concurrencylimit" class="tsd-kind-icon">concurrency<wbr>Limit</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#functioncallserializer" class="tsd-kind-icon">function<wbr>Call<wbr>Serializer</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#idleworkers" class="tsd-kind-icon">idle<wbr>Workers</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#lasttaskid" class="tsd-kind-icon">last<wbr>Task<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#queue" class="tsd-kind-icon">queue</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#workerthreadfactory" class="tsd-kind-icon">worker<wbr>Thread<wbr>Factory</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#workers" class="tsd-kind-icon">workers</a></li>
@@ -116,11 +115,12 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#_releaseworker" class="tsd-kind-icon">_release<wbr>Worker</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#_schedulependingtasks" class="tsd-kind-icon">_schedule<wbr>Pending<wbr>Tasks</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#getfunctionserializer" class="tsd-kind-icon">get<wbr>Function<wbr>Serializer</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#schedule" class="tsd-kind-icon">schedule</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#scheduletask" class="tsd-kind-icon">schedule<wbr>Task</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#releaseworker" class="tsd-kind-icon">release<wbr>Worker</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#run" class="tsd-kind-icon">run</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#runtask" class="tsd-kind-icon">run<wbr>Task</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#runtaskonworker" class="tsd-kind-icon">run<wbr>Task<wbr>OnWorker</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#schedulependingtasks" class="tsd-kind-icon">schedule<wbr>Pending<wbr>Tasks</a></li>
 							</ul>
 						</section>
 					</div>
@@ -138,7 +138,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L19">common/thread-pool/default-thread-pool.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L18">common/thread-pool/default-thread-pool.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -171,7 +171,7 @@
 					<div class="tsd-signature tsd-kind-icon">concurrency<wbr>Limit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L19">common/thread-pool/default-thread-pool.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L18">common/thread-pool/default-thread-pool.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -181,7 +181,7 @@
 					<div class="tsd-signature tsd-kind-icon">function<wbr>Call<wbr>Serializer<span class="tsd-signature-symbol">:</span> <a href="parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L21">common/thread-pool/default-thread-pool.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L20">common/thread-pool/default-thread-pool.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -191,17 +191,7 @@
 					<div class="tsd-signature tsd-kind-icon">idle<wbr>Workers<span class="tsd-signature-symbol">:</span> <a href="../interfaces/parallel.iworkerthread.html" class="tsd-signature-type">IWorkerThread</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L16">common/thread-pool/default-thread-pool.ts:16</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-					<a name="lasttaskid" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> last<wbr>Task<wbr>Id</h3>
-					<div class="tsd-signature tsd-kind-icon">last<wbr>Task<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;-1</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L18">common/thread-pool/default-thread-pool.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L16">common/thread-pool/default-thread-pool.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -211,7 +201,7 @@
 					<div class="tsd-signature tsd-kind-icon">queue<span class="tsd-signature-symbol">:</span> <a href="_common_task_worker_task_.workertask.html" class="tsd-signature-type">WorkerTask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L17">common/thread-pool/default-thread-pool.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L17">common/thread-pool/default-thread-pool.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -221,7 +211,7 @@
 					<div class="tsd-signature tsd-kind-icon">worker<wbr>Thread<wbr>Factory<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_common_worker_worker_thread_factory_.iworkerthreadfactory.html" class="tsd-signature-type">IWorkerThreadFactory</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L21">common/thread-pool/default-thread-pool.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L20">common/thread-pool/default-thread-pool.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -231,53 +221,13 @@
 					<div class="tsd-signature tsd-kind-icon">workers<span class="tsd-signature-symbol">:</span> <a href="../interfaces/parallel.iworkerthread.html" class="tsd-signature-type">IWorkerThread</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L15">common/thread-pool/default-thread-pool.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L15">common/thread-pool/default-thread-pool.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
-					<a name="_releaseworker" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _release<wbr>Worker</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">_release<wbr>Worker<span class="tsd-signature-symbol">(</span>task<span class="tsd-signature-symbol">: </span><a href="_common_task_worker_task_.workertask.html" class="tsd-signature-type">WorkerTask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L47">common/thread-pool/default-thread-pool.ts:47</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>task: <a href="_common_task_worker_task_.workertask.html" class="tsd-signature-type">WorkerTask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
-					<a name="_schedulependingtasks" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _schedule<wbr>Pending<wbr>Tasks</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">_schedule<wbr>Pending<wbr>Tasks<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L54">common/thread-pool/default-thread-pool.ts:54</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
 					<a name="getfunctionserializer" class="tsd-anchor"></a>
 					<h3>get<wbr>Function<wbr>Serializer</h3>
@@ -289,24 +239,47 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/parallel.ithreadpool.html">IThreadPool</a>.<a href="../interfaces/parallel.ithreadpool.html#getfunctionserializer">getFunctionSerializer</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L43">common/thread-pool/default-thread-pool.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L39">common/thread-pool/default-thread-pool.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
-					<a name="schedule" class="tsd-anchor"></a>
-					<h3>schedule</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">schedule&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a>, <span class="tsd-signature-symbol">...</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+					<a name="releaseworker" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> release<wbr>Worker</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">release<wbr>Worker<span class="tsd-signature-symbol">(</span>worker<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iworkerthread.html" class="tsd-signature-type">IWorkerThread</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L25">common/thread-pool/default-thread-pool.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L89">common/thread-pool/default-thread-pool.ts:89</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>worker: <a href="../interfaces/parallel.iworkerthread.html" class="tsd-signature-type">IWorkerThread</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
+					<a name="run" class="tsd-anchor"></a>
+					<h3>run</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">run&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/parallel.ifunctionid.html" class="tsd-signature-type">IFunctionId</a>, <span class="tsd-signature-symbol">...</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L24">common/thread-pool/default-thread-pool.ts:24</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -329,17 +302,17 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
-					<a name="scheduletask" class="tsd-anchor"></a>
-					<h3>schedule<wbr>Task</h3>
+					<a name="runtask" class="tsd-anchor"></a>
+					<h3>run<wbr>Task</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">schedule<wbr>Task&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>taskDefinition<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.itaskdefinition.html" class="tsd-signature-type">ITaskDefinition</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">run<wbr>Task&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>taskDefinition<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.itaskdefinition.html" class="tsd-signature-type">ITaskDefinition</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/parallel.ithreadpool.html">IThreadPool</a>.<a href="../interfaces/parallel.ithreadpool.html#scheduletask">scheduleTask</a></p>
+								<p>Implementation of <a href="../interfaces/parallel.ithreadpool.html">IThreadPool</a>.<a href="../interfaces/parallel.ithreadpool.html#runtask">runTask</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/thread-pool/default-thread-pool.ts#L31">common/thread-pool/default-thread-pool.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L30">common/thread-pool/default-thread-pool.ts:30</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -355,6 +328,68 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/parallel.itask.html" class="tsd-signature-type">ITask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+					<a name="runtaskonworker" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> run<wbr>Task<wbr>OnWorker</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">run<wbr>Task<wbr>OnWorker<span class="tsd-signature-symbol">(</span>task<span class="tsd-signature-symbol">: </span><a href="_common_task_worker_task_.workertask.html" class="tsd-signature-type">WorkerTask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>, worker<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iworkerthread.html" class="tsd-signature-type">IWorkerThread</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L73">common/thread-pool/default-thread-pool.ts:73</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Starts the given task on the given worker. Resolves the task when the computation succeeds, rejects it otherwise.
+									The task is resolved when the computation has succeeded or is rejected if the computation failed</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>task: <a href="_common_task_worker_task_.workertask.html" class="tsd-signature-type">WorkerTask</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the task to run on the given worker</p>
+									</div>
+								</li>
+								<li>
+									<h5>worker: <a href="../interfaces/parallel.iworkerthread.html" class="tsd-signature-type">IWorkerThread</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the worker to use to execute the task</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+					<a name="schedulependingtasks" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> schedule<wbr>Pending<wbr>Tasks</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">schedule<wbr>Pending<wbr>Tasks<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/thread-pool/default-thread-pool.ts#L48">common/thread-pool/default-thread-pool.ts:48</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Schedules the tasks in the queue onto the available workers.
+										A new worker is spawned when no more idle workers are available and the number of workers has not yet reached the concurrency limit.
+									If no more idle workers are available and the concurrency limit has been reached then the tasks are left in queue.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -391,9 +426,6 @@
 								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#idleworkers" class="tsd-kind-icon">idle<wbr>Workers</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#lasttaskid" class="tsd-kind-icon">last<wbr>Task<wbr>Id</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#queue" class="tsd-kind-icon">queue</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
@@ -402,20 +434,23 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#workers" class="tsd-kind-icon">workers</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
-								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#_releaseworker" class="tsd-kind-icon">_release<wbr>Worker</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
-								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#_schedulependingtasks" class="tsd-kind-icon">_schedule<wbr>Pending<wbr>Tasks</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#getfunctionserializer" class="tsd-kind-icon">get<wbr>Function<wbr>Serializer</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
-								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#schedule" class="tsd-kind-icon">schedule</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#releaseworker" class="tsd-kind-icon">release<wbr>Worker</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
-								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#scheduletask" class="tsd-kind-icon">schedule<wbr>Task</a>
+								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#run" class="tsd-kind-icon">run</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
+								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#runtask" class="tsd-kind-icon">run<wbr>Task</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#runtaskonworker" class="tsd-kind-icon">run<wbr>Task<wbr>OnWorker</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+								<a href="_common_thread_pool_default_thread_pool_.defaultthreadpool.html#schedulependingtasks" class="tsd-kind-icon">schedule<wbr>Pending<wbr>Tasks</a>
 							</li>
 						</ul>
 					</li>

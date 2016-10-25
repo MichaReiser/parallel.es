@@ -73,8 +73,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Default implementation of a task.
-						Executes the task on a <a href="../interfaces/parallel.iworkerthread.html">IWorkerThread</a>.</p>
+						<p>Default implementation of a task. Keeps the state of a state and allows to register handlers that are invoked
+						in case of task completion or error.</p>
 					</div>
 				</div>
 			</section>
@@ -117,20 +117,18 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="_common_task_worker_task_.workertask.html#iscanceled" class="tsd-kind-icon">is<wbr>Canceled</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="_common_task_worker_task_.workertask.html#iscancellationrequested" class="tsd-kind-icon">is<wbr>Cancellation<wbr>Requested</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_task_worker_task_.workertask.html#promise" class="tsd-kind-icon">promise</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_task_worker_task_.workertask.html#reject" class="tsd-kind-icon">reject</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_task_worker_task_.workertask.html#resolve" class="tsd-kind-icon">resolve</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_task_worker_task_.workertask.html#worker" class="tsd-kind-icon">worker</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_task_worker_task_.workertask.html#rejectpromise" class="tsd-kind-icon">reject<wbr>Promise</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_task_worker_task_.workertask.html#resolvepromise" class="tsd-kind-icon">resolve<wbr>Promise</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_task_worker_task_.workertask.html#_taskcompleted" class="tsd-kind-icon">_task<wbr>Completed</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_common_task_worker_task_.workertask.html#always" class="tsd-kind-icon">always</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_common_task_worker_task_.workertask.html#cancel" class="tsd-kind-icon">cancel</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_common_task_worker_task_.workertask.html#catch" class="tsd-kind-icon">catch</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_common_task_worker_task_.workertask.html#releaseworker" class="tsd-kind-icon">release<wbr>Worker</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_common_task_worker_task_.workertask.html#runon" class="tsd-kind-icon">run<wbr>On</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_common_task_worker_task_.workertask.html#reject" class="tsd-kind-icon">reject</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_common_task_worker_task_.workertask.html#resolve" class="tsd-kind-icon">resolve</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_common_task_worker_task_.workertask.html#resolvecancelled" class="tsd-kind-icon">resolve<wbr>Cancelled</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external"><a href="_common_task_worker_task_.workertask.html#then" class="tsd-kind-icon">then</a></li>
 							</ul>
 						</section>
@@ -149,7 +147,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L16">common/task/worker-task.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L14">common/task/worker-task.ts:14</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -182,7 +180,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/parallel.itask.html">ITask</a>.<a href="../interfaces/parallel.itask.html#definition">definition</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L22">common/task/worker-task.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L20">common/task/worker-task.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -198,7 +196,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/parallel.itask.html">ITask</a>.<a href="../interfaces/parallel.itask.html#iscanceled">isCanceled</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L11">common/task/worker-task.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L10">common/task/worker-task.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -209,7 +207,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/parallel.itask.html">ITask</a>.<a href="../interfaces/parallel.itask.html#iscancellationrequested">isCancellationRequested</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L10">common/task/worker-task.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L9">common/task/worker-task.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -219,17 +217,17 @@
 					<div class="tsd-signature tsd-kind-icon">promise<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L16">common/task/worker-task.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L14">common/task/worker-task.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-					<a name="reject" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> reject</h3>
-					<div class="tsd-signature tsd-kind-icon">reject<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<a name="rejectpromise" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> reject<wbr>Promise</h3>
+					<div class="tsd-signature tsd-kind-icon">reject<wbr>Promise<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L14">common/task/worker-task.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L13">common/task/worker-task.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -255,12 +253,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-					<a name="resolve" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> resolve</h3>
-					<div class="tsd-signature tsd-kind-icon">resolve<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<a name="resolvepromise" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> resolve<wbr>Promise</h3>
+					<div class="tsd-signature tsd-kind-icon">resolve<wbr>Promise<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L13">common/task/worker-task.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L12">common/task/worker-task.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -285,85 +283,9 @@
 						</ul>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-					<a name="worker" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> <span class="tsd-flag ts-flagOptional">Optional</span> worker</h3>
-					<div class="tsd-signature tsd-kind-icon">worker<span class="tsd-signature-symbol">:</span> <a href="../interfaces/parallel.iworkerthread.html" class="tsd-signature-type">IWorkerThread</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L15">common/task/worker-task.ts:15</a></li>
-						</ul>
-					</aside>
-				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
-					<a name="_taskcompleted" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _task<wbr>Completed</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">_task<wbr>Completed<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">T</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L89">common/task/worker-task.ts:89</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> result: <a href="" class="tsd-signature-type">T</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
-					<a name="always" class="tsd-anchor"></a>
-					<h3>always</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">always<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L85">common/task/worker-task.ts:85</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Registers a handler that is invoked always invoked when the task has completed, independently if the execution was successful or not</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>handler: <span class="tsd-signature-type">function</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The handler to invoke.</p>
-									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
 					<a name="cancel" class="tsd-anchor"></a>
 					<h3>cancel</h3>
@@ -375,7 +297,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/parallel.itask.html">ITask</a>.<a href="../interfaces/parallel.itask.html#cancel">cancel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L77">common/task/worker-task.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L68">common/task/worker-task.ts:68</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -392,7 +314,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L73">common/task/worker-task.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L64">common/task/worker-task.ts:64</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -424,56 +346,87 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
-					<a name="releaseworker" class="tsd-anchor"></a>
-					<h3>release<wbr>Worker</h3>
+					<a name="reject" class="tsd-anchor"></a>
+					<h3>reject</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">release<wbr>Worker<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iworkerthread.html" class="tsd-signature-type">IWorkerThread</a></li>
+						<li class="tsd-signature tsd-kind-icon">reject<span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L56">common/task/worker-task.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L53">common/task/worker-task.ts:53</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Releases the used worker.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/parallel.iworkerthread.html" class="tsd-signature-type">IWorkerThread</a></h4>
-							<p>the worker used by this task</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
-					<a name="runon" class="tsd-anchor"></a>
-					<h3>run<wbr>On</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">run<wbr>On<span class="tsd-signature-symbol">(</span>worker<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iworkerthread.html" class="tsd-signature-type">IWorkerThread</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L34">common/task/worker-task.ts:34</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Executes the task on the given worker. Assumes that the worker is not performing any other work at the moment.
-									If the task has been canceled in the meantime, no operation is performed and the reject callback is invoked immediately.</p>
+									<p>Marks the task as failed</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>worker: <a href="../interfaces/parallel.iworkerthread.html" class="tsd-signature-type">IWorkerThread</a></h5>
+									<h5>error: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the worker thread that should be used to execute this task</p>
+										<p>the error that occurred while processing the task</p>
 									</div>
 								</li>
 							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
+					<a name="resolve" class="tsd-anchor"></a>
+					<h3>resolve</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">resolve<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L32">common/task/worker-task.ts:32</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Marks the task as complete where the given value is the task result. Triggers all registered <code>then</code> handlers of the promise.
+									However, if the task has been cancelled in the mean time, then the <code>catch</code> handlers are triggered instead</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>result: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the result of the task execution</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
+					<a name="resolvecancelled" class="tsd-anchor"></a>
+					<h3>resolve<wbr>Cancelled</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">resolve<wbr>Cancelled<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L44">common/task/worker-task.ts:44</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Resolves a task that has been cancelled before start.
+									Triggers all the <code>catch</code> handlers.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -488,7 +441,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/396c9c6/src/common/task/worker-task.ts#L66">common/task/worker-task.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/96358af/src/common/task/worker-task.ts#L57">common/task/worker-task.ts:57</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -567,19 +520,10 @@
 								<a href="_common_task_worker_task_.workertask.html#promise" class="tsd-kind-icon">promise</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-								<a href="_common_task_worker_task_.workertask.html#reject" class="tsd-kind-icon">reject</a>
+								<a href="_common_task_worker_task_.workertask.html#rejectpromise" class="tsd-kind-icon">reject<wbr>Promise</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-								<a href="_common_task_worker_task_.workertask.html#resolve" class="tsd-kind-icon">resolve</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-								<a href="_common_task_worker_task_.workertask.html#worker" class="tsd-kind-icon">worker</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
-								<a href="_common_task_worker_task_.workertask.html#_taskcompleted" class="tsd-kind-icon">_task<wbr>Completed</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
-								<a href="_common_task_worker_task_.workertask.html#always" class="tsd-kind-icon">always</a>
+								<a href="_common_task_worker_task_.workertask.html#resolvepromise" class="tsd-kind-icon">resolve<wbr>Promise</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="_common_task_worker_task_.workertask.html#cancel" class="tsd-kind-icon">cancel</a>
@@ -588,10 +532,13 @@
 								<a href="_common_task_worker_task_.workertask.html#catch" class="tsd-kind-icon">catch</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
-								<a href="_common_task_worker_task_.workertask.html#releaseworker" class="tsd-kind-icon">release<wbr>Worker</a>
+								<a href="_common_task_worker_task_.workertask.html#reject" class="tsd-kind-icon">reject</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
-								<a href="_common_task_worker_task_.workertask.html#runon" class="tsd-kind-icon">run<wbr>On</a>
+								<a href="_common_task_worker_task_.workertask.html#resolve" class="tsd-kind-icon">resolve</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
+								<a href="_common_task_worker_task_.workertask.html#resolvecancelled" class="tsd-kind-icon">resolve<wbr>Cancelled</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
 								<a href="_common_task_worker_task_.workertask.html#then" class="tsd-kind-icon">then</a>

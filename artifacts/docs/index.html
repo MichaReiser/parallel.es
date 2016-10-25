@@ -76,9 +76,9 @@
 				<p>Perform a single computation on a worker thread:</p>
 				<pre><code class="lang-js"><span class="hljs-keyword">import</span> parallel <span class="hljs-keyword">from</span> <span class="hljs-string">"parallel-es"</span>;
 
-parallel.schedule(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+parallel.run(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-comment">//… compute</span>
-    <span class="hljs-keyword">return</span> [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>;
+    <span class="hljs-keyword">return</span> [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];
 }).then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(result));
 </code></pre>
 				<p>Or use the reactive api that automatically schedules the work onto multiple worker without any additional doing:</p>
@@ -91,7 +91,7 @@ parallel.schedule(<span class="hljs-function"><span class="hljs-keyword">functio
 				<h2 id="referencing-functions-and-variables">Referencing Functions and Variables</h2>
 				<p>The library uses function serialization and therefore the outer scope is no longer available when the function is invoked in the  worker thread. However, there is a <a href="https://github.com/DatenMetzgerX/parallel-es-webpack-plugin">webpack plugin</a> that rewrites your code and allows you to use const variables from the outer scope or reference functions.</p>
 				<h2 id="documentation">Documentation</h2>
-				<p>The <a href="https://datenmetzgerx.github.io/parallel.es/artifacts/docs/interfaces/parallel.iparallel.html">API Documentation</a> is available online. The <a href="./wiki">wiki</a> describes the architecture and programing model in more detail.</p>
+				<p>The <a href="https://datenmetzgerx.github.io/parallel.es/artifacts/docs/interfaces/parallel.iparallel.html">API Documentation</a> is available online. The <a href="../../wiki">wiki</a> describes the architecture and programing model in more detail.</p>
 				<h2 id="examples">Examples</h2>
 				<p>More sophisticated examples can be seen <a href="https://datenmetzgerx.github.io/parallel.es/artifacts/example.html">here</a>.</p>
 				<h2 id="browsers-support-sub-sup-sub-sub-made-by-godban-sub-sub-sup-sub-">Browsers support <sub><sup><sub><sub>made by @godban</sub></sub></sup></sub></h2>
