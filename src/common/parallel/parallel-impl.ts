@@ -8,12 +8,17 @@ import {ParallelTimesGenerator} from "./generator/parallel-times-generator";
 import {createParallelChain} from "./chain/parallel-chain-factory";
 import {ITask} from "../task/task";
 import {IFunctionId, isFunctionId} from "../function/function-id";
+import {FunctionCall} from "../function/function-call";
 
 export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptions): IParallel {
     function mergeOptions(userOptions?: IParallelOptions): IDefaultInitializedParallelOptions {
         if (userOptions) {
             if (userOptions.hasOwnProperty("threadPool") && typeof(userOptions.threadPool) === "undefined") {
                 throw new Error("The thread pool is mandatory and cannot be unset");
+            }
+
+            if (userOptions.hasOwnProperty("functionCallSerializer") && typeof(userOptions.functionCallSerializer) === "undefined") {
+                throw new Error("The function call serializer is mandatory and cannot be unset");
             }
 
             if (userOptions.hasOwnProperty("maxConcurrencyLevel") && typeof(userOptions.maxConcurrencyLevel) !== "number") {
@@ -50,10 +55,21 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
         },
 
         run<TResult>(func: ((this: void, ...params: any[]) => TResult) | IFunctionId, ...params: any[]): ITask<TResult> {
+            let functionCall: FunctionCall;
+
             if (isFunctionId(func)) {
-                return defaultOptions.threadPool.run<TResult>(func, ...params);
+                functionCall = FunctionCall.create(func, params);
+            } else {
+                functionCall = FunctionCall.create(func, params);
             }
-            return defaultOptions.threadPool.run(func as any, ...params);
+
+            const serializedCall = defaultOptions.functionCallSerializer.serializeFunctionCall(functionCall);
+            const task = {
+                main: serializedCall,
+                usedFunctionIds: [serializedCall.functionId]
+            };
+
+            return defaultOptions.threadPool.run(task);
         }
     };
 }

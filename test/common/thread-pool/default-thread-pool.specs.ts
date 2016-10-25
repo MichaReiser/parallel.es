@@ -1,74 +1,19 @@
 import {DefaultThreadPool} from "../../../src/common/thread-pool/default-thread-pool";
-import {FunctionCall} from "../../../src/common/function/function-call";
 import {ITaskDefinition} from "../../../src/common/task/task-definition";
 import {IWorkerThread} from "../../../src/common/worker/worker-thread";
 
 describe("DefaultThreadPool", function () {
     let spawn: jasmine.Spy;
-    let serializeCallSpy: jasmine.Spy;
     let threadPool: DefaultThreadPool;
 
     beforeEach(function () {
         spawn = jasmine.createSpy("spawn");
 
         const workerThreadFactory = { spawn };
-        serializeCallSpy = jasmine.createSpy("serializeCall");
-        threadPool = new DefaultThreadPool(workerThreadFactory, { serializeFunctionCall: serializeCallSpy } as any, { maxConcurrencyLevel: 2 });
+        threadPool = new DefaultThreadPool(workerThreadFactory, { maxConcurrencyLevel: 2 });
     });
 
     describe("run", function () {
-        it("registers the function in the function lookup table", function () {
-            // arrange
-            const func = function () { /* ignore */
-            };
-            serializeCallSpy.and.returnValue({functionId: "test-1"});
-
-            // act
-            threadPool.run(func);
-
-            // assert
-            expect(serializeCallSpy).toHaveBeenCalledWith(FunctionCall.create(func));
-        });
-
-        it("spawns a new worker until the concurrency limit is reached", function () {
-            // arrange
-            const func = function () { /* ignore */
-            };
-            serializeCallSpy.and.returnValue({functionId: "test-1"});
-
-            // act
-            threadPool.run(func);
-            threadPool.run(func);
-            threadPool.run(func);
-
-            // assert
-            expect(spawn).toHaveBeenCalledTimes(2);
-        });
-
-        it("creates a task definition from the given task and runs it onto the worker thread", function () {
-            // arrange
-            const runSpy = jasmine.createSpy("run");
-            const workerThread = {run: runSpy};
-            spawn.and.returnValue(workerThread);
-
-            const func = function (value: number) {
-                return value;
-            };
-            const serializedFunc = {functionId: "test-1"};
-            serializeCallSpy.and.returnValue(serializedFunc);
-
-            // act
-            threadPool.run(func, 10);
-
-            // assert
-            expect(runSpy).toHaveBeenCalledWith({
-                main: serializedFunc,
-                usedFunctionIds: ["test-1"]
-            }, jasmine.any(Function));
-        });
-    });
-
-    describe("runTask", function () {
         let task: ITaskDefinition;
         let worker1RunSpy: jasmine.Spy;
         let worker1: IWorkerThread;
@@ -85,10 +30,20 @@ describe("DefaultThreadPool", function () {
         });
 
         it("runs the task on an available worker thread", function () {
-            threadPool.runTask(task);
+            threadPool.run(task);
 
             // assert
             expect(worker1RunSpy).toHaveBeenCalledWith(task, jasmine.any(Function));
+        });
+
+        it("spawns a new worker until the concurrency limit is reached", function () {
+            // act
+            threadPool.run(task);
+            threadPool.run(task);
+            threadPool.run(task);
+
+            // assert
+            expect(spawn).toHaveBeenCalledTimes(2);
         });
 
         it("enqueues the task if no worker thread is available", function () {
@@ -97,11 +52,11 @@ describe("DefaultThreadPool", function () {
             spawn.and.returnValues(worker1, worker2);
 
             // schedule worker until no worker is available...
-            threadPool.runTask(task);
-            threadPool.runTask(task);
+            threadPool.run(task);
+            threadPool.run(task);
 
             // act, should be queued.
-            threadPool.runTask(task);
+            threadPool.run(task);
 
             // assert
             expect(worker1RunSpy).toHaveBeenCalledWith(task, jasmine.any(Function));
@@ -117,9 +72,9 @@ describe("DefaultThreadPool", function () {
             spawn.and.returnValues(worker1, worker2);
 
             // schedule worker until no worker is available...
-            threadPool.runTask(task);
-            threadPool.runTask(task2);
-            threadPool.runTask(task3); // queue third task
+            threadPool.run(task);
+            threadPool.run(task2);
+            threadPool.run(task3); // queue third task
 
             // act
             // complete task of first worker so that the third task is scheduled on worker 1
@@ -145,14 +100,14 @@ describe("DefaultThreadPool", function () {
             spawn.and.returnValues(worker1, worker2);
 
             // spawn all workers by scheduling tasks up to concurrency limit
-            threadPool.runTask(task);
-            threadPool.runTask(task2);
+            threadPool.run(task);
+            threadPool.run(task2);
 
             // complete first task, third task can now be scheduled on worker1 as this worker is idle
             worker1RunSpy.calls.argsFor(0)[1].call(undefined, undefined, 10);
 
             // act
-            threadPool.runTask(task3);
+            threadPool.run(task3);
 
             expect(worker1RunSpy).toHaveBeenCalledTimes(2);
             expect(worker1RunSpy).toHaveBeenCalledWith(task, jasmine.any(Function));
@@ -164,9 +119,9 @@ describe("DefaultThreadPool", function () {
             const canceledTaskDefinition = Object.create(task);
 
             // schedule tasks to fill queue
-            threadPool.runTask(task);
-            threadPool.runTask(task);
-            const canceledTask = threadPool.runTask(canceledTaskDefinition);
+            threadPool.run(task);
+            threadPool.run(task);
+            const canceledTask = threadPool.run(canceledTaskDefinition);
             const resolvedCancelledSpy = spyOn(canceledTask, "resolveCancelled");
 
             canceledTask.cancel();
@@ -186,9 +141,9 @@ describe("DefaultThreadPool", function () {
             const nextTask = Object.create(task);
 
             // schedule tasks to fill queue
-            threadPool.runTask(task);
-            threadPool.runTask(task);
-            const canceledTask = threadPool.runTask(canceledTaskDefinition);
+            threadPool.run(task);
+            threadPool.run(task);
+            const canceledTask = threadPool.run(canceledTaskDefinition);
 
             // act
             canceledTask.cancel();
@@ -201,7 +156,7 @@ describe("DefaultThreadPool", function () {
 
         it("resolves the task if the computation has completed", function () {
             // arrange
-            const scheduledTask = threadPool.runTask(task);
+            const scheduledTask = threadPool.run(task);
             const resolveSpy = spyOn(scheduledTask, "resolve");
 
             // act
@@ -214,7 +169,7 @@ describe("DefaultThreadPool", function () {
 
         it("rejects the task if the computation has failed", function () {
             // arrange
-            const scheduledTask = threadPool.runTask(task);
+            const scheduledTask = threadPool.run(task);
             const rejectSpy = spyOn(scheduledTask, "reject");
 
             // act
@@ -223,16 +178,6 @@ describe("DefaultThreadPool", function () {
 
             // assert
             expect(rejectSpy).toHaveBeenCalledWith("error");
-        });
-    });
-
-    describe("getFunctionSerializer", function () {
-        it("returns the instance", function () {
-            // arrange
-            const serializer = threadPool.getFunctionSerializer();
-
-            // assert
-            expect(serializer).not.toBeUndefined();
         });
     });
 });
