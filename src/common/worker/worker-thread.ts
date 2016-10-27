@@ -15,6 +15,12 @@ import {ITaskDefinition} from "../task/task-definition";
  * Acts as abstraction of the actually used environment (node, browser...)
  */
 export interface IWorkerThread {
+
+    /**
+     * Unique id of this worker thread
+     */
+    id: number;
+
     /**
      * Executes the given task on this worker thread. The given callback is invoked when the task has completed
      * @param task the task to execute
