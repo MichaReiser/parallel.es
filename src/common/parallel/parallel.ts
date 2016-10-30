@@ -45,8 +45,9 @@ export interface IParallel {
      * Creates an array containing the elements in the range from start (inclusive) to end (exclusive) with the step size of step.
      * @param start the start of the range or the end, if the function is called with a single argument
      * @param end the end of the range
-     * @param step the step size
+     * @param step the step size.
      * @param options options configuring the computation behaviour
+     * @throws if step size is equal to zero
      */
     range(start: number, end?: number, step?: number, options?: IParallelOptions): IParallelChain<number, {}, number>;
 
