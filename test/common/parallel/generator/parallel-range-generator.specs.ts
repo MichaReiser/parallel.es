@@ -56,6 +56,11 @@ describe("ParallelRangeGenerator", function () {
             expect(generator.end).toBe(1);
             expect(generator.step).toBe(-1);
         });
+
+        it("throws if the step size is 0", function() {
+            // act
+            expect(() => ParallelRangeGenerator.create(1, 10, 0)).toThrowError("Step size of zero is not allowed");
+        });
     });
 
     describe("length", function () {
