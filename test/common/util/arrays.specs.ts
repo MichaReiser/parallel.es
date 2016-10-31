@@ -9,17 +9,16 @@ describe("arrays", function () {
             expect(typeof iterator.next).toBe("function");
         });
 
-        it("next returns done=true for the first and any succeeding calls if the array contains no elements", function () {
+        it("hasNext returns false for the first and any succeeding calls if the array contains no elements", function () {
             // arrange
             const iterator = toIterator([]);
 
             // assert
-            expect(iterator.next().done).toBe(true);
-            expect(iterator.next().done).toBe(true);
-            expect(iterator.next().done).toBe(true);
+            expect(iterator.hasNext()).toBe(false);
+            expect(iterator.hasNext()).toBe(false);
         });
 
-        it("next returns the value and done=false for if the iterator has not reached the end", function () {
+        it("next returns the value if the iterator has not reached the end", function () {
             // arrange
             const iterator = toIterator([1, 2, 3]);
 
@@ -28,15 +27,13 @@ describe("arrays", function () {
             const second = iterator.next();
             const third = iterator.next();
 
-            expect(first.done).toBe(false);
-            expect(first.value).toBe(1);
-            expect(second.done).toBe(false);
-            expect(second.value).toBe(2);
-            expect(third.done).toBe(false);
-            expect(third.value).toBe(3);
+            expect(first).toBe(1);
+            expect(second).toBe(2);
+            expect(third).toBe(3);
+            expect(iterator.hasNext()).toBe(false);
         });
 
-        it("returns done=true if the iterator has reached the end", function () {
+        it("returns hasNext=false if the iterator has reached the end", function () {
             // arrange
             const iterator = toIterator([1, 2]);
 
@@ -44,16 +41,14 @@ describe("arrays", function () {
             iterator.next();
 
             // assert
-            const result = iterator.next();
-            expect(result.done).toBe(true);
-            expect(result.value).toBeUndefined();
+            expect(iterator.hasNext()).toBe(false);
         });
     });
 
     describe("toArray", function () {
         it("converts an empty iterator to an empty array", function () {
             // arrange
-            const iterator = { next() { return { done: true } as IteratorResult<number>; }};
+            const iterator = { hasNext() { return false; }, next() { return null; } };
 
             // assert
             expect(toArray(iterator)).toEqual([]);
@@ -63,11 +58,11 @@ describe("arrays", function () {
             // arrange
             let i = 0;
             const iterator: Iterator<number> = {
+                hasNext() {
+                    return i < 3;
+                },
                 next() {
-                    if (++i < 4) {
-                        return { done: false, value: i };
-                    }
-                    return { done: true } as IteratorResult<number>;
+                    return ++i;
                 }
             };
 

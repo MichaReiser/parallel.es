@@ -1,11 +1,24 @@
+import {IFastIterator} from "./fast-iterator";
 /**
  * Creates an iterator that iterates over the given array
  * @param data the array
  * @param T element type
  * @returns the iterator
  */
-export function toIterator<T>(data: T[]): Iterator<T> {
-    return data[Symbol.iterator]();
+export function toIterator<T>(data: T[]): IFastIterator<T> {
+    let index = 0;
+    return {
+        hasNext() {
+            return index < data.length;
+        },
+
+        next() {
+            if (index >= data.length) {
+                throw new Error("Iterator has reached the end");
+            }
+            return data[index++];
+        }
+    };
 }
 
 /**
@@ -14,13 +27,13 @@ export function toIterator<T>(data: T[]): Iterator<T> {
  * @param T element type
  * @returns {T[]} the array representation of the given iterator
  */
-export function toArray<T>(iterator: Iterator<T>): T[] {
+export function toArray<T>(iterator: IFastIterator<T>): T[] {
     const result: T[] = [];
-    let current: IteratorResult<T>;
-    /* tslint:disable:no-conditional-assignment */
-    while (!(current = iterator.next()).done) {
-        result.push(current.value as T);
+
+    while (iterator.hasNext()) {
+        result.push(iterator.next());
     }
+
     return result;
 }
 

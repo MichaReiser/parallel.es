@@ -14,7 +14,7 @@ describe("reduceIterator", function () {
         const iterator = toIterator([]);
 
         // act
-        const result = reduceIterator(100, iterator, (memo, value) => memo + value, environment).next().value;
+        const result = reduceIterator(100, iterator, (memo, value) => memo + value, environment).next();
 
         // assert
         expect(result).toBe(100);
@@ -42,7 +42,7 @@ describe("reduceIterator", function () {
         const accumulator = (memo: number, value: number) => memo + value;
 
         // act
-        const result = reduceIterator(0, iterator, accumulator, environment).next().value;
+        const result = reduceIterator(0, iterator, accumulator, environment).next();
 
         // assert
         expect(result).toBe(10);
