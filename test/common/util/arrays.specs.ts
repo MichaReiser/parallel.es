@@ -1,4 +1,5 @@
-import {toIterator, toArray, flattenArray} from "../../../src/common/util/arrays";
+import {toIterator, toArray, flattenArray, concatInPlace} from "../../../src/common/util/arrays";
+
 describe("arrays", function () {
     describe("toIterator", function () {
         it("returns an iterator with a next method", function () {
@@ -89,4 +90,29 @@ describe("arrays", function () {
             expect(flattenArray([[1, 2], [3, 4]])).toEqual([1, 2, 3, 4]);
         });
     });
+
+    describe("concatInPlace", function () {
+        it("returns an empty array if two empty arrays are concatenated", function () {
+            // arrange
+            const target: number[] = [];
+
+            // act
+            concatInPlace(target, []);
+
+            // assert
+            expect(target).toEqual([]);
+        });
+
+        it("inserts the elements of the second array into the first", function () {
+            // arrange
+            const target = [1, 2];
+
+            // act
+            concatInPlace(target, [3, 4, 5]);
+
+            // assert
+            expect(target).toEqual([1, 2, 3, 4, 5]);
+        });
+    });
+
 });

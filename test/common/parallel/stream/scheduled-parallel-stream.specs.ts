@@ -8,7 +8,13 @@ describe("ScheduledParallelStream", function () {
     let task1: FakeTask<string>;
     let task2: FakeTask<string>;
     let task3: FakeTask<string>;
-    let joiner = (values: string[]) => values.join(" ");
+    let joiner = (first: string, second: string) => {
+        if (typeof first === "undefined") {
+            return second;
+        }
+
+        return first + " " + second;
+    };
 
     beforeEach(function () {
         tasks = [new FakeTask(0), new FakeTask(1), new FakeTask(2)];
@@ -18,7 +24,7 @@ describe("ScheduledParallelStream", function () {
     describe("subscribe", function () {
         it("calls the onNext handler for every resolved sub result", function (done) {
             // arrange
-            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, undefined, joiner);
             const onNextSpy = jasmine.createSpy("onNext");
             stream.subscribe(onNextSpy);
 
@@ -39,7 +45,7 @@ describe("ScheduledParallelStream", function () {
 
         it("passes the correct task index even if the tasks are resolved out of order", function (done) {
             // arrange
-            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, undefined, joiner);
             const onNextSpy = jasmine.createSpy("onNext");
             stream.subscribe(onNextSpy);
 
@@ -60,7 +66,7 @@ describe("ScheduledParallelStream", function () {
 
         it("does not trigger the onNext callback after the first task has failed (fail fast)", function (done) {
             // arrange
-            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, undefined, joiner);
             const onNextSpy = jasmine.createSpy("onNext");
             stream.subscribe(onNextSpy);
 
@@ -79,7 +85,7 @@ describe("ScheduledParallelStream", function () {
 
         it("multiple onNext handlers can be registered", function (done) {
             // arrange
-            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, undefined, joiner);
             const onNextSpy = jasmine.createSpy("onNext");
             const onNextSpy2 = jasmine.createSpy("onNext2");
             stream.subscribe(onNextSpy);
@@ -101,7 +107,7 @@ describe("ScheduledParallelStream", function () {
 
         it("The onError callback is called if a task fails", function (done) {
             // arrange
-            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, undefined, joiner);
             const onNextSpy = jasmine.createSpy("onNext");
             const onError = jasmine.createSpy("onError");
             stream.subscribe(onNextSpy, onError);
@@ -118,7 +124,7 @@ describe("ScheduledParallelStream", function () {
 
         it("Calls the onComplete handler if all tasks have been completed", function (done) {
             // arrange
-            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, undefined, joiner);
             const onNextSpy = jasmine.createSpy("onNext");
             const onError = jasmine.createSpy("onError");
             const onComplete = jasmine.createSpy("onComplete");
@@ -141,7 +147,7 @@ describe("ScheduledParallelStream", function () {
     describe("then", function () {
         it("calls the onFulfilled handler if all tasks have been completed", function (done) {
             // arrange
-            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, undefined, joiner);
             const onFulfilled = jasmine.createSpy("onFulfilled");
             const completed = stream.then(onFulfilled);
 
@@ -162,7 +168,7 @@ describe("ScheduledParallelStream", function () {
 
         it("calls the onRejected handler if any tasks failed", function (done) {
             // arrange
-            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, undefined, joiner);
 
             // act
             task1.resolve("Good");
@@ -197,7 +203,7 @@ describe("ScheduledParallelStream", function () {
 
         it("calls the onrejected handler if any task failed", function (done) {
             // arrange
-            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, undefined, joiner);
 
             // act
             task1.resolve("Good");
@@ -217,7 +223,7 @@ describe("ScheduledParallelStream", function () {
 
         it("cancels all not yet completed tasks", function (done) {
             // arrange
-            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, undefined, joiner);
 
             // act
             task1.resolve("Good");
@@ -239,7 +245,7 @@ describe("ScheduledParallelStream", function () {
             // arrange
             doneFn = done;
 
-            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, joiner);
+            const stream: IParallelStream<string, string> = new ScheduledParallelStream(tasks, undefined, joiner);
             stream.catch(() => done());
 
             // act

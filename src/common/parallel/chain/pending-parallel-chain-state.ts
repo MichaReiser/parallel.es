@@ -3,7 +3,7 @@ import {ScheduledParallelChainState} from "./scheduled-parallel-chain-state";
 import {IParallelGenerator} from "../generator/parallel-generator";
 import {IParallelOperation, IDefaultInitializedParallelOptions} from "../";
 import {ParallelStream} from "../stream/parallel-stream-impl";
-import {flattenArray} from "../../util/arrays";
+import {concatInPlace} from "../../util/arrays";
 import {ParallelEnvironmentDefinition} from "../parallel-environment-definition";
 
 /**
@@ -41,7 +41,7 @@ export class PendingParallelChainState<TElement> implements IParallelChainState<
             options: this.options
         });
 
-        return new ScheduledParallelChainState<TElement>(ParallelStream.fromTasks(tasks, flattenArray), this.options, this.environment);
+        return new ScheduledParallelChainState<TElement>(ParallelStream.fromTasks(tasks, [], concatInPlace), this.options, this.environment);
     }
 
     public chainOperation<TElementNew>(operation: IParallelOperation): IParallelChainState<TElementNew> {

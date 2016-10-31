@@ -3,7 +3,7 @@ import {IParallelOperation, IDefaultInitializedParallelOptions} from "../";
 import {IParallelStream} from "../stream/parallel-stream";
 import {ScheduledParallelChainState} from "./scheduled-parallel-chain-state";
 import {ParallelCollectionGenerator} from "../generator/parallel-collection-generator";
-import {flattenArray} from "../../util/arrays";
+import {concatInPlace} from "../../util/arrays";
 import {ParallelStream} from "../stream/parallel-stream-impl";
 import {ParallelEnvironmentDefinition} from "../parallel-environment-definition";
 
@@ -46,7 +46,7 @@ export class DependentParallelChainState<TPrevious, TElement> implements IParall
                 options: this.options
             });
 
-            const wrappedStream = ParallelStream.fromTasks(tasks, flattenArray);
+            const wrappedStream = ParallelStream.fromTasks(tasks, [], concatInPlace);
             wrappedStream.subscribe(next!, reject!, resolve!);
         }, reject!);
 
