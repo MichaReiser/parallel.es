@@ -2,7 +2,7 @@ import {ParallelStream} from "../../../../src/common/parallel/stream/parallel-st
 import {ResolvedParallelStream} from "../../../../src/common/parallel/stream/resolved-parallel-stream";
 import {ITask} from "../../../../src/common/task/task";
 import {ScheduledParallelStream} from "../../../../src/common/parallel/stream/scheduled-parallel-stream";
-describe("ParallelStream", function () {
+describe("ParallelStreamImpl", function () {
     let next: ((subResult: string, worker: number, valuesPerWorker: number) => void) | undefined = undefined;
     let reject: ((reason: any) => void) | undefined = undefined;
     let resolve: ((result: number) => void) | undefined = undefined;
@@ -61,18 +61,21 @@ describe("ParallelStream", function () {
     describe("fromTasks", function () {
         it("returns a resolved parallel stream if the task array is empty", function () {
              // act
-            const result = ParallelStream.fromTasks([], () => "abcd");
+            const result = ParallelStream.fromTasks([], "", () => "abcd");
 
             // assert
             expect(result).toEqual(jasmine.any(ResolvedParallelStream));
         });
 
-        it("applies the joiner to an empty array if the task array is empty", function () {
+        it("returns the default value if the task array is empty", function (done) {
             // act
-            const result = ParallelStream.fromTasks([], () => "abcd");
+            const result = ParallelStream.fromTasks([], "ab", () => "abcd");
 
             // assert
-            result.then(res => expect(res).toEqual("abcd"));
+            result.then(res => {
+                expect(res).toEqual("ab");
+                done();
+            });
         });
 
         it("returns a scheduled parallel stream if the task array is not empty", function () {
@@ -80,7 +83,7 @@ describe("ParallelStream", function () {
             const tasks: ITask<string[]>[] = [ jasmine.createSpyObj("task", ["then"]) ];
 
             // act
-            const result = ParallelStream.fromTasks(tasks, () => "abcd");
+            const result = ParallelStream.fromTasks(tasks, "", () => "abcd");
 
             // assert
             expect(result).toEqual(jasmine.any(ScheduledParallelStream));

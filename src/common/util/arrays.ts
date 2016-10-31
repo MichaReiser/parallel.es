@@ -38,3 +38,14 @@ export function flattenArray<T>(deepArray: T[][]): T[] {
     const [head, ...tail] = deepArray;
     return Array.prototype.concat.apply(head, tail);
 }
+
+export function concatInPlace<T>(target: T[], toAppend: T[]): T[] {
+    const insertionIndex = target.length;
+    target.length += toAppend.length;
+
+    for (let i = 0; i < toAppend.length; ++i) {
+        target[insertionIndex + i] = toAppend[i];
+    }
+
+    return target;
+}

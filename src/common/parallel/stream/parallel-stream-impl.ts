@@ -70,17 +70,18 @@ export class ParallelStream<TSubResult, TEndResult> implements IParallelStream<T
     /**
      * Creates a new parallel stream for the given set of tasks.
      * @param tasks the set of tasks that compute the results of the stream
-     * @param joiner the joiner to use to join the computed results of the stream
+     * @param defaultResult the default result
+     * @param joiner the joiner to use to join two computed task results
      * @param TTaskResult type of the task results
      * @param TEndResult result of the created stream. Created by applying the end results of the stream to the joiner
      * @returns stream for the given set of tasks
      */
-    public static fromTasks<TTaskResult, TEndResult>(tasks: ITask<TTaskResult>[], joiner: (subResults: TTaskResult[]) => TEndResult): IParallelStream<TTaskResult, TEndResult> {
+    public static fromTasks<TTaskResult, TEndResult>(tasks: ITask<TTaskResult>[], defaultResult: TEndResult, joiner: (memo: TTaskResult, current: TTaskResult) => TEndResult): IParallelStream<TTaskResult, TEndResult> {
         if (tasks.length === 0) {
-            return new ResolvedParallelStream(joiner.apply(undefined, [[]]));
+            return new ResolvedParallelStream(defaultResult);
         }
 
-        return new ScheduledParallelStream(tasks, joiner);
+        return new ScheduledParallelStream(tasks, defaultResult, joiner);
     }
 
     private promise: Promise<TEndResult>;

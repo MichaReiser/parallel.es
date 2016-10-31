@@ -10,9 +10,10 @@ import {ParallelStream} from "./parallel-stream-impl";
  */
 export class ScheduledParallelStream<TSubResult, TEndResult> implements IParallelStream<TSubResult, TEndResult> {
     /**
-     * The tasks executed by this stream
+     * The tasks executed by this stream.
+     * Already completed tasks are replaced with undefined to free the reference to the task (gc can collect the task)
      */
-    private tasks: ITask<TSubResult>[];
+    private tasks: Array<ITask<TSubResult> | undefined>;
 
     private innerStream: ParallelStream<TSubResult, TEndResult>;
 
@@ -42,20 +43,31 @@ export class ScheduledParallelStream<TSubResult, TEndResult> implements IParalle
     private failed: boolean = false;
 
     /**
-     * Array containing the retrieved sub results. Not yet retrieved sub results are default initialized
-     */
-    private subResults: TSubResult[];
-
-    /**
      * Function used to join the sub results to the end result
      */
-    private joiner: (subResults: TSubResult[]) => TEndResult;
+    private joiner: (memo: TSubResult, current: TSubResult) => TEndResult;
 
-    constructor(tasks: ITask<TSubResult>[], join: (subResults: TSubResult[]) => TEndResult) {
+    /**
+     * The accumulated end result for all yet completed tasks. Is undefined if the stream is complete.
+     */
+    private endResult: TEndResult | undefined;
+
+    /**
+     * Not yet joined sub results
+     */
+    private subResults: Array<TSubResult | undefined>;
+
+    /**
+     * The index of the next expected sub result that should be joined with the end result
+     */
+    private nextSubResultIndex = 0;
+
+    constructor(tasks: ITask<TSubResult>[], endResultDefault: TEndResult, join: (memo: TSubResult, current: TSubResult) => TEndResult) {
         this.tasks = tasks;
         this.joiner = join;
-        this.subResults = new Array(tasks.length);
+        this.endResult = endResultDefault;
         this.pending = tasks.length;
+        this.subResults = new Array(this.tasks.length);
 
         this.innerStream = new ParallelStream((next, resolve, reject) => {
             this.next = next;
@@ -64,7 +76,7 @@ export class ScheduledParallelStream<TSubResult, TEndResult> implements IParalle
         });
 
         for (const task of tasks) {
-            task.then(subResult => this._taskCompleted(subResult, task.definition as IParallelTaskDefinition), reason => this._taskFailed(reason));
+            this.registerTaskHandler(task);
         }
     }
 
@@ -88,13 +100,17 @@ export class ScheduledParallelStream<TSubResult, TEndResult> implements IParalle
         return this.innerStream.catch(onrejected);
     }
 
+    private registerTaskHandler(task: ITask<TSubResult>) {
+        task.then(subResult => this._taskCompleted(subResult, task.definition as IParallelTaskDefinition), reason => this._taskFailed(reason));
+    }
+
     private _taskCompleted(subResult: TSubResult, taskDefinition: IParallelTaskDefinition): void {
         if (this.pending === 0) {
             throw new Error("Stream already resolved but taskCompleted called one more time");
         }
 
         --this.pending;
-
+        this.tasks[taskDefinition.taskIndex] = undefined;
         this.subResults[taskDefinition.taskIndex] = subResult;
 
         if (this.failed) {
@@ -103,8 +119,29 @@ export class ScheduledParallelStream<TSubResult, TEndResult> implements IParalle
 
         this.next(subResult, taskDefinition.taskIndex, taskDefinition.valuesPerTask);
 
+        if (this.nextSubResultIndex === taskDefinition.taskIndex) {
+            this.joinSubResults();
+        }
+
         if (this.pending === 0) {
-            this.resolve(this.joiner.apply(undefined, [this.subResults]));
+            this.resolve(this.endResult!);
+            this.endResult = undefined;
+        }
+    }
+
+    /**
+     * Joins the currently outstanding sub results. The sub results is needed to ensure that the results are joined in
+     * task order. This method iterates until it either reaches the end of the sub results or a sub result for a task is
+     * missing (undefined, not yet computed).
+     * Has a better memory footprint compared to if all subresults are kept.
+     */
+    private joinSubResults() {
+        while (this.nextSubResultIndex < this.subResults.length && typeof (this.subResults[this.nextSubResultIndex]) !== "undefined") {
+            const subResult = this.subResults[this.nextSubResultIndex];
+            this.subResults[this.nextSubResultIndex] = undefined;
+            this.endResult = this.joiner.apply(undefined, [this.endResult, subResult]);
+
+            ++this.nextSubResultIndex;
         }
     }
 
@@ -117,8 +154,9 @@ export class ScheduledParallelStream<TSubResult, TEndResult> implements IParalle
 
         // Cancel all not yet completed tasks
         for (let i = 0; i < this.tasks.length; ++i) {
-            if (typeof(this.subResults[i]) === "undefined") {
-                this.tasks[i].cancel();
+            const task = this.tasks[i];
+            if (typeof task !== "undefined") {
+                task.cancel();
             }
         }
 
