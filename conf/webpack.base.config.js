@@ -35,7 +35,17 @@ module.exports = new Config().merge({
                 test: /\.ts$/,
                 loader: "awesome-typescript-loader",
                 query: {
-                    useBabel: true
+                    useBabel: true,
+                    babelOptions: {
+                        "presets": [
+                            ["es2015", {"modules": false}]
+                        ],
+                        "plugins": [
+                            ["transform-runtime", {
+                                "regenerator": false
+                            }]
+                        ]
+                    }
                 }
             }
         ]

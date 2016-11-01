@@ -1,6 +1,12 @@
 var webpack = require("webpack");
 var Config = require("webpack-config").Config;
 var CompressionPlugin = require("compression-webpack-plugin");
+var BabiliPlugin = require("babili-webpack-plugin");
+var babiliPreset = require("babel-preset-babili");
+var mangleNamesPlugin = require("babel-plugin-minify-mangle-names");
+
+var mangleNamesIndex = babiliPreset.plugins.indexOf(mangleNamesPlugin);
+babiliPreset.plugins[mangleNamesIndex] = [mangleNamesPlugin, { "blacklist": { "slaveFunctionLookupTable": true } }];
 
 const FILE_NAME = "[name].parallel-es6.js";
 
@@ -26,7 +32,9 @@ module.exports = new Config().extend({
     plugins: [
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurrenceOrderPlugin(),
-        // does not yet support es 6 new webpack.optimize.UglifyJsPlugin(),
+        new BabiliPlugin({
+            babili: babiliPreset
+        }),
         new CompressionPlugin({
             asset: "[path].gz[query]",
             algorithm: "gzip",
