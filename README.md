@@ -40,7 +40,7 @@ The library uses function serialization and therefore the outer scope is no long
 The [API Documentation](https://datenmetzgerx.github.io/parallel.es/artifacts/docs/interfaces/parallel.iparallel.html) is available online. The [wiki](../../wiki) describes the architecture and programing model in more detail.
 
 ## Examples
-More sophisticated examples can be seen [here](https://datenmetzgerx.github.io/parallel.es/artifacts/example.html).
+An example project using parallel-es and comparing it performance to related projects is [parallel-es-example](https://github.com/DatenMetzgerX/parallel-es-example). The examples are hosted  [here](https://datenmetzgerx.github.io/parallel-es-example/).
 
 ## Browsers support <sub><sup><sub><sub>made by @godban</sub></sub></sup></sub>
 
