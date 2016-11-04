@@ -99,9 +99,9 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="parallel.iparalleloptions.html#functioncallserializer" class="tsd-kind-icon">function<wbr>Call<wbr>Serializer</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="parallel.iparalleloptions.html#maxconcurrencylevel" class="tsd-kind-icon">max<wbr>Concurrency<wbr>Level</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="parallel.iparalleloptions.html#maxdegreeofparallelism" class="tsd-kind-icon">max<wbr>Degree<wbr>OfParallelism</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="parallel.iparalleloptions.html#maxvaluespertask" class="tsd-kind-icon">max<wbr>Values<wbr>Per<wbr>Task</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="parallel.iparalleloptions.html#minvaluespertask" class="tsd-kind-icon">min<wbr>Values<wbr>Per<wbr>Task</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="parallel.iparalleloptions.html#oversubscribe" class="tsd-kind-icon">oversubscribe</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="parallel.iparalleloptions.html#scheduler" class="tsd-kind-icon">scheduler</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="parallel.iparalleloptions.html#threadpool" class="tsd-kind-icon">thread<wbr>Pool</a></li>
 							</ul>
@@ -117,7 +117,7 @@
 					<div class="tsd-signature tsd-kind-icon">function<wbr>Call<wbr>Serializer<span class="tsd-signature-symbol">:</span> <a href="../classes/parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/1d55a9b/src/common/parallel/parallel-options.ts#L18">common/parallel/parallel-options.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/f9882f2/src/common/parallel/parallel-options.ts#L18">common/parallel/parallel-options.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -132,7 +132,7 @@
 					<div class="tsd-signature tsd-kind-icon">max<wbr>Concurrency<wbr>Level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/1d55a9b/src/common/parallel/parallel-options.ts#L23">common/parallel/parallel-options.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/f9882f2/src/common/parallel/parallel-options.ts#L23">common/parallel/parallel-options.ts:23</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -142,12 +142,37 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+					<a name="maxdegreeofparallelism" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> max<wbr>Degree<wbr>OfParallelism</h3>
+					<div class="tsd-signature tsd-kind-icon">max<wbr>Degree<wbr>OfParallelism<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/f9882f2/src/common/parallel/parallel-options.ts#L55">common/parallel/parallel-options.ts:55</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines the max degree of parallelism to use for a scheduled job. The value defines in how many task the scheduler is allowed
+								to split the task at most relative to the {@link IParallelOptions.maxConcurrency}. If the value is equal to one, at most
+								as many tasks as {@link IParallelOptions.maxConcurrency} are created. If the value is larger than one, than <a href="parallel.iparalleloptions.html#maxdegreeofparallelism">IParallelOptions.maxDegreeOfParallelism</a> as
+								many tasks are created (at most). Negative values or a value of zero is not allowed. If the value is in between (0, 1) than scheduler
+								guarantees that at least one task is created. If the value is undefined, the scheduler is free to choose the desired
+							degree of parallelism</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>undefined / unlimited</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
 					<a name="maxvaluespertask" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> max<wbr>Values<wbr>Per<wbr>Task</h3>
 					<div class="tsd-signature tsd-kind-icon">max<wbr>Values<wbr>Per<wbr>Task<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/1d55a9b/src/common/parallel/parallel-options.ts#L34">common/parallel/parallel-options.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/f9882f2/src/common/parallel/parallel-options.ts#L34">common/parallel/parallel-options.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -163,7 +188,7 @@
 					<div class="tsd-signature tsd-kind-icon">min<wbr>Values<wbr>Per<wbr>Task<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/1d55a9b/src/common/parallel/parallel-options.ts#L28">common/parallel/parallel-options.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/f9882f2/src/common/parallel/parallel-options.ts#L28">common/parallel/parallel-options.ts:28</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -173,35 +198,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="oversubscribe" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> oversubscribe</h3>
-					<div class="tsd-signature tsd-kind-icon">oversubscribe<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/1d55a9b/src/common/parallel/parallel-options.ts#L53">common/parallel/parallel-options.ts:53</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Allow the <a href="parallel.iparalleloptions.html#scheduler">IParallelOptions.scheduler</a> to create more than {@link IParallelOptions.maxConcurrency} tasks
-								for a single job. By default this is desired but might increases computation time if the initialization of the environment
-								is very compute intensive (compared to the computation needed to transform the elements).
-							This option is only a hint for the scheduler. Actual implementations may ignore the option at all or interpret it less strict.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>default</dt>
-							<dd><p>true</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
 					<a name="scheduler" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scheduler</h3>
 					<div class="tsd-signature tsd-kind-icon">scheduler<span class="tsd-signature-symbol">:</span> <a href="parallel.iparalleljobscheduler.html" class="tsd-signature-type">IParallelJobScheduler</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/1d55a9b/src/common/parallel/parallel-options.ts#L44">common/parallel/parallel-options.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/f9882f2/src/common/parallel/parallel-options.ts#L44">common/parallel/parallel-options.ts:44</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -216,7 +218,7 @@
 					<div class="tsd-signature tsd-kind-icon">thread<wbr>Pool<span class="tsd-signature-symbol">:</span> <a href="parallel.ithreadpool.html" class="tsd-signature-type">IThreadPool</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/1d55a9b/src/common/parallel/parallel-options.ts#L39">common/parallel/parallel-options.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/f9882f2/src/common/parallel/parallel-options.ts#L39">common/parallel/parallel-options.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -282,13 +284,13 @@
 								<a href="parallel.iparalleloptions.html#maxconcurrencylevel" class="tsd-kind-icon">max<wbr>Concurrency<wbr>Level</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+								<a href="parallel.iparalleloptions.html#maxdegreeofparallelism" class="tsd-kind-icon">max<wbr>Degree<wbr>OfParallelism</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
 								<a href="parallel.iparalleloptions.html#maxvaluespertask" class="tsd-kind-icon">max<wbr>Values<wbr>Per<wbr>Task</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
 								<a href="parallel.iparalleloptions.html#minvaluespertask" class="tsd-kind-icon">min<wbr>Values<wbr>Per<wbr>Task</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="parallel.iparalleloptions.html#oversubscribe" class="tsd-kind-icon">oversubscribe</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
 								<a href="parallel.iparalleloptions.html#scheduler" class="tsd-kind-icon">scheduler</a>
@@ -327,6 +329,9 @@
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/parallel.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
 					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-external tsd-is-not-exported">
+						<a href="../modules/parallel.html#greaterthanzerooptions" class="tsd-kind-icon">greater<wbr>Than<wbr>Zero<wbr>Options</a>
+					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/parallel.html#maxconcurrencylevel" class="tsd-kind-icon">max<wbr>Concurrency<wbr>Level</a>
 					</li>
@@ -344,6 +349,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-external">
 						<a href="../modules/parallel.html#isserializedfunctioncall" class="tsd-kind-icon">is<wbr>Serialized<wbr>Function<wbr>Call</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-external">
+						<a href="../modules/parallel.html#validateoptions" class="tsd-kind-icon">validate<wbr>Options</a>
 					</li>
 				</ul>
 			</nav>
