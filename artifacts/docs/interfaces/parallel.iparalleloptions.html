@@ -117,7 +117,7 @@
 					<div class="tsd-signature tsd-kind-icon">function<wbr>Call<wbr>Serializer<span class="tsd-signature-symbol">:</span> <a href="../classes/parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L18">common/parallel/parallel-options.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L18">common/parallel/parallel-options.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -132,7 +132,7 @@
 					<div class="tsd-signature tsd-kind-icon">max<wbr>Concurrency<wbr>Level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L23">common/parallel/parallel-options.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L23">common/parallel/parallel-options.ts:23</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -147,17 +147,14 @@
 					<div class="tsd-signature tsd-kind-icon">max<wbr>Degree<wbr>OfParallelism<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L55">common/parallel/parallel-options.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L52">common/parallel/parallel-options.ts:52</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Defines the max degree of parallelism to use for a scheduled job. The value defines in how many task the scheduler is allowed
-								to split the task at most relative to the {@link IParallelOptions.maxConcurrency}. If the value is equal to one, at most
-								as many tasks as {@link IParallelOptions.maxConcurrency} are created. If the value is larger than one, than <a href="parallel.iparalleloptions.html#maxdegreeofparallelism">IParallelOptions.maxDegreeOfParallelism</a> as
-								many tasks are created (at most). Negative values or a value of zero is not allowed. If the value is in between (0, 1) than scheduler
-								guarantees that at least one task is created. If the value is undefined, the scheduler is free to choose the desired
-							degree of parallelism</p>
+								to split the task at most. A value of 1 creates exactly one task. Undefined does not limit the max degree and leaves it to the
+							scheduler to decide.</p>
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>default</dt>
@@ -172,7 +169,7 @@
 					<div class="tsd-signature tsd-kind-icon">max<wbr>Values<wbr>Per<wbr>Task<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L34">common/parallel/parallel-options.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L34">common/parallel/parallel-options.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -188,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">min<wbr>Values<wbr>Per<wbr>Task<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L28">common/parallel/parallel-options.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L28">common/parallel/parallel-options.ts:28</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -203,7 +200,7 @@
 					<div class="tsd-signature tsd-kind-icon">scheduler<span class="tsd-signature-symbol">:</span> <a href="parallel.iparalleljobscheduler.html" class="tsd-signature-type">IParallelJobScheduler</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L44">common/parallel/parallel-options.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L44">common/parallel/parallel-options.ts:44</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -218,7 +215,7 @@
 					<div class="tsd-signature tsd-kind-icon">thread<wbr>Pool<span class="tsd-signature-symbol">:</span> <a href="parallel.ithreadpool.html" class="tsd-signature-type">IThreadPool</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L39">common/parallel/parallel-options.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L39">common/parallel/parallel-options.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">

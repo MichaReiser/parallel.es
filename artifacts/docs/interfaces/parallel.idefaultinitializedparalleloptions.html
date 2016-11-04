@@ -118,7 +118,7 @@
 					<aside class="tsd-sources">
 						<p>Overwrites <a href="parallel.iparalleloptions.html">IParallelOptions</a>.<a href="parallel.iparalleloptions.html#functioncallserializer">functionCallSerializer</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L62">common/parallel/parallel-options.ts:62</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L59">common/parallel/parallel-options.ts:59</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -129,7 +129,7 @@
 					<aside class="tsd-sources">
 						<p>Overwrites <a href="parallel.iparalleloptions.html">IParallelOptions</a>.<a href="parallel.iparalleloptions.html#maxconcurrencylevel">maxConcurrencyLevel</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L63">common/parallel/parallel-options.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L60">common/parallel/parallel-options.ts:60</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -140,17 +140,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="parallel.iparalleloptions.html">IParallelOptions</a>.<a href="parallel.iparalleloptions.html#maxdegreeofparallelism">maxDegreeOfParallelism</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L55">common/parallel/parallel-options.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L52">common/parallel/parallel-options.ts:52</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Defines the max degree of parallelism to use for a scheduled job. The value defines in how many task the scheduler is allowed
-								to split the task at most relative to the {@link IParallelOptions.maxConcurrency}. If the value is equal to one, at most
-								as many tasks as {@link IParallelOptions.maxConcurrency} are created. If the value is larger than one, than <a href="parallel.iparalleloptions.html#maxdegreeofparallelism">IParallelOptions.maxDegreeOfParallelism</a> as
-								many tasks are created (at most). Negative values or a value of zero is not allowed. If the value is in between (0, 1) than scheduler
-								guarantees that at least one task is created. If the value is undefined, the scheduler is free to choose the desired
-							degree of parallelism</p>
+								to split the task at most. A value of 1 creates exactly one task. Undefined does not limit the max degree and leaves it to the
+							scheduler to decide.</p>
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>default</dt>
@@ -166,7 +163,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="parallel.iparalleloptions.html">IParallelOptions</a>.<a href="parallel.iparalleloptions.html#maxvaluespertask">maxValuesPerTask</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L34">common/parallel/parallel-options.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L34">common/parallel/parallel-options.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -183,7 +180,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="parallel.iparalleloptions.html">IParallelOptions</a>.<a href="parallel.iparalleloptions.html#minvaluespertask">minValuesPerTask</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L28">common/parallel/parallel-options.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L28">common/parallel/parallel-options.ts:28</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -199,7 +196,7 @@
 					<aside class="tsd-sources">
 						<p>Overwrites <a href="parallel.iparalleloptions.html">IParallelOptions</a>.<a href="parallel.iparalleloptions.html#scheduler">scheduler</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L65">common/parallel/parallel-options.ts:65</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L62">common/parallel/parallel-options.ts:62</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -210,7 +207,7 @@
 					<aside class="tsd-sources">
 						<p>Overwrites <a href="parallel.iparalleloptions.html">IParallelOptions</a>.<a href="parallel.iparalleloptions.html#threadpool">threadPool</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/73f1252/src/common/parallel/parallel-options.ts#L64">common/parallel/parallel-options.ts:64</a></li>
+							<li>Defined in <a href="https://github.com/DatenMetzgerX/parallel.es/blob/8739055/src/common/parallel/parallel-options.ts#L61">common/parallel/parallel-options.ts:61</a></li>
 						</ul>
 					</aside>
 				</section>
