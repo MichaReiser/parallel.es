@@ -81,9 +81,9 @@ describe("DefaultParallelScheduler", function () {
             expect(scheduling.numberOfTasks).toBe(0);
         });
 
-        it("creates at most options.maxConcurrencyLevel tasks if maxDegreeOfParallelism is equal to 1", function () {
+        it("creates at most maxDegreeOfParallelism tasks if specified", function () {
             // arrange
-            options.maxDegreeOfParallelism = 1;
+            options.maxDegreeOfParallelism = 2;
 
             // act
             const scheduling = scheduler.getScheduling(20, options);
@@ -91,30 +91,6 @@ describe("DefaultParallelScheduler", function () {
             // assert
             expect(scheduling.numberOfTasks).toBe(2);
             expect(scheduling.valuesPerTask).toBe(10);
-        });
-
-        it("creates at at least one task tasks if maxConcurrencyLevel * maxDegreeOfParallelism is less than 0.5", function () {
-            // arrange
-            options.maxDegreeOfParallelism = 0.4;
-
-            // act
-            const scheduling = scheduler.getScheduling(20, options);
-
-            // assert
-            expect(scheduling.numberOfTasks).toBe(1);
-            expect(scheduling.valuesPerTask).toBe(20);
-        });
-
-        it("rounds up if options.maxConcurrencyLevel * maxDegreeOfParallelism is fractional", function () {
-            // arrange
-            options.maxDegreeOfParallelism = 3;
-
-            // act
-            const scheduling = scheduler.getScheduling(18, options);
-
-            // assert
-            expect(scheduling.numberOfTasks).toBe(6);
-            expect(scheduling.valuesPerTask).toBe(3);
         });
     });
 });
