@@ -43,7 +43,6 @@ export class DynamicFunctionRegistry {
 
     private initDefinition(func: Function, id: IFunctionId) {
         const source = func.toString();
-        const name = source.substring(source.indexOf("function") + 9, source.indexOf("(")).trim();
         const args = source.substring(source.indexOf("(") + 1, source.indexOf(")")).split(",");
         const body = source.substring(source.indexOf("{") + 1, source.lastIndexOf("}")).trim();
 
@@ -51,7 +50,7 @@ export class DynamicFunctionRegistry {
             argumentNames: args.map(arg => arg.trim()),
             body,
             id,
-            name: name !== "anonymous" ? name : undefined
+            name: func.name ? func.name : undefined
         };
 
         this.ids.set(source, id);

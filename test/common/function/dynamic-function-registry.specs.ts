@@ -64,6 +64,7 @@ describe("DynamicFunctionRegistry", function () {
             if (definition) {
                 expect(definition.id).toEqual(id);
                 expect(definition.argumentNames).toEqual(["x", "y"]);
+                expect(definition.name).toEqual("testFunction");
                 expect(definition.body).toContain("console.log(x + y)"); // Firefox adds a 'use strict' directive, the other browsers don't
             } else {
                 fail("Definition not returned");
