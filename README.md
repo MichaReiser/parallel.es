@@ -1,6 +1,7 @@
 # parallel.es
 [![Build Status](https://travis-ci.org/DatenMetzgerX/parallel.es.svg?branch=master)](https://travis-ci.org/DatenMetzgerX/parallel.es)
 [![Coverage Status](https://coveralls.io/repos/github/DatenMetzgerX/parallel.es/badge.svg?branch=master)](https://coveralls.io/github/DatenMetzgerX/parallel.es?branch=master)
+[![npm version](https://badge.fury.io/js/parallel-es.svg)](https://badge.fury.io/js/parallel-es)
 
 A JavaScript library that simplifies parallel computation in the browser (and other environments soon).  
 
