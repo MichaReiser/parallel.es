@@ -1,5 +1,6 @@
 import {SlaveFunctionLookupTable} from "../../../src/common/function/slave-function-lookup-table";
 import {functionId} from "../../../src/common/function/function-id";
+import {getFunctionName} from "../../../src/common/util/function-name";
 
 describe("SlaveFunctionLookupTable", function () {
     let cache: SlaveFunctionLookupTable;
@@ -42,7 +43,7 @@ describe("SlaveFunctionLookupTable", function () {
             const func = cache.getFunction(functionId("test", 1000));
 
             // assert
-            expect(func!.name).toEqual("test");
+            expect(getFunctionName(func!)).toEqual("test");
             expect(func!(5, 10, 5)).toEqual(10);
         });
     });
