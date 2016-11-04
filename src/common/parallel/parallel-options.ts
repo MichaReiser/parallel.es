@@ -45,11 +45,8 @@ export interface IParallelOptions {
 
     /**
      * Defines the max degree of parallelism to use for a scheduled job. The value defines in how many task the scheduler is allowed
-     * to split the task at most relative to the {@link IParallelOptions.maxConcurrency}. If the value is equal to one, at most
-     * as many tasks as {@link IParallelOptions.maxConcurrency} are created. If the value is larger than one, than {@link IParallelOptions.maxDegreeOfParallelism} as
-     * many tasks are created (at most). Negative values or a value of zero is not allowed. If the value is in between (0, 1) than scheduler
-     * guarantees that at least one task is created. If the value is undefined, the scheduler is free to choose the desired
-     * degree of parallelism
+     * to split the task at most. A value of 1 creates exactly one task. Undefined does not limit the max degree and leaves it to the
+     * scheduler to decide.
      * @default undefined / unlimited
      */
     maxDegreeOfParallelism?: number;
@@ -67,6 +64,9 @@ export interface IDefaultInitializedParallelOptions extends IParallelOptions {
 
 const greaterThanZeroOptions = ["maxValuesPerTask", "minValuesPerTask", "maxConcurrencyLevel", "maxDegreeOfParallelism"];
 export function validateOptions(options: IParallelOptions) {
+    if (typeof (options.maxDegreeOfParallelism) === "number") {
+        options.maxDegreeOfParallelism = Math.floor(options.maxDegreeOfParallelism);
+    }
 
     for (const optionName of greaterThanZeroOptions) {
         const optionValue = (options as {[name: string]: number | undefined })[optionName];
