@@ -64,7 +64,28 @@ describe("DynamicFunctionRegistry", function () {
             if (definition) {
                 expect(definition.id).toEqual(id);
                 expect(definition.argumentNames).toEqual(["x", "y"]);
+                expect(definition.name).toEqual("testFunction");
                 expect(definition.body).toContain("console.log(x + y)"); // Firefox adds a 'use strict' directive, the other browsers don't
+            } else {
+                fail("Definition not returned");
+            }
+        });
+
+        it("does not set the name for an anonymous function", function () {
+            // arrange
+            const id = functionRegistry.getOrSetId(function (x: number) {
+                return x;
+            });
+
+            // act
+            const definition = functionRegistry.getDefinition(id);
+
+            // assert
+            if (definition) {
+                expect(definition.id).toEqual(id);
+                expect(definition.argumentNames).toEqual(["x"]);
+                expect(definition.name).not.toBeDefined();
+                expect(definition.body).toContain("return x"); // Firefox adds a 'use strict' directive, the other browsers don't
             } else {
                 fail("Definition not returned");
             }

@@ -1,5 +1,6 @@
 import {SlaveFunctionLookupTable} from "../../../src/common/function/slave-function-lookup-table";
 import {functionId} from "../../../src/common/function/function-id";
+import {getFunctionName} from "../../../src/common/util/function-name";
 
 describe("SlaveFunctionLookupTable", function () {
     let cache: SlaveFunctionLookupTable;
@@ -27,6 +28,23 @@ describe("SlaveFunctionLookupTable", function () {
             // assert
             expect(func).toBeDefined();
             expect(func!(10)).toEqual(10);
+        });
+
+        it("returns a named function if the name attribute is set in the definition", function () {
+            // arrange
+            cache.registerFunction({
+                argumentNames: ["x, y, z"],
+                body: "return x + z;",
+                id: functionId("test", 1000),
+                name: "test"
+            });
+
+            // act
+            const func = cache.getFunction(functionId("test", 1000));
+
+            // assert
+            expect(getFunctionName(func!)).toEqual("test");
+            expect(func!(5, 10, 5)).toEqual(10);
         });
     });
 

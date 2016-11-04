@@ -12,7 +12,7 @@ export class SlaveFunctionLookupTable implements IFunctionLookupTable {
     private cache = new SimpleMap<string, Function>();
 
     /**
-     * Resolves the funciton with the givne id
+     * Resolves the function with the given id
      * @param id the id of the function to resolve
      * @returns the resolved function or undefined if not known
      */
@@ -26,7 +26,7 @@ export class SlaveFunctionLookupTable implements IFunctionLookupTable {
      * @returns the registered function
      */
     public registerFunction(definition: IFunctionDefinition): Function {
-        const f = Function.apply(null, [...definition.argumentNames, definition.body]);
+        const f = this.toFunction(definition);
         this.cache.set(definition.id.identifier, f);
         return f;
     }
@@ -45,5 +45,14 @@ export class SlaveFunctionLookupTable implements IFunctionLookupTable {
      */
     public has(id: IFunctionId) {
         return this.cache.has(id.identifier);
+    }
+
+    private toFunction(definition: IFunctionDefinition): Function {
+        if (definition.name) {
+            const args = definition.argumentNames.join(", ");
+            const wrapper = Function.apply(undefined, [`return function ${definition.name} (${args}) { ${definition.body}}` ]);
+            return wrapper();
+        }
+        return Function.apply(undefined, [...definition.argumentNames, definition.body]);
     }
 }

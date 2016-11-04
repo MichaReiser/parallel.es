@@ -1,53 +1,29 @@
 var Config = require("webpack-config").Config;
 var path = require("path");
 
-const FILE_NAME = "[name].parallel.js";
-
 module.exports = new Config().merge({
     entry: {
         browser: "./src/api/browser.ts",
         node: "./src/api/node.ts"
     },
+
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                enforce: "pre",
+                loader: "tslint-loader"
+            }
+        ]
+    },
+
     output: {
         library: "parallel-es",
         libraryTarget: "umd",
-        path: path.resolve(__dirname, "../dist"),
-        filename: FILE_NAME
+        path: path.resolve(__dirname, "../dist")
     },
-    worker: {
-        inline: false,
-        output: {
-            filename: FILE_NAME
-        }
-    },
+
     resolve: {
-        extensions: ["", ".webpack.js", ".web.js", ".ts", ".js"]
-    },
-    module: {
-        preLoaders: [
-            {
-                test: /\.ts$/,
-                loader: "tslint"
-            }
-        ],
-        loaders: [
-            {
-                test: /\.ts$/,
-                loader: "awesome-typescript-loader",
-                query: {
-                    useBabel: true,
-                    babelOptions: {
-                        "presets": [
-                            ["es2015", {"modules": false}]
-                        ],
-                        "plugins": [
-                            ["transform-runtime", {
-                                "regenerator": false
-                            }]
-                        ]
-                    }
-                }
-            }
-        ]
+        extensions: [".webpack.js", ".web.js", ".ts", ".js"]
     }
 });

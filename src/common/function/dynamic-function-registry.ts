@@ -1,6 +1,7 @@
 import {IFunctionDefinition} from "./function-defintion";
 import {SimpleMap} from "../util/simple-map";
 import {IFunctionId, functionId, isFunctionId} from "./function-id";
+import {getFunctionName} from "../util/function-name";
 
 /**
  * Lookup table for resolving dynamic functions and their definitions
@@ -43,7 +44,7 @@ export class DynamicFunctionRegistry {
 
     private initDefinition(func: Function, id: IFunctionId) {
         const source = func.toString();
-        const name = source.substring(source.indexOf("function") + 9, source.indexOf("(")).trim();
+        const name = getFunctionName(func);
         const args = source.substring(source.indexOf("(") + 1, source.indexOf(")")).split(",");
         const body = source.substring(source.indexOf("{") + 1, source.lastIndexOf("}")).trim();
 
@@ -51,7 +52,7 @@ export class DynamicFunctionRegistry {
             argumentNames: args.map(arg => arg.trim()),
             body,
             id,
-            name: name !== "anonymous" ? name : undefined
+            name: name ? name : undefined
         };
 
         this.ids.set(source, id);

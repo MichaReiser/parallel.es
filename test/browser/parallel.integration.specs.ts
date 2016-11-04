@@ -34,4 +34,22 @@ describe("ParallelIntegration", function () {
                 done();
             });
     });
+
+    it("supports recursion for named functions", function (done) {
+        function fib(num: number): number {
+            if (num <= 2) {
+                return 1;
+            }
+
+            return fib(num - 1) + fib(num - 2);
+        }
+
+        parallel.range(1, 10)
+            .map(fib)
+            .then(result => {
+                expect(result).toEqual([1, 1, 2, 3, 5, 8, 13, 21, 34]);
+                done();
+            })
+            .catch(() => done.fail());
+    });
 });

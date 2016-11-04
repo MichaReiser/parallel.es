@@ -12,15 +12,20 @@ export interface IFunctionDefinition {
     /**
      * Unique identification of the function
      */
-    id: IFunctionId;
+    readonly id: IFunctionId;
+
+    /**
+     * The name of the function
+     */
+    readonly name?: string;
 
     /**
      * The names of the function arguments
      */
-    argumentNames: string[];
+    readonly argumentNames: string[];
 
     /**
      * The body of the function as string
      */
-    body: string;
+    readonly body: string;
 }
