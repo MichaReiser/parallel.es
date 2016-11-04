@@ -7,7 +7,13 @@ describe("DefaultParallelScheduler", function () {
 
     beforeEach(function () {
         scheduler = new DefaultParallelScheduler();
-        options = { functionCallSerializer: undefined as any, maxConcurrencyLevel: 2, scheduler, threadPool: undefined as any };
+        options = {
+            functionCallSerializer: undefined as any,
+            maxConcurrencyLevel: 2,
+            oversubscribe: true,
+            scheduler,
+            threadPool: undefined as any
+        };
     });
 
     describe("getScheduling", function () {
@@ -74,6 +80,18 @@ describe("DefaultParallelScheduler", function () {
             // assert
             expect(scheduling.valuesPerTask).toBe(0);
             expect(scheduling.numberOfTasks).toBe(0);
+        });
+
+        it("sets valuesPerTask not larger than options.maxConcurrencyLevel if oversubscribe is false", function () {
+            // arrange
+            options.oversubscribe = false;
+
+            // act
+            const scheduling = scheduler.getScheduling(20, options);
+
+            // assert
+            expect(scheduling.numberOfTasks).toBe(2);
+            expect(scheduling.valuesPerTask).toBe(10);
         });
     });
 });

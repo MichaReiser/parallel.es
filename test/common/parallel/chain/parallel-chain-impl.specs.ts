@@ -31,6 +31,7 @@ describe("ParallelChainImpl", function () {
         options = {
             functionCallSerializer: undefined as any,
             maxConcurrencyLevel: 2,
+            oversubscribe: true,
             scheduler: undefined as any,
             threadPool: undefined as any
         };
