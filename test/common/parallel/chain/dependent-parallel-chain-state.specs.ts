@@ -21,9 +21,10 @@ describe("DependentParallelChainState", function () {
         scheduleSpy = scheduler.schedule as jasmine.Spy;
         options = {
             functionCallSerializer: undefined as any,
-             maxConcurrencyLevel: 2,
-             scheduler,
-             threadPool: undefined as any
+            maxConcurrencyLevel: 2,
+            oversubscribe: true,
+            scheduler,
+            threadPool: undefined as any
         };
 
         environment = ParallelEnvironmentDefinition.of();

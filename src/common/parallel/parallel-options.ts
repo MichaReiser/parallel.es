@@ -42,6 +42,15 @@ export interface IParallelOptions {
      * The scheduler that should be used to determine the number of tasks to create.
      */
     scheduler?: IParallelJobScheduler;
+
+    /**
+     * Allow the {@link IParallelOptions.scheduler} to create more than {@link IParallelOptions.maxConcurrency} tasks
+     * for a single job. By default this is desired but might increases computation time if the initialization of the environment
+     * is very compute intensive (compared to the computation needed to transform the elements).
+     * This option is only a hint for the scheduler. Actual implementations may ignore the option at all or interpret it less strict.
+     * @default true
+     */
+    oversubscribe?: boolean;
 }
 
 /**
@@ -52,4 +61,5 @@ export interface IDefaultInitializedParallelOptions extends IParallelOptions {
     maxConcurrencyLevel: number;
     threadPool: IThreadPool;
     scheduler: IParallelJobScheduler;
+    oversubscribe: boolean;
 }
