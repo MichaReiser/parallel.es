@@ -2,7 +2,7 @@ var webpack = require("webpack");
 var Config = require("webpack-config").Config;
 var CompressionPlugin = require("compression-webpack-plugin");
 
-module.exports = new Config().extend("conf/webpack.base.config.js").merge({
+module.exports = new Config().extend("conf/webpack.es5.config.js").merge({
     entry: {
         "browser-commonjs": "./src/api/browser-commonjs"
     },

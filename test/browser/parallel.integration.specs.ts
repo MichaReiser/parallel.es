@@ -36,7 +36,7 @@ describe("ParallelIntegration", function () {
     });
 
     it("supports recursion for named functions", function (done) {
-        function fib(num: number) {
+        function fib(num: number): number {
             if (num <= 2) {
                 return 1;
             }
@@ -46,7 +46,7 @@ describe("ParallelIntegration", function () {
 
         parallel.range(1, 10)
             .map(fib)
-            .then((result: number[]) => {
+            .then(result => {
                 expect(result).toEqual([1, 1, 2, 3, 5, 8, 13, 21, 34]);
                 done();
             })

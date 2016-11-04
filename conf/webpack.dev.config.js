@@ -1,26 +1,10 @@
 var Config = require("webpack-config").Config;
 
-const FILE_NAME = "[name].parallel-es6.js";
-
-module.exports = new Config().extend({
-    "conf/webpack.base.config.js": function (config) {
-        const awesomeLoader = config.module.loaders.find(function (loader) {
-            return loader.loader === "awesome-typescript-loader";
-        });
-
-        awesomeLoader.query.useBabel = false;
-        return config;
-    }
-}).merge({
-    devtool: "#inline-source-map",
+module.exports = new Config().extend("conf/webpack.es6.config.js").merge({
+    devtool: "#source-map",
     output: {
-        filename: FILE_NAME,
+        filename: "[name].parallel.js", // by default the es5 build is used of parallel... we replace it for now with es6
         pathinfo: true
-    },
-    worker: {
-        output: {
-            filename: FILE_NAME
-        }
     },
     watch: true,
     devServer: {
