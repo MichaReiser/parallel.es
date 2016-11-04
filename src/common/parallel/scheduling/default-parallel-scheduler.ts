@@ -11,7 +11,14 @@ import {AbstractParallelScheduler, IParallelTaskScheduling} from "./abstract-par
 export class DefaultParallelScheduler extends AbstractParallelScheduler {
 
     public getScheduling(totalNumberOfValues: number, options: IDefaultInitializedParallelOptions): IParallelTaskScheduling {
-        const maxNumberOfTasks = options.oversubscribe === false ? options.maxConcurrencyLevel : options.maxConcurrencyLevel * 4;
+        let maxNumberOfTasks: number;
+
+        if (options.maxDegreeOfParallelism) {
+            maxNumberOfTasks = Math.ceil(options.maxConcurrencyLevel * options.maxDegreeOfParallelism);
+        } else {
+            maxNumberOfTasks = options.maxConcurrencyLevel * 4;
+        }
+
         let itemsPerTask = totalNumberOfValues / maxNumberOfTasks;
 
         if (options.minValuesPerTask) {

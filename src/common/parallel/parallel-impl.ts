@@ -1,5 +1,5 @@
 import {IParallel} from "./parallel";
-import {IDefaultInitializedParallelOptions, IParallelOptions} from "./parallel-options";
+import {IDefaultInitializedParallelOptions, IParallelOptions, validateOptions} from "./parallel-options";
 import {IParallelChain} from "./chain/parallel-chain";
 import {IParallelTaskEnvironment} from "./parallel-environment";
 import {ParallelCollectionGenerator} from "./generator/parallel-collection-generator";
@@ -24,6 +24,8 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
             if (userOptions.hasOwnProperty("maxConcurrencyLevel") && typeof(userOptions.maxConcurrencyLevel) !== "number") {
                 throw new Error("The maxConcurrencyLevel is mandatory and has to be a number");
             }
+
+            validateOptions(userOptions);
         }
 
         return Object.assign({}, defaultOptions, userOptions) as IDefaultInitializedParallelOptions;
