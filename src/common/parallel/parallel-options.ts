@@ -44,13 +44,15 @@ export interface IParallelOptions {
     scheduler?: IParallelJobScheduler;
 
     /**
-     * Allow the {@link IParallelOptions.scheduler} to create more than {@link IParallelOptions.maxConcurrency} tasks
-     * for a single job. By default this is desired but might increases computation time if the initialization of the environment
-     * is very compute intensive (compared to the computation needed to transform the elements).
-     * This option is only a hint for the scheduler. Actual implementations may ignore the option at all or interpret it less strict.
-     * @default true
+     * Defines the max degree of parallelism to use for a scheduled job. The value defines in how many task the scheduler is allowed
+     * to split the task at most relative to the {@link IParallelOptions.maxConcurrency}. If the value is equal to one, at most
+     * as many tasks as {@link IParallelOptions.maxConcurrency} are created. If the value is larger than one, than {@link IParallelOptions.maxDegreeOfParallelism} as
+     * many tasks are created (at most). Negative values or a value of zero is not allowed. If the value is in between (0, 1) than scheduler
+     * guarantees that at least one task is created. If the value is undefined, the scheduler is free to choose the desired
+     * degree of parallelism
+     * @default undefined / unlimited
      */
-    oversubscribe?: boolean;
+    maxDegreeOfParallelism?: number;
 }
 
 /**
@@ -61,5 +63,19 @@ export interface IDefaultInitializedParallelOptions extends IParallelOptions {
     maxConcurrencyLevel: number;
     threadPool: IThreadPool;
     scheduler: IParallelJobScheduler;
-    oversubscribe: boolean;
+}
+
+const greaterThanZeroOptions = ["maxValuesPerTask", "minValuesPerTask", "maxConcurrencyLevel", "maxDegreeOfParallelism"];
+export function validateOptions(options: IParallelOptions) {
+
+    for (const optionName of greaterThanZeroOptions) {
+        const optionValue = (options as {[name: string]: number | undefined })[optionName];
+        if (typeof (optionValue) !== "undefined" && (typeof(optionValue) !== "number" || optionValue <= 0)) {
+            throw new Error(`Illegal parallel options: ${optionName} (${optionValue}) must be number greater than zero`);
+        }
+    }
+
+    if (typeof (options.minValuesPerTask) !== "undefined" && typeof(options.maxValuesPerTask) !== "undefined" && options.minValuesPerTask > options.maxValuesPerTask) {
+        throw new Error(`Illegal parallel options: minValuesPerTask (${options.minValuesPerTask}) must be equal or less than maxValuesPerTask (${options.maxValuesPerTask}).`);
+    }
 }

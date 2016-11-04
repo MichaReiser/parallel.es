@@ -10,7 +10,6 @@ describe("DefaultParallelScheduler", function () {
         options = {
             functionCallSerializer: undefined as any,
             maxConcurrencyLevel: 2,
-            oversubscribe: true,
             scheduler,
             threadPool: undefined as any
         };
@@ -82,9 +81,9 @@ describe("DefaultParallelScheduler", function () {
             expect(scheduling.numberOfTasks).toBe(0);
         });
 
-        it("sets valuesPerTask not larger than options.maxConcurrencyLevel if oversubscribe is false", function () {
+        it("creates at most options.maxConcurrencyLevel tasks if maxDegreeOfParallelism is equal to 1", function () {
             // arrange
-            options.oversubscribe = false;
+            options.maxDegreeOfParallelism = 1;
 
             // act
             const scheduling = scheduler.getScheduling(20, options);
@@ -92,6 +91,30 @@ describe("DefaultParallelScheduler", function () {
             // assert
             expect(scheduling.numberOfTasks).toBe(2);
             expect(scheduling.valuesPerTask).toBe(10);
+        });
+
+        it("creates at at least one task tasks if maxConcurrencyLevel * maxDegreeOfParallelism is less than 0.5", function () {
+            // arrange
+            options.maxDegreeOfParallelism = 0.4;
+
+            // act
+            const scheduling = scheduler.getScheduling(20, options);
+
+            // assert
+            expect(scheduling.numberOfTasks).toBe(1);
+            expect(scheduling.valuesPerTask).toBe(20);
+        });
+
+        it("rounds up if options.maxConcurrencyLevel * maxDegreeOfParallelism is fractional", function () {
+            // arrange
+            options.maxDegreeOfParallelism = 3;
+
+            // act
+            const scheduling = scheduler.getScheduling(18, options);
+
+            // assert
+            expect(scheduling.numberOfTasks).toBe(6);
+            expect(scheduling.valuesPerTask).toBe(3);
         });
     });
 });

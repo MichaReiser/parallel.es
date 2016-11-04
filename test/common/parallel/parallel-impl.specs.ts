@@ -34,7 +34,6 @@ describe("Parallel", function () {
         options = {
             functionCallSerializer,
             maxConcurrencyLevel,
-            oversubscribe: true,
             threadPool,
             scheduler: undefined as any
         };
@@ -149,7 +148,6 @@ describe("Parallel", function () {
                 functionCallSerializer,
                 maxConcurrencyLevel,
                 maxValuesPerTask: 2,
-                oversubscribe: true,
                 threadPool,
                 scheduler: undefined
             });
@@ -176,7 +174,6 @@ describe("Parallel", function () {
                 functionCallSerializer,
                 maxConcurrencyLevel,
                 maxValuesPerTask: 2,
-                oversubscribe: true,
                 threadPool,
                 scheduler: undefined
             });
@@ -205,7 +202,6 @@ describe("Parallel", function () {
                 functionCallSerializer,
                 maxConcurrencyLevel,
                 maxValuesPerTask: 2,
-                oversubscribe: true,
                 threadPool,
                 scheduler: undefined
             }, {});

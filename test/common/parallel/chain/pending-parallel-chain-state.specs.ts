@@ -22,7 +22,6 @@ describe("PendingParallelChainState", function () {
         options = {
             functionCallSerializer: undefined as any,
             maxConcurrencyLevel: 2,
-            oversubscribe: true,
             scheduler,
             threadPool: undefined as any
         };

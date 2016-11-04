@@ -40,7 +40,6 @@ describe("AbstractParallelScheduler", function () {
         options = {
             functionCallSerializer: functionSerializer,
             maxConcurrencyLevel: 2,
-            oversubscribe: true,
             scheduler,
             threadPool
         };
