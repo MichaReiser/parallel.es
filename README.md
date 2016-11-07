@@ -1,6 +1,6 @@
 # parallel.es
-[![Build Status](https://travis-ci.org/DatenMetzgerX/parallel.es.svg?branch=master)](https://travis-ci.org/DatenMetzgerX/parallel.es)
-[![Coverage Status](https://coveralls.io/repos/github/DatenMetzgerX/parallel.es/badge.svg?branch=master)](https://coveralls.io/github/DatenMetzgerX/parallel.es?branch=master)
+[![Build Status](https://travis-ci.org/MichaReiser/parallel.es.svg?branch=master)](https://travis-ci.org/MichaReiser/parallel.es)
+[![Coverage Status](https://coveralls.io/repos/github/MichaReiser/parallel.es/badge.svg?branch=master)](https://coveralls.io/github/MichaReiser/parallel.es?branch=master)
 [![npm version](https://badge.fury.io/js/parallel-es.svg)](https://badge.fury.io/js/parallel-es)
 
 A JavaScript library that simplifies parallel computation in the browser (and other environments soon).  
@@ -32,16 +32,16 @@ parallel.range(0, 100000)
 ```
 
 ## Debugging Support
-The Library uses Function serialization and therefore debugging is not supported out of the box. However, there is a [webpack plugin](https://github.com/DatenMetzgerX/parallel-es-webpack-plugin) that rewrites your code in a way that allows debugging (at least in Chrome and Firefox Nightly). 
+The Library uses Function serialization and therefore debugging is not supported out of the box. However, there is a [webpack plugin](https://github.com/MichaReiser/parallel-es-webpack-plugin) that rewrites your code in a way that allows debugging (at least in Chrome and Firefox Nightly). 
 
 ## Referencing Functions and Variables
-The library uses function serialization and therefore the outer scope is no longer available when the function is invoked in the  worker thread. However, there is a [webpack plugin](https://github.com/DatenMetzgerX/parallel-es-webpack-plugin) that rewrites your code and allows you to use const variables from the outer scope or reference functions.
+The library uses function serialization and therefore the outer scope is no longer available when the function is invoked in the  worker thread. However, there is a [webpack plugin](https://github.com/MichaReiser/parallel-es-webpack-plugin) that rewrites your code and allows you to use const variables from the outer scope or reference functions.
 
 ## Documentation
-The [API Documentation](https://datenmetzgerx.github.io/parallel.es/artifacts/docs/interfaces/parallel.iparallel.html) is available online. The [wiki](../../wiki) describes the architecture and programing model in more detail.
+The [API Documentation](https://michareiser.github.io/parallel.es/artifacts/docs/interfaces/parallel.iparallel.html) is available online. The [wiki](../../wiki) describes the architecture and programing model in more detail.
 
 ## Examples
-An example project using parallel-es and comparing it performance to related projects is [parallel-es-example](https://github.com/DatenMetzgerX/parallel-es-example). The examples are hosted  [here](https://datenmetzgerx.github.io/parallel-es-example/).
+An example project using parallel-es and comparing it performance to related projects is [parallel-es-example](https://github.com/MichaReiser/parallel-es-example). The examples are hosted  [here](https://michareiser.github.io/parallel-es-example/).
 
 ## Browsers support <sub><sup><sub><sub>made by @godban</sub></sub></sup></sub>
 
