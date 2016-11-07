@@ -12,10 +12,22 @@ export class DefaultThreadPool implements IThreadPool {
     private workers: IWorkerThread[] = [];
     private idleWorkers: IWorkerThread[] = [];
     private queue: WorkerTask<any>[] = [];
-    private concurrencyLimit: number;
+    private maxThreadsLimit: number;
+
+    public get maxThreads(): number {
+        return this.maxThreadsLimit;
+    }
+
+    public set maxThreads(limit: number) {
+        if (typeof (limit) !== "number" || limit % 1 !== 0 || limit <= 0) {
+            throw new Error(`The maxThreads limit (${limit}) has to be a positive integer larger than zero.`);
+        }
+
+        this.maxThreadsLimit = limit;
+    }
 
     constructor(private workerThreadFactory: IWorkerThreadFactory, options: { maxConcurrencyLevel: number }) {
-        this.concurrencyLimit = options.maxConcurrencyLevel;
+        this.maxThreadsLimit = options.maxConcurrencyLevel;
     }
 
     public run<TResult>(taskDefinition: ITaskDefinition): ITask<TResult> {
@@ -35,7 +47,7 @@ export class DefaultThreadPool implements IThreadPool {
     private schedulePendingTasks(): void {
         while (this.queue.length) {
             let worker: IWorkerThread | undefined;
-            if (this.idleWorkers.length === 0 && this.workers.length < this.concurrencyLimit) {
+            if (this.idleWorkers.length === 0 && this.workers.length < this.maxThreadsLimit) {
                 worker = this.workerThreadFactory.spawn();
                 this.workers.push(worker);
             } else if (this.idleWorkers.length > 0) {

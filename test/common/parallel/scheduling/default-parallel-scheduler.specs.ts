@@ -9,9 +9,8 @@ describe("DefaultParallelScheduler", function () {
         scheduler = new DefaultParallelScheduler();
         options = {
             functionCallSerializer: undefined as any,
-            maxConcurrencyLevel: 2,
             scheduler,
-            threadPool: undefined as any
+            threadPool: { maxThreads: 2 } as any
         };
     });
 
@@ -21,7 +20,7 @@ describe("DefaultParallelScheduler", function () {
             const scheduling = scheduler.getScheduling(10, options);
 
             // assert
-            expect(scheduling.numberOfTasks).toBe(options.maxConcurrencyLevel * 4);
+            expect(scheduling.numberOfTasks).toBe(8);
         });
 
         it("uses options.maxValuesPerTask as upper items limit", function () {

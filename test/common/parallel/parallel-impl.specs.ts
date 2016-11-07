@@ -19,7 +19,6 @@ describe("Parallel", function () {
     let functionCallSerializer: FunctionCallSerializer;
     let serializeFunctionCallSpy: jasmine.Spy;
 
-    const maxConcurrencyLevel = 2;
     let createParallelChainSpy: jasmine.Spy;
     let options: IDefaultInitializedParallelOptions;
 
@@ -33,7 +32,6 @@ describe("Parallel", function () {
 
         options = {
             functionCallSerializer,
-            maxConcurrencyLevel,
             threadPool,
             scheduler: undefined as any
         };
@@ -49,14 +47,6 @@ describe("Parallel", function () {
             expect(defaultOptions).toBeDefined();
         });
 
-        it("initializes the maxConcurrencyLevel from the configuration by default", function () {
-            // act
-            const defaultOptions = parallel.defaultOptions();
-
-            // assert
-            expect(defaultOptions.maxConcurrencyLevel).toBe(maxConcurrencyLevel);
-        });
-
         it("initializes the thread pool to the thread pool from the configuration by default", function () {
             // act
             const defaultOptions = parallel.defaultOptions();
@@ -68,21 +58,18 @@ describe("Parallel", function () {
         it("applies the user options as new default options", function () {
             // act
             parallel.defaultOptions({
-                maxConcurrencyLevel: 8,
                 minValuesPerTask: 1000
             });
 
             // assert
             const defaultOptions = parallel.defaultOptions();
 
-            expect(defaultOptions.maxConcurrencyLevel).toBe(8);
             expect(defaultOptions.minValuesPerTask).toBe(1000);
         });
 
         it("merges the given options with the existing options", function () {
             // act
             parallel.defaultOptions({
-                maxConcurrencyLevel: 8,
                 minValuesPerTask: 1000
             });
 
@@ -105,16 +92,6 @@ describe("Parallel", function () {
             // assert
             const defaultOptions = parallel.defaultOptions();
             expect(defaultOptions.minValuesPerTask).toBeUndefined();
-        });
-
-        it("throws if maxConcurrencyLevel is not a number", function () {
-            // act, assert
-            expect(() => parallel.defaultOptions({ maxConcurrencyLevel: "test" } as any)).toThrowError("The maxConcurrencyLevel is mandatory and has to be a number");
-        });
-
-        it("throws if maxConcurrencyLevel is set to undefined", function () {
-            // act, assert
-            expect(() => parallel.defaultOptions({ maxConcurrencyLevel: undefined } as any)).toThrowError("The maxConcurrencyLevel is mandatory and has to be a number");
         });
 
         it("throws if the thread pool is set to undefined", function () {
@@ -146,7 +123,6 @@ describe("Parallel", function () {
 
             expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelCollectionGenerator), {
                 functionCallSerializer,
-                maxConcurrencyLevel,
                 maxValuesPerTask: 2,
                 threadPool,
                 scheduler: undefined
@@ -172,7 +148,6 @@ describe("Parallel", function () {
 
             expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelRangeGenerator), {
                 functionCallSerializer,
-                maxConcurrencyLevel,
                 maxValuesPerTask: 2,
                 threadPool,
                 scheduler: undefined
@@ -200,7 +175,6 @@ describe("Parallel", function () {
 
             expect(createParallelChainSpy).toHaveBeenCalledWith(jasmine.any(ParallelTimesGenerator), {
                 functionCallSerializer,
-                maxConcurrencyLevel,
                 maxValuesPerTask: 2,
                 threadPool,
                 scheduler: undefined

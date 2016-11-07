@@ -34,12 +34,12 @@ describe("AbstractParallelScheduler", function () {
 
         threadPoolRunSpy = jasmine.createSpy("scheduleTask");
         threadPool = {
+            maxThreads: 2,
             run: threadPoolRunSpy
         };
 
         options = {
             functionCallSerializer: functionSerializer,
-            maxConcurrencyLevel: 2,
             scheduler,
             threadPool
         };

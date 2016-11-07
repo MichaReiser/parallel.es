@@ -18,7 +18,6 @@ describe("createParallelChain", function () {
         generator = new ParallelCollectionGenerator([1, 2, 3, 4]);
         options = {
             functionCallSerializer: undefined as any,
-            maxConcurrencyLevel: 2,
             scheduler: undefined as any,
             threadPool: undefined as any
         };

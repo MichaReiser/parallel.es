@@ -21,10 +21,6 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
                 throw new Error("The function call serializer is mandatory and cannot be unset");
             }
 
-            if (userOptions.hasOwnProperty("maxConcurrencyLevel") && typeof(userOptions.maxConcurrencyLevel) !== "number") {
-                throw new Error("The maxConcurrencyLevel is mandatory and has to be a number");
-            }
-
             validateOptions(userOptions);
         }
 
