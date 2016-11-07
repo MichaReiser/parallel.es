@@ -13,6 +13,32 @@ describe("DefaultThreadPool", function () {
         threadPool = new DefaultThreadPool(workerThreadFactory, { maxConcurrencyLevel: 2 });
     });
 
+    describe("maxThreads", function () {
+        it("returns the maxConcurrencyLevel constructor argument by default", function () {
+            expect(threadPool.maxThreads).toEqual(2);
+        });
+
+        it("sets the maxThreads limit", function () {
+            // act
+            threadPool.maxThreads = 10;
+
+            // assert
+            expect(threadPool.maxThreads).toEqual(10);
+        });
+
+        it("throws if the value is not a number", function () {
+            expect(() => threadPool.maxThreads = undefined as any).toThrowError("The maxThreads limit (undefined) has to be a positive integer larger than zero.");
+        });
+
+        it("throws if the value is not an int", function () {
+            expect(() => threadPool.maxThreads = 2.1).toThrowError("The maxThreads limit (2.1) has to be a positive integer larger than zero.");
+        });
+
+        it("throws if the value is negative", function () {
+            expect(() => threadPool.maxThreads = -1).toThrowError("The maxThreads limit (-1) has to be a positive integer larger than zero.");
+        });
+    });
+
     describe("run", function () {
         let task: ITaskDefinition;
         let worker1RunSpy: jasmine.Spy;

@@ -18,11 +18,6 @@ export interface IParallelOptions {
     functionCallSerializer?: FunctionCallSerializer;
 
     /**
-     * Maximum number of workers that can run in parallel (without blocking each other)
-     */
-    maxConcurrencyLevel?: number;
-
-    /**
      * The minimum number of values assigned to a single task before the work is split and assigned another task
      */
     minValuesPerTask?: number;
@@ -57,21 +52,16 @@ export interface IParallelOptions {
  */
 export interface IDefaultInitializedParallelOptions extends IParallelOptions {
     functionCallSerializer: FunctionCallSerializer;
-    maxConcurrencyLevel: number;
     threadPool: IThreadPool;
     scheduler: IParallelJobScheduler;
 }
 
-const greaterThanZeroOptions = ["maxValuesPerTask", "minValuesPerTask", "maxConcurrencyLevel", "maxDegreeOfParallelism"];
+const greaterThanZeroOptions = ["maxValuesPerTask", "minValuesPerTask", "maxDegreeOfParallelism"];
 export function validateOptions(options: IParallelOptions) {
-    if (typeof (options.maxDegreeOfParallelism) === "number") {
-        options.maxDegreeOfParallelism = Math.floor(options.maxDegreeOfParallelism);
-    }
-
     for (const optionName of greaterThanZeroOptions) {
         const optionValue = (options as {[name: string]: number | undefined })[optionName];
-        if (typeof (optionValue) !== "undefined" && (typeof(optionValue) !== "number" || optionValue <= 0)) {
-            throw new Error(`Illegal parallel options: ${optionName} (${optionValue}) must be number greater than zero`);
+        if (typeof (optionValue) !== "undefined" && (typeof(optionValue) !== "number" || optionValue <= 0 || optionValue % 1 !== 0)) {
+            throw new Error(`Illegal parallel options: ${optionName} (${optionValue}) has to be an integer greater than zero`);
         }
     }
 

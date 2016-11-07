@@ -21,7 +21,6 @@ describe("PendingParallelChainState", function () {
         scheduleSpy = scheduler.schedule as jasmine.Spy;
         options = {
             functionCallSerializer: undefined as any,
-            maxConcurrencyLevel: 2,
             scheduler,
             threadPool: undefined as any
         };

@@ -16,7 +16,7 @@ export class DefaultParallelScheduler extends AbstractParallelScheduler {
         if (options.maxDegreeOfParallelism) {
             maxDegreeOfParallelism = options.maxDegreeOfParallelism;
         } else {
-            maxDegreeOfParallelism = options.maxConcurrencyLevel * 4;
+            maxDegreeOfParallelism = options.threadPool.maxThreads * 4;
         }
 
         let itemsPerTask = totalNumberOfValues / maxDegreeOfParallelism;

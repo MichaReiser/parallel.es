@@ -24,7 +24,6 @@ const threadPool = new DefaultThreadPool(new BrowserWorkerThreadFactory(function
  */
 const parallel: IParallel = parallelFactory({
     functionCallSerializer,
-    maxConcurrencyLevel,
     scheduler: new DefaultParallelScheduler(),
     threadPool
 });

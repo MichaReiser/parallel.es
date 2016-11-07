@@ -1,3 +1,4 @@
+
 import {ITask} from "../../../../src/common/task/task";
 import {IParallelStream} from "../../../../src/common/parallel/stream/parallel-stream";
 import {IParallelTaskDefinition} from "../../../../src/common/parallel/parallel-task-definition";

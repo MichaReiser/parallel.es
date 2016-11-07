@@ -15,7 +15,6 @@ describe("ScheduledParallelChainState", function () {
     beforeEach(function () {
         options = {
             functionCallSerializer: undefined as any,
-            maxConcurrencyLevel: 2,
             scheduler: undefined as any,
             threadPool: undefined as any
         };
