@@ -9,6 +9,7 @@ import {createParallelChain} from "./chain/parallel-chain-factory";
 import {ITask} from "../task/task";
 import {IFunctionId, isFunctionId} from "../function/function-id";
 import {FunctionCall} from "../function/function-call";
+import {assign} from "../util/assign";
 
 export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptions): IParallel {
     function mergeOptions(userOptions?: IParallelOptions): IDefaultInitializedParallelOptions {
@@ -24,7 +25,7 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
             validateOptions(userOptions);
         }
 
-        return Object.assign({}, defaultOptions, userOptions) as IDefaultInitializedParallelOptions;
+        return assign({}, defaultOptions, userOptions) as IDefaultInitializedParallelOptions;
     }
 
     return {
@@ -32,7 +33,7 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
             if (options) {
                 defaultOptions = mergeOptions(options);
             } else {
-                return Object.assign({}, defaultOptions);
+                return assign({}, defaultOptions);
             }
         },
 
