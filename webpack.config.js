@@ -7,4 +7,8 @@ environment.setAll({
     env: function () { return process.env.NODE_ENV; }
 });
 
-module.exports = new Config().extend("conf/webpack.[env].config.js");
+if (process.env.NODE_ENV !== "test" && process.env.NODE_ENV !== "test-ci") {
+    module.exports = [new Config().extend("conf/webpack.[env].config"), new Config().extend("conf/webpack.[env]-es6.config")];
+} else {
+    module.exports = new Config().extend("conf/webpack.[env].config.js");
+}

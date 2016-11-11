@@ -6,11 +6,11 @@
   "browser": "./dist/browser-commonjs.parallel.js",
   "types": "./dist/api/browser.d.ts",
   "scripts": {
-    "build": "cross-env NODE_ENV=prod webpack --progress && cross-env NODE_ENV=prod-es6 webpack --progress && npm run build:declarations",
+    "build": "cross-env NODE_ENV=prod webpack --progress && npm run build:declarations",
     "build:doc": "typedoc --out ./docs --module umd --target es6 --name \"Parallel ES\" ./src",
     "build:declarations": "tsc --declaration --outDir ./tmp -p tsconfig.json && copyfiles -u 1 './tmp/**/*.d.ts' ./dist",
     "prepublish": "npm run-script build",
-    "start": "cross-env NODE_ENV=dev webpack --progress",
+    "start": "cross-env NODE_ENV=dev webpack --progress --watch",
     "test": "cross-env NODE_ENV=test-ci karma start --single-run && npm run coverage:remap",
     "test:watch": "cross-env NODE_ENV=test karma start",
     "coverage:remap": "remap-istanbul --input ./coverage/Firefox*/coverage-final.json --output ./coverage/html -t html && remap-istanbul --input ./coverage/Firefox*/coverage-final.json --output ./coverage/lcov.info -t lcovonly",
