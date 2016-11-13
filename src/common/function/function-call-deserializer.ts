@@ -2,6 +2,23 @@ import {IFunctionLookupTable} from "./function-lookup-table";
 import {ISerializedFunctionCall, isSerializedFunctionCall} from "./serialized-function-call";
 
 /**
+ * Binds the function to undefined and the given params. Uses Function.bind if available or creates its own wrapper
+ * if not.
+ * @param fn the function to bind to the given parameters
+ * @param params the parameters to which the function is partially bound
+ * @returns a partially bound function
+ */
+function bind<TResult>(fn: Function, params: any[]): (...args: any[]) => TResult {
+    if (typeof(fn.bind) === "function") {
+        return fn.bind(undefined, ...params);
+    }
+
+    return function bound(...additionalParams: any[]) {
+        return fn.apply(undefined, params.concat(additionalParams)) as TResult;
+    };
+}
+
+/**
  * Deserializer for a {@link ISerializedFunctionCall}.
  */
 export class FunctionCallDeserializer {
@@ -34,8 +51,6 @@ export class FunctionCallDeserializer {
             });
         }
 
-        return function (...additionalParams: any[]) {
-            return func.apply(undefined, params.concat(additionalParams)) as TResult;
-        };
+        return bind<TResult>(func, params);
     }
 }

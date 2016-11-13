@@ -50,7 +50,7 @@ export class SlaveFunctionLookupTable implements IFunctionLookupTable {
     private toFunction(definition: IFunctionDefinition): Function {
         if (definition.name) {
             const args = definition.argumentNames.join(", ");
-            const wrapper = Function.apply(undefined, [`return function ${definition.name} (${args}) { ${definition.body}}` ]);
+            const wrapper = Function.apply(undefined, [`return function ${definition.name} (${args}) { ${definition.body} }; ` ]);
             return wrapper();
         }
         return Function.apply(undefined, [...definition.argumentNames, definition.body]);
