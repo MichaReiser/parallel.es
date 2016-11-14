@@ -17,4 +17,8 @@ describe("getFunctionName", function () {
     it("returns an empty string for arrow functions", function () {
         expect(getFunctionName(() => 10)).toEqual("");
     });
+
+    it("returns am empty string even if the function has no space after the function keyword", function () {
+        expect(getFunctionName(function(memo: any, count: any) { return memo + count; })).toEqual("");
+    });
 });
