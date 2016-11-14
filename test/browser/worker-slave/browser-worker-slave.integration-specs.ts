@@ -7,7 +7,7 @@ import {functionId} from "../../../src/common/function/function-id";
 
 declare function require(module: string): any;
 /* tslint:disable:no-var-requires */
-const BrowserSlave = require("worker?inline=true!../../../src/browser/worker-slave/index");
+const BrowserSlave = require("worker-loader?inline=true!../../../src/browser/worker-slave/index");
 
 describe("BrowserSlave IntegrationTests", function () {
     let slave: Worker;
