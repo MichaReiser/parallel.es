@@ -5,7 +5,7 @@ import {DynamicFunctionRegistry} from "../../common/function/dynamic-function-re
 
 declare function require(module: string): any;
 /* tslint:disable:no-var-requires */
-const SlaveWorker = require("worker?name=worker-slave!../worker-slave");
+const SlaveWorker = require("worker-loader?name=worker-slave!../worker-slave");
 
 /**
  * Thread factory that creates web worker based threads using {@link BrowserWorkerThread}.
