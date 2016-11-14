@@ -11,5 +11,12 @@ export function getFunctionName(func: Function): string {
     }
 
     const source = func.toString();
-    return source.substring(source.indexOf("function") + 9, source.indexOf("(")).trim();
+    const functionKeywordStart = source.indexOf("function");
+
+    // Arrow Function Expressions
+    if (functionKeywordStart === -1) {
+        return "";
+    }
+
+    return source.substring(functionKeywordStart + 8, source.indexOf("(")).trim();
 }
