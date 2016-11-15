@@ -136,6 +136,47 @@ describe("parallelJobExecutor", function () {
             expect(coordinator).toHaveBeenCalledWith(iterator, iteratee, { taskIndex: 0, test: 10, valuesPerTask: 2 });
         });
 
+        it("passes valuesPerTask and taskIndex to the environment provider", function () {
+            // arrange
+            const iterator = toIterator([1, 2, 3]);
+            const environmentProvider = jasmine.createSpy("environmentProvider").and.returnValue({ test: 10 });
+            const generator = jasmine.createSpy("generator").and.returnValue(iterator);
+            const coordinator = jasmine.createSpy("coordinator").and.returnValue(toIterator([2, 4]));
+            const iteratee = jasmine.createSpy("iteratee");
+            spyOn(deserializer, "deserializeFunctionCall").and.returnValues(environmentProvider, generator, coordinator, iteratee);
+
+            // act
+            parallelJobExecutor({
+                environments: [{
+                    ______serializedFunctionCall: true,
+                    functionId: functionId("test", 1003),
+                    parameters: []
+                }],
+                generator: {
+                    ______serializedFunctionCall: true,
+                    functionId: functionId("test", 1000),
+                    parameters: []
+                },
+                operations: [{
+                    iteratee: {
+                        ______serializedFunctionCall: true,
+                        functionId: functionId("test", 1002),
+                        parameters: []
+                    },
+                    iterator: {
+                        ______serializedFunctionCall: true,
+                        functionId: functionId("test", 1001),
+                        parameters: []
+                    }
+                }],
+                taskIndex: 0,
+                valuesPerTask: 2
+            }, { functionCallDeserializer: deserializer });
+
+            // assert
+            expect(environmentProvider).toHaveBeenCalledWith({ taskIndex: 0, valuesPerTask: 2 });
+        });
+
         it("merges the environments", function () {
             // arrange
             const iterator = toIterator([1, 2, 3]);

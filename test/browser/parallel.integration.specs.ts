@@ -52,4 +52,21 @@ describe("ParallelIntegration", function () {
             })
             .catch(() => done.fail());
     });
+
+    it("allows to run a single task", function (done) {
+        function fib(num: number): number {
+            if (num <= 2) {
+                return 1;
+            }
+
+            return fib(num - 1) + fib(num - 2);
+        }
+
+        parallel.run(fib, 10)
+            .then(result => {
+                expect(result).toEqual(55);
+                done();
+            })
+            .catch(() => done.fail());
+    });
 });

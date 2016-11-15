@@ -35,19 +35,19 @@ export interface IParallelJobDefinition {
 }
 
 function createTaskEnvironment(definition: IParallelJobDefinition, functionCallDeserializer: FunctionCallDeserializer): IParallelTaskEnvironment {
-    let taskEnvironment: IParallelEnvironment = {};
+    let taskEnvironment: IParallelTaskEnvironment = { taskIndex: definition.taskIndex, valuesPerTask: definition.valuesPerTask };
 
     for (const environment of definition.environments) {
         let currentEnvironment: IParallelEnvironment;
         if (isSerializedFunctionCall(environment)) {
-            currentEnvironment = functionCallDeserializer.deserializeFunctionCall(environment)();
+            currentEnvironment = functionCallDeserializer.deserializeFunctionCall(environment)(taskEnvironment);
         } else {
             currentEnvironment = environment;
         }
-        assign(taskEnvironment, currentEnvironment);
+        taskEnvironment = assign({}, taskEnvironment, currentEnvironment);
     }
 
-    return assign({}, { taskIndex: definition.taskIndex, valuesPerTask: definition.valuesPerTask }, taskEnvironment);
+    return taskEnvironment;
 }
 
 /**
