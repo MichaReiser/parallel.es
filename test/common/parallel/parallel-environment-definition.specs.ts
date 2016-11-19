@@ -63,6 +63,17 @@ describe("ParallelEnvironmentDefinition", function () {
             // act, assert
             expect(definition.add({ name: "Müller" }).environments).toEqual([{name: "Müller"}]);
         });
+
+        it("does not merge succeeding environment providers", function () {
+            // arrange
+            const provider1 = FunctionCall.create(() => ({ value: 1 }));
+            const provider2 = FunctionCall.create(() => ({ value: 2 }));
+
+            const definition = ParallelEnvironmentDefinition.of(provider1);
+
+            // act, assert
+            expect(definition.add(provider2).environments).toEqual([provider1, provider2]);
+        });
     });
 
     describe("toJSON", function () {
