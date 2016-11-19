@@ -4,6 +4,7 @@
 /** */
 
 import {IFunctionId} from "./function-id";
+import {ISerializedFunctionCall} from "./serialized-function-call";
 
 /**
  * Represents a function call
@@ -56,6 +57,15 @@ export class FunctionCall {
      */
     public static createUnchecked(func: Function | IFunctionId, ...params: any[]) {
         return new FunctionCall(func, params);
+    }
+
+    /**
+     * Creates a function call instance from its serialized representation
+     * @param serialized the serialized function call
+     * @returns {FunctionCall} the function call
+     */
+    public static fromSerialized(serialized: ISerializedFunctionCall): FunctionCall {
+        return new FunctionCall(serialized.functionId, serialized.parameters);
     }
 
     /**

@@ -5,7 +5,8 @@ import {IParallelEnvironment, IParallelTaskEnvironment} from "../parallel-enviro
 import {FunctionCall} from "../../function/function-call";
 import {IParallelChainState, IParallelChainEnvironment} from "./parallel-chain-state";
 import {ParallelStream} from "../stream/parallel-stream-impl";
-import {IFunctionId} from "../../function/function-id";
+import {IFunctionId, isFunctionId} from "../../function/function-id";
+import {isSerializedFunctionCall} from "../../function/serialized-function-call";
 
 /**
  * Implementation of a {@link IParallelChain}
@@ -32,8 +33,10 @@ export class ParallelChainImpl<TIn, TEnv extends IParallelEnvironment, TOut> imp
     // region Chaining
     public inEnvironment<TEnvNew extends IParallelEnvironment>(newEnv: Function | IParallelEnvironment | IFunctionId, ...params: any[]): IParallelChain<TIn, TEnv & TEnvNew, TOut> {
         let env: IParallelChainEnvironment | undefined;
-        if (typeof newEnv === "function") {
+        if (typeof newEnv === "function" || isFunctionId(newEnv)) {
             env = FunctionCall.createUnchecked(newEnv, ...params);
+        } else if (isSerializedFunctionCall(newEnv)) {
+            env = FunctionCall.fromSerialized(newEnv);
         } else {
             env = newEnv;
         }

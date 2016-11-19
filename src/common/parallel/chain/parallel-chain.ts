@@ -76,7 +76,7 @@ export interface IParallelChain<TIn, TEnv extends IParallelEnvironment, TOut> ex
     map<TResult>(mapper: IFunctionId ): IParallelChain<TIn, TEnv, TResult>;
 
     /**
-     * Reduces the elements to a single value using the givne accumulator. The accumulator is invoked with the - up to now - accumulated value
+     * Reduces the elements to a single value using the given accumulator. The accumulator is invoked with the - up to now - accumulated value
      * and the current element and returns the sum of the accumulated value and the current value.
      * @param defaultValue default value to use to initialize the accumulator
      * @param accumulator the accumulator function
