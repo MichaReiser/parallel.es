@@ -153,8 +153,7 @@ export class ScheduledParallelStream<TSubResult, TEndResult> implements IParalle
         this.failed = true;
 
         // Cancel all not yet completed tasks
-        for (let i = 0; i < this.tasks.length; ++i) {
-            const task = this.tasks[i];
+        for (const task of this.tasks) {
             if (typeof task !== "undefined") {
                 task.cancel();
             }

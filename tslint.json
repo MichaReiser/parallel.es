@@ -1,7 +1,6 @@
 {
   "extends": "tslint:latest",
   "rules": {
-    "no-unused-variable": false,
     "only-arrow-functions": false,
     "max-line-length": false,
     "quotemark": [
@@ -10,6 +9,9 @@
     ],
     "trailing-comma": [true, { "multiline": "never", "singleline": "never" }],
     "ordered-imports": false,
-    "no-string-literal": false
+    "no-string-literal": false,
+    "arrow-parens": false,
+    "max-classes-per-file": false,
+    "array-type": false
   }
 }
