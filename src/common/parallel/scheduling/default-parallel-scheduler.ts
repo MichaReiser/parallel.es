@@ -19,19 +19,21 @@ export class DefaultParallelScheduler extends AbstractParallelScheduler {
             maxDegreeOfParallelism = options.threadPool.maxThreads * 4;
         }
 
-        let itemsPerTask = totalNumberOfValues / maxDegreeOfParallelism;
+        let valuesPerTask = totalNumberOfValues / maxDegreeOfParallelism;
 
         if (options.minValuesPerTask) {
-            itemsPerTask = Math.min(Math.max(itemsPerTask, options.minValuesPerTask), totalNumberOfValues);
+            valuesPerTask = Math.min(Math.max(valuesPerTask, options.minValuesPerTask), totalNumberOfValues);
         }
 
         if (options.maxValuesPerTask) {
-            itemsPerTask = Math.min(itemsPerTask, options.maxValuesPerTask);
+            valuesPerTask = Math.min(valuesPerTask, options.maxValuesPerTask);
         }
 
+        valuesPerTask = Math.ceil(valuesPerTask);
+
         return {
-            numberOfTasks: itemsPerTask === 0 ? 0 : Math.round(totalNumberOfValues / itemsPerTask),
-            valuesPerTask: Math.ceil(itemsPerTask)
+            numberOfTasks: valuesPerTask === 0 ? 0 : Math.ceil(totalNumberOfValues / valuesPerTask),
+            valuesPerTask
         };
     }
 }

@@ -17,7 +17,7 @@ describe("DefaultParallelScheduler", function () {
     describe("getScheduling", function () {
         it("returns the options.maxConcurrencyLevel * 4 as numberOfTasks by default", function () {
             // act
-            const scheduling = scheduler.getScheduling(10, options);
+            const scheduling = scheduler.getScheduling(16, options);
 
             // assert
             expect(scheduling.numberOfTasks).toBe(8);
@@ -40,7 +40,7 @@ describe("DefaultParallelScheduler", function () {
             options.maxValuesPerTask = 6;
 
             // act
-            const scheduling = scheduler.getScheduling(10, options);
+            const scheduling = scheduler.getScheduling(16, options);
 
             // assert
             expect(scheduling.valuesPerTask).toBe(2);
@@ -90,6 +90,31 @@ describe("DefaultParallelScheduler", function () {
             // assert
             expect(scheduling.numberOfTasks).toBe(2);
             expect(scheduling.valuesPerTask).toBe(10);
+        });
+
+        it("rounds the values per task before calculating the number of tasks", function () {
+            // arrange
+            options.threadPool.maxThreads = 4;
+
+            // act
+            const scheduling = scheduler.getScheduling(10, options);
+
+            // assert
+            expect(scheduling.numberOfTasks).toBe(10);
+            expect(scheduling.valuesPerTask).toBe(1);
+        });
+
+        it("rounds the number of tasks up", function () {
+            // arrange
+            options.maxValuesPerTask = 3;
+            options.minValuesPerTask = 3;
+
+            // act
+            const scheduling = scheduler.getScheduling(10, options);
+
+            // assert
+            expect(scheduling.numberOfTasks).toBe(4);
+            expect(scheduling.valuesPerTask).toBe(3);
         });
     });
 });
