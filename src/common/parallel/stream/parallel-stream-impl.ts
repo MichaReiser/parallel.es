@@ -11,7 +11,7 @@ import {ITask} from "../../task/task";
  * @param valuesPerTask the number of values each task has to process at most
  * @param TSubResult type of the sub result
  */
-export type INextCallback<TSubResult> = (subResult: TSubResult, taskIndex: number, valuesPerTask: number) => any
+export type INextCallback<TSubResult> = (subResult: TSubResult, taskIndex: number, valuesPerTask: number) => any;
 
 /**
  * Function that resolves the end result of a parallel stream
@@ -33,7 +33,7 @@ export type IRejectCallback = (reason: any) => any;
  * @param resolve callback to invoke to resolve the stream
  * @param reject callback to invoke to reject the stream
  */
-export type IExecutorCallback<TSubResult, TEndResult> = (next: INextCallback<TSubResult>, resolve: IResolveCallback<TEndResult>, reject: IRejectCallback) => any
+export type IExecutorCallback<TSubResult, TEndResult> = (next: INextCallback<TSubResult>, resolve: IResolveCallback<TEndResult>, reject: IRejectCallback) => any;
 
 /**
  * Generic parallel stream that can be coordinated using the provided next, resolve and reject callbacks.
