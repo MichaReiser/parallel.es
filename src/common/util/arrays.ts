@@ -39,6 +39,11 @@ export function flattenArray<T>(deepArray: T[][]): T[] {
     return Array.prototype.concat.apply(head, tail);
 }
 
+/**
+ * Appends the toAppend array to the target array. The result is stored in the target array (therefore, in place)
+ * @param target the first element to concat and as well as the target of the concatenation operation
+ * @param toAppend the array to append to target
+ */
 export function concatInPlace<T>(target: T[], toAppend: T[]): T[] {
     const insertionIndex = target.length;
     target.length += toAppend.length;
