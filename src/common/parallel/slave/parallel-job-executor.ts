@@ -43,7 +43,7 @@ function createTaskEnvironment(definition: IParallelJobDefinition, functionCallD
         } else {
             currentEnvironment = environment;
         }
-        taskEnvironment = Object.assign({}, taskEnvironment, currentEnvironment);
+        taskEnvironment = Object.assign(taskEnvironment, currentEnvironment);
     }
 
     return taskEnvironment;

@@ -174,7 +174,7 @@ describe("parallelJobExecutor", function () {
             }, { functionCallDeserializer: deserializer });
 
             // assert
-            expect(environmentProvider).toHaveBeenCalledWith({ taskIndex: 0, valuesPerTask: 2 });
+            expect(environmentProvider).toHaveBeenCalledWith(jasmine.objectContaining({ taskIndex: 0, valuesPerTask: 2 }));
         });
 
         it("merges the environments", function () {
