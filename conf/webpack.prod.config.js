@@ -8,7 +8,6 @@ module.exports = new Config().extend("conf/webpack.es5.config.js").merge({
     },
     devtool: "#source-map",
     plugins: [
-        new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
