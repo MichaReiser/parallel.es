@@ -2,6 +2,7 @@ import {toArray} from "../../util/arrays";
 import {FunctionCallDeserializer} from "../../function/function-call-deserializer";
 import {ISerializedFunctionCall, isSerializedFunctionCall} from "../../function/serialized-function-call";
 import {ISerializedParallelOperation, IParallelEnvironment, IParallelTaskEnvironment} from "../";
+import {assign} from "../../util/assign";
 
 /**
  * Defines the parallel operation to perform
@@ -43,7 +44,7 @@ function createTaskEnvironment(definition: IParallelJobDefinition, functionCallD
         } else {
             currentEnvironment = environment;
         }
-        taskEnvironment = Object.assign(taskEnvironment, currentEnvironment);
+        taskEnvironment = assign(taskEnvironment, currentEnvironment);
     }
 
     return taskEnvironment;

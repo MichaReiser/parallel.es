@@ -2,6 +2,7 @@ import {IParallelEnvironment} from "./parallel-environment";
 import {FunctionCall} from "../function/function-call";
 import {ISerializedFunctionCall} from "../function/serialized-function-call";
 import {FunctionCallSerializer} from "../function/function-call-serializer";
+import {assign} from "../util/assign";
 
 /**
  * Defines the environment for a parallel chain. The environment can consist of one or multiple static environments or
@@ -35,7 +36,7 @@ export class ParallelEnvironmentDefinition {
     public add(environment: FunctionCall | IParallelEnvironment): ParallelEnvironmentDefinition {
         const newEnvironments = this.environments.slice();
         if (!(environment instanceof FunctionCall) && this.environments.length > 0 && !(this.environments[this.environments.length - 1] instanceof FunctionCall)) {
-            newEnvironments[newEnvironments.length - 1] = Object.assign({}, newEnvironments[newEnvironments.length - 1], environment);
+            newEnvironments[newEnvironments.length - 1] = assign({}, newEnvironments[newEnvironments.length - 1], environment);
         } else {
             newEnvironments.push(environment);
         }
