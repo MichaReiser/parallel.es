@@ -1,6 +1,6 @@
 {
   "name": "parallel-es",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Simple parallelization for EcmaScript",
   "main": "./dist/node.parallel.js",
   "browser": "./dist/browser-commonjs.parallel.js",
