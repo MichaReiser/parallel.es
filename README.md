@@ -69,3 +69,10 @@ An example project using parallel-es and comparing its performance to related pr
 Automated browser testing is performed using [BrowserStack](https://www.browserstack.com)'s open source offer.
 
 [![BrowserStack](./browser-stack.png?raw=true)](https://www.browserstack.com)
+
+## Related Work
+There exist other runtime systems with identical or similar goals. The [report](https://raw.githubusercontent.com/MichaReiser/parallel-es-report/master/parallel-es.pdf) of the project thesis compares these runtime systems concerning applicability and runtime performance.
+
+* [Parallel.js](https://github.com/parallel-js/parallel.js)
+* [Hamsters.js](http://www.hamsters.io/)
+* [Threads.js](https://github.com/andywer/threads.js)
