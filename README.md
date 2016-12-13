@@ -3,16 +3,22 @@
 [![Coverage Status](https://coveralls.io/repos/github/MichaReiser/parallel.es/badge.svg?branch=master)](https://coveralls.io/github/MichaReiser/parallel.es?branch=master)
 [![npm version](https://badge.fury.io/js/parallel-es.svg)](https://badge.fury.io/js/parallel-es)
 
-A JavaScript library that simplifies parallel computation in the browser (and other environments soon).  
+A JavaScript library to perform parallel JavaScript computations with ease (and other environments soon).  
 
 ## Getting Started
-Install the library using npm:
+Install Parallel.es using npm:
 
 ```sh
 npm install --save parallel-es
 ```
 
-Perform a single computation on a worker thread:
+or yarn:
+
+```sh
+yarn add parallel-es
+```
+
+Performing a single computation in a background thread is as simple as calling a normal method:
 
 ```js
 import parallel from "parallel-es";
@@ -23,7 +29,7 @@ parallel.run(function () {
 }).then(result => console.log(result));
 ```
 
-Or use the reactive api that automatically schedules the work onto multiple worker without any additional doing:
+Or use the reactive API to parallelize data stream based operations. The reactive API automatically splits the input array into sub-arrays, computes the sub-results in a web worker, and joins the resulting arrays:
 
 ```js
 parallel.range(0, 100000)
@@ -31,17 +37,28 @@ parallel.range(0, 100000)
 	.then(result => console.log(result));
 ```
 
-## Debugging Support
-The Library uses Function serialization and therefore debugging is not supported out of the box. However, there is a [webpack plugin](https://github.com/MichaReiser/parallel-es-webpack-plugin) that rewrites your code in a way that allows debugging (at least in Chrome and Firefox Nightly). 
+To show a progress update, use the [subscribe](https://michareiser.github.io/parallel.es/artifacts/docs/interfaces/parallel.iparallelchain.html#subscribe) method to register a callback that is invoked whenever a sub-result has been computed:
 
-## Referencing Functions and Variables
-The library uses function serialization and therefore the outer scope is no longer available when the function is invoked in the  worker thread. However, there is a [webpack plugin](https://github.com/MichaReiser/parallel-es-webpack-plugin) that rewrites your code and allows you to use const variables from the outer scope or reference functions.
+```js
+parallel.range(0, 100000)
+	.map(value => value * value)
+	.subscribe((subresult, taskIndex) => console.log(`The result of the task ${taskIndex} is`, subresult);)
+	.then(result => console.log(result));
+```
+
+For more detail, take a look at the [API](https://michareiser.github.io/parallel.es/artifacts/docs/interfaces/parallel.iparallel.html) Documentation.
+
+## Debugging Support
+Parallel.es uses function serialization and, therefore, debugging is not supported out of the box (except if the `debugger` statement is used. However, there is a [webpack plugin](https://github.com/MichaReiser/parallel-es-webpack-plugin) that transpiles the program code and generates the needed source maps to enable debugging (at least in Chrome and Firefox Nightly). 
+
+## Referenced Functions, Variables, and Imports
+Parallel.es uses function serialization and, therefore, the variables from the closure (outer scope) are no longer available when the function is invoked in the background thread. However, there is a [webpack plugin](https://github.com/MichaReiser/parallel-es-webpack-plugin) that rewrites your code and allows you to use constant variables, and as well, functions defined in the outer scope of the task function. The plugin also exposes any used imports in the background thread.
 
 ## Documentation
-The [API Documentation](https://michareiser.github.io/parallel.es/artifacts/docs/interfaces/parallel.iparallel.html) is available online. The [wiki](../../wiki) describes the architecture and programing model in more detail.
+The [API Documentation](https://michareiser.github.io/parallel.es/artifacts/docs/interfaces/parallel.iparallel.html) is available online. The [wiki](../../wiki) describes the architecture in more detail. An academical description of the work is available [here](https://raw.githubusercontent.com/MichaReiser/parallel-es-report/master/parallel-es.pdf).
 
 ## Examples
-An example project using parallel-es and comparing it performance to related projects is [parallel-es-example](https://github.com/MichaReiser/parallel-es-example). The examples are hosted  [here](https://michareiser.github.io/parallel-es-example/).
+An example project using parallel-es and comparing its performance to related projects is [parallel-es-example](https://github.com/MichaReiser/parallel-es-example). The examples are hosted  [here](https://michareiser.github.io/parallel-es-example/).
 
 ## Browsers support <sub><sup><sub><sub>made by @godban</sub></sub></sup></sub>
 
