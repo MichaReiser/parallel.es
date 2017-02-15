@@ -12,7 +12,7 @@ export function timesIterator<TResult>(start: number, end: number, iteratee: (th
     let next = start;
     return {
         next(): IteratorResult<TResult> {
-            let current = next;
+            const current = next;
             next = current + 1;
             if (current < end) {
                 return { done: false, value: iteratee(current, env) };

@@ -8,6 +8,6 @@ registerStaticParallelFunctions(slaveFunctionLookupTable);
 /** @preserve WORKER_SLAVE_STATIC_FUNCTIONS_PLACEHOLDER */
 
 const slave = new BrowserWorkerSlave(slaveFunctionLookupTable);
-onmessage = function () {
+onmessage = function() {
     slave.onMessage.apply(slave, arguments);
 };

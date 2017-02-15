@@ -171,7 +171,7 @@ export function workerResultMessage(result: any): IWorkerResultMessage {
  * @returns the message
  */
 export function functionExecutionError(error: Error): IFunctionExecutionError {
-    let errorObject: {[prop: string]: string} = {};
+    const errorObject: {[prop: string]: string} = {};
 
     for (const prop of Object.getOwnPropertyNames(error)) {
         errorObject[prop] = JSON.stringify((error as any)[prop]);

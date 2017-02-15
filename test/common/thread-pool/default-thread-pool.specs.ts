@@ -1,6 +1,7 @@
 import {DefaultThreadPool} from "../../../src/common/thread-pool/default-thread-pool";
 import {ITaskDefinition} from "../../../src/common/task/task-definition";
 import {IWorkerThread} from "../../../src/common/worker/worker-thread";
+import {WorkerTask} from "../../../src/common/task/worker-task";
 
 describe("DefaultThreadPool", function () {
     let spawn: jasmine.Spy;
@@ -147,7 +148,7 @@ describe("DefaultThreadPool", function () {
             // schedule tasks to fill queue
             threadPool.run(task);
             threadPool.run(task);
-            const canceledTask = threadPool.run(canceledTaskDefinition);
+            const canceledTask = threadPool.run(canceledTaskDefinition) as WorkerTask<any>;
             const resolvedCancelledSpy = spyOn(canceledTask, "resolveCancelled");
 
             canceledTask.cancel();
@@ -182,7 +183,7 @@ describe("DefaultThreadPool", function () {
 
         it("resolves the task if the computation has completed", function () {
             // arrange
-            const scheduledTask = threadPool.run(task);
+            const scheduledTask = threadPool.run(task) as WorkerTask<any>;
             const resolveSpy = spyOn(scheduledTask, "resolve");
 
             // act
@@ -195,7 +196,7 @@ describe("DefaultThreadPool", function () {
 
         it("rejects the task if the computation has failed", function () {
             // arrange
-            const scheduledTask = threadPool.run(task);
+            const scheduledTask = threadPool.run(task) as WorkerTask<any>;
             const rejectSpy = spyOn(scheduledTask, "reject");
 
             // act

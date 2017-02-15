@@ -28,9 +28,9 @@ export class DependentParallelChainState<TPrevious, TElement> implements IParall
     constructor(private previousStream: IParallelStream<TPrevious[], TPrevious[]>, private options: IDefaultInitializedParallelOptions, private environment: ParallelEnvironmentDefinition, private operations: IParallelOperation[] = []) {}
 
     public resolve(): IScheduledParallelChainState<TElement> {
-        let next: ((subResult: TElement[], taskIndex: number, valuesPerTask: number) => void) | undefined = undefined;
-        let resolve: ((result: TElement[]) => void) | undefined = undefined;
-        let reject: ((reason: any) => void) | undefined = undefined;
+        let next: ((subResult: TElement[], taskIndex: number, valuesPerTask: number) => void) | undefined;
+        let resolve: ((result: TElement[]) => void) | undefined;
+        let reject: ((reason: any) => void) | undefined;
 
         const stream = new ParallelStream((nxt, rsolve, rject) => {
             next = nxt;

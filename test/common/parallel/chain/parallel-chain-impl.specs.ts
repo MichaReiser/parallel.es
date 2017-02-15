@@ -79,7 +79,7 @@ describe("ParallelChainImpl", function () {
         it("changes the state of the chain to the state returned by chainOperation", function () {
             // arrange
             const newState = {};
-            let chain = new ParallelChainImpl(state);
+            const chain = new ParallelChainImpl(state);
             chainOperationSpy.and.returnValue(newState);
 
             // act, assert
@@ -94,7 +94,7 @@ describe("ParallelChainImpl", function () {
         it("adds the filter operation to the operations to perform", function () {
             // arrange
             const filter = (value: number) => value % 2 === 0;
-            let chain = new ParallelChainImpl(state);
+            const chain = new ParallelChainImpl(state);
 
             // act
             chain.filter(filter);
@@ -109,7 +109,7 @@ describe("ParallelChainImpl", function () {
         it("changes the state of the chain to the state returned by chainOperation", function () {
             // arrange
             const newState = {};
-            let chain = new ParallelChainImpl(state);
+            const chain = new ParallelChainImpl(state);
             chainOperationSpy.and.returnValue(newState);
 
             // act, assert
@@ -124,7 +124,7 @@ describe("ParallelChainImpl", function () {
         it("adds the reduce operation to the operations to perform", function () {
             // arrange
             const add = (memo: number, value: number) => memo + value;
-            let chain = new ParallelChainImpl(state);
+            const chain = new ParallelChainImpl(state);
 
             const reducedStream = jasmine.createSpyObj("reducedStream", [ "then" ]);
             const resolvedState = { stream: reducedStream };
@@ -145,7 +145,7 @@ describe("ParallelChainImpl", function () {
         it("returns the default value if the tasks returned an empty array", function (done) {
             // arrange
             const add = (memo: number, value: number) => memo + value;
-            let chain = new ParallelChainImpl(state);
+            const chain = new ParallelChainImpl(state);
 
             const reducedStream = jasmine.createSpyObj("reducedStream", [ "subscribe" ]);
             const resolvedState = { stream: reducedStream };
@@ -165,7 +165,7 @@ describe("ParallelChainImpl", function () {
         it("returns the summed up value if the task returns values", function (done) {
             // arrange
             const add = (memo: number, value: number) => memo + value;
-            let chain = new ParallelChainImpl(state);
+            const chain = new ParallelChainImpl(state);
 
             const reducedStream = jasmine.createSpyObj("reducedStream", [ "subscribe" ]);
             const resolvedState = { stream: reducedStream };

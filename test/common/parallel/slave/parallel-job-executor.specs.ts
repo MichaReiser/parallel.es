@@ -63,7 +63,7 @@ describe("parallelJobExecutor", function () {
         const generator = jasmine.createSpy("generator").and.returnValue(iterator);
         const coordinator = jasmine.createSpy("coordinator").and.returnValue(toIterator([2, 4]));
         const iteratee = jasmine.createSpy("iteratee");
-        let userEnvironment = { test: 10 };
+        const userEnvironment = { test: 10 };
         spyOn(deserializer, "deserializeFunctionCall").and.returnValues(generator, coordinator, iteratee);
 
         // act
