@@ -9,7 +9,7 @@ describe("ScheduledParallelStream", function () {
     let task1: FakeTask<string>;
     let task2: FakeTask<string>;
     let task3: FakeTask<string>;
-    let joiner = (first: string, second: string) => {
+    const joiner = (first: string, second: string) => {
         if (typeof first === "undefined") {
             return second;
         }

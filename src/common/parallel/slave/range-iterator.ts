@@ -12,7 +12,7 @@ export function rangeIterator(start: number, end: number, step: number): Iterato
 
     return {
         next(): IteratorResult<number> {
-            let current = next;
+            const current = next;
             next = next + step;
             if (length-- !== 0) {
                 return { done: false, value: current };

@@ -58,7 +58,7 @@ export class DefaultThreadPool implements IThreadPool {
                 return;
             }
 
-            const task = <WorkerTask<any>> this.queue.pop();
+            const task = this.queue.pop() as WorkerTask<any>;
             this.runTaskOnWorker(task, worker);
         }
     }

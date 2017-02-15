@@ -3,9 +3,9 @@ import {ResolvedParallelStream} from "../../../../src/common/parallel/stream/res
 import {ITask} from "../../../../src/common/task/task";
 import {ScheduledParallelStream} from "../../../../src/common/parallel/stream/scheduled-parallel-stream";
 describe("ParallelStreamImpl", function () {
-    let next: ((subResult: string, worker: number, valuesPerWorker: number) => void) | undefined = undefined;
-    let reject: ((reason: any) => void) | undefined = undefined;
-    let resolve: ((result: number) => void) | undefined = undefined;
+    let next: ((subResult: string, worker: number, valuesPerWorker: number) => void) | undefined;
+    let reject: ((reason: any) => void) | undefined;
+    let resolve: ((result: number) => void) | undefined;
     let stream: ParallelStream<string, number>;
 
     beforeEach(function () {

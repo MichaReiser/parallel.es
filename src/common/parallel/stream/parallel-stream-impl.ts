@@ -35,6 +35,8 @@ export type IRejectCallback = (reason: any) => any;
  */
 export type IExecutorCallback<TSubResult, TEndResult> = (next: INextCallback<TSubResult>, resolve: IResolveCallback<TEndResult>, reject: IRejectCallback) => any;
 
+type NextHandler<TSubResult> = (subResult: TSubResult, worker: number, valuesPerWorker: number) => void;
+
 /**
  * Generic parallel stream that can be coordinated using the provided next, resolve and reject callbacks.
  * @param TSubResult type of the sub results
@@ -52,9 +54,9 @@ export class ParallelStream<TSubResult, TEndResult> implements IParallelStream<T
      * @returns parallel stream that is based on the given input stream but with the transformed end result
      */
     public static transform<TIn, TIntermediate, TResult>(inputStream: IParallelStream<TIn, TIntermediate>, transformer: (result: TIntermediate) => TResult) {
-        let next: ((subResult: TIn, taskIndex: number, valuesPerTask: number) => void) | undefined = undefined;
-        let resolve: ((result: TResult) => void) | undefined = undefined;
-        let reject: ((reason: any) => void) | undefined = undefined;
+        let next: ((subResult: TIn, taskIndex: number, valuesPerTask: number) => void) | undefined;
+        let resolve: ((result: TResult) => void) | undefined;
+        let reject: ((reason: any) => void) | undefined;
 
         const transformedStream = new ParallelStream<TIn, TResult>((nxt, rsolve, rject) => {
             next = nxt;
@@ -91,7 +93,7 @@ export class ParallelStream<TSubResult, TEndResult> implements IParallelStream<T
      * @type {Array}
      * @private
      */
-    private nextHandlers: { (subResult: TSubResult, worker: number, valuesPerWorker: number): void}[] = [];
+    private nextHandlers: NextHandler<TSubResult>[] = [];
     private resolve: (result: TEndResult) => void;
     private reject: (reason: any) => void;
 

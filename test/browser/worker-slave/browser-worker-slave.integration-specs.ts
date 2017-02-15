@@ -44,7 +44,7 @@ describe("BrowserSlave IntegrationTests", function () {
             // arrange
             const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: functionId("test", 0), parameters: [10] }, usedFunctionIds: [functionId("test", 0)] };
 
-            let promise = new Promise((resolve, reject) => {
+            const promise = new Promise((resolve, reject) => {
                 (onresponse as jasmine.Spy).and.callFake(function (event: MessageEvent) {
                     if (isFunctionRequest(event.data)) {
                         slave.postMessage(functionResponseMessage([{ argumentNames: ["x"], body: "return x;", id: functionId("test", 0) }]));
@@ -73,7 +73,7 @@ describe("BrowserSlave IntegrationTests", function () {
 
         it("does not request the function definition if the slave has executed the function before", function (done) {
             // arrange
-            let firstTaskCompleted = new Promise((resolve, reject) => {
+            const firstTaskCompleted = new Promise((resolve, reject) => {
                 (onresponse as jasmine.Spy).and.callFake(function (event: MessageEvent) {
                     if (isFunctionRequest(event.data)) {
                         slave.postMessage(functionResponseMessage([{ argumentNames: ["x"], body: "return x;", id: functionId("test", 0) }]));
@@ -121,7 +121,7 @@ describe("BrowserSlave IntegrationTests", function () {
             // arrange
             const task: ITaskDefinition = { main: { ______serializedFunctionCall: true, functionId: functionId("test", 0), parameters: [10] }, usedFunctionIds: [functionId("test", 0)] };
 
-            let promise = new Promise((resolve, reject) => {
+            const promise = new Promise((resolve, reject) => {
                 (onresponse as jasmine.Spy).and.callFake(function (event: MessageEvent) {
                     if (isFunctionRequest(event.data)) {
                         slave.postMessage(functionResponseMessage([{ argumentNames: ["x"], body: "return y;", id: functionId("test", 0) }]));

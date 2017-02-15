@@ -5,7 +5,7 @@ import {functionId} from "../../../src/common/function/function-id";
 describe("WorkerTask", function () {
     let workerTask: WorkerTask<number>;
 
-    let taskDefinition: ITaskDefinition = {
+    const taskDefinition: ITaskDefinition = {
         main: {
             ______serializedFunctionCall: true,
             functionId: functionId("test", 2),
