@@ -3,7 +3,7 @@ var Config = require("webpack-config").Config;
 
 const FILE_NAME = "[name].parallel.js";
 
-module.exports = new Config().extend("conf/webpack.base.config.js").merge({
+module.exports = new Config().extend("conf/node.base.config.js").merge({
     output: {
         filename: FILE_NAME
     },
@@ -32,18 +32,5 @@ module.exports = new Config().extend("conf/webpack.base.config.js").merge({
                 ]
             }
         ]
-    },
-
-    plugins: [
-        new webpack.LoaderOptionsPlugin({
-            options: {
-                worker: {
-                    inline: false,
-                    output: {
-                        filename: FILE_NAME
-                    }
-                }
-            }
-        })
-    ]
+    }
 });

@@ -3,7 +3,7 @@ var Config = require("webpack-config").Config;
 
 module.exports = new Config()
     .extend({
-        "./conf/webpack.es5.config.js": function (config) {
+        "./conf/web.es5.config.js": function (config) {
             delete config.entry;
             return config;
         }

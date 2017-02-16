@@ -3,8 +3,7 @@ var path = require("path");
 
 module.exports = new Config().merge({
     entry: {
-        browser: "./src/api/browser.ts",
-        node: "./src/api/node.ts"
+        browser: "./src/api/browser.ts"
     },
 
     module: {

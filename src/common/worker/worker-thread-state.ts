@@ -1,25 +1,26 @@
-import {isFunctionRequest, IFunctionRequest, functionResponseMessage, isWorkerResult, isFunctionExecutionError} from "../../common/worker/worker-messages";
-import {DynamicFunctionRegistry} from "../../common/function/dynamic-function-registry";
-import {IFunctionId} from "../../common/function/function-id";
-import {IFunctionDefinition} from "../../common/function/function-defintion";
+import {isFunctionRequest, IFunctionRequest, functionResponseMessage, isWorkerResult, isFunctionExecutionError} from "./worker-messages";
+import {DynamicFunctionRegistry} from "../function/dynamic-function-registry";
+import {IFunctionId} from "../function/function-id";
+import {IFunctionDefinition} from "../function/function-defintion";
+import {IWorkerThreadSlaveCommunicationChannel} from "./worker-thread-slave-communication-channel";
 
 /**
- * State of the browser worker thread
+ * State of the worker thread
  */
-export class BrowserWorkerThreadState {
+export class WorkerThreadState {
     constructor(public name: string) { }
 
     /**
-     * Called if the browser worker thread has received a message from the {@link BrowserWorkerSlave}
+     * Called if the worker thread has received a message from a slave
      * @param event the received message
      */
     public onMessage(event: MessageEvent): void {
-        throw new Error(`Browser worker thread in state '${this.name}' cannot handle the received message (${event.data.type}).`);
+        throw new Error(`Worker thread in state '${this.name}' cannot handle the received message (${event.data.type}).`);
     }
 
     /**
-     * Called if a fatal error on the {@link BrowserWorkerSlave}. Errors occurring during task execution are specially handled
-     * and passed to {@link BrowserWorkerThreadState.onMessage}
+     * Called if a fatal error on the Slave. Errors occurring during task execution are specially handled
+     * and passed to {@link WorkerThreadState.onMessage}
      * @param event
      */
     public onError(event: ErrorEvent) {
@@ -28,10 +29,10 @@ export class BrowserWorkerThreadState {
 }
 
 /**
- * Browser worker thread is executing a function on the {@link BrowserWorkerSlave}
+ * Worker thread is executing a function on the {@link IWorkerSlave}
  */
-export class BrowserWorkerThreadExecutingState extends BrowserWorkerThreadState {
-    constructor(private callback: (error: any, result: any) => void, private functionRegistry: DynamicFunctionRegistry, private worker: Worker) {
+export class WorkerThreadExecutingState extends WorkerThreadState {
+    constructor(private callback: (error: any, result: any) => void, private functionRegistry: DynamicFunctionRegistry, private communicationChannel: IWorkerThreadSlaveCommunicationChannel) {
         super("executing");
     }
 
@@ -65,6 +66,6 @@ export class BrowserWorkerThreadExecutingState extends BrowserWorkerThreadState 
             }
         }
 
-        this.worker.postMessage(functionResponseMessage(definitions, ...missingIds));
+        this.communicationChannel.sendMessage(functionResponseMessage(definitions, ...missingIds));
     }
 }

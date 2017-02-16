@@ -4,7 +4,7 @@ var CompressionPlugin = require("compression-webpack-plugin");
 
 const FILE_NAME = "[name].parallel-es6.js";
 
-module.exports = new Config().extend("conf/webpack.base.config.js").merge({
+module.exports = new Config().extend("conf/node.base.config.js").merge({
     output: {
         filename: FILE_NAME
     },
@@ -20,18 +20,5 @@ module.exports = new Config().extend("conf/webpack.base.config.js").merge({
                 ]
             }
         ]
-    },
-
-    plugins: [
-        new webpack.LoaderOptionsPlugin({
-            options: {
-                worker: {
-                    inline: false,
-                    output: {
-                        filename: FILE_NAME
-                    }
-                }
-            }
-        })
-    ]
+    }
 });

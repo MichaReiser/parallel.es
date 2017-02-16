@@ -1,31 +1,48 @@
-import {BrowserWorkerSlave} from "../../../src/browser/worker-slave/browser-worker-slave";
 import {
     initializeWorkerMessage, scheduleTaskMessage,
     functionResponseMessage
 } from "../../../src/common/worker/worker-messages";
 import {
-    IdleBrowserWorkerSlaveState, DefaultBrowserWorkerSlaveState, BrowserWorkerSlaveState,
-    WaitingForFunctionDefinitionBrowserWorkerSlaveState, ExecuteFunctionBrowserWorkerSlaveState
-} from "../../../src/browser/worker-slave/browser-worker-slave-states";
+    IdleWorkerSlaveState, DefaultWorkerSlaveState, WorkerSlaveState,
+    WaitingForFunctionDefinitionWorkerSlaveState, ExecuteFunctionWorkerSlaveState
+} from "../../../src/common/worker/worker-slave-states";
 import {ITaskDefinition} from "../../../src/common/task/task-definition";
 import {FunctionCallDeserializer} from "../../../src/common/function/function-call-deserializer";
 import {SlaveFunctionLookupTable} from "../../../src/common/function/slave-function-lookup-table";
 import {functionId} from "../../../src/common/function/function-id";
+import {AbstractWorkerSlave} from "../../../src/common/worker/abstract-worker-slave";
 
-describe("BrowserWorkerSlaveStates", function () {
-    let slave: BrowserWorkerSlave;
-    let state: BrowserWorkerSlaveState;
+class TestWorkerSlave extends AbstractWorkerSlave {
+    public terminateSpy= jasmine.createSpy("terminate");
+    public postMessageSpy = jasmine.createSpy("postMessage");
+
+    constructor(functionLookupTable: SlaveFunctionLookupTable) {
+        super(functionLookupTable);
+    }
+
+    public postMessage(message: any): void {
+        this.postMessageSpy(message);
+    }
+
+    protected terminate(): void {
+        this.terminateSpy();
+    }
+}
+
+describe("WorkerSlaveStates", function () {
+    let slave: TestWorkerSlave;
+    let state: WorkerSlaveState;
     let functionLookupTable: SlaveFunctionLookupTable;
 
     beforeEach(function () {
         functionLookupTable = new SlaveFunctionLookupTable();
-        slave = new BrowserWorkerSlave(functionLookupTable);
+        slave = new TestWorkerSlave(functionLookupTable);
     });
 
-    describe("DefaultBrowserWorkerSlaveState", function () {
+    describe("DefaultWorkerSlaveState", function () {
 
         beforeEach(function () {
-            state = new DefaultBrowserWorkerSlaveState(slave);
+            state = new DefaultWorkerSlaveState(slave);
         });
 
         it("assigns the worker id if the initialize message is retrieved", function () {
@@ -48,13 +65,13 @@ describe("BrowserWorkerSlaveStates", function () {
             state.onMessage(createMessage(initializeWorkerMessage(10)));
 
             // assert
-            expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(IdleBrowserWorkerSlaveState));
+            expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(IdleWorkerSlaveState));
         });
     });
 
-    describe("IdleBrowserWorkerSlaveState", function () {
+    describe("IdleWorkerSlaveState", function () {
         beforeEach(function () {
-            state = new IdleBrowserWorkerSlaveState(slave);
+            state = new IdleWorkerSlaveState(slave);
         });
 
         it("requests the definitions of the functions used in the task definition but yet missing in the slave cache", function () {
@@ -70,14 +87,13 @@ describe("BrowserWorkerSlaveStates", function () {
 
             spyOn(functionLookupTable, "has").and.returnValues(false, true, false);
             const changeStateSpy = spyOn(slave, "changeState");
-            const slavePostMessageSpy = spyOn(slave, "postMessage");
 
             // act
             state.onMessage(createMessage(scheduleTaskMessage(task)));
 
             // assert
-            expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(WaitingForFunctionDefinitionBrowserWorkerSlaveState));
-            expect(slavePostMessageSpy).toHaveBeenCalledWith(jasmine.objectContaining({ functionIds: [functionId("test", 0), functionId("test", 2)] }));
+            expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(WaitingForFunctionDefinitionWorkerSlaveState));
+            expect(slave.postMessageSpy).toHaveBeenCalledWith(jasmine.objectContaining({ functionIds: [functionId("test", 0), functionId("test", 2)] }));
         });
 
         it("changes to the execution state if the slave already has all functions cached", function () {
@@ -98,11 +114,11 @@ describe("BrowserWorkerSlaveStates", function () {
             state.onMessage(createMessage(scheduleTaskMessage(task)));
 
             // assert
-            expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(ExecuteFunctionBrowserWorkerSlaveState));
+            expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(ExecuteFunctionWorkerSlaveState));
         });
     });
 
-    describe("WaitingForFunctionDefinitionBrowserWorkerState", function () {
+    describe("WaitingForFunctionDefinitionWorkerSlaveState", function () {
         beforeEach(function () {
             const task: ITaskDefinition = {
                 main: {
@@ -113,7 +129,7 @@ describe("BrowserWorkerSlaveStates", function () {
                 usedFunctionIds: [functionId("test", 0), functionId("test", 1), functionId("test", 2)]
             };
 
-            state = new WaitingForFunctionDefinitionBrowserWorkerSlaveState(slave, task);
+            state = new WaitingForFunctionDefinitionWorkerSlaveState(slave, task);
         });
 
         it("changes to the execute state as soon as the function definitions have arrived", function () {
@@ -128,13 +144,12 @@ describe("BrowserWorkerSlaveStates", function () {
             }])));
 
             // assert
-            expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(ExecuteFunctionBrowserWorkerSlaveState));
+            expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(ExecuteFunctionWorkerSlaveState));
         });
 
         it("changes to idle state if some function definitions are missing", function () {
             // arrange
             const changeStateSpy = spyOn(slave, "changeState");
-            spyOn(slave, "postMessage");
 
             // act
             state.onMessage(createMessage(functionResponseMessage([{
@@ -144,12 +159,11 @@ describe("BrowserWorkerSlaveStates", function () {
             }], functionId("test", 0))));
 
             // assert
-            expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(IdleBrowserWorkerSlaveState));
+            expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(IdleWorkerSlaveState));
         });
 
         it("reports an error if some function definitions are missing", function () {
             // arrange
-            const slavePostMessage = spyOn(slave, "postMessage");
             // act
             state.onMessage(createMessage(functionResponseMessage([{
                 argumentNames: ["x"],
@@ -158,7 +172,7 @@ describe("BrowserWorkerSlaveStates", function () {
             }], functionId("missing", 1), functionId("missing", 2))));
 
             // assert
-            expect(slavePostMessage).toHaveBeenCalledWith(jasmine.objectContaining({ error: jasmine.objectContaining({ message: `"The function ids [missing-1, missing-2] could not be resolved by slave NaN."` })}));
+            expect(slave.postMessageSpy).toHaveBeenCalledWith(jasmine.objectContaining({ error: jasmine.objectContaining({ message: `"The function ids [missing-1, missing-2] could not be resolved by slave NaN."` })}));
         });
 
         it("registers the retrieved functions in the slave cache", function () {
@@ -187,7 +201,7 @@ describe("BrowserWorkerSlaveStates", function () {
         });
     });
 
-    describe("ExecuteFunctionBrowserWorkerState", function () {
+    describe("ExecuteFunctionWorkerState", function () {
         beforeEach(function () {
             const task: ITaskDefinition = {
                 main: {
@@ -198,13 +212,12 @@ describe("BrowserWorkerSlaveStates", function () {
                 usedFunctionIds: [functionId("test", 0)]
             };
 
-            state = new ExecuteFunctionBrowserWorkerSlaveState(slave, task);
+            state = new ExecuteFunctionWorkerSlaveState(slave, task);
         });
 
         it("calls the deserialized function", function () {
             // arrange
             const deserializedFunction = jasmine.createSpy("deserialized function");
-            spyOn(slave, "postMessage");
             spyOn(FunctionCallDeserializer.prototype, "deserializeFunctionCall").and.returnValue(deserializedFunction);
 
             // act
@@ -217,20 +230,18 @@ describe("BrowserWorkerSlaveStates", function () {
         it("sends the result to the worker thread", function () {
             // arrange
             const deserializedFunction = jasmine.createSpy("deserialized function").and.returnValue(10);
-            const slavePostMessage = spyOn(slave, "postMessage");
             spyOn(FunctionCallDeserializer.prototype, "deserializeFunctionCall").and.returnValue(deserializedFunction);
 
             // act
             state.enter();
 
             // assert
-            expect(slavePostMessage).toHaveBeenCalledWith(jasmine.objectContaining({ result: 10 }));
+            expect(slave.postMessageSpy).toHaveBeenCalledWith(jasmine.objectContaining({ result: 10 }));
         });
 
         it("changes to the idle state after execution", function () {
             // arrange
             const deserializedFunction = jasmine.createSpy("deserialized function").and.returnValue(10);
-            spyOn(slave, "postMessage");
             const slaveChangeState = spyOn(slave, "changeState");
 
             spyOn(FunctionCallDeserializer.prototype, "deserializeFunctionCall").and.returnValue(deserializedFunction);
@@ -239,26 +250,24 @@ describe("BrowserWorkerSlaveStates", function () {
             state.enter();
 
             // assert
-            expect(slaveChangeState).toHaveBeenCalledWith(jasmine.any(IdleBrowserWorkerSlaveState));
+            expect(slaveChangeState).toHaveBeenCalledWith(jasmine.any(IdleWorkerSlaveState));
         });
 
         it("sends the error to the worker thread if the function execution failed", function () {
             // arrange
             const deserializedFunction = jasmine.createSpy("deserialized function").and.throwError("execution failed");
-            const slavePostMessage = spyOn(slave, "postMessage");
             spyOn(FunctionCallDeserializer.prototype, "deserializeFunctionCall").and.returnValue(deserializedFunction);
 
             // act
             state.enter();
 
             // assert
-            expect(slavePostMessage).toHaveBeenCalledWith(jasmine.objectContaining({ error: jasmine.objectContaining({ message: `"execution failed"` })}));
+            expect(slave.postMessageSpy).toHaveBeenCalledWith(jasmine.objectContaining({ error: jasmine.objectContaining({ message: `"execution failed"` })}));
         });
 
         it("changes to the idle state after function execution has failed", function () {
             // arrange
             const deserializedFunction = jasmine.createSpy("deserialized function").and.throwError("execution failed");
-            spyOn(slave, "postMessage");
             const slaveChangeState = spyOn(slave, "changeState");
 
             spyOn(FunctionCallDeserializer.prototype, "deserializeFunctionCall").and.returnValue(deserializedFunction);
@@ -267,7 +276,7 @@ describe("BrowserWorkerSlaveStates", function () {
             state.enter();
 
             // assert
-            expect(slaveChangeState).toHaveBeenCalledWith(jasmine.any(IdleBrowserWorkerSlaveState));
+            expect(slaveChangeState).toHaveBeenCalledWith(jasmine.any(IdleWorkerSlaveState));
         });
     });
 
