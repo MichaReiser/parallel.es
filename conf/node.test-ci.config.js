@@ -2,7 +2,7 @@ var path = require("path");
 var Config = require("webpack-config").Config;
 
 module.exports = new Config()
-    .extend("./conf/webpack.test.config.js")
+    .extend("./conf/node.test.config.js")
     .merge({
         module: {
             rules: [

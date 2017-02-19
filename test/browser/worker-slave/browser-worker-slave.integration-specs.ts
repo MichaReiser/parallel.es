@@ -7,7 +7,7 @@ import {functionId} from "../../../src/common/function/function-id";
 
 declare function require(module: string): any;
 /* tslint:disable:no-var-requires */
-const BrowserSlave = require("worker-loader?inline=true!../../../src/browser/worker-slave/index");
+const BrowserSlave = require("worker-loader?inline=false!../../../src/browser/worker-slave/index");
 
 describe("BrowserSlave IntegrationTests", function () {
     let slave: Worker;
@@ -16,7 +16,7 @@ describe("BrowserSlave IntegrationTests", function () {
     beforeEach(function () {
         slave = new BrowserSlave();
         slave.onmessage = onresponse = jasmine.createSpy("onmessage");
-        slave.onerror = (error: ErrorEvent) => fail(error);
+        slave.onerror = (error: any) => fail(error);
     });
 
     afterEach(function () {

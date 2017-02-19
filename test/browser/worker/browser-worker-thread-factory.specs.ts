@@ -1,7 +1,7 @@
 import {BrowserWorkerThreadFactory} from "../../../src/browser/worker/browser-worker-thread-factory";
 import {DynamicFunctionRegistry} from "../../../src/common/function/dynamic-function-registry";
 import {IWorkerThread} from "../../../src/common/worker/worker-thread";
-import {BrowserWorkerThread} from "../../../src/browser/worker/browser-worker-thread";
+import {DefaultWorkerThread} from "../../../src/common/worker/default-worker-thread";
 
 describe("BrowserWorkerThreadFactory", function () {
     let factory: BrowserWorkerThreadFactory;
@@ -28,8 +28,8 @@ describe("BrowserWorkerThreadFactory", function () {
 
         it("Assigns a unique id to each created worker", function () {
             // arrange
-            const worker1 = factory.spawn() as BrowserWorkerThread;
-            const worker2 = factory.spawn() as BrowserWorkerThread;
+            const worker1 = factory.spawn() as DefaultWorkerThread;
+            const worker2 = factory.spawn() as DefaultWorkerThread;
             workers.push(worker1, worker2);
 
             // assert

@@ -1,16 +1,17 @@
-import {FunctionCallDeserializer} from "../../common/function/function-call-deserializer";
-import {ITaskDefinition} from "../../common/task/task-definition";
-import {IFunctionDefinition} from "../../common/function/function-defintion";
+import {FunctionCallDeserializer} from "../function/function-call-deserializer";
+import {ITaskDefinition} from "../task/task-definition";
+import {IFunctionDefinition} from "../function/function-defintion";
 import {
     functionExecutionError, isFunctionResponse, isInitializeMessage, isScheduleTask, requestFunctionMessage,
-    workerResultMessage } from "../../common/worker/worker-messages";
-import {BrowserWorkerSlave} from "./browser-worker-slave";
+    workerResultMessage, IWorkerMessage
+} from "./worker-messages";
+import {IWorkerSlave} from "./worker-slave";
 
 /**
- * State of the browser worker slave.
+ * State of the worker slave.
  */
-export abstract class BrowserWorkerSlaveState {
-    constructor(public name: string, protected slave: BrowserWorkerSlave) {}
+export abstract class WorkerSlaveState {
+    constructor(public name: string, protected slave: IWorkerSlave) {}
 
     /**
      * Executed when the slave changes its state to this state.
@@ -21,24 +22,24 @@ export abstract class BrowserWorkerSlaveState {
 
     /**
      * Executed whenever the slave receives a message from the ui-thread while being in this state
-     * @param event the received message
+     * @param message the received message
      * @returns {boolean} true if the state has handled the message, false otherwise
      */
-    public onMessage(event: MessageEvent): boolean { return false; }
+    public onMessage(message: IWorkerMessage): boolean { return false; }
 }
 
 /**
  * Initial state of a slave. The slave is waiting for the initialization message.
  */
-export class DefaultBrowserWorkerSlaveState extends BrowserWorkerSlaveState {
-       constructor(slave: BrowserWorkerSlave) {
+export class DefaultWorkerSlaveState extends WorkerSlaveState {
+       constructor(slave: IWorkerSlave) {
         super("Default", slave);
     }
 
-    public onMessage(event: MessageEvent): boolean {
-        if (isInitializeMessage(event.data)) {
-            this.slave.id = event.data.workerId;
-            this.slave.changeState(new IdleBrowserWorkerSlaveState(this.slave));
+    public onMessage(message: IWorkerMessage): boolean {
+        if (isInitializeMessage(message)) {
+            this.slave.id = message.workerId;
+            this.slave.changeState(new IdleWorkerSlaveState(this.slave));
             return true;
         }
         return false;
@@ -48,25 +49,25 @@ export class DefaultBrowserWorkerSlaveState extends BrowserWorkerSlaveState {
 /**
  * The slave is waiting for work from the ui-thread.
  */
-export class IdleBrowserWorkerSlaveState extends BrowserWorkerSlaveState {
-    constructor(slave: BrowserWorkerSlave) {
+export class IdleWorkerSlaveState extends WorkerSlaveState {
+    constructor(slave: IWorkerSlave) {
         super("Idle", slave);
     }
 
-    public onMessage(event: MessageEvent): boolean {
-        if (!isScheduleTask(event.data)) {
+    public onMessage(message: IWorkerMessage): boolean {
+        if (!isScheduleTask(message)) {
             return false;
         }
 
-        const task: ITaskDefinition = event.data.task;
+        const task: ITaskDefinition = message.task;
         const missingFunctions = task.usedFunctionIds.filter(id => !this.slave.functionCache.has(id));
 
         if (missingFunctions.length === 0) {
-            this.slave.changeState(new ExecuteFunctionBrowserWorkerSlaveState(this.slave, task));
+            this.slave.changeState(new ExecuteFunctionWorkerSlaveState(this.slave, task));
         } else {
             const [ head, ...tail ] = missingFunctions;
             this.slave.postMessage(requestFunctionMessage(head, ...tail));
-            this.slave.changeState(new WaitingForFunctionDefinitionBrowserWorkerSlaveState(this.slave, task));
+            this.slave.changeState(new WaitingForFunctionDefinitionWorkerSlaveState(this.slave, task));
         }
 
         return true;
@@ -76,24 +77,23 @@ export class IdleBrowserWorkerSlaveState extends BrowserWorkerSlaveState {
 /**
  * The slave is waiting for the definition of the requested function that is needed to execute the assigned task.
  */
-export class WaitingForFunctionDefinitionBrowserWorkerSlaveState extends BrowserWorkerSlaveState {
-    constructor(slave: BrowserWorkerSlave, private task: ITaskDefinition) {
+export class WaitingForFunctionDefinitionWorkerSlaveState extends WorkerSlaveState {
+    constructor(slave: IWorkerSlave, private task: ITaskDefinition) {
         super("WaitingForFunctionDefinition", slave);
     }
 
-    public onMessage(event: MessageEvent): boolean {
-        const message = event.data;
+    public onMessage(message: IWorkerMessage): boolean {
         if (isFunctionResponse(message)) {
             if (message.missingFunctions.length > 0) {
                 const identifiers = message.missingFunctions.map(functionId => functionId.identifier).join(", ");
                 this.slave.postMessage(functionExecutionError(new Error(`The function ids [${identifiers}] could not be resolved by slave ${this.slave.id}.`)));
-                this.slave.changeState(new IdleBrowserWorkerSlaveState(this.slave));
+                this.slave.changeState(new IdleWorkerSlaveState(this.slave));
             } else {
                 for (const definition of message.functions as IFunctionDefinition[]) {
                     this.slave.functionCache.registerFunction(definition);
                 }
 
-                this.slave.changeState(new ExecuteFunctionBrowserWorkerSlaveState(this.slave, this.task));
+                this.slave.changeState(new ExecuteFunctionWorkerSlaveState(this.slave, this.task));
             }
             return true;
         }
@@ -104,8 +104,8 @@ export class WaitingForFunctionDefinitionBrowserWorkerSlaveState extends Browser
 /**
  * The slave is executing the function
  */
-export class ExecuteFunctionBrowserWorkerSlaveState extends BrowserWorkerSlaveState {
-    constructor(slave: BrowserWorkerSlave, private task: ITaskDefinition) {
+export class ExecuteFunctionWorkerSlaveState extends WorkerSlaveState {
+    constructor(slave: IWorkerSlave, private task: ITaskDefinition) {
         super("Executing", slave);
     }
 
@@ -120,6 +120,6 @@ export class ExecuteFunctionBrowserWorkerSlaveState extends BrowserWorkerSlaveSt
             this.slave.postMessage(functionExecutionError(error));
         }
 
-        this.slave.changeState(new IdleBrowserWorkerSlaveState(this.slave));
+        this.slave.changeState(new IdleWorkerSlaveState(this.slave));
     }
 }

@@ -1,6 +1,6 @@
 var Config = require("webpack-config").Config;
 
-module.exports = new Config().extend("conf/webpack.es5.config.js").merge({
+module.exports = new Config().extend("conf/node.es5.config.js").merge({
     devtool: "#source-map",
     output: {
         pathinfo: true
