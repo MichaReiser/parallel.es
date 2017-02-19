@@ -14,8 +14,8 @@ export class ChildProcessWorkerThreadSlaveCommunicationChannel implements IWorke
         }
     }
 
-    public addEventListener(type: "error", listener: (ev: ErrorEvent) => any): void;
-    public addEventListener(type: "message", listener: (ev: MessageEvent) => any): void;
+    public addEventListener(type: "error", listener: (ev: any) => any): void;
+    public addEventListener(type: "message", listener: (ev: IWorkerMessage) => any): void;
     public addEventListener(type: "error" | "message", listener: Function): void {
         this.child.addListener(type, listener);
     }

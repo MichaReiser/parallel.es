@@ -1,5 +1,6 @@
 import {WorkerSlaveState} from "./worker-slave-states";
 import {SlaveFunctionLookupTable} from "../function/slave-function-lookup-table";
+import {IWorkerMessage} from "./worker-messages";
 
 export interface IWorkerSlave {
 
@@ -20,7 +21,7 @@ export interface IWorkerSlave {
      * Executed when the slave receives a message from the ui-thread
      * @param event the received message
      */
-    onMessage(event: MessageEvent): void;
+    onMessage(event: IWorkerMessage): void;
 
     postMessage(message: any): void;
 }

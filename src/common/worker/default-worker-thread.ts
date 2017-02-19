@@ -1,5 +1,5 @@
 import {ITaskDefinition} from "../task/task-definition";
-import {initializeWorkerMessage, stopMessage, scheduleTaskMessage} from "./worker-messages";
+import {initializeWorkerMessage, stopMessage, scheduleTaskMessage, IWorkerMessage} from "./worker-messages";
 import {IWorkerThread} from "./worker-thread";
 import {DynamicFunctionRegistry} from "../function/dynamic-function-registry";
 import {WorkerThreadState, WorkerThreadExecutingState} from "./worker-thread-state";
@@ -95,11 +95,11 @@ export class DefaultWorkerThread implements IWorkerThread {
         return `WorkerThread { id: ${this.id}, state: ${this.state.name }`;
     }
 
-    private onWorkerMessage(event: MessageEvent): void {
-        this.state.onMessage(event);
+    private onWorkerMessage(message: IWorkerMessage): void {
+        this.state.onMessage(message);
     }
 
-    private onError(event: ErrorEvent): void {
+    private onError(event: any): void {
         this.state.onError(event);
         this.state = new WorkerThreadState("errored");
     }

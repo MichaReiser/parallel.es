@@ -1,6 +1,6 @@
 import {
     WorkerMessageType, requestFunctionMessage, workerResultMessage,
-    functionExecutionError
+    functionExecutionError, IWorkerMessage
 } from "../../../src/common/worker/worker-messages";
 import {IFunctionDefinition} from "../../../src/common/function/function-defintion";
 import {ITaskDefinition} from "../../../src/common/task/task-definition";
@@ -12,7 +12,7 @@ describe("DefaultWorkerThread", function () {
     let communicationChannel: { sendMessage: jasmine.Spy, addEventListener(event: string, handler: (event: MessageEvent) => void): void };
     let workerThread: DefaultWorkerThread;
     let functionLookupTable: DynamicFunctionRegistry;
-    let slaveRespond: (event: MessageEvent) => void;
+    let slaveRespond: (message: IWorkerMessage) => void;
 
     beforeEach(function () {
         communicationChannel = {
@@ -94,7 +94,7 @@ describe("DefaultWorkerThread", function () {
             workerThread.run(task, () => undefined);
 
             // act
-            slaveRespond({data: requestFunctionMessage(task.main.functionId)} as any);
+            slaveRespond(requestFunctionMessage(task.main.functionId));
 
             // assert
             expect(communicationChannel.sendMessage).toHaveBeenCalledWith({ functions: [functionDefinition], missingFunctions: [], type: WorkerMessageType.FunctionResponse });
@@ -111,7 +111,7 @@ describe("DefaultWorkerThread", function () {
             workerThread.run(task, () => undefined);
 
             // act
-            slaveRespond({data: requestFunctionMessage(task.main.functionId, missingId)} as any);
+            slaveRespond(requestFunctionMessage(task.main.functionId, missingId));
 
             // assert
             expect(communicationChannel.sendMessage).toHaveBeenCalledWith({ functions: [functionDefinition], missingFunctions: [ missingId ], type: WorkerMessageType.FunctionResponse });
@@ -127,7 +127,7 @@ describe("DefaultWorkerThread", function () {
             workerThread.run(task, callback);
 
             // act
-            slaveRespond({ data: workerResultMessage(10) } as any);
+            slaveRespond(workerResultMessage(10));
 
             // assert
             expect(callback).toHaveBeenCalledWith(undefined, 10);
@@ -142,7 +142,7 @@ describe("DefaultWorkerThread", function () {
             workerThread.run(task, callback);
 
             // act
-            slaveRespond({ data: functionExecutionError(new Error("Failed to execute the function"))} as any);
+            slaveRespond(functionExecutionError(new Error("Failed to execute the function")));
 
             // assert
             expect(callback).toHaveBeenCalledWith(jasmine.objectContaining({
@@ -152,7 +152,7 @@ describe("DefaultWorkerThread", function () {
 
         it("throws an error if the slave sends an unexpected message", function () {
             // act, assert
-            expect(() => slaveRespond({ data: { txt: "Unknown message", type: 9999999 } } as any)).toThrowError("Worker thread in state 'default' cannot handle the received message (9999999).");
+            expect(() => slaveRespond({ txt: "Unknown message", type: 9999999 })).toThrowError("Worker thread in state 'default' cannot handle the received message (9999999).");
         });
 
         it("fails if the worker thread is not in idle state", function () {
@@ -175,7 +175,7 @@ describe("DefaultWorkerThread", function () {
             workerThread.run(task, callback);
 
             // act
-            slaveRespond({ data: workerResultMessage(10 )} as any);
+            slaveRespond(workerResultMessage(10 ));
 
             // assert
             expect(workerThread.state.name).toEqual("idle");
@@ -192,7 +192,7 @@ describe("DefaultWorkerThread", function () {
 
             // act
             workerThread.stop();
-            slaveRespond({ data: workerResultMessage(10 )} as any);
+            slaveRespond(workerResultMessage(10 ));
 
             // assert
             expect(workerThread.state.name).toEqual("stopped");

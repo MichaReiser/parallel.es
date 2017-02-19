@@ -36,10 +36,10 @@ describe("AbstractWorkerSlave", function () {
             slave.changeState(state);
 
             // act
-            slave.onMessage({ data: message } as any);
+            slave.onMessage(message);
 
             // assert
-            expect(onMessageSpy).toHaveBeenCalledWith(jasmine.objectContaining({ data: message }));
+            expect(onMessageSpy).toHaveBeenCalledWith(message);
         });
 
         it("throws an error if the state cannot handle the given message", function () {
@@ -51,7 +51,7 @@ describe("AbstractWorkerSlave", function () {
             slave.changeState(state);
 
             // act, assert
-            expect(() => slave.onMessage({ data: message } as any)).toThrowError(`Message with type 0 cannot be handled by Slave { id: NaN, state: 'Idle' }`);
+            expect(() => slave.onMessage(message)).toThrowError(`Message with type 0 cannot be handled by Slave { id: NaN, state: 'Idle' }`);
         });
     });
 

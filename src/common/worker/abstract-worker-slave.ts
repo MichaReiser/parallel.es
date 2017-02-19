@@ -1,4 +1,4 @@
-import {isStopMesssage} from "./worker-messages";
+import {isStopMesssage, IWorkerMessage} from "./worker-messages";
 import {SlaveFunctionLookupTable} from "../function/slave-function-lookup-table";
 import {IWorkerSlave} from "./worker-slave";
 import {DefaultWorkerSlaveState, WorkerSlaveState} from "./worker-slave-states";
@@ -30,13 +30,13 @@ export abstract class AbstractWorkerSlave implements IWorkerSlave {
 
     /**
      * Executed when the slave receives a message from the ui-thread
-     * @param event the received message
+     * @param message the received message
      */
-    public onMessage(event: MessageEvent): void {
-        if (isStopMesssage(event.data)) {
+    public onMessage(message: IWorkerMessage): void {
+        if (isStopMesssage(message)) {
             this.terminate();
-        } else if (!this.state.onMessage(event)) {
-            throw new Error(`Message with type ${event.data.type} cannot be handled by ${this}`);
+        } else if (!this.state.onMessage(message)) {
+            throw new Error(`Message with type ${message.type} cannot be handled by ${this}`);
         }
     }
 

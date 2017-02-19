@@ -50,7 +50,7 @@ describe("WorkerSlaveStates", function () {
             slave.changeState(state);
 
             // act
-            state.onMessage(createMessage(initializeWorkerMessage(10)));
+            state.onMessage(initializeWorkerMessage(10));
 
             // assert
             expect(slave.id).toBe(10);
@@ -62,7 +62,7 @@ describe("WorkerSlaveStates", function () {
             const changeStateSpy = spyOn(slave, "changeState");
 
             // act
-            state.onMessage(createMessage(initializeWorkerMessage(10)));
+            state.onMessage(initializeWorkerMessage(10));
 
             // assert
             expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(IdleWorkerSlaveState));
@@ -89,7 +89,7 @@ describe("WorkerSlaveStates", function () {
             const changeStateSpy = spyOn(slave, "changeState");
 
             // act
-            state.onMessage(createMessage(scheduleTaskMessage(task)));
+            state.onMessage(scheduleTaskMessage(task));
 
             // assert
             expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(WaitingForFunctionDefinitionWorkerSlaveState));
@@ -111,7 +111,7 @@ describe("WorkerSlaveStates", function () {
             const changeStateSpy = spyOn(slave, "changeState");
 
             // act
-            state.onMessage(createMessage(scheduleTaskMessage(task)));
+            state.onMessage(scheduleTaskMessage(task));
 
             // assert
             expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(ExecuteFunctionWorkerSlaveState));
@@ -137,11 +137,11 @@ describe("WorkerSlaveStates", function () {
             const changeStateSpy = spyOn(slave, "changeState");
 
             // act
-            state.onMessage(createMessage(functionResponseMessage([{
+            state.onMessage(functionResponseMessage([{
                 argumentNames: ["x"],
                 body: "return x;",
                 id: functionId("test", 0)
-            }])));
+            }]));
 
             // assert
             expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(ExecuteFunctionWorkerSlaveState));
@@ -152,11 +152,11 @@ describe("WorkerSlaveStates", function () {
             const changeStateSpy = spyOn(slave, "changeState");
 
             // act
-            state.onMessage(createMessage(functionResponseMessage([{
+            state.onMessage(functionResponseMessage([{
                 argumentNames: ["x"],
                 body: "return x;",
                 id: functionId("test", 0)
-            }], functionId("test", 0))));
+            }], functionId("test", 0)));
 
             // assert
             expect(changeStateSpy).toHaveBeenCalledWith(jasmine.any(IdleWorkerSlaveState));
@@ -165,11 +165,11 @@ describe("WorkerSlaveStates", function () {
         it("reports an error if some function definitions are missing", function () {
             // arrange
             // act
-            state.onMessage(createMessage(functionResponseMessage([{
+            state.onMessage(functionResponseMessage([{
                 argumentNames: ["x"],
                 body: "return x;",
                 id: functionId("test", 0)
-            }], functionId("missing", 1), functionId("missing", 2))));
+            }], functionId("missing", 1), functionId("missing", 2)));
 
             // assert
             expect(slave.postMessageSpy).toHaveBeenCalledWith(jasmine.objectContaining({ error: jasmine.objectContaining({ message: `"The function ids [missing-1, missing-2] could not be resolved by slave NaN."` })}));
@@ -193,7 +193,7 @@ describe("WorkerSlaveStates", function () {
             };
 
             // act
-            state.onMessage(createMessage(functionResponseMessage([def1, def2])));
+            state.onMessage(functionResponseMessage([def1, def2]));
 
             // assert
             expect(registerFunctionSpy).toHaveBeenCalledWith(def1);
@@ -279,8 +279,4 @@ describe("WorkerSlaveStates", function () {
             expect(slaveChangeState).toHaveBeenCalledWith(jasmine.any(IdleWorkerSlaveState));
         });
     });
-
-    function createMessage(data: any): MessageEvent {
-        return { data } as any;
-    }
 });

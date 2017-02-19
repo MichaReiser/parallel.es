@@ -3,7 +3,8 @@ import {ITaskDefinition} from "../task/task-definition";
 import {IFunctionDefinition} from "../function/function-defintion";
 import {
     functionExecutionError, isFunctionResponse, isInitializeMessage, isScheduleTask, requestFunctionMessage,
-    workerResultMessage } from "./worker-messages";
+    workerResultMessage, IWorkerMessage
+} from "./worker-messages";
 import {IWorkerSlave} from "./worker-slave";
 
 /**
@@ -21,10 +22,10 @@ export abstract class WorkerSlaveState {
 
     /**
      * Executed whenever the slave receives a message from the ui-thread while being in this state
-     * @param event the received message
+     * @param message the received message
      * @returns {boolean} true if the state has handled the message, false otherwise
      */
-    public onMessage(event: MessageEvent): boolean { return false; }
+    public onMessage(message: IWorkerMessage): boolean { return false; }
 }
 
 /**
@@ -35,9 +36,9 @@ export class DefaultWorkerSlaveState extends WorkerSlaveState {
         super("Default", slave);
     }
 
-    public onMessage(event: MessageEvent): boolean {
-        if (isInitializeMessage(event.data)) {
-            this.slave.id = event.data.workerId;
+    public onMessage(message: IWorkerMessage): boolean {
+        if (isInitializeMessage(message)) {
+            this.slave.id = message.workerId;
             this.slave.changeState(new IdleWorkerSlaveState(this.slave));
             return true;
         }
@@ -53,12 +54,12 @@ export class IdleWorkerSlaveState extends WorkerSlaveState {
         super("Idle", slave);
     }
 
-    public onMessage(event: MessageEvent): boolean {
-        if (!isScheduleTask(event.data)) {
+    public onMessage(message: IWorkerMessage): boolean {
+        if (!isScheduleTask(message)) {
             return false;
         }
 
-        const task: ITaskDefinition = event.data.task;
+        const task: ITaskDefinition = message.task;
         const missingFunctions = task.usedFunctionIds.filter(id => !this.slave.functionCache.has(id));
 
         if (missingFunctions.length === 0) {
@@ -81,8 +82,7 @@ export class WaitingForFunctionDefinitionWorkerSlaveState extends WorkerSlaveSta
         super("WaitingForFunctionDefinition", slave);
     }
 
-    public onMessage(event: MessageEvent): boolean {
-        const message = event.data;
+    public onMessage(message: IWorkerMessage): boolean {
         if (isFunctionResponse(message)) {
             if (message.missingFunctions.length > 0) {
                 const identifiers = message.missingFunctions.map(functionId => functionId.identifier).join(", ");

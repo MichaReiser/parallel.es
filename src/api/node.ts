@@ -11,7 +11,7 @@ export * from "./shared";
 
 const functionLookupTable = new DynamicFunctionRegistry();
 const maxConcurrencyLevel = os.cpus().length;
-console.log(maxConcurrencyLevel);
+
 const functionCallSerializer = new FunctionCallSerializer(functionLookupTable);
 const threadPool = new DefaultThreadPool(new NodeWorkerThreadFactory(functionLookupTable), { maxConcurrencyLevel });
 

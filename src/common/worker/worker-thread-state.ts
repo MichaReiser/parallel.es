@@ -1,4 +1,7 @@
-import {isFunctionRequest, IFunctionRequest, functionResponseMessage, isWorkerResult, isFunctionExecutionError} from "./worker-messages";
+import {
+    isFunctionRequest, IFunctionRequest, functionResponseMessage, isWorkerResult, isFunctionExecutionError,
+    IWorkerMessage
+} from "./worker-messages";
 import {DynamicFunctionRegistry} from "../function/dynamic-function-registry";
 import {IFunctionId} from "../function/function-id";
 import {IFunctionDefinition} from "../function/function-defintion";
@@ -14,17 +17,17 @@ export class WorkerThreadState {
      * Called if the worker thread has received a message from a slave
      * @param event the received message
      */
-    public onMessage(event: MessageEvent): void {
-        throw new Error(`Worker thread in state '${this.name}' cannot handle the received message (${event.data.type}).`);
+    public onMessage(message: IWorkerMessage): void {
+        throw new Error(`Worker thread in state '${this.name}' cannot handle the received message (${message.type}).`);
     }
 
     /**
      * Called if a fatal error on the Slave. Errors occurring during task execution are specially handled
      * and passed to {@link WorkerThreadState.onMessage}
-     * @param event
+     * @param error
      */
-    public onError(event: ErrorEvent) {
-        console.error("Processing error on worker slave", event.error);
+    public onError(error: any) {
+        console.error("Processing error on worker slave", error);
     }
 }
 
@@ -36,8 +39,7 @@ export class WorkerThreadExecutingState extends WorkerThreadState {
         super("executing");
     }
 
-    public onMessage(event: MessageEvent) {
-        const message = event.data;
+    public onMessage(message: IWorkerMessage) {
         if (isFunctionRequest(message)) {
             this.handleFunctionRequest(message);
         } else if (isWorkerResult(message)) {
@@ -45,12 +47,12 @@ export class WorkerThreadExecutingState extends WorkerThreadState {
         } else if (isFunctionExecutionError(message)) {
             this.callback(message.error, undefined);
         } else {
-            super.onMessage(event);
+            super.onMessage(message);
         }
     }
 
-    public onError(event: ErrorEvent) {
-        this.callback(event.error, undefined);
+    public onError(error: any) {
+        this.callback(error, undefined);
     }
 
     private handleFunctionRequest(message: IFunctionRequest) {

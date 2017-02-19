@@ -10,7 +10,11 @@ export class WebWorkerThreadSlaveCommunicationChannel implements IWorkerThreadSl
         this.worker.postMessage(message);
     }
 
-    public addEventListener(type: "error" | "message", listener: (ev: Event) => any): void {
-        this.worker.addEventListener(type, listener);
+    public addEventListener(type: "error" | "message", listener: (ev: any) => any): void {
+        if (type === "message") {
+            this.worker.addEventListener("message", (event) => listener(event.data));
+        } else if (type === "error") {
+            this.worker.addEventListener("error", (event) => listener(event.error));
+        }
     }
 }
