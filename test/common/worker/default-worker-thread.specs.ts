@@ -9,7 +9,7 @@ import {functionId} from "../../../src/common/function/function-id";
 import {DefaultWorkerThread} from "../../../src/common/worker/default-worker-thread";
 
 describe("DefaultWorkerThread", function () {
-    let communicationChannel: { sendMessage: jasmine.Spy, addEventListener(event: string, handler: (event: MessageEvent) => void): void };
+    let communicationChannel: { sendMessage: jasmine.Spy, addEventListener(event: "message", handler: (event: IWorkerMessage) => void): void };
     let workerThread: DefaultWorkerThread;
     let functionLookupTable: DynamicFunctionRegistry;
     let slaveRespond: (message: IWorkerMessage) => void;
@@ -17,7 +17,7 @@ describe("DefaultWorkerThread", function () {
     beforeEach(function () {
         communicationChannel = {
             sendMessage: jasmine.createSpy("sendMessage"),
-            addEventListener(event: string, handler: (event: MessageEvent) => void): void {
+            addEventListener(event: string, handler: (message: IWorkerMessage) => void): void {
                 if (event === "message") {
                     slaveRespond = handler;
                 }
@@ -152,7 +152,7 @@ describe("DefaultWorkerThread", function () {
 
         it("throws an error if the slave sends an unexpected message", function () {
             // act, assert
-            expect(() => slaveRespond({ txt: "Unknown message", type: 9999999 })).toThrowError("Worker thread in state 'default' cannot handle the received message (9999999).");
+            expect(() => slaveRespond({ txt: "Unknown message", type: 9999999 } as any)).toThrowError("Worker thread in state 'default' cannot handle the received message (9999999).");
         });
 
         it("fails if the worker thread is not in idle state", function () {
