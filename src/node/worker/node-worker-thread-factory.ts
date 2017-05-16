@@ -23,10 +23,6 @@ export class NodeWorkerThreadFactory implements IWorkerThreadFactory {
      * @returns {string} the file name of the slave
      */
     private getSlaveFileName(): string {
-        /* tslint:disable:no-eval */
-        const requireResolve = eval("require.resolve") as (moduleName: string) => string;
-        /* tslint:enable:no-eval */
-        // TODO get es5 or es6 version
-        return requireResolve("parallel-es/dist/node-slave.parallel.js");
+        return eval("require").resolve("./node-slave.parallel");
     }
 }
