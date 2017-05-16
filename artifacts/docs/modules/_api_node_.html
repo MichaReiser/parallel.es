@@ -66,6 +66,81 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_api_node_.html#functioncallserializer" class="tsd-kind-icon">function<wbr>Call<wbr>Serializer</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_api_node_.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_api_node_.html#maxconcurrencylevel" class="tsd-kind-icon">max<wbr>Concurrency<wbr>Level</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module"><a href="_api_node_.html#parallel" class="tsd-kind-icon">parallel</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_api_node_.html#threadpool" class="tsd-kind-icon">thread<wbr>Pool</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="functioncallserializer" class="tsd-anchor"></a>
+					<h3>function<wbr>Call<wbr>Serializer</h3>
+					<div class="tsd-signature tsd-kind-icon">function<wbr>Call<wbr>Serializer<span class="tsd-signature-symbol">:</span> <a href="../classes/parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a><span class="tsd-signature-symbol"> =&nbsp;new FunctionCallSerializer(functionLookupTable)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/api/node.ts#L15">api/node.ts:15</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="functionlookuptable" class="tsd-anchor"></a>
+					<h3>function<wbr>Lookup<wbr>Table</h3>
+					<div class="tsd-signature tsd-kind-icon">function<wbr>Lookup<wbr>Table<span class="tsd-signature-symbol">:</span> <a href="../classes/_common_function_dynamic_function_registry_.dynamicfunctionregistry.html" class="tsd-signature-type">DynamicFunctionRegistry</a><span class="tsd-signature-symbol"> =&nbsp;new DynamicFunctionRegistry()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/api/node.ts#L12">api/node.ts:12</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="maxconcurrencylevel" class="tsd-anchor"></a>
+					<h3>max<wbr>Concurrency<wbr>Level</h3>
+					<div class="tsd-signature tsd-kind-icon">max<wbr>Concurrency<wbr>Level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;os.cpus().length</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/api/node.ts#L13">api/node.ts:13</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module">
+					<a name="parallel" class="tsd-anchor"></a>
+					<h3>parallel</h3>
+					<div class="tsd-signature tsd-kind-icon">parallel<span class="tsd-signature-symbol">:</span> <a href="../interfaces/parallel.iparallel.html" class="tsd-signature-type">IParallel</a><span class="tsd-signature-symbol"> =&nbsp;parallelFactory({functionCallSerializer,scheduler: new DefaultParallelScheduler(),threadPool})</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/api/node.ts#L21">api/node.ts:21</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The global parallel instance.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="threadpool" class="tsd-anchor"></a>
+					<h3>thread<wbr>Pool</h3>
+					<div class="tsd-signature tsd-kind-icon">thread<wbr>Pool<span class="tsd-signature-symbol">:</span> <a href="../classes/_common_thread_pool_default_thread_pool_.defaultthreadpool.html" class="tsd-signature-type">DefaultThreadPool</a><span class="tsd-signature-symbol"> =&nbsp;new DefaultThreadPool(new NodeWorkerThreadFactory(functionLookupTable), { maxConcurrencyLevel })</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/api/node.ts#L16">api/node.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
@@ -80,6 +155,21 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_api_node_.html#functioncallserializer" class="tsd-kind-icon">function<wbr>Call<wbr>Serializer</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_api_node_.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_api_node_.html#maxconcurrencylevel" class="tsd-kind-icon">max<wbr>Concurrency<wbr>Level</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
+						<a href="_api_node_.html#parallel" class="tsd-kind-icon">parallel</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_api_node_.html#threadpool" class="tsd-kind-icon">thread<wbr>Pool</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

@@ -158,7 +158,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_common_util_promise_.ipromise.html">IPromise</a>.<a href="_common_util_promise_.ipromise.html#catch">catch</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/4e44f27/src/common/util/promise.ts#L30">common/util/promise.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/util/promise.ts#L30">common/util/promise.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -209,7 +209,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_common_util_promise_.ipromise.html">IPromise</a>.<a href="_common_util_promise_.ipromise.html#catch">catch</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/4e44f27/src/common/util/promise.ts#L37">common/util/promise.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/util/promise.ts#L37">common/util/promise.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -256,13 +256,13 @@
 					<a name="subscribe" class="tsd-anchor"></a>
 					<h3>subscribe</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">subscribe<span class="tsd-signature-symbol">(</span>onNext<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, onError<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span>, onComplete<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.iparallelstream.html" class="tsd-signature-type">IParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">subscribe<span class="tsd-signature-symbol">(</span>onNext<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, onError<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span>, onComplete<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.iparallelstream.html" class="tsd-signature-type">IParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/4e44f27/src/common/parallel/stream/parallel-stream.ts#L29">common/parallel/stream/parallel-stream.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/parallel/stream/parallel-stream.ts#L29">common/parallel/stream/parallel-stream.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -307,58 +307,16 @@
 									</ul>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> onError: <span class="tsd-signature-type">function</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> onError: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>is invoked whenever any task has failed.</p>
 									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, reason<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>this: <span class="tsd-signature-type">void</span></h5>
-														</li>
-														<li>
-															<h5>reason: <span class="tsd-signature-type">any</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> onComplete: <span class="tsd-signature-type">function</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> onComplete: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>is invoked with the joined result when all tasks have completed</p>
 									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>this: <span class="tsd-signature-type">void</span></h5>
-														</li>
-														<li>
-															<h5>result: <span class="tsd-signature-type">TEndResult</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="parallel.iparallelstream.html" class="tsd-signature-type">IParallelStream</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -379,7 +337,7 @@
 								<p>Inherited from <a href="_common_util_promise_.ipromise.html">IPromise</a>.<a href="_common_util_promise_.ipromise.html#then">then</a></p>
 								<p>Overrides PromiseLike.then</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/4e44f27/src/common/util/promise.ts#L8">common/util/promise.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/util/promise.ts#L8">common/util/promise.ts:8</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -461,7 +419,7 @@
 								<p>Inherited from <a href="_common_util_promise_.ipromise.html">IPromise</a>.<a href="_common_util_promise_.ipromise.html#then">then</a></p>
 								<p>Overrides PromiseLike.then</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/4e44f27/src/common/util/promise.ts#L16">common/util/promise.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/util/promise.ts#L16">common/util/promise.ts:16</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -540,7 +498,7 @@
 								<p>Inherited from <a href="_common_util_promise_.ipromise.html">IPromise</a>.<a href="_common_util_promise_.ipromise.html#then">then</a></p>
 								<p>Overrides PromiseLike.then</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/4e44f27/src/common/util/promise.ts#L23">common/util/promise.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/util/promise.ts#L23">common/util/promise.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

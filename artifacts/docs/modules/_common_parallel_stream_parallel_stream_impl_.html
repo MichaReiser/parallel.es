@@ -83,6 +83,7 @@
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-external"><a href="_common_parallel_stream_parallel_stream_impl_.html#inextcallback" class="tsd-kind-icon">INext<wbr>Callback</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-external"><a href="_common_parallel_stream_parallel_stream_impl_.html#irejectcallback" class="tsd-kind-icon">IReject<wbr>Callback</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-external"><a href="_common_parallel_stream_parallel_stream_impl_.html#iresolvecallback" class="tsd-kind-icon">IResolve<wbr>Callback</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-external tsd-is-not-exported"><a href="_common_parallel_stream_parallel_stream_impl_.html#nexthandler" class="tsd-kind-icon">Next<wbr>Handler</a></li>
 							</ul>
 						</section>
 					</div>
@@ -96,7 +97,7 @@
 					<div class="tsd-signature tsd-kind-icon">IExecutor<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/4e44f27/src/common/parallel/stream/parallel-stream-impl.ts#L36">common/parallel/stream/parallel-stream-impl.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/parallel/stream/parallel-stream-impl.ts#L36">common/parallel/stream/parallel-stream-impl.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -120,17 +121,17 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>next<span class="tsd-signature-symbol">: </span><a href="_common_parallel_stream_parallel_stream_impl_.html#inextcallback" class="tsd-signature-type">INextCallback</a>, resolve<span class="tsd-signature-symbol">: </span><a href="_common_parallel_stream_parallel_stream_impl_.html#iresolvecallback" class="tsd-signature-type">IResolveCallback</a>, reject<span class="tsd-signature-symbol">: </span><a href="_common_parallel_stream_parallel_stream_impl_.html#irejectcallback" class="tsd-signature-type">IRejectCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>next<span class="tsd-signature-symbol">: </span><a href="_common_parallel_stream_parallel_stream_impl_.html#inextcallback" class="tsd-signature-type">INextCallback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">&gt;</span>, resolve<span class="tsd-signature-symbol">: </span><a href="_common_parallel_stream_parallel_stream_impl_.html#iresolvecallback" class="tsd-signature-type">IResolveCallback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">&gt;</span>, reject<span class="tsd-signature-symbol">: </span><a href="_common_parallel_stream_parallel_stream_impl_.html#irejectcallback" class="tsd-signature-type">IRejectCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>next: <a href="_common_parallel_stream_parallel_stream_impl_.html#inextcallback" class="tsd-signature-type">INextCallback</a></h5>
+												<h5>next: <a href="_common_parallel_stream_parallel_stream_impl_.html#inextcallback" class="tsd-signature-type">INextCallback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSubResult</span><span class="tsd-signature-symbol">&gt;</span></h5>
 											</li>
 											<li>
-												<h5>resolve: <a href="_common_parallel_stream_parallel_stream_impl_.html#iresolvecallback" class="tsd-signature-type">IResolveCallback</a></h5>
+												<h5>resolve: <a href="_common_parallel_stream_parallel_stream_impl_.html#iresolvecallback" class="tsd-signature-type">IResolveCallback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEndResult</span><span class="tsd-signature-symbol">&gt;</span></h5>
 											</li>
 											<li>
 												<h5>reject: <a href="_common_parallel_stream_parallel_stream_impl_.html#irejectcallback" class="tsd-signature-type">IRejectCallback</a></h5>
@@ -149,7 +150,7 @@
 					<div class="tsd-signature tsd-kind-icon">INext<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/4e44f27/src/common/parallel/stream/parallel-stream-impl.ts#L14">common/parallel/stream/parallel-stream-impl.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/parallel/stream/parallel-stream-impl.ts#L14">common/parallel/stream/parallel-stream-impl.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -205,7 +206,7 @@
 					<div class="tsd-signature tsd-kind-icon">IReject<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/4e44f27/src/common/parallel/stream/parallel-stream-impl.ts#L27">common/parallel/stream/parallel-stream-impl.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/parallel/stream/parallel-stream-impl.ts#L27">common/parallel/stream/parallel-stream-impl.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -246,7 +247,7 @@
 					<div class="tsd-signature tsd-kind-icon">IResolve<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/4e44f27/src/common/parallel/stream/parallel-stream-impl.ts#L21">common/parallel/stream/parallel-stream-impl.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/parallel/stream/parallel-stream-impl.ts#L21">common/parallel/stream/parallel-stream-impl.ts:21</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -284,6 +285,43 @@
 						</ul>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-external tsd-is-not-exported">
+					<a name="nexthandler" class="tsd-anchor"></a>
+					<h3>Next<wbr>Handler</h3>
+					<div class="tsd-signature tsd-kind-icon">Next<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/parallel/stream/parallel-stream-impl.ts#L38">common/parallel/stream/parallel-stream-impl.ts:38</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>subResult<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSubResult</span>, worker<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, valuesPerWorker<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>subResult: <span class="tsd-signature-type">TSubResult</span></h5>
+											</li>
+											<li>
+												<h5>worker: <span class="tsd-signature-type">number</span></h5>
+											</li>
+											<li>
+												<h5>valuesPerWorker: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -313,6 +351,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-external">
 						<a href="_common_parallel_stream_parallel_stream_impl_.html#iresolvecallback" class="tsd-kind-icon">IResolve<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-external tsd-is-not-exported">
+						<a href="_common_parallel_stream_parallel_stream_impl_.html#nexthandler" class="tsd-kind-icon">Next<wbr>Handler</a>
 					</li>
 				</ul>
 			</nav>

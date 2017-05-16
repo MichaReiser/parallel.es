@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FunctionCallDeserializer | Parallel ES</title>
+	<title>WebWorkerThreadSlaveCommunicationChannel | Parallel ES</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,32 +56,31 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_common_function_function_call_deserializer_.html">&quot;common/function/function-call-deserializer&quot;</a>
+					<a href="../modules/_browser_worker_web_worker_thread_slave_communication_channel_.html">&quot;browser/worker/web-worker-thread-slave-communication-channel&quot;</a>
 				</li>
 				<li>
-					<a href="_common_function_function_call_deserializer_.functioncalldeserializer.html">FunctionCallDeserializer</a>
+					<a href="_browser_worker_web_worker_thread_slave_communication_channel_.webworkerthreadslavecommunicationchannel.html">WebWorkerThreadSlaveCommunicationChannel</a>
 				</li>
 			</ul>
-			<h1>Class FunctionCallDeserializer</h1>
+			<h1>Class WebWorkerThreadSlaveCommunicationChannel</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Deserializer for a <a href="../interfaces/parallel.iserializedfunctioncall.html">ISerializedFunctionCall</a>.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">FunctionCallDeserializer</span>
+						<span class="target">WebWorkerThreadSlaveCommunicationChannel</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/_common_worker_worker_thread_slave_communication_channel_.iworkerthreadslavecommunicationchannel.html" class="tsd-signature-type">IWorkerThreadSlaveCommunicationChannel</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -91,19 +90,20 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-external"><a href="_common_function_function_call_deserializer_.functioncalldeserializer.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-external"><a href="_browser_worker_web_worker_thread_slave_communication_channel_.webworkerthreadslavecommunicationchannel.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-private tsd-is-private-protected tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_common_function_function_call_deserializer_.functioncalldeserializer.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_browser_worker_web_worker_thread_slave_communication_channel_.webworkerthreadslavecommunicationchannel.html#worker" class="tsd-kind-icon">worker</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external"><a href="_common_function_function_call_deserializer_.functioncalldeserializer.html#deserializefunctioncall" class="tsd-kind-icon">deserialize<wbr>Function<wbr>Call</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_browser_worker_web_worker_thread_slave_communication_channel_.webworkerthreadslavecommunicationchannel.html#addeventlistener" class="tsd-kind-icon">add<wbr>Event<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_browser_worker_web_worker_thread_slave_communication_channel_.webworkerthreadslavecommunicationchannel.html#sendmessage" class="tsd-kind-icon">send<wbr>Message</a></li>
 							</ul>
 						</section>
 					</div>
@@ -115,32 +115,22 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Function<wbr>Call<wbr>Deserializer<span class="tsd-signature-symbol">(</span>functionLookupTable<span class="tsd-signature-symbol">: </span><a href="../interfaces/_common_function_function_lookup_table_.ifunctionlookuptable.html" class="tsd-signature-type">IFunctionLookupTable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_function_function_call_deserializer_.functioncalldeserializer.html" class="tsd-signature-type">FunctionCallDeserializer</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Web<wbr>Worker<wbr>Thread<wbr>Slave<wbr>Communication<wbr>Channel<span class="tsd-signature-symbol">(</span>worker<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Worker</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_browser_worker_web_worker_thread_slave_communication_channel_.webworkerthreadslavecommunicationchannel.html" class="tsd-signature-type">WebWorkerThreadSlaveCommunicationChannel</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/function/function-call-deserializer.ts#L24">common/function/function-call-deserializer.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/browser/worker/web-worker-thread-slave-communication-channel.ts#L4">browser/worker/web-worker-thread-slave-communication-channel.ts:4</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Creates a new deserializer that uses the given function lookup table to retrieve the function for a given id</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>functionLookupTable: <a href="../interfaces/_common_function_function_lookup_table_.ifunctionlookuptable.html" class="tsd-signature-type">IFunctionLookupTable</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>the lookup table to use</p>
-										</div>
-									</div>
+									<h5>worker: <span class="tsd-signature-type">Worker</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_common_function_function_call_deserializer_.functioncalldeserializer.html" class="tsd-signature-type">FunctionCallDeserializer</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_browser_worker_web_worker_thread_slave_communication_channel_.webworkerthreadslavecommunicationchannel.html" class="tsd-signature-type">WebWorkerThreadSlaveCommunicationChannel</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -148,82 +138,83 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected tsd-is-external">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-					<a name="functionlookuptable" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> function<wbr>Lookup<wbr>Table</h3>
-					<div class="tsd-signature tsd-kind-icon">function<wbr>Lookup<wbr>Table<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_common_function_function_lookup_table_.ifunctionlookuptable.html" class="tsd-signature-type">IFunctionLookupTable</a></div>
+					<a name="worker" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> worker</h3>
+					<div class="tsd-signature tsd-kind-icon">worker<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Worker</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/function/function-call-deserializer.ts#L29">common/function/function-call-deserializer.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/browser/worker/web-worker-thread-slave-communication-channel.ts#L6">browser/worker/web-worker-thread-slave-communication-channel.ts:6</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>the lookup table to use</p>
-						</div>
-					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
-					<a name="deserializefunctioncall" class="tsd-anchor"></a>
-					<h3>deserialize<wbr>Function<wbr>Call</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">deserialize<wbr>Function<wbr>Call&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>functionCall<span class="tsd-signature-symbol">: </span><a href="../interfaces/parallel.iserializedfunctioncall.html" class="tsd-signature-type">ISerializedFunctionCall</a>, deserializeParams<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
+					<a name="addeventlistener" class="tsd-anchor"></a>
+					<h3>add<wbr>Event<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Event<wbr>Listener<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"error"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"message"</span>, listener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/function/function-call-deserializer.ts#L37">common/function/function-call-deserializer.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/browser/worker/web-worker-thread-slave-communication-channel.ts#L13">browser/worker/web-worker-thread-slave-communication-channel.ts:13</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Deserializes the function call into a function</p>
-								</div>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>TResult</h4>
-								</li>
-							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>functionCall: <a href="../interfaces/parallel.iserializedfunctioncall.html" class="tsd-signature-type">ISerializedFunctionCall</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>the function call to deserialize</p>
-									</div>
+									<h5>type: <span class="tsd-signature-type">"error"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"message"</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> deserializeParams: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>indicator if the parameters passed to the serialized function should be deserailized too</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span></h4>
-							<p>a function that can be called with additional parameters (the params from the serialized function calls are prepended to the passed parameters)</p>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter-siganture">
-									<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>additionalParams<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
-									</ul>
-									<ul class="tsd-descriptions">
-										<li class="tsd-description">
-											<h4 class="tsd-parameters-title">Parameters</h4>
-											<ul class="tsd-parameters">
-												<li>
-													<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>additionalParams: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>listener: <span class="tsd-signature-type">function</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>ev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>ev: <span class="tsd-signature-type">any</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 												</li>
 											</ul>
-											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span></h4>
 										</li>
 									</ul>
 								</li>
 							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
+					<a name="sendmessage" class="tsd-anchor"></a>
+					<h3>send<wbr>Message</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Message<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="../interfaces/_common_worker_worker_messages_.iworkermessage.html" class="tsd-signature-type">IWorkerMessage</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_common_worker_worker_thread_slave_communication_channel_.iworkerthreadslavecommunicationchannel.html">IWorkerThreadSlaveCommunicationChannel</a>.<a href="../interfaces/_common_worker_worker_thread_slave_communication_channel_.iworkerthreadslavecommunicationchannel.html#sendmessage">sendMessage</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/browser/worker/web-worker-thread-slave-communication-channel.ts#L9">browser/worker/web-worker-thread-slave-communication-channel.ts:9</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>message: <a href="../interfaces/_common_worker_worker_messages_.iworkermessage.html" class="tsd-signature-type">IWorkerMessage</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -236,7 +227,7 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_common_function_function_call_deserializer_.html">"common/function/function-<wbr>call-<wbr>deserializer"</a>
+						<a href="../modules/_browser_worker_web_worker_thread_slave_communication_channel_.html">"browser/worker/web-<wbr>worker-<wbr>thread-<wbr>slave-<wbr>communication-<wbr>channel"</a>
 					</li>
 				</ul>
 			</nav>
@@ -245,24 +236,24 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-is-external">
-						<a href="_common_function_function_call_deserializer_.functioncalldeserializer.html" class="tsd-kind-icon">Function<wbr>Call<wbr>Deserializer</a>
+						<a href="_browser_worker_web_worker_thread_slave_communication_channel_.webworkerthreadslavecommunicationchannel.html" class="tsd-kind-icon">Web<wbr>Worker<wbr>Thread<wbr>Slave<wbr>Communication<wbr>Channel</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-external">
-								<a href="_common_function_function_call_deserializer_.functioncalldeserializer.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="_browser_worker_web_worker_thread_slave_communication_channel_.webworkerthreadslavecommunicationchannel.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-								<a href="_common_function_function_call_deserializer_.functioncalldeserializer.html#functionlookuptable" class="tsd-kind-icon">function<wbr>Lookup<wbr>Table</a>
+								<a href="_browser_worker_web_worker_thread_slave_communication_channel_.webworkerthreadslavecommunicationchannel.html#worker" class="tsd-kind-icon">worker</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
-								<a href="_common_function_function_call_deserializer_.functioncalldeserializer.html#deserializefunctioncall" class="tsd-kind-icon">deserialize<wbr>Function<wbr>Call</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
+								<a href="_browser_worker_web_worker_thread_slave_communication_channel_.webworkerthreadslavecommunicationchannel.html#addeventlistener" class="tsd-kind-icon">add<wbr>Event<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
+								<a href="_browser_worker_web_worker_thread_slave_communication_channel_.webworkerthreadslavecommunicationchannel.html#sendmessage" class="tsd-kind-icon">send<wbr>Message</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-external tsd-is-not-exported">
-						<a href="../modules/_common_function_function_call_deserializer_.html#bind" class="tsd-kind-icon">bind</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

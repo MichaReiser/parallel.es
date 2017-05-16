@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IParallelGenerator | Parallel ES</title>
+	<title>WorkerThreadState | Parallel ES</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_common_parallel_generator_parallel_generator_.html">&quot;common/parallel/generator/parallel-generator&quot;</a>
+					<a href="../modules/_common_worker_worker_thread_state_.html">&quot;common/worker/worker-thread-state&quot;</a>
 				</li>
 				<li>
-					<a href="_common_parallel_generator_parallel_generator_.iparallelgenerator.html">IParallelGenerator</a>
+					<a href="_common_worker_worker_thread_state_.workerthreadstate.html">WorkerThreadState</a>
 				</li>
 			</ul>
-			<h1>Interface IParallelGenerator</h1>
+			<h1>Class WorkerThreadState</h1>
 		</div>
 	</div>
 </header>
@@ -72,8 +72,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Generator that creates a sequence of values and is capable
-						to distribute the value generations onto various tasks</p>
+						<p>State of the worker thread</p>
 					</div>
 				</div>
 			</section>
@@ -81,16 +80,13 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IParallelGenerator</span>
+						<span class="target">WorkerThreadState</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="_common_worker_worker_thread_state_.workerthreadexecutingstate.html" class="tsd-signature-type">WorkerThreadExecutingState</a>
+							</li>
+						</ul>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/_common_parallel_generator_parallel_collection_generator_.parallelcollectiongenerator.html" class="tsd-signature-type">ParallelCollectionGenerator</a></li>
-					<li><a href="../classes/_common_parallel_generator_parallel_range_generator_.parallelrangegenerator.html" class="tsd-signature-type">ParallelRangeGenerator</a></li>
-					<li><a href="../classes/_common_parallel_generator_parallel_times_generator_.paralleltimesgenerator.html" class="tsd-signature-type">ParallelTimesGenerator</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -98,80 +94,124 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section tsd-is-external">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-external"><a href="_common_worker_worker_thread_state_.workerthreadstate.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="_common_parallel_generator_parallel_generator_.iparallelgenerator.html#length" class="tsd-kind-icon">length</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="_common_worker_worker_thread_state_.workerthreadstate.html#name" class="tsd-kind-icon">name</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-external"><a href="_common_parallel_generator_parallel_generator_.iparallelgenerator.html#serializeslice" class="tsd-kind-icon">serialize<wbr>Slice</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_common_worker_worker_thread_state_.workerthreadstate.html#onerror" class="tsd-kind-icon">on<wbr>Error</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_common_worker_worker_thread_state_.workerthreadstate.html#onmessage" class="tsd-kind-icon">on<wbr>Message</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="length" class="tsd-anchor"></a>
-					<h3>length</h3>
-					<div class="tsd-signature tsd-kind-icon">length<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/parallel/generator/parallel-generator.ts#L12">common/parallel/generator/parallel-generator.ts:12</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Total number of elements that this generator return</p>
-						</div>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-external">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-external">
-					<a name="serializeslice" class="tsd-anchor"></a>
-					<h3>serialize<wbr>Slice</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">serialize<wbr>Slice<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, numberOfItems<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, functionCallSerializer<span class="tsd-signature-symbol">: </span><a href="../classes/parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="parallel.iserializedfunctioncall.html" class="tsd-signature-type">ISerializedFunctionCall</a></li>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-external">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Worker<wbr>Thread<wbr>State<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_common_worker_worker_thread_state_.workerthreadstate.html" class="tsd-signature-type">WorkerThreadState</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/parallel/generator/parallel-generator.ts#L20">common/parallel/generator/parallel-generator.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/worker/worker-thread-state.ts#L13">common/worker/worker-thread-state.ts:13</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_common_worker_worker_thread_state_.workerthreadstate.html" class="tsd-signature-type">WorkerThreadState</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-external">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/worker/worker-thread-state.ts#L14">common/worker/worker-thread-state.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-external">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
+					<a name="onerror" class="tsd-anchor"></a>
+					<h3>on<wbr>Error</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Error<span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/worker/worker-thread-state.ts#L29">common/worker/worker-thread-state.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Serializes the generation of a single slice that can be executed as separate task</p>
+									<p>Called if a fatal error on the Slave. Errors occurring during task execution are specially handled
+									and passed to <a href="_common_worker_worker_thread_state_.workerthreadstate.html#onmessage">WorkerThreadState.onMessage</a></p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>index: <span class="tsd-signature-type">number</span></h5>
+									<h5>error: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the slice/task index (start 0)</p>
-									</div>
-								</li>
-								<li>
-									<h5>numberOfItems: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>the number of items to include in this slice</p>
-									</div>
-								</li>
-								<li>
-									<h5>functionCallSerializer: <a href="../classes/parallel.functioncallserializer.html" class="tsd-signature-type">FunctionCallSerializer</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>the serialized function call</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="parallel.iserializedfunctioncall.html" class="tsd-signature-type">ISerializedFunctionCall</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
+					<a name="onmessage" class="tsd-anchor"></a>
+					<h3>on<wbr>Message</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Message<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="../interfaces/_common_worker_worker_messages_.iworkermessage.html" class="tsd-signature-type">IWorkerMessage</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/MichaReiser/parallel.es/blob/9114efe/src/common/worker/worker-thread-state.ts#L20">common/worker/worker-thread-state.ts:20</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Called if the worker thread has received a message from a slave</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>message: <a href="../interfaces/_common_worker_worker_messages_.iworkermessage.html" class="tsd-signature-type">IWorkerMessage</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -184,22 +224,31 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_common_parallel_generator_parallel_generator_.html">"common/parallel/generator/parallel-<wbr>generator"</a>
+						<a href="../modules/_common_worker_worker_thread_state_.html">"common/worker/worker-<wbr>thread-<wbr>state"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-external">
+						<a href="_common_worker_worker_thread_state_.workerthreadexecutingstate.html" class="tsd-kind-icon">Worker<wbr>Thread<wbr>Executing<wbr>State</a>
+					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-external-module tsd-is-external">
-						<a href="_common_parallel_generator_parallel_generator_.iparallelgenerator.html" class="tsd-kind-icon">IParallel<wbr>Generator</a>
+					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-is-external">
+						<a href="_common_worker_worker_thread_state_.workerthreadstate.html" class="tsd-kind-icon">Worker<wbr>Thread<wbr>State</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="_common_parallel_generator_parallel_generator_.iparallelgenerator.html#length" class="tsd-kind-icon">length</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-external">
+								<a href="_common_worker_worker_thread_state_.workerthreadstate.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-external">
-								<a href="_common_parallel_generator_parallel_generator_.iparallelgenerator.html#serializeslice" class="tsd-kind-icon">serialize<wbr>Slice</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="_common_worker_worker_thread_state_.workerthreadstate.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
+								<a href="_common_worker_worker_thread_state_.workerthreadstate.html#onerror" class="tsd-kind-icon">on<wbr>Error</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
+								<a href="_common_worker_worker_thread_state_.workerthreadstate.html#onmessage" class="tsd-kind-icon">on<wbr>Message</a>
 							</li>
 						</ul>
 					</li>
