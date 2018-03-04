@@ -3,44 +3,42 @@ var path = require("path");
 var webpack = require("webpack");
 
 module.exports = new Config().merge({
-    entry: {
-        node: "./src/api/node.ts",
-        "node-slave": "./src/node/worker-slave/index.ts"
-    },
+  entry: {
+    node: "./src/api/node.ts",
+    "node-slave": "./src/node/worker-slave/index.ts"
+  },
 
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                enforce: "pre",
-                loader: "tslint-loader"
-            }
-        ],
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        enforce: "pre",
+        loader: "tslint-loader"
+      }
+    ],
 
-        noParse: [
-            /src\/node\/worker\/node-worker-slave-file-name.ts/
-        ]
-    },
+    noParse: [/src\/node\/worker\/node-worker-slave-file-name.ts/]
+  },
 
-    target: "node",
+  target: "node",
 
-    output: {
-        library: "parallel-es",
-        libraryTarget: "umd",
-        path: path.resolve(__dirname, "../dist")
-    },
+  output: {
+    library: "parallel-es",
+    libraryTarget: "umd",
+    path: path.resolve(__dirname, "../dist")
+  },
 
-    node: {
-        __dirname: false
-    },
+  node: {
+    __dirname: false
+  },
 
-    resolve: {
-        extensions: [".webpack.js", ".web.js", ".ts", ".js"]
-    },
+  resolve: {
+    extensions: [".webpack.js", ".web.js", ".ts", ".js"]
+  },
 
-    plugins: [
-        new webpack.DefinePlugin({
-            SLAVE_FILE_NAME: "require.resolve(\"parallel-es/dist/node-slave.parallel.js\")"
-        })
-    ]
+  plugins: [
+    new webpack.DefinePlugin({
+      SLAVE_FILE_NAME: 'require.resolve("parallel-es/dist/node-slave.parallel.js")'
+    })
+  ]
 });

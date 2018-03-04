@@ -11,8 +11,5 @@
     "target": "es6",
     "sourceMap": true
   },
-  "files": [
-    "src/api/browser.ts",
-    "src/api/node.ts"
-  ]
+  "files": ["src/api/browser.ts", "src/api/node.ts"]
 }

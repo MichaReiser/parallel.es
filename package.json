@@ -8,25 +8,27 @@
   "scripts": {
     "build": "cross-env NODE_ENV=prod webpack --progress && npm run build:declarations",
     "build:doc": "typedoc --out ./docs --module umd --target es6 --name \"Parallel ES\" ./src",
-    "build:declarations": "tsc --declaration --outDir ./tmp -p tsconfig.json && copyfiles -u 1 './tmp/**/*.d.ts' ./dist",
+    "build:declarations":
+      "tsc --declaration --outDir ./tmp -p tsconfig.json && copyfiles -u 1 './tmp/**/*.d.ts' ./dist",
+    "lint": "tslint --project .",
     "prepublish": "npm run-script build",
+    "precommit": "lint-staged",
     "start": "cross-env NODE_ENV=dev webpack --progress --watch",
     "test": "cross-env NODE_ENV=test-ci karma start --single-run && npm run coverage:remap",
     "test:watch": "cross-env NODE_ENV=test karma start",
-    "coverage:remap": "remap-istanbul --input ./coverage/Firefox*/coverage-final.json --output ./coverage/html -t html && remap-istanbul --input ./coverage/Firefox*/coverage-final.json --output ./coverage/lcov.info -t lcovonly",
+    "coverage:remap":
+      "remap-istanbul --input ./coverage/Firefox*/coverage-final.json --output ./coverage/html -t html && remap-istanbul --input ./coverage/Firefox*/coverage-final.json --output ./coverage/lcov.info -t lcovonly",
     "coveralljs": "cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf coverage"
+  },
+  "lint-staged": {
+    "*.ts": ["prettier --write", "tslint --fix", "git add"],
+    "*.{json,js}": ["prettier --write", "git add"]
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MichaReiser/parallel.es.git"
   },
-  "keywords": [
-    "Parallel",
-    "JS",
-    "Parallel.For",
-    "ECMAScript",
-    "Web Workers"
-  ],
+  "keywords": ["Parallel", "JS", "Parallel.For", "ECMAScript", "Web Workers"],
   "author": "Micha Reiser <micha@famreiser.ch>",
   "license": "MIT",
   "bugs": {
@@ -45,6 +47,7 @@
     "copyfiles": "^1.2.0",
     "coveralls": "^2.11.16",
     "cross-env": "^3.1.4",
+    "husky": "^0.14.3",
     "istanbul-instrumenter-loader": "^2.0.0",
     "jasmine-core": "^2.5.2",
     "karma": "^1.4.1",
@@ -57,8 +60,11 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.2",
+    "lint-staged": "^7.0.0",
+    "prettier": "^1.11.1",
     "remap-istanbul": "^0.9.1",
     "tslint": "^4.4.2",
+    "tslint-config-prettier": "^1.9.0",
     "tslint-loader": "^3.4.2",
     "typedoc": "^0.5.6",
     "typedoc-plugin-external-module-name": "^1.0.8",
