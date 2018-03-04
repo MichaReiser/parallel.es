@@ -9,8 +9,8 @@ export class WorkerTask<T> implements ITask<T> {
   public isCancellationRequested = false;
   public isCanceled = false;
 
-  private resolvePromise: (result?: T) => void;
-  private rejectPromise: (error: any) => void;
+  private resolvePromise!: (result?: T) => void;
+  private rejectPromise!: (error: any) => void;
   private promise: Promise<T>;
 
   /**

@@ -2,14 +2,11 @@
   "compilerOptions": {
     "module": "es2015",
     "moduleResolution": "node",
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "strictNullChecks": true,
+    "strict": true,
     "pretty": true,
     "target": "es6",
-    "sourceMap": true
+    "sourceMap": true,
+    "importHelpers": true
   },
   "files": ["src/api/browser.ts", "src/api/node.ts"]
 }

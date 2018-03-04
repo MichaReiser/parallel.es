@@ -104,8 +104,8 @@ export class ParallelStream<TSubResult, TEndResult = TSubResult> implements IPar
    * @private
    */
   private nextHandlers: NextHandler<TSubResult>[] = [];
-  private resolve: (result: TEndResult) => void;
-  private reject: (reason: any) => void;
+  private resolve!: (result: TEndResult) => void;
+  private reject!: (reason: any) => void;
 
   /**
    * Creates a new, generic parallel stream

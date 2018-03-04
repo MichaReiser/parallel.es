@@ -151,7 +151,7 @@ describe("BrowserSlave IntegrationTests", function() {
         usedFunctionIds: [functionId("test", 0)]
       };
 
-      const promise = new Promise((resolve, reject) => {
+      const promise = new Promise<Error>((resolve, reject) => {
         (onresponse as jasmine.Spy).and.callFake(function(event: MessageEvent) {
           if (isFunctionRequest(event.data)) {
             slave.postMessage(

@@ -20,14 +20,14 @@ export class ScheduledParallelStream<TSubResult, TEndResult> implements IParalle
   /**
    * Resolves the _promise with the given end result
    */
-  private resolve: (result: TEndResult) => void;
+  private resolve!: (result: TEndResult) => void;
 
   /**
    * Rejects the _promise with the given reason
    */
-  private reject: (reason: any) => void;
+  private reject!: (reason: any) => void;
 
-  private next: (subResult: TSubResult, task: number, valuesPerTask: number) => void;
+  private next!: (subResult: TSubResult, task: number, valuesPerTask: number) => void;
 
   /**
    * Number of still pending tasks

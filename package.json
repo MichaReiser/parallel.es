@@ -63,6 +63,7 @@
     "lint-staged": "^7.0.0",
     "prettier": "^1.11.1",
     "remap-istanbul": "^0.10.1",
+    "ts-lib": "^0.0.5",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.9.0",
     "tslint-loader": "^3.6.0",

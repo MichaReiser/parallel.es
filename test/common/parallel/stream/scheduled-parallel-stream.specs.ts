@@ -262,8 +262,8 @@ class FakeTask<T> implements ITask<T> {
   public isCanceled = false;
   public isCancellationRequested = false;
 
-  public resolve: (result: T) => void;
-  public reject: (reason: any) => void;
+  public resolve!: (result: T) => void;
+  public reject!: (reason: any) => void;
   private promise: Promise<T>;
 
   constructor(index: number) {

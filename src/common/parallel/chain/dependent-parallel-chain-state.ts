@@ -43,7 +43,7 @@ export class DependentParallelChainState<TPrevious, TElement> implements IParall
     });
 
     this.previousStream.then(result => {
-      const tasks = this.options.scheduler.schedule({
+      const tasks = this.options.scheduler.schedule<TElement[]>({
         environment: this.environment,
         generator: new ParallelCollectionGenerator(result),
         operations: this.operations,
