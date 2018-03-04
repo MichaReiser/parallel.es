@@ -65,7 +65,7 @@ export class ParallelChainImpl<TIn, TEnv extends IParallelEnvironment, TOut>
     combiner?: (this: void, sub1: TResult, sub2: TResult) => TResult
   ): IParallelStream<TResult[], TResult> {
     const combineOperation: (accumulatedValue: TResult, value: TResult) => TResult = combiner || (accumulator as any);
-    const reduced = this._chain(
+    const reduced = this._chain<TResult>(
       FunctionCall.createUnchecked(ParallelWorkerFunctionIds.REDUCE, defaultValue),
       FunctionCall.createUnchecked(accumulator)
     ).resolveChain();

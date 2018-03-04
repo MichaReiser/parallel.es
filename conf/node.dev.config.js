@@ -5,6 +5,7 @@ module.exports = new Config().extend("conf/node.es5.config.js").merge({
   output: {
     pathinfo: true
   },
+  mode: "development",
   watch: true,
   devServer: {
     stats: {

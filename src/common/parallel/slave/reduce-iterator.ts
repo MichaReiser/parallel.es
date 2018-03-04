@@ -14,7 +14,7 @@ import { toIterator } from "../../util/arrays";
 export function reduceIterator<T, TResult>(
   defaultValue: TResult,
   iterator: Iterator<T>,
-  iteratee: (this: void, accumulatedValue: TResult, value: T | undefined, env: IParallelTaskEnvironment) => TResult,
+  iteratee: (this: void, accumulatedValue: TResult, value: T, env: IParallelTaskEnvironment) => TResult,
   env: IParallelTaskEnvironment
 ): Iterator<TResult> {
   let accumulatedValue = defaultValue;

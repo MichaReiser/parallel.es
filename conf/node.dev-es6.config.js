@@ -6,6 +6,7 @@ module.exports = new Config().extend("conf/node.es6.config.js").merge({
     pathinfo: true
   },
   watch: true,
+  mode: "development",
   devServer: {
     stats: {
       chunks: false

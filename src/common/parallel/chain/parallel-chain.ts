@@ -119,9 +119,9 @@ export interface IParallelChain<TIn, TEnv extends IParallelEnvironment, TOut> ex
    * @param mapper the mapper to apply for each element
    * @param TResult the type of the resulting elements
    */
-  map<TResult>(mapper: {
-    (this: void, element: TOut, env: TEnv & IParallelTaskEnvironment): TResult;
-  }): IParallelChain<TIn, TEnv, TResult>;
+  map<TResult>(
+    mapper: (this: void, element: TOut, env: TEnv & IParallelTaskEnvironment) => TResult
+  ): IParallelChain<TIn, TEnv, TResult>;
   map<TResult>(mapper: IFunctionId): IParallelChain<TIn, TEnv, TResult>;
 
   /**
@@ -133,9 +133,7 @@ export interface IParallelChain<TIn, TEnv extends IParallelEnvironment, TOut> ex
    */
   reduce(
     defaultValue: TOut,
-    accumulator: {
-      (this: void, memo: TOut, value: TOut, env: TEnv & IParallelTaskEnvironment): TOut;
-    }
+    accumulator: (this: void, memo: TOut, value: TOut, env: TEnv & IParallelTaskEnvironment) => TOut
   ): IParallelStream<TOut[], TOut>;
   reduce(defaultValue: TOut, accumulator: IFunctionId): IParallelStream<TOut[], TOut>;
 
@@ -150,28 +148,22 @@ export interface IParallelChain<TIn, TEnv extends IParallelEnvironment, TOut> ex
    */
   reduce<TResult>(
     defaultValue: TResult,
-    accumulator: {
-      (this: void, memo: TResult, value: TOut, env: TEnv & IParallelTaskEnvironment): TResult;
-    },
-    combiner: {
-      (this: void, subResult1: TResult, subResult2: TResult): TResult;
-    }
+    accumulator: (this: void, memo: TResult, value: TOut, env: TEnv & IParallelTaskEnvironment) => TResult,
+    combiner: (this: void, subResult1: TResult, subResult2: TResult) => TResult
   ): IParallelStream<TResult[], TResult>;
   reduce<TResult>(
     defaultValue: TResult,
     accumulator: IFunctionId,
-    combiner: {
-      (this: void, subResult1: TResult, subResult2: TResult): TResult;
-    }
+    combiner: (this: void, subResult1: TResult, subResult2: TResult) => TResult
   ): IParallelStream<TResult[], TResult>;
 
   /**
    * Filters the input elements using the given predicate
    * @param predicate the predicate to use to filter the elements
    */
-  filter(predicate: {
-    (this: void, value: TOut, env: TEnv & IParallelTaskEnvironment): boolean;
-  }): IParallelChain<TIn, TEnv, TOut>;
+  filter(
+    predicate: (this: void, value: TOut, env: TEnv & IParallelTaskEnvironment) => boolean
+  ): IParallelChain<TIn, TEnv, TOut>;
   filter(predicate: IFunctionId): IParallelChain<TIn, TEnv, TOut>;
 
   // sortBy?

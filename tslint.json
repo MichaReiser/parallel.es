@@ -8,6 +8,7 @@
     "no-string-literal": false,
     "arrow-parens": false,
     "max-classes-per-file": false,
-    "array-type": false
+    "array-type": false,
+    "ban-types": false
   }
 }

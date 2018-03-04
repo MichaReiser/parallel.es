@@ -36,7 +36,7 @@ export class DependentParallelChainState<TPrevious, TElement> implements IParall
     let resolve: ((result: TElement[]) => void) | undefined;
     let reject: ((reason: any) => void) | undefined;
 
-    const stream = new ParallelStream((nxt, rsolve, rject) => {
+    const stream = new ParallelStream<TElement[], TElement[]>((nxt, rsolve, rject) => {
       next = nxt;
       resolve = rsolve;
       reject = rject;

@@ -46,7 +46,7 @@ type NextHandler<TSubResult> = (subResult: TSubResult, worker: number, valuesPer
  * @param TSubResult type of the sub results
  * @param TEndResult type of the end result
  */
-export class ParallelStream<TSubResult, TEndResult> implements IParallelStream<TSubResult, TEndResult> {
+export class ParallelStream<TSubResult, TEndResult = TSubResult> implements IParallelStream<TSubResult, TEndResult> {
   /**
    * Creates a new parallel that is based on the given input stream but transforms the end result using the given transformer
    * @param inputStream the input stream on which the returned stream is based on

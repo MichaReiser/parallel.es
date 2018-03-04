@@ -4,8 +4,8 @@ var CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = new Config().extend("conf/node.es6.config.js").merge({
   devtool: "#source-map",
+  mode: "production",
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new CompressionPlugin({
       asset: "[path].gz[query]",
       algorithm: "gzip",

@@ -5,7 +5,7 @@ import { IParallelTaskEnvironment } from "./parallel-environment";
 import { ParallelCollectionGenerator } from "./generator/parallel-collection-generator";
 import { ParallelRangeGenerator } from "./generator/parallel-range-generator";
 import { ParallelTimesGenerator } from "./generator/parallel-times-generator";
-import { createParallelChain } from "./chain/parallel-chain-factory";
+import { parallelChainFactory } from "./chain/parallel-chain-factory";
 import { ITask } from "../task/task";
 import { IFunctionId, isFunctionId } from "../function/function-id";
 import { FunctionCall } from "../function/function-call";
@@ -40,12 +40,12 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
     },
 
     from<T>(collection: T[], options?: IParallelOptions): IParallelChain<T, {}, T> {
-      return createParallelChain(new ParallelCollectionGenerator<T>(collection), mergeOptions(options));
+      return parallelChainFactory.create(new ParallelCollectionGenerator<T>(collection), mergeOptions(options));
     },
 
     range(start: number, end?: number, step?: number, options?: IParallelOptions) {
       const generator = ParallelRangeGenerator.create(start, end, step);
-      return createParallelChain(generator, mergeOptions(options));
+      return parallelChainFactory.create(generator, mergeOptions(options));
     },
 
     times<TEnv, TResult>(
@@ -55,9 +55,9 @@ export function parallelFactory(defaultOptions: IDefaultInitializedParallelOptio
       options?: IParallelOptions
     ) {
       if (env) {
-        return createParallelChain(ParallelTimesGenerator.create(n, generator), mergeOptions(options), env);
+        return parallelChainFactory.create(ParallelTimesGenerator.create(n, generator), mergeOptions(options), env);
       }
-      return createParallelChain(ParallelTimesGenerator.create(n, generator), mergeOptions(options));
+      return parallelChainFactory.create(ParallelTimesGenerator.create(n, generator), mergeOptions(options));
     },
 
     run<TResult>(func: ((this: void, ...params: any[]) => TResult) | IFunctionId, ...params: any[]): ITask<TResult> {
