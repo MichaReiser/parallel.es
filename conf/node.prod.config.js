@@ -14,7 +14,9 @@ module.exports = new Config().extend("conf/node.es5.config.js").merge({
       new UglifyJsPlugin({
         sourceMap: true,
         uglifyOptions: {
-          comments: /WORKER_SLAVE_STATIC_FUNCTIONS_PLACEHOLDER/,
+          output: {
+            comments: /WORKER_SLAVE_STATIC_FUNCTIONS_PLACEHOLDER/
+          },
           mangle: {
             reserved: ["slaveFunctionLookupTable"]
           }
