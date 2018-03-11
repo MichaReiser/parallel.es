@@ -46,7 +46,6 @@ module.exports = new Config().merge({
                         browsers: "defaults"
                       },
                       useBuiltIns: "usage",
-                      debug: true,
                       modules: false
                     }
                   ]

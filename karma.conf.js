@@ -145,14 +145,6 @@ module.exports = function(config) {
         browser: "iphone",
         device: "iPhone 5"
       },
-      ios_51: {
-        // oldest  with web worker support
-        base: "BrowserStack",
-        os: "ios",
-        os_version: "5.1",
-        browser: "iphone",
-        device: "iPhone 4S"
-      },
       /*android_5: { Not working at the moment, investigate
                 base: "BrowserStack",
                 browser: "android",
