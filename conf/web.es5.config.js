@@ -18,12 +18,15 @@ module.exports = new Config().extend("conf/web.base.config.js").merge({
             query: {
               useBabel: true,
               babelOptions: {
-                presets: [["es2015", { modules: false }]],
-                plugins: [
+                presets: [
                   [
-                    "transform-runtime",
+                    "babel-preset-env",
                     {
-                      regenerator: false
+                      targets: {
+                        browsers: "defaults"
+                      },
+                      useBuiltIns: "usage",
+                      modules: false
                     }
                   ]
                 ]

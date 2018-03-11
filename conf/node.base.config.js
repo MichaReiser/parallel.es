@@ -14,6 +14,31 @@ module.exports = new Config().merge({
         test: /\.ts$/,
         enforce: "pre",
         loader: "tslint-loader"
+      },
+      {
+        test: /\.ts$/,
+        use: [
+          {
+            loader: "awesome-typescript-loader",
+            query: {
+              useBabel: true,
+              babelOptions: {
+                presets: [
+                  [
+                    "babel-preset-env",
+                    {
+                      targets: {
+                        node: 8
+                      },
+                      useBuiltIns: "usage",
+                      modules: false
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ]
       }
     ],
 

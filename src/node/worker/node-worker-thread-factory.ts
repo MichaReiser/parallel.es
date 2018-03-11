@@ -27,6 +27,6 @@ export class NodeWorkerThreadFactory implements IWorkerThreadFactory {
    */
   private getSlaveFileName(): string {
     // tslint:disable-next-line:no-eval
-    return eval("require").resolve("./node-slave.parallel");
+    return eval("require").resolve("./node-slave");
   }
 }

@@ -3,7 +3,7 @@ var Config = require("webpack-config").Config;
 var CompressionPlugin = require("compression-webpack-plugin");
 var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
-module.exports = new Config().extend("conf/node.es5.config.js").merge({
+module.exports = new Config().extend("conf/node.base.config.js").merge({
   entry: {
     "node-commonjs": "./src/api/node-commonjs"
   },
@@ -25,7 +25,6 @@ module.exports = new Config().extend("conf/node.es5.config.js").merge({
     ]
   },
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new CompressionPlugin({
       asset: "[path].gz[query]",
       algorithm: "gzip",

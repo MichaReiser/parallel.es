@@ -3,7 +3,7 @@ var Config = require("webpack-config").Config;
 var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 var CompressionPlugin = require("compression-webpack-plugin");
 
-module.exports = new Config().extend("conf/node.es6.config.js").merge({
+module.exports = new Config().extend("conf/web.es6.config.js").merge({
   devtool: "#source-map",
   mode: "production",
   optimization: {
