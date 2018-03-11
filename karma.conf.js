@@ -120,6 +120,20 @@ module.exports = function(config) {
       ios_latest: {
         base: "BrowserStack",
         browser: "iPhone",
+        device: "iPhone SE",
+        os: "ios",
+        os_version: "11.2"
+      },
+      ios_10: {
+        base: "BrowserStack",
+        browser: "iPhone",
+        device: "iPhone 7",
+        os: "ios",
+        os_version: "10.3"
+      },
+      ios_9: {
+        base: "BrowserStack",
+        browser: "iPhone",
         device: "iPhone 6S",
         os: "ios",
         os_version: "9.1"
@@ -138,20 +152,13 @@ module.exports = function(config) {
         browser: "iphone",
         device: "iPhone 5S"
       },
-      ios_6: {
-        base: "BrowserStack",
-        os: "ios",
-        os_version: "6.0",
-        browser: "iphone",
-        device: "iPhone 5"
-      },
       /*android_5: { Not working at the moment, investigate
-                base: "BrowserStack",
-                browser: "android",
-                device: "Google Nexus 5",
-                os: "android",
-                os_version: "5.0"
-            },*/
+                      base: "BrowserStack",
+                      browser: "android",
+                      device: "Google Nexus 5",
+                      os: "android",
+                      os_version: "5.0"
+                  },*/
       android_44_chrome: {
         base: "BrowserStack",
         browser: "android",
