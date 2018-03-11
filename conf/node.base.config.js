@@ -5,7 +5,7 @@ var webpack = require("webpack");
 module.exports = new Config().merge({
   entry: {
     parallel: "./src/api/node.ts",
-    slave: "./src/node/worker-slave/index.ts"
+    "parallel-slave": "./src/node/worker-slave/index.ts"
   },
 
   module: {

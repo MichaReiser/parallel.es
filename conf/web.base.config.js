@@ -27,7 +27,7 @@ module.exports = new Config().merge({
         loader: "worker-loader",
         test: path.join(__dirname, "../src/browser/worker-slave/index.ts"),
         options: {
-          name: "slave.js"
+          name: "parallel-slave.js"
         }
       },
       {
