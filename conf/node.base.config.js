@@ -4,8 +4,8 @@ var webpack = require("webpack");
 
 module.exports = new Config().merge({
   entry: {
-    node: "./src/api/node.ts",
-    "node-slave": "./src/node/worker-slave/index.ts"
+    parallel: "./src/api/node.ts",
+    slave: "./src/node/worker-slave/index.ts"
   },
 
   module: {
@@ -50,7 +50,7 @@ module.exports = new Config().merge({
   output: {
     library: "parallel-es",
     libraryTarget: "umd",
-    path: path.resolve(__dirname, "../dist")
+    path: path.resolve(__dirname, "../dist/node")
   },
 
   node: {

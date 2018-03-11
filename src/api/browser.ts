@@ -3,7 +3,7 @@
  * @module parallel
  * @preferred
  */ /** */
-
+import "babel-polyfill";
 import { parallelFactory } from "../common/parallel/parallel-impl";
 import { DefaultThreadPool } from "../common/thread-pool/default-thread-pool";
 import { DefaultParallelScheduler } from "../common/parallel/scheduling/default-parallel-scheduler";

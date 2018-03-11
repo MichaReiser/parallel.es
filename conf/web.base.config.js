@@ -3,7 +3,17 @@ var path = require("path");
 
 module.exports = new Config().merge({
   entry: {
-    browser: "./src/api/browser.ts"
+    parallel: "./src/api/browser.ts"
+  },
+
+  output: {
+    library: "parallel-es",
+    libraryTarget: "umd",
+    path: path.resolve(__dirname, "../dist/browser")
+  },
+
+  resolve: {
+    extensions: [".webpack.js", ".web.js", ".ts", ".js"]
   },
 
   module: {
@@ -12,17 +22,40 @@ module.exports = new Config().merge({
         test: /\.ts$/,
         enforce: "pre",
         loader: "tslint-loader"
+      },
+      {
+        loader: "worker-loader",
+        test: path.join(__dirname, "../src/browser/worker-slave/index.ts"),
+        options: {
+          name: "slave.js"
+        }
+      },
+      {
+        test: /\.ts$/,
+        use: [
+          {
+            loader: "awesome-typescript-loader",
+            query: {
+              useBabel: true,
+              babelOptions: {
+                presets: [
+                  [
+                    "babel-preset-env",
+                    {
+                      targets: {
+                        browsers: "defaults"
+                      },
+                      useBuiltIns: "usage",
+                      debug: true,
+                      modules: false
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        ]
       }
     ]
-  },
-
-  output: {
-    library: "parallel-es",
-    libraryTarget: "umd",
-    path: path.resolve(__dirname, "../dist")
-  },
-
-  resolve: {
-    extensions: [".webpack.js", ".web.js", ".ts", ".js"]
   }
 });

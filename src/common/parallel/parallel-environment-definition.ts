@@ -39,11 +39,10 @@ export class ParallelEnvironmentDefinition {
       this.environments.length > 0 &&
       !(this.environments[this.environments.length - 1] instanceof FunctionCall)
     ) {
-      newEnvironments[newEnvironments.length - 1] = Object.assign(
-        {},
-        newEnvironments[newEnvironments.length - 1],
-        environment
-      );
+      newEnvironments[newEnvironments.length - 1] = {
+        ...newEnvironments[newEnvironments.length - 1],
+        ...environment
+      };
     } else {
       newEnvironments.push(environment);
     }

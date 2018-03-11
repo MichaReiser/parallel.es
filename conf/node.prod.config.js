@@ -1,12 +1,8 @@
-var webpack = require("webpack");
-var Config = require("webpack-config").Config;
-var CompressionPlugin = require("compression-webpack-plugin");
-var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const webpack = require("webpack");
+const Config = require("webpack-config").Config;
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = new Config().extend("conf/node.base.config.js").merge({
-  entry: {
-    "node-commonjs": "./src/api/node-commonjs"
-  },
   devtool: "#source-map",
   mode: "production",
   optimization: {
@@ -23,12 +19,5 @@ module.exports = new Config().extend("conf/node.base.config.js").merge({
         }
       })
     ]
-  },
-  plugins: [
-    new CompressionPlugin({
-      asset: "[path].gz[query]",
-      algorithm: "gzip",
-      test: /\.js$|\.css$|\.html$/
-    })
-  ]
+  }
 });

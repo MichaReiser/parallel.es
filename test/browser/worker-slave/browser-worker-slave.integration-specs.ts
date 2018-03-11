@@ -9,10 +9,9 @@ import {
 } from "../../../src/common/worker/worker-messages";
 import { ITaskDefinition } from "../../../src/common/task/task-definition";
 import { functionId } from "../../../src/common/function/function-id";
+import * as Slave from "../../../src/browser/worker-slave/index";
 
-declare function require(module: string): any;
-/* tslint:disable:no-var-requires */
-const BrowserSlave = require("worker-loader?inline=false!../../../src/browser/worker-slave/index");
+const BrowserSlave = Slave as any;
 
 describe("BrowserSlave IntegrationTests", function() {
   let slave: Worker;
