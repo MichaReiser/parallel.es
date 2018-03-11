@@ -120,9 +120,9 @@ module.exports = function(config) {
       ios_latest: {
         base: "BrowserStack",
         browser: "iPhone",
-        device: "iPhone SE",
+        device: "iPhone X",
         os: "ios",
-        os_version: "11.2"
+        os_version: "11"
       },
       ios_10: {
         base: "BrowserStack",
