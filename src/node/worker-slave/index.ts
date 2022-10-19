@@ -1,6 +1,6 @@
-import {SlaveFunctionLookupTable} from "../../common/function/slave-function-lookup-table";
-import {registerStaticParallelFunctions} from "../../common/parallel/slave/register-parallel-worker-functions";
-import {NodeWorkerSlave} from "./node-worker-slave";
+import { SlaveFunctionLookupTable } from "../../common/function/slave-function-lookup-table";
+import { registerStaticParallelFunctions } from "../../common/parallel/slave/register-parallel-worker-functions";
+import { NodeWorkerSlave } from "./node-worker-slave";
 import * as process from "process";
 
 const slaveFunctionLookupTable = new SlaveFunctionLookupTable();
