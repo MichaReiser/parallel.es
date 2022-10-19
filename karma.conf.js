@@ -177,8 +177,7 @@ module.exports = function (config) {
 				accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
 				startTunnel: false,
 				tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
-				build:
-					process.env.TRAVIS_BUILD_NUMBER + " - " + process.env.TRAVIS_BRANCH,
+				build: `${process.env.TRAVIS_BUILD_NUMBER} - ${process.env.TRAVIS_BRANCH}`,
 			},
 			browsers: Object.keys(customLaunchers),
 			captureTimeout: 300000,

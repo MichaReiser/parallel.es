@@ -29,7 +29,7 @@ export function createParallelChain<TIn, TOut>(
 export function createParallelChain<
 	TIn,
 	TEnv extends IParallelEnvironment,
-	TOut,
+	TOut
 >(
 	generator: IParallelGenerator,
 	options: IDefaultInitializedParallelOptions,
@@ -39,7 +39,7 @@ export function createParallelChain<
 export function createParallelChain<
 	TIn,
 	TEnv extends IParallelEnvironment,
-	TOut,
+	TOut
 >(
 	generator: IParallelGenerator,
 	options: IDefaultInitializedParallelOptions,

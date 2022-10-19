@@ -156,7 +156,7 @@ describe("AbstractParallelScheduler", function () {
 							parameters: call.params,
 						};
 					}
-					throw new Error("Unknown function call" + JSON.stringify(call));
+					throw new Error(`Unknown function call${JSON.stringify(call)}`);
 				},
 			);
 

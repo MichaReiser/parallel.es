@@ -43,9 +43,11 @@ export class DefaultWorkerThread implements IWorkerThread {
 	) {
 		const that = this;
 		this.communicationChannel.addEventListener("message", function () {
+			// rome-ignore lint(correctness/noArguments): TypeScript doesn't like using `...args` on a implementation of an interface
 			that.onWorkerMessage.apply(that, arguments);
 		});
 		this.communicationChannel.addEventListener("error", function () {
+			// rome-ignore lint(correctness/noArguments): TypeScript doesn't like using `...args` on a implementation of an interface
 			that.onError.apply(that, arguments);
 		});
 	}
@@ -83,10 +85,10 @@ export class DefaultWorkerThread implements IWorkerThread {
 
 		this.communicationChannel.sendMessage(scheduleTaskMessage(task));
 		const onComplete = (error: any, result: any) => {
-			if (!this.stopped) {
-				this.state = new WorkerThreadState("idle");
-			} else {
+			if (this.stopped) {
 				this.state = new WorkerThreadState("stopped");
+			} else {
+				this.state = new WorkerThreadState("idle");
 			}
 			callback(error, result);
 		};

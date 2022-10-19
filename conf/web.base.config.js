@@ -6,16 +6,6 @@ module.exports = new Config().merge({
 		browser: "./src/api/browser.ts",
 	},
 
-	module: {
-		rules: [
-			{
-				test: /\.ts$/,
-				enforce: "pre",
-				loader: "tslint-loader",
-			},
-		],
-	},
-
 	output: {
 		library: "parallel-es",
 		libraryTarget: "umd",

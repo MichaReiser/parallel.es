@@ -84,7 +84,7 @@ export interface IParallelChain<TIn, TEnv extends IParallelEnvironment, TOut>
 		TParam1,
 		TParam2,
 		TParam3,
-		TEnvNew extends IParallelEnvironment,
+		TEnvNew extends IParallelEnvironment
 	>(
 		provider: (
 			this: void,
@@ -107,7 +107,7 @@ export interface IParallelChain<TIn, TEnv extends IParallelEnvironment, TOut>
 		TParam2,
 		TParam3,
 		TParam4,
-		TEnvNew extends IParallelEnvironment,
+		TEnvNew extends IParallelEnvironment
 	>(
 		provider: (
 			this: void,
@@ -131,7 +131,7 @@ export interface IParallelChain<TIn, TEnv extends IParallelEnvironment, TOut>
 		TParam2,
 		TParam3,
 		TParam4,
-		TEnvNew extends IParallelEnvironment,
+		TEnvNew extends IParallelEnvironment
 	>(
 		provider: (
 			this: void,

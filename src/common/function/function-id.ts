@@ -37,5 +37,5 @@ export function functionId(namespace: string, id: number): IFunctionId {
  * @returns true if the object is  a function id
  */
 export function isFunctionId(obj: any): obj is IFunctionId {
-	return !!obj && obj._______isFunctionId === true;
+	return obj && obj._______isFunctionId === true;
 }

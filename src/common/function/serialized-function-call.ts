@@ -33,5 +33,5 @@ export interface ISerializedFunctionCall {
 export function isSerializedFunctionCall(
 	potentialFunc: any,
 ): potentialFunc is ISerializedFunctionCall {
-	return !!potentialFunc && potentialFunc.______serializedFunctionCall === true;
+	return potentialFunc && potentialFunc.______serializedFunctionCall === true;
 }

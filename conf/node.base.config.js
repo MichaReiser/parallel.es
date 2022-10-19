@@ -9,14 +9,6 @@ module.exports = new Config().merge({
 	},
 
 	module: {
-		rules: [
-			{
-				test: /\.ts$/,
-				enforce: "pre",
-				loader: "tslint-loader",
-			},
-		],
-
 		noParse: [/src\/node\/worker\/node-worker-slave-file-name.ts/],
 	},
 

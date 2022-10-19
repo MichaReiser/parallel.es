@@ -13,7 +13,7 @@ describe("ScheduledParallelStream", function () {
 			return second;
 		}
 
-		return first + " " + second;
+		return `${first} ${second}`;
 	};
 
 	beforeEach(function () {

@@ -201,6 +201,7 @@ export class ParallelStream<TSubResult, TEndResult>
 		valuesPerTask: number,
 	) {
 		for (const nextHandler of this.nextHandlers) {
+			// rome-ignore lint(correctness/noArguments): Too tired to fiddle with types
 			nextHandler.apply(undefined, arguments);
 		}
 	}

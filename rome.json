@@ -1,0 +1,20 @@
+{
+  "linter": {
+    "enabled": true,
+    "ignore": [
+      "dist",
+      "tmp"
+    ],
+    "rules": {
+      "recommended": true
+    }
+  },
+  "formatter": {
+    "ignore": [
+      "dist",
+      "tmp",
+      "src/common/parallel/chain/parallel-chain-factory.ts",
+      "/src/common/parallel/chain/parallel-chain.ts"
+    ]
+  }
+}
